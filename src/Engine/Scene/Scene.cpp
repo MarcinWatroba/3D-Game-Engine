@@ -1,0 +1,32 @@
+#include <Engine/Scene/Scene.h>
+
+//Pass loader
+void Scene::pass_Loader(Loader* po_Loader_In)
+{
+	po_Loader = po_Loader_In;
+}
+
+//Is loader empty?
+bool Scene::is_LoaderEmpty()
+{
+	if (po_Loader == nullptr) return true;
+	return false;
+}
+
+//Lock mouse
+void Scene::lock_mouse(bool b_Cond_In)
+{
+	b_LockMouse = b_Cond_In;
+}
+
+//Is mouse locked?
+bool Scene::is_MouseLocked()
+{
+	return b_LockMouse;
+}
+
+//Extract state
+void Scene::extract_State(State* po_State_In)
+{
+	po_GameState = po_State_In;
+}
