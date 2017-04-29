@@ -5,11 +5,12 @@
 #include <iostream>
 #include <glad\glad.h>
 
-Shader::Shader(const char* pc_VertexShader_In, const char* pc_FragmentShader_In)
+Shader::Shader(const char* pc_VertexShader_In, const char* pc_FragmentShader_In, const char* pc_GeometryShader_In)
 {
 	//Streams to store the whole file
 	std::stringstream vertexShaderStream;
 	std::stringstream fragmentShaderStream;
+	std::stringstream geometryShaderStream;
 
 	//Status of compilation
 	int compiled;
@@ -17,11 +18,15 @@ Shader::Shader(const char* pc_VertexShader_In, const char* pc_FragmentShader_In)
 	//Sources for openGL
 	const char* vertexSource;
 	const char* fragmentSource;
+	const char* geometrySource;
 
 	//Files
 	std::ifstream openVertex;
 	std::ifstream openFragment;
-
+	std::ifstream openGeometry;
+	bool b_GeometryIn = false;
+	if (pc_GeometryShader_In != nullptr && pc_GeometryShader_In[0] != '\0') b_GeometryIn = true;
+	
 	//Open
 	openVertex.open(pc_VertexShader_In);
 	openFragment.open(pc_FragmentShader_In);
@@ -40,6 +45,7 @@ Shader::Shader(const char* pc_VertexShader_In, const char* pc_FragmentShader_In)
 
 	std::string vertexShaderStringSource = vertexShaderStream.str();
 	std::string fragmentShaderStringSource = fragmentShaderStream.str();
+	std::string geometryShaderStringSource;
 
 	//Conver from string to C_String
 	vertexSource = vertexShaderStringSource.c_str();
@@ -54,7 +60,7 @@ Shader::Shader(const char* pc_VertexShader_In, const char* pc_FragmentShader_In)
 	glShaderSource(vertShader, 1, &vertexSource, nullptr); // Point at the source
 	glCompileShader(vertShader); // Compile it
 
-								 //Get any compile errors
+	//Get any compile errors
 	glGetShaderiv(vertShader, GL_COMPILE_STATUS, &compiled);
 	if (!compiled)
 	{
@@ -92,10 +98,51 @@ Shader::Shader(const char* pc_VertexShader_In, const char* pc_FragmentShader_In)
 		}
 	}
 
+
+	GLint geoShader;
+	if (b_GeometryIn)
+	{
+		openGeometry.open(pc_GeometryShader_In);
+
+		if (openGeometry.is_open())
+		{
+			//Read the buffer
+			geometryShaderStream << openGeometry.rdbuf();
+			//Close them
+			openGeometry.close();
+		}
+
+		geometryShaderStringSource = geometryShaderStream.str();
+		geometrySource = geometryShaderStringSource.c_str();
+		geometryShaderStream.clear();
+
+		//Create vertex shader
+		geoShader = glCreateShader(GL_GEOMETRY_SHADER);
+		glShaderSource(geoShader, 1, &geometrySource, nullptr); // Point at the source
+		glCompileShader(geoShader); // Compile it
+
+		//Get any compile errors
+		glGetShaderiv(geoShader, GL_COMPILE_STATUS, &compiled);
+		if (!compiled)
+		{
+			GLint logLength;
+			glGetShaderiv(geoShader, GL_INFO_LOG_LENGTH, &logLength);
+
+			if (logLength > 0)
+			{
+				char* log = new char[logLength];
+				glGetShaderInfoLog(vertShader, logLength, nullptr, log);
+				std::cout << "Geometry shader compilation failure..." << "\n" << log << "\n";
+				delete[] log;
+			}
+		}
+	}
+
 	//Program
 	programHandle = glCreateProgram();
 	glAttachShader(programHandle, vertShader);
 	glAttachShader(programHandle, fragShader);
+	if (b_GeometryIn) glAttachShader(programHandle, geoShader);
 	glLinkProgram(programHandle);
 
 	//Linking errors
