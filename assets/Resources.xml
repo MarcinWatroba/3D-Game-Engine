@@ -363,5 +363,6 @@
 		<new_File ID = "0" vertex = "passIn.vert" fragment = "passIn.frag" geometry = ""> </new_File>
 		<new_File ID = "1" vertex = "font_Shader.vert" fragment = "font_Shader.frag" geometry = ""> </new_File>
 		<new_File ID = "2" vertex = "light_Shader.vert" fragment = "light_Shader.frag" geometry = ""> </new_File>
+		<new_File ID = "3" vertex = "depth_Shader.vert" fragment = "depth_Shader.frag" geometry = "depth_Shader.geom"> </new_File>
  	</shader_Files>
 </resources>

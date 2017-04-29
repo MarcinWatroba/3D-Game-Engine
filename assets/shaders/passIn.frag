@@ -31,9 +31,7 @@ struct Point_Light
 	vec3 diffuse;
 	vec3 specular;
 
-	float constant;
-	float linear;
-	float quadratic;
+	float radius;
 };
 
 
@@ -69,7 +67,7 @@ vec3 create_DirectionalLight(Directional_Light light, vec3 normal, vec3 viewDir)
 	vec3 ambient = light.ambient * vec3(texture(material.diffuse, vec2(TexCoord.x * tiling.x, (1 - TexCoord.y) * tiling.y)));
 	vec3 diffuse = light.diffuse * diff * vec3(texture(material.diffuse, vec2(TexCoord.x * tiling.x, (1 - TexCoord.y) * tiling.y)));
 	vec3 specular = light.specular * spec * vec3(texture(material.specular, vec2(TexCoord.x * tiling.x, (1 - TexCoord.y) * tiling.y)));
-	return (ambient + diffuse + specular);
+	return (diffuse + specular);
 }
 
 vec3 create_PointLight(Point_Light light, vec3 normal, vec3 vertPos, vec3 viewDir)
@@ -81,15 +79,19 @@ vec3 create_PointLight(Point_Light light, vec3 normal, vec3 vertPos, vec3 viewDi
 	float spec = pow(max(dot(viewDir, reflectDir), 0.f), material.shininess);
 
 	float distance = length(light.position - vertPos);
-	float attenuation = 1.f / (light.constant + light.linear * distance + light.quadratic * (distance * distance));
+
+
+	float dist = max(distance - light.radius, 0);
+	float intensity = dist/light.radius + 1;
+   	float attenuation = 1.f / (intensity*intensity);
 
 	vec3 ambient = light.ambient * vec3(texture(material.diffuse, vec2(TexCoord.x * tiling.x, (1 - TexCoord.y) * tiling.y)));
 	vec3 diffuse = light.diffuse * diff * vec3(texture(material.diffuse, vec2(TexCoord.x * tiling.x, (1 - TexCoord.y) * tiling.y)));
 	vec3 specular = light.specular * spec * vec3(texture(material.specular, vec2(TexCoord.x * tiling.x, (1 - TexCoord.y) * tiling.y)));
 
-	ambient *= attenuation;
+
 	diffuse *= attenuation;
 	specular *= attenuation;
 
-	return (ambient + diffuse + specular);
+	return (diffuse + specular);
 }
