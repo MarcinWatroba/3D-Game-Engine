@@ -11,12 +11,18 @@
 
 SceneLoader::SceneLoader(const char* pc_FileName_In, Loader* po_Loader_In, std::map<std::string, Game_Object*>& mspo_GameObjects_In)
 {
+	glClearColor(0.1f, 0.1f, 0.1f, 1.f);
+	glEnable(GL_DEPTH_TEST);
+
 	po_SceneLoader = po_Loader_In;
 	i_NumOfPointLight = 0;
+	shadowMapDimensions = glm::vec2(1024, 1024);
 
 	tinyxml2::XMLDocument object_File;
 	object_File.LoadFile(pc_FileName_In);
 	tinyxml2::XMLElement* body = object_File.FirstChildElement("objects");
+
+	setup_FBO();
 
 	for (tinyxml2::XMLElement* it = body->FirstChildElement("new_Object3D"); it != nullptr; it = it->NextSiblingElement("new_Object3D"))
 	{
@@ -132,9 +138,7 @@ SceneLoader::SceneLoader(const char* pc_FileName_In, Loader* po_Loader_In, std::
 		glm::vec3 v3_Specular;
 		glm::vec3 v3_Direction;
 		glm::vec3 v3_Position;
-		float f_Constant;
-		float f_Linear;
-		float f_Quadratic;
+		float f_lRadius;
 		std::string s_Tag;
 
 		s_Type = it->Attribute("type");
@@ -157,10 +161,8 @@ SceneLoader::SceneLoader(const char* pc_FileName_In, Loader* po_Loader_In, std::
 			v3_Ambient = to3DVector(it->Attribute("ambient"));
 			v3_Diffuse = to3DVector(it->Attribute("diffuse"));
 			v3_Specular = to3DVector(it->Attribute("specular"));
-			f_Constant = std::strtof(it->Attribute("constant"), nullptr);
-			f_Linear = std::strtof(it->Attribute("linear"), nullptr);
-			f_Quadratic = std::strtof(it->Attribute("quadratic"), nullptr);
-			mspo_GameObjects_In.insert(std::pair<std::string, Game_Object*>(s_Name, new Point_Light(v3_Ambient, v3_Diffuse, v3_Specular, f_Constant, f_Linear, f_Quadratic, i_LightID)));
+			f_lRadius = std::strtof(it->Attribute("radius"), nullptr);
+			mspo_GameObjects_In.insert(std::pair<std::string, Game_Object*>(s_Name, new Point_Light(v3_Ambient, v3_Diffuse, v3_Specular, f_lRadius, i_LightID)));
 			i_NumOfPointLight++;
 
 			auto point_Light = static_cast<Point_Light*>(mspo_GameObjects_In.find(s_Name)->second);
@@ -423,4 +425,80 @@ void SceneLoader::set_LightAmount(Shader* p_Shader_In)
 	//Send this amount of light to shader
 	GLint lightLoc = glGetUniformLocation(p_Shader_In->get_Program(), "numOfLights");
 	glUniform1i(lightLoc, i_NumOfPointLight);
+}
+
+void SceneLoader::setup_FBO()
+{
+	GLfloat border[] = { 1.0f, 0.0f,0.0f,0.0f };
+	glGenFramebuffers(1, &depthMapFBO);
+	// The depth buffer texture
+	//	gl::ActiveTexture(gl::TEXTURE1);
+
+	glGenTextures(1, &depthCubemap);
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_CUBE_MAP, depthCubemap);
+
+	glBindTexture(GL_TEXTURE_CUBE_MAP, depthCubemap);
+	for (GLuint i = 0; i < 6; ++i)
+	{
+		glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_DEPTH_COMPONENT,
+			shadowMapDimensions.x, shadowMapDimensions.y, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
+	}
+
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+
+	// Assign the depth buffer texture to texture channel 0
+
+
+	// Create and set up the FBO
+
+	glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);
+	glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, depthCubemap, 0);
+
+	glDrawBuffer(GL_NONE);
+	glReadBuffer(GL_NONE);
+
+
+	GLenum result = glCheckFramebufferStatus(GL_FRAMEBUFFER);
+	if (result == GL_FRAMEBUFFER_COMPLETE) {
+		printf("Framebuffer is complete.\n");
+	}
+	else {
+		printf("Framebuffer is not complete.\n");
+	}
+
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	std::cout << depthMapFBO << std::endl;
+
+	std::cout << depthCubemap << std::endl;
+}
+
+void SceneLoader::prepare_FrameBuffer(Shader* p_Shader_In)
+{
+	//static int i = 0;
+
+
+	//float aspect = shadowMapDimensions.x / shadowMapDimensions.y;
+	//float nearP = 1.0f;
+	//float farP = 25.0f;
+	//projection = glm::perspective(glm::radians(90.0f), aspect, nearP, farP);
+
+	//
+	//std::vector<glm::mat4> shadowTransforms;
+	//shadowTransforms.push_back(projection *
+	//	glm::lookAt(_worldLight, _worldLight + vec3(1.0, 0.0, 0.0), vec3(0.0, -1.0, 0.0)));
+	//shadowTransforms.push_back(projection *
+	//	glm::lookAt(_worldLight, _worldLight + vec3(-1.0, 0.0, 0.0), vec3(0.0, -1.0, 0.0)));
+	//shadowTransforms.push_back(projection *
+	//	glm::lookAt(_worldLight, _worldLight + vec3(0.0, 1.0, 0.0), vec3(0.0, 0.0, 1.0)));
+	//shadowTransforms.push_back(projection *
+	//	glm::lookAt(_worldLight, _worldLight + vec3(0.0, -1.0, 0.0), vec3(0.0, 0.0, -1.0)));
+	//shadowTransforms.push_back(projection *
+	//	glm::lookAt(_worldLight, _worldLight + vec3(0.0, 0.0, 1.0), vec3(0.0, -1.0, 0.0)));
+	//shadowTransforms.push_back(projection *
+	//	glm::lookAt(_worldLight, _worldLight + vec3(0.0, 0.0, -1.0), vec3(0.0, -1.0, 0.0)));
 }

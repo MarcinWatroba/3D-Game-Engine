@@ -173,6 +173,9 @@
     <ClInclude Include="include\Game\Scene\Game_Scene.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="assets\shaders\depth_Shader.frag" />
+    <None Include="assets\shaders\depth_Shader.geom" />
+    <None Include="assets\shaders\depth_Shader.vert" />
     <None Include="assets\shaders\font_Shader.frag" />
     <None Include="assets\shaders\font_Shader.vert" />
     <None Include="assets\shaders\light_Shader.frag" />

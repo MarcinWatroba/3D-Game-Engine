@@ -12,6 +12,7 @@
 //Initialize everything once
 void Game_Scene::init()
 {
+
 	//Initialize
 	lock_mouse(true);
 	b_Init = false;
@@ -116,14 +117,15 @@ void Game_Scene::update_Scene(GLfloat f_Delta_In, glm::vec2 v2_MousePos_In)
 //Render all scene objects
 void Game_Scene::render()
 {
-	glClearColor(0.1f, 0.1f, 0.1f, 1.f);
+
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glEnable(GL_DEPTH_TEST);
+
 
 	if (b_Init)
 	{
 		glUseProgram(po_Loader->get_Shader("0")->get_Program());
 		camera_3D->update_Shader(po_Loader->get_Shader("0"));
+
 		o_SceneLoader->set_LightAmount(po_Loader->get_Shader("0"));
 
 		for (auto const& pair : mspo_Objects)

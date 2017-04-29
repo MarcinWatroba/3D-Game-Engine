@@ -274,6 +274,15 @@
     <None Include="assets\shaders\passIn.vert">
       <Filter>Resource Files\Shaders</Filter>
     </None>
+    <None Include="assets\shaders\depth_Shader.frag">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="assets\shaders\depth_Shader.geom">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="assets\shaders\depth_Shader.vert">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Xml Include="assets\Resources.xml">
