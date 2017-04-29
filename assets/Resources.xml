@@ -360,8 +360,8 @@
 	
 	<shader_File_Location>assets/shaders/</shader_File_Location>
 	<shader_Files>
-		<new_File ID = "0" vertex = "passIn.vert" fragment = "passIn.frag"> </new_File>
-		<new_File ID = "1" vertex = "font_Shader.vert" fragment = "font_Shader.frag"> </new_File>
-		<new_File ID = "2" vertex = "light_Shader.vert" fragment = "light_Shader.frag"> </new_File>
+		<new_File ID = "0" vertex = "passIn.vert" fragment = "passIn.frag" geometry = ""> </new_File>
+		<new_File ID = "1" vertex = "font_Shader.vert" fragment = "font_Shader.frag" geometry = ""> </new_File>
+		<new_File ID = "2" vertex = "light_Shader.vert" fragment = "light_Shader.frag" geometry = ""> </new_File>
  	</shader_Files>
 </resources>

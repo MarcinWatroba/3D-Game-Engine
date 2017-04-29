@@ -76,9 +76,13 @@ void Loader::ParseXML_Resources(const char* pc_FileName)
 		std::string i_ID = i->Attribute("ID");
 		std::string s_NameVertex = shader_FileLoc + i->Attribute("vertex");
 		std::string s_NameFragment = shader_FileLoc + i->Attribute("fragment");
+		std::string s_NameGeometry = i->Attribute("geometry");
 
+		if (s_NameGeometry == "") s_NameGeometry = "";
+		else s_NameGeometry = shader_FileLoc + s_NameGeometry;
+		
 		//Add shader
-		mipo_Shaders.insert(std::make_pair(i_ID, new Shader(s_NameVertex.c_str(), s_NameFragment.c_str())));
+		mipo_Shaders.insert(std::make_pair(i_ID, new Shader(s_NameVertex.c_str(), s_NameFragment.c_str(), s_NameGeometry.c_str())));
 	}
 
 	//std::string font_FileLoc = po_Body->FirstChildElement("font_File_Location")->GetText();

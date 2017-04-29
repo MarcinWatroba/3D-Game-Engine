@@ -10,7 +10,7 @@ public:
 	Shader() {};
 
 	//Main constructor
-	Shader(const char* pc_VertexShader_In, const char* pc_FragmentShader_In);
+	Shader(const char* pc_VertexShader_In, const char* pc_FragmentShader_In, const char* pc_GeometryShader_In);
 
 	//Get program
 	int get_Program();
