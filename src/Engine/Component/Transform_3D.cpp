@@ -32,7 +32,7 @@ void Transform_3D::update(glm::mat4 parent_Matrix_In)
 
 		b_Update = false;
 	}
- }
+}
 
 glm::mat4 Transform_3D::get_ModelMatrix()
 {

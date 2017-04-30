@@ -18,6 +18,11 @@ SceneLoader::SceneLoader(const char* pc_FileName_In, Loader* po_Loader_In, std::
 	i_NumOfPointLight = 0;
 	shadowMapDimensions = glm::vec2(1024, 1024);
 
+	aspect = shadowMapDimensions.x / shadowMapDimensions.y;
+	nearP = 1.0f;
+	farP = 1000.0f;
+	projection = glm::perspective(glm::radians(90.0f), aspect, nearP, farP);
+
 	tinyxml2::XMLDocument object_File;
 	object_File.LoadFile(pc_FileName_In);
 	tinyxml2::XMLElement* body = object_File.FirstChildElement("objects");
@@ -37,7 +42,7 @@ SceneLoader::SceneLoader(const char* pc_FileName_In, Loader* po_Loader_In, std::
 		std::string s_Components;
 		int i_InitMode;
 		float f_Shiny;
-		glm::vec3 v3_Origin; 
+		glm::vec3 v3_Origin;
 		glm::vec3 v3_Position;
 		glm::quat quat_OrientationX;
 		glm::quat quat_OrientationY;
@@ -51,39 +56,39 @@ SceneLoader::SceneLoader(const char* pc_FileName_In, Loader* po_Loader_In, std::
 
 		if (s_Container == "Yes") // This object has children
 		{
-				//Add variables
-				s_Components = it->Attribute("component");
-				v3_Origin = to3DVector(it->Attribute("origin"));
-				v3_Position = to3DVector(it->Attribute("position"));
-				quat_OrientationX = toQuat(it->Attribute("orientationX"));
-				quat_OrientationY = toQuat(it->Attribute("orientationY"));
-				quat_OrientationZ = toQuat(it->Attribute("orientationZ"));
-				v3_Scale = to3DVector(it->Attribute("scale"));
-				s_Children = it->Attribute("children");
-				s_Tag = it->Attribute("tag");
-				
-				//Typical process of adding new 3D object
-				mspo_GameObjects_In.insert(std::pair<std::string, Game_Object*>(s_ObjectName, new GameObject_3D()));
-				auto object = static_cast<GameObject_3D*>(mspo_GameObjects_In.find(s_ObjectName)->second);
-				object->set_Name(s_ObjectName);
-				object->add_Component("Transform_3D", new Transform_3D());
-				object->set_RenderStatus(false);
-				object->set_Position(v3_Position);
-				object->set_Origin(v3_Origin);
-				object->set_Rotation(quat_OrientationZ * quat_OrientationY * quat_OrientationX);
-				object->set_Scale(v3_Scale);
-				object->set_Tag(s_Tag);
-				
-				if (s_Children != "") // Make sure that children are really there
+			//Add variables
+			s_Components = it->Attribute("component");
+			v3_Origin = to3DVector(it->Attribute("origin"));
+			v3_Position = to3DVector(it->Attribute("position"));
+			quat_OrientationX = toQuat(it->Attribute("orientationX"));
+			quat_OrientationY = toQuat(it->Attribute("orientationY"));
+			quat_OrientationZ = toQuat(it->Attribute("orientationZ"));
+			v3_Scale = to3DVector(it->Attribute("scale"));
+			s_Children = it->Attribute("children");
+			s_Tag = it->Attribute("tag");
+
+			//Typical process of adding new 3D object
+			mspo_GameObjects_In.insert(std::pair<std::string, Game_Object*>(s_ObjectName, new GameObject_3D()));
+			auto object = static_cast<GameObject_3D*>(mspo_GameObjects_In.find(s_ObjectName)->second);
+			object->set_Name(s_ObjectName);
+			object->add_Component("Transform_3D", new Transform_3D());
+			object->set_RenderStatus(false);
+			object->set_Position(v3_Position);
+			object->set_Origin(v3_Origin);
+			object->set_Rotation(quat_OrientationZ * quat_OrientationY * quat_OrientationX);
+			object->set_Scale(v3_Scale);
+			object->set_Tag(s_Tag);
+
+			if (s_Children != "") // Make sure that children are really there
+			{
+				//Add child to the object
+				add_Children(vs_Children, s_Children);
+				for (auto it = vs_Children.begin(); it != vs_Children.end(); ++it)
 				{
-					//Add child to the object
-					add_Children(vs_Children, s_Children);
-					for (auto it = vs_Children.begin(); it != vs_Children.end(); ++it)
-					{
-						auto found_Child = static_cast<GameObject_3D*>(mspo_GameObjects_In.find(*it)->second);
-						object->add_Child(found_Child);
-					}
+					auto found_Child = static_cast<GameObject_3D*>(mspo_GameObjects_In.find(*it)->second);
+					object->add_Child(found_Child);
 				}
+			}
 		}
 		else // It doesn't
 		{
@@ -200,29 +205,29 @@ glm::vec3 SceneLoader::to3DVector(const char* pc_Vector3D_In)
 		switch (pc_Vector3D_In[i])
 		{
 		case 32: // Empty space
-			//Ignore
+				 //Ignore
 			break;
 
 		case 44: // Comma
 			i_DataCounter++;
 
 			switch (i_DataCounter)
-				{
-				case 1:
-					v3_Vector.x = std::strtof(s_Result.c_str(), NULL);
-					s_Result.clear();
-					break;
-
-				case 2:
-					v3_Vector.y = std::strtof(s_Result.c_str(), NULL);
-					s_Result.clear();
-					break;
-				}
+			{
+			case 1:
+				v3_Vector.x = std::strtof(s_Result.c_str(), NULL);
+				s_Result.clear();
 				break;
+
+			case 2:
+				v3_Vector.y = std::strtof(s_Result.c_str(), NULL);
+				s_Result.clear();
+				break;
+			}
+			break;
 			break;
 
 		case 40: // This bracker "(" 
-			//Ignore
+				 //Ignore
 			break;
 
 		case 41: // This bracket ")"
@@ -232,7 +237,7 @@ glm::vec3 SceneLoader::to3DVector(const char* pc_Vector3D_In)
 			//Process
 		default:
 			s_Result += pc_Vector3D_In[i];
-		break;
+			break;
 		}
 	}
 
@@ -289,46 +294,46 @@ glm::quat SceneLoader::toQuat(const char* pc_Quaternion_In)
 	{
 		switch (pc_Quaternion_In[i])
 		{
-			case 32: // Empty space
-			//Ignore
+		case 32: // Empty space
+				 //Ignore
 			break;
 
-			case 44: // Comma
-				i_DataCounter++;
+		case 44: // Comma
+			i_DataCounter++;
 
-				switch (i_DataCounter)
-				{
-					case 1:
-						f_Angle = std::strtof(s_Result.c_str(), nullptr);
-						s_Result.clear();
-					break;
-
-					case 2:
-						v3_Vector.x = std::strtof(s_Result.c_str(), nullptr);
-						s_Result.clear();
-					break;
-
-					case 3:
-						v3_Vector.y = std::strtof(s_Result.c_str(), nullptr);
-						s_Result.clear();
-					break;
-				}
+			switch (i_DataCounter)
+			{
+			case 1:
+				f_Angle = std::strtof(s_Result.c_str(), nullptr);
+				s_Result.clear();
 				break;
 
-			case 40: // This bracket "("
-			 //Ignore
+			case 2:
+				v3_Vector.x = std::strtof(s_Result.c_str(), nullptr);
+				s_Result.clear();
+				break;
+
+			case 3:
+				v3_Vector.y = std::strtof(s_Result.c_str(), nullptr);
+				s_Result.clear();
+				break;
+			}
 			break;
 
-			case 41: // This bracket ")"
-				v3_Vector.z = std::strtof(s_Result.c_str(), nullptr);
+		case 40: // This bracket "("
+				 //Ignore
 			break;
 
-				//Process
-			default:
-				s_Result = s_Result + pc_Quaternion_In[i];
+		case 41: // This bracket ")"
+			v3_Vector.z = std::strtof(s_Result.c_str(), nullptr);
 			break;
-		break;
-		}	
+
+			//Process
+		default:
+			s_Result = s_Result + pc_Quaternion_In[i];
+			break;
+			break;
+		}
 	}
 
 	glm::quat temp = glm::angleAxis(glm::radians(f_Angle), glm::vec3(v3_Vector.x, v3_Vector.y, v3_Vector.z));
@@ -345,36 +350,36 @@ void SceneLoader::add_Children(std::vector<std::string>& vs_Children_In, std::st
 	{
 		switch (s_ToProcess_In[i])
 		{
-			case 40: // This bracket "("
+		case 40: // This bracket "("
 				 //Ignore
 			break;
 
-			case 41: // This bracket ")"
-				vs_Children_In.push_back(s_Result);
-				s_Result.clear();
-				b_IgnoreSpaces = true;
+		case 41: // This bracket ")"
+			vs_Children_In.push_back(s_Result);
+			s_Result.clear();
+			b_IgnoreSpaces = true;
 			break;
 
-			case 44:  // Comma
-				vs_Children_In.push_back(s_Result);
-				s_Result.clear();
-				b_IgnoreSpaces = true;
+		case 44:  // Comma
+			vs_Children_In.push_back(s_Result);
+			s_Result.clear();
+			b_IgnoreSpaces = true;
 			break;
 
-			case '\n':
-				break;
+		case '\n':
+			break;
 
-			case '\t':
-				break;
+		case '\t':
+			break;
 
-			case 32:
-				if (!b_IgnoreSpaces) s_Result = s_Result + s_ToProcess_In[i];
+		case 32:
+			if (!b_IgnoreSpaces) s_Result = s_Result + s_ToProcess_In[i];
 			break;
 
 			//Process
-			default:
-				s_Result = s_Result + s_ToProcess_In[i];
-				if (s_Result.length() > 1) b_IgnoreSpaces = false;
+		default:
+			s_Result = s_Result + s_ToProcess_In[i];
+			if (s_Result.length() > 1) b_IgnoreSpaces = false;
 
 			break;
 		}
@@ -399,8 +404,8 @@ void SceneLoader::add_Components(GameObject_3D* po_GameObject_In, std::string s_
 			break;
 
 		case 44:  // Comma
-			//Find the right component
-			identify_Component(po_GameObject_In, s_Result);	
+				  //Find the right component
+			identify_Component(po_GameObject_In, s_Result);
 			break;
 
 		case '\n':
@@ -477,28 +482,48 @@ void SceneLoader::setup_FBO()
 	std::cout << depthCubemap << std::endl;
 }
 
-void SceneLoader::prepare_FrameBuffer(Shader* p_Shader_In)
+void SceneLoader::prepare_FrameBuffer(Shader* p_Shader_In, glm::vec3 light_Pos)
 {
 	//static int i = 0;
 
+	glViewport(0, 0, shadowMapDimensions.x, shadowMapDimensions.y);
+	glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);
+	glClear(GL_DEPTH_BUFFER_BIT);
 
-	//float aspect = shadowMapDimensions.x / shadowMapDimensions.y;
-	//float nearP = 1.0f;
-	//float farP = 25.0f;
-	//projection = glm::perspective(glm::radians(90.0f), aspect, nearP, farP);
+	std::vector<glm::mat4> shadowTransforms;
+	shadowTransforms.push_back(projection *
+		glm::lookAt(light_Pos, light_Pos + glm::vec3(1.0, 0.0, 0.0), glm::vec3(0.0, -1.0, 0.0)));
+	shadowTransforms.push_back(projection *
+		glm::lookAt(light_Pos, light_Pos + glm::vec3(-1.0, 0.0, 0.0), glm::vec3(0.0, -1.0, 0.0)));
+	shadowTransforms.push_back(projection *
+		glm::lookAt(light_Pos, light_Pos + glm::vec3(0.0, 1.0, 0.0), glm::vec3(0.0, 0.0, 1.0)));
+	shadowTransforms.push_back(projection *
+		glm::lookAt(light_Pos, light_Pos + glm::vec3(0.0, -1.0, 0.0), glm::vec3(0.0, 0.0, -1.0)));
+	shadowTransforms.push_back(projection *
+		glm::lookAt(light_Pos, light_Pos + glm::vec3(0.0, 0.0, 1.0), glm::vec3(0.0, -1.0, 0.0)));
+	shadowTransforms.push_back(projection *
+		glm::lookAt(light_Pos, light_Pos + glm::vec3(0.0, 0.0, -1.0), glm::vec3(0.0, -1.0, 0.0)));
 
-	//
-	//std::vector<glm::mat4> shadowTransforms;
-	//shadowTransforms.push_back(projection *
-	//	glm::lookAt(_worldLight, _worldLight + vec3(1.0, 0.0, 0.0), vec3(0.0, -1.0, 0.0)));
-	//shadowTransforms.push_back(projection *
-	//	glm::lookAt(_worldLight, _worldLight + vec3(-1.0, 0.0, 0.0), vec3(0.0, -1.0, 0.0)));
-	//shadowTransforms.push_back(projection *
-	//	glm::lookAt(_worldLight, _worldLight + vec3(0.0, 1.0, 0.0), vec3(0.0, 0.0, 1.0)));
-	//shadowTransforms.push_back(projection *
-	//	glm::lookAt(_worldLight, _worldLight + vec3(0.0, -1.0, 0.0), vec3(0.0, 0.0, -1.0)));
-	//shadowTransforms.push_back(projection *
-	//	glm::lookAt(_worldLight, _worldLight + vec3(0.0, 0.0, 1.0), vec3(0.0, -1.0, 0.0)));
-	//shadowTransforms.push_back(projection *
-	//	glm::lookAt(_worldLight, _worldLight + vec3(0.0, 0.0, -1.0), vec3(0.0, -1.0, 0.0)));
+	GLint shadow_Matrix_Loc = glGetUniformLocation(p_Shader_In->get_Program(), "shadowMatrices[0]");
+	glUniformMatrix4fv(shadow_Matrix_Loc, 1, GL_FALSE, glm::value_ptr(shadowTransforms[0]));
+	shadow_Matrix_Loc = glGetUniformLocation(p_Shader_In->get_Program(), "shadowMatrices[1]");
+	glUniformMatrix4fv(shadow_Matrix_Loc, 1, GL_FALSE, glm::value_ptr(shadowTransforms[1]));
+	shadow_Matrix_Loc = glGetUniformLocation(p_Shader_In->get_Program(), "shadowMatrices[2]");
+	glUniformMatrix4fv(shadow_Matrix_Loc, 1, GL_FALSE, glm::value_ptr(shadowTransforms[2]));
+	shadow_Matrix_Loc = glGetUniformLocation(p_Shader_In->get_Program(), "shadowMatrices[3]");
+	glUniformMatrix4fv(shadow_Matrix_Loc, 1, GL_FALSE, glm::value_ptr(shadowTransforms[3]));
+	shadow_Matrix_Loc = glGetUniformLocation(p_Shader_In->get_Program(), "shadowMatrices[4]");
+	glUniformMatrix4fv(shadow_Matrix_Loc, 1, GL_FALSE, glm::value_ptr(shadowTransforms[4]));
+	shadow_Matrix_Loc = glGetUniformLocation(p_Shader_In->get_Program(), "shadowMatrices[5]");
+	glUniformMatrix4fv(shadow_Matrix_Loc, 1, GL_FALSE, glm::value_ptr(shadowTransforms[5]));
+
+	GLint far_Loc = glGetUniformLocation(p_Shader_In->get_Program(), "farPlane");
+	glUniform1f(far_Loc, farP);
+
+	GLint light_Loc = glGetUniformLocation(p_Shader_In->get_Program(), "lightPos");
+	glUniform3f(light_Loc, light_Pos.x, light_Pos.y, light_Pos.z);
+
+	glActiveTexture(GL_TEXTURE2);
+	glBindTexture(GL_TEXTURE_CUBE_MAP, depthCubemap);
+
 }

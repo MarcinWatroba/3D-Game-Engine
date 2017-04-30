@@ -3,6 +3,12 @@
 #include <Engine\Creators\Shader.h>
 #include <glad\glad.h>
 
+void RenderComp_3D::renderDepth(int draw_Mode_In, int draw_Shape_In, Shader* p_Shader_In)
+{
+	glBindVertexArray(p_Mesh->get_VAO());
+	glDrawElements(GL_TRIANGLES, p_Mesh->get_SizeOfIndices(), GL_UNSIGNED_INT, 0);
+}
+
 void RenderComp_3D::render(int draw_Mode_In, int draw_Shape_In, Shader* p_Shader_In)
 {
 	//Bind lightning maps

@@ -8,13 +8,7 @@ private:
 
 	float f_radius;
 	//Attenutation constant
-	float f_Constant;
 
-	//Attenuation linear
-	float f_Linear;
-
-	//Attenuation quadratic
-	float f_Quadratic;
 
 	unsigned int i_ID; // ID of the point light
 

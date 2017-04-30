@@ -42,7 +42,7 @@ void Game_Scene::keyboard_Input(GLfloat f_Delta_In, GLboolean* pab_KeyArray_In, 
 		camera_3D->set_Speed(f_Speed);
 		camera_3D->move_Backward();
 	}
-		
+
 	if (pab_KeyArray_In[GLFW_KEY_A])
 	{
 		camera_3D->set_Speed(f_Speed);
@@ -54,7 +54,7 @@ void Game_Scene::keyboard_Input(GLfloat f_Delta_In, GLboolean* pab_KeyArray_In, 
 		camera_3D->set_Speed(f_Speed);
 		camera_3D->move_Right();
 	}
-		
+
 	if (pab_KeyArray_In[GLFW_KEY_SPACE])
 	{
 		camera_3D->set_Speed(f_Speed);
@@ -77,7 +77,7 @@ void Game_Scene::keyboard_Input(GLfloat f_Delta_In, GLboolean* pab_KeyArray_In, 
 	}
 	if (!pab_KeyArray_In[GLFW_KEY_R]) pab_LockedKeys_In[GLFW_KEY_R] = false;
 
-	
+
 	if (pab_KeyArray_In[GLFW_KEY_ESCAPE] && !pab_LockedKeys_In[GLFW_KEY_ESCAPE])
 	{
 		lock_mouse(false);
@@ -106,7 +106,7 @@ void Game_Scene::update_Scene(GLfloat f_Delta_In, glm::vec2 v2_MousePos_In)
 	if (b_Init)
 	{
 		for (auto const& pair : mspo_Objects) pair.second->update();
-		
+
 		camera_3D->move_Keyboard(f_Delta_In);
 		camera_3D->move_Mouse(f_Delta_In, v2_MousePos_In);
 		camera_3D->update();
@@ -118,15 +118,53 @@ void Game_Scene::update_Scene(GLfloat f_Delta_In, glm::vec2 v2_MousePos_In)
 void Game_Scene::render()
 {
 
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 
 
 	if (b_Init)
 	{
+		glUseProgram(po_Loader->get_Shader("3")->get_Program());
+		for (auto const& pair : mspo_Objects)
+		{
+			if (pair.second->get_Tag() == "Light")
+			{
+				glm::vec3 light = static_cast<Light*>(pair.second)->get_Position();
+				o_SceneLoader->prepare_FrameBuffer(po_Loader->get_Shader("3"), light);
+			}
+		}
+
+		for (auto const& pair : mspo_Objects)
+		{
+			if (pair.second->get_Tag() == "Object") pair.second->renderDepth(po_Loader->get_Shader("3"));
+			else if (pair.second->get_Tag() == "Light")
+			{
+				//static_cast<Light*>(pair.second)->update_Shader(po_Loader->get_Shader("0"));
+				pair.second->renderDepth(po_Loader->get_Shader("3"));
+			}
+		}
+
+		glViewport(0, 0, 1920, 1080);
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 		glUseProgram(po_Loader->get_Shader("0")->get_Program());
+
+
+		GLint depth_Cube_Loc = glGetUniformLocation(po_Loader->get_Shader("0")->get_Program(), "depthMap");
+		glUniform1i(depth_Cube_Loc, 2);
+		GLint diff_Tex_Loc = glGetUniformLocation(po_Loader->get_Shader("0")->get_Program(), "diffuse");
+		glUniform1i(diff_Tex_Loc, 0);
+		GLint spec_Tex_Loc = glGetUniformLocation(po_Loader->get_Shader("0")->get_Program(), "specular");
+		glUniform1i(spec_Tex_Loc, 1);
+		//camera_3D->update_Shader(po_Loader->get_Shader("0"));
 		camera_3D->update_Shader(po_Loader->get_Shader("0"));
 
 		o_SceneLoader->set_LightAmount(po_Loader->get_Shader("0"));
+
+		GLint far_Loc = glGetUniformLocation(po_Loader->get_Shader("0")->get_Program(), "farPlane");
+		glUniform1f(far_Loc, 1000.0f);
+
+
 
 		for (auto const& pair : mspo_Objects)
 		{

@@ -49,6 +49,12 @@ void GameObject_3D::update()
 	else static_cast<Transform_3D*>(mipo_Components.find("Transform_3D")->second)->update();
 }
 
+void GameObject_3D::renderDepth(Shader* p_Shader_In)
+{
+	static_cast<Transform_3D*>(mipo_Components.find("Transform_3D")->second)->update_Shader(p_Shader_In);
+	if (b_RenderStatus) static_cast<RenderComp_3D*>(mipo_Components.find("RenderComp_3D")->second)->renderDepth(GL_TEXTURE_2D, GL_TRIANGLES, p_Shader_In);
+}
+
 void GameObject_3D::render(Shader* p_Shader_In)
 {
 	static_cast<Transform_3D*>(mipo_Components.find("Transform_3D")->second)->update_Shader(p_Shader_In);

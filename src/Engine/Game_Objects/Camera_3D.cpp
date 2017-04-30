@@ -28,13 +28,13 @@ void Camera_3D::update()
 	quat_Pitch = glm::angleAxis(glm::radians(f_Pitch), glm::vec3(1.f, 0.f, 0.f)); //Pitch is a rotation around X axis // Usually called the right vector
 	quat_Yaw = glm::angleAxis(glm::radians(f_Yaw), glm::vec3(0.f, 1.f, 0.f)); // Yaw is a rotation around Y axis // Usually called the upper vector
 
-	//Apply multiplication
-	//Pitch and yaw must be applied in that order to avoid tilting
+																			  //Apply multiplication
+																			  //Pitch and yaw must be applied in that order to avoid tilting
 	glm::quat quat_Temp_01 = quat_Pitch * quat_Orientation;
 	glm::quat quat_Temp_02 = quat_Temp_01 * quat_Yaw;
 	quat_Orientation = quat_Temp_02; // Apply rotations
 
-	//Normalization is needed, because quaterion de-normalizes every frame
+									 //Normalization is needed, because quaterion de-normalizes every frame
 	quat_Orientation = glm::normalize(quat_Orientation);
 
 	//Convert quat to matrix
@@ -44,6 +44,11 @@ void Camera_3D::update()
 	glm::mat4 mat4_TransView = glm::mat4(1.f);
 	mat4_TransView = glm::translate(mat4_TransView, vec3_EyePos);
 	mat4_View = mat4_CombinedRot * mat4_TransView; //Multiply them all
+
+	mat4_Shadow_View = glm::mat4(1.0f);
+	mat4_Shadow_View[3][0] = mat4_View[3][0];
+	mat4_Shadow_View[3][1] = mat4_View[3][1];
+	mat4_Shadow_View[3][2] = mat4_View[3][2];
 
 	f_Pitch = f_Yaw = 0;
 
@@ -55,8 +60,10 @@ void Camera_3D::update_Shader(Shader* p_Shader_In)
 	//Send them to shader
 	GLint viewLoc = glGetUniformLocation(p_Shader_In->get_Program(), "view");
 	GLint projLoc = glGetUniformLocation(p_Shader_In->get_Program(), "projection");
+	GLint shadowViewLoc = glGetUniformLocation(p_Shader_In->get_Program(), "shadowViewMat");
 	glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(mat4_View));
 	glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(mat4_Projection));
+	glUniformMatrix4fv(shadowViewLoc, 1, GL_FALSE, glm::value_ptr(mat4_Shadow_View));
 }
 
 void Camera_3D::set_Speed(float f_Speed_In)
