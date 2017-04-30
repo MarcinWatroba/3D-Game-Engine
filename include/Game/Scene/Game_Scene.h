@@ -19,6 +19,7 @@ class Game_Scene : public Scene
 {
 private:
 	//Label* o_Label;
+	bool rendered;
 	bool b_Render[render::Num];
 	bool b_SwitchCamMode;
 public:

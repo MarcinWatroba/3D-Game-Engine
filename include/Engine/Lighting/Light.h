@@ -13,6 +13,9 @@ protected:
 
 	//Speculat intensity
 	glm::vec3 v3_Specular;
+
+	//Assigned depth cube texture ID
+	glm::uvec2 ui_Depth_Texture;
 public:
 	Light() {};
 
@@ -27,6 +30,10 @@ public:
 
 	//Set specular intensity
 	virtual void set_Specular(glm::vec3 v3_Specular_In);
+
+	virtual void set_Depth_Texture(glm::uvec2 ui_Depth_In);
+
+	virtual glm::uvec2 get_Depth_Texture();
 
 	//Update light
 	virtual void update_Shader(Shader* p_Shader_In) = 0;

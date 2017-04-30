@@ -12,7 +12,7 @@
 //Initialize everything once
 void Game_Scene::init()
 {
-
+	rendered = false;
 	//Initialize
 	lock_mouse(true);
 	b_Init = false;
@@ -23,6 +23,24 @@ void Game_Scene::init()
 	//Load the scene
 	o_SceneLoader = new SceneLoader("assets/scenes/Robot_Scene.xml", po_Loader, mspo_Objects);
 	b_Init = true;
+
+	glUseProgram(po_Loader->get_Shader("3")->get_Program());
+	for (auto const& pair : mspo_Objects)
+	{
+		if (pair.second->get_Tag() == "Light")
+		{
+			static_cast<Light*>(pair.second)->set_Depth_Texture(o_SceneLoader->setup_FBO());
+			//glm::vec3 light = static_cast<Light*>(pair.second)->get_Position();
+			//glm::uvec2 depth = static_cast<Light*>(pair.second)->get_Depth_Texture();
+			//o_SceneLoader->prepare_DepthCube(po_Loader->get_Shader("3"), light, depth);
+		}
+	}
+
+
+
+	//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	glUseProgram(po_Loader->get_Shader("0")->get_Program());
 }
 
 //Do something with keyboard input
@@ -123,47 +141,55 @@ void Game_Scene::render()
 
 	if (b_Init)
 	{
+		glEnable(GL_BLEND);
 		glUseProgram(po_Loader->get_Shader("3")->get_Program());
+		unsigned int tex_No = 0;
 		for (auto const& pair : mspo_Objects)
 		{
 			if (pair.second->get_Tag() == "Light")
 			{
+
 				glm::vec3 light = static_cast<Light*>(pair.second)->get_Position();
-				o_SceneLoader->prepare_FrameBuffer(po_Loader->get_Shader("3"), light);
+				glm::uvec2 depth = static_cast<Light*>(pair.second)->get_Depth_Texture();
+				o_SceneLoader->prepare_DepthCube(po_Loader->get_Shader("3"), light, depth, tex_No);
+
+				for (auto const& pair : mspo_Objects)
+				{
+					if (pair.second->get_Tag() == "Object") pair.second->renderDepth(po_Loader->get_Shader("3"));
+					else if (pair.second->get_Tag() == "Light")
+					{
+							//static_cast<Light*>(pair.second)->update_Shader(po_Loader->get_Shader("0"));
+						pair.second->renderDepth(po_Loader->get_Shader("3"));
+					}
+				}
+				glBindFramebuffer(GL_FRAMEBUFFER, 0);
+				//rendered = true;
+				tex_No++;
 			}
 		}
 
-		for (auto const& pair : mspo_Objects)
-		{
-			if (pair.second->get_Tag() == "Object") pair.second->renderDepth(po_Loader->get_Shader("3"));
-			else if (pair.second->get_Tag() == "Light")
-			{
-				//static_cast<Light*>(pair.second)->update_Shader(po_Loader->get_Shader("0"));
-				pair.second->renderDepth(po_Loader->get_Shader("3"));
-			}
-		}
+				glViewport(0, 0, 1920, 1080);
+				glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		glViewport(0, 0, 1920, 1080);
-		glBindFramebuffer(GL_FRAMEBUFFER, 0);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+				glUseProgram(po_Loader->get_Shader("0")->get_Program());
 
-		glUseProgram(po_Loader->get_Shader("0")->get_Program());
+				GLint depth_Cube_Loc = glGetUniformLocation(po_Loader->get_Shader("0")->get_Program(), "depthMap[0]");
+				glUniform1i(depth_Cube_Loc, 2);
 
+				depth_Cube_Loc = glGetUniformLocation(po_Loader->get_Shader("0")->get_Program(), "depthMap[1]");
+				glUniform1i(depth_Cube_Loc, 3);
 
-		GLint depth_Cube_Loc = glGetUniformLocation(po_Loader->get_Shader("0")->get_Program(), "depthMap");
-		glUniform1i(depth_Cube_Loc, 2);
-		GLint diff_Tex_Loc = glGetUniformLocation(po_Loader->get_Shader("0")->get_Program(), "diffuse");
-		glUniform1i(diff_Tex_Loc, 0);
-		GLint spec_Tex_Loc = glGetUniformLocation(po_Loader->get_Shader("0")->get_Program(), "specular");
-		glUniform1i(spec_Tex_Loc, 1);
-		//camera_3D->update_Shader(po_Loader->get_Shader("0"));
-		camera_3D->update_Shader(po_Loader->get_Shader("0"));
+				GLint diff_Tex_Loc = glGetUniformLocation(po_Loader->get_Shader("0")->get_Program(), "diffuse");
+				glUniform1i(diff_Tex_Loc, 0);
+				GLint spec_Tex_Loc = glGetUniformLocation(po_Loader->get_Shader("0")->get_Program(), "specular");
+				glUniform1i(spec_Tex_Loc, 1);
 
-		o_SceneLoader->set_LightAmount(po_Loader->get_Shader("0"));
+				GLint far_Loc = glGetUniformLocation(po_Loader->get_Shader("0")->get_Program(), "farPlane");
+				glUniform1f(far_Loc, 1000.0f);
 
-		GLint far_Loc = glGetUniformLocation(po_Loader->get_Shader("0")->get_Program(), "farPlane");
-		glUniform1f(far_Loc, 1000.0f);
+				camera_3D->update_Shader(po_Loader->get_Shader("0"));
 
+				o_SceneLoader->set_LightAmount(po_Loader->get_Shader("0"));
 
 
 		for (auto const& pair : mspo_Objects)
@@ -174,10 +200,10 @@ void Game_Scene::render()
 				static_cast<Light*>(pair.second)->update_Shader(po_Loader->get_Shader("0"));
 				pair.second->render(po_Loader->get_Shader("0"));
 			}
+
 		}
 	}
-}
-
+	}
 void Game_Scene::clean_Up()
 {
 	if (!mspo_Objects.empty())

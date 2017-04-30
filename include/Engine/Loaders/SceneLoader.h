@@ -26,7 +26,7 @@ private:
 	glm::quat toQuat(const char* pc_Quaternion_In);
 
 	//Depth map GLuints for binding
-	unsigned int depthMapFBO;
+	//unsigned int depthMapFBO;
 	unsigned int depthCubemap;
 
 	float aspect;
@@ -36,7 +36,8 @@ private:
 
 	//Number of lights
 	int i_NumOfPointLight;
-	void setup_FBO();
+
+
 
 	//Add children
 	void add_Components(GameObject_3D* po_GameObject_In, std::string s_ToProcess_In);
@@ -55,5 +56,6 @@ public:
 	SceneLoader(const char* pc_FileName_In, Loader* po_Loader_In, std::map<std::string, Game_Object*>& mspo_GameObjects3D_In);
 	//Set amount of lights to shader
 	void set_LightAmount(Shader* p_Shader_In);
-	void prepare_FrameBuffer(Shader * p_Shader_In, glm::vec3 light_Pos);
+	glm::uvec2 setup_FBO();
+	void prepare_DepthCube(Shader * p_Shader_In, glm::vec3 light_Pos, glm::uvec2 ui_Depth_In, unsigned int tex_Num);
 };

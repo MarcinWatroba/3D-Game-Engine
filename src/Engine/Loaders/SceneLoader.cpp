@@ -27,8 +27,6 @@ SceneLoader::SceneLoader(const char* pc_FileName_In, Loader* po_Loader_In, std::
 	object_File.LoadFile(pc_FileName_In);
 	tinyxml2::XMLElement* body = object_File.FirstChildElement("objects");
 
-	setup_FBO();
-
 	for (tinyxml2::XMLElement* it = body->FirstChildElement("new_Object3D"); it != nullptr; it = it->NextSiblingElement("new_Object3D"))
 	{
 		std::cout << "Adding new object to the scene..." << "\n";
@@ -432,18 +430,23 @@ void SceneLoader::set_LightAmount(Shader* p_Shader_In)
 	glUniform1i(lightLoc, i_NumOfPointLight);
 }
 
-void SceneLoader::setup_FBO()
+glm::uvec2 SceneLoader::setup_FBO()
 {
+
 	GLfloat border[] = { 1.0f, 0.0f,0.0f,0.0f };
+
+	unsigned int depthMapFBO;
+	unsigned int depthMap;
+
 	glGenFramebuffers(1, &depthMapFBO);
 	// The depth buffer texture
 	//	gl::ActiveTexture(gl::TEXTURE1);
 
-	glGenTextures(1, &depthCubemap);
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_CUBE_MAP, depthCubemap);
+	glGenTextures(1, &depthMap);
+	//glActiveTexture(GL_TEXTURE0);
+	//glBindTexture(GL_TEXTURE_CUBE_MAP, depthCubemap);
 
-	glBindTexture(GL_TEXTURE_CUBE_MAP, depthCubemap);
+	glBindTexture(GL_TEXTURE_CUBE_MAP, depthMap);
 	for (GLuint i = 0; i < 6; ++i)
 	{
 		glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_DEPTH_COMPONENT,
@@ -462,7 +465,7 @@ void SceneLoader::setup_FBO()
 	// Create and set up the FBO
 
 	glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);
-	glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, depthCubemap, 0);
+	glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, depthMap, 0);
 
 	glDrawBuffer(GL_NONE);
 	glReadBuffer(GL_NONE);
@@ -477,17 +480,21 @@ void SceneLoader::setup_FBO()
 	}
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
 	std::cout << depthMapFBO << std::endl;
 
-	std::cout << depthCubemap << std::endl;
+	std::cout << depthMap << std::endl;
+
+	return glm::uvec2(depthMapFBO, depthMap);
+
 }
 
-void SceneLoader::prepare_FrameBuffer(Shader* p_Shader_In, glm::vec3 light_Pos)
+void SceneLoader::prepare_DepthCube(Shader* p_Shader_In, glm::vec3 light_Pos, glm::uvec2 ui_Depth_In, unsigned int tex_Num)
 {
 	//static int i = 0;
 
 	glViewport(0, 0, shadowMapDimensions.x, shadowMapDimensions.y);
-	glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);
+	glBindFramebuffer(GL_FRAMEBUFFER, ui_Depth_In.x);
 	glClear(GL_DEPTH_BUFFER_BIT);
 
 	std::vector<glm::mat4> shadowTransforms;
@@ -523,7 +530,10 @@ void SceneLoader::prepare_FrameBuffer(Shader* p_Shader_In, glm::vec3 light_Pos)
 	GLint light_Loc = glGetUniformLocation(p_Shader_In->get_Program(), "lightPos");
 	glUniform3f(light_Loc, light_Pos.x, light_Pos.y, light_Pos.z);
 
-	glActiveTexture(GL_TEXTURE2);
-	glBindTexture(GL_TEXTURE_CUBE_MAP, depthCubemap);
 
+	glActiveTexture(GL_TEXTURE2 + tex_Num);
+	glBindTexture(GL_TEXTURE_CUBE_MAP, ui_Depth_In.y);
+
+	//std::cout << depthMap << std::endl;
+	//std::cout << ui_Depth_In << std::endl;
 }

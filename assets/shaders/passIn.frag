@@ -7,7 +7,7 @@ in vec3 VertPos;
 out vec4 colour;
 uniform vec2 tiling;
 
-uniform samplerCube depthMap;
+uniform samplerCube depthMap[2];
 
 struct Material
 {
@@ -45,17 +45,18 @@ uniform int numOfLights;
 uniform float farPlane;
 
 vec3 point_Lights[20];
+float shadows[2];
 
 vec3 create_DirectionalLight(Directional_Light light, vec3 normal, vec3 viewDir);
 vec3 create_PointLight(Point_Light light, vec3 normal, vec3 VertPos, vec3 viewDir);
-float ShadowCalculation();
+float ShadowCalculation(samplerCube depthMap_In, Point_Light light_In);
 
 void main()
 {
 	vec3 norm = normalize(Normal);
 	vec3 viewDir = normalize(viewPos - VertPos);
 	vec3 ambient = point_Light[0].ambient * vec3(texture(material.diffuse, vec2(TexCoord.x * tiling.x, (1 - TexCoord.y) * tiling.y)));
-	float shadows = ShadowCalculation();
+	//float shadows = ShadowCalculation();
 	
 	vec3 result;
 
@@ -64,13 +65,18 @@ void main()
 		point_Lights[i] = create_PointLight(point_Light[i], norm, VertPos, viewDir);
 	}
 
-	result = ambient + ((1.0f - (shadows)) * (point_Lights[0]));
+	for (int i = 0; i < 2; i++) 
+	{
+		shadows[i] = ShadowCalculation(depthMap[i], point_Light[i]);
+	}
+
+	result = ambient + ((1.0 - shadows[0]) * point_Lights[0] + (1.0 - shadows[1]) *  point_Lights[1]);
 	colour = vec4(result, 1.f);
 
-	vec3 fragToLight = VertPos - point_Light[0].position; 
+	vec3 fragToLight = VertPos - point_Light[1].position; 
 		
-    //float closestDepth = texture(depthMap, fragToLight).r;
-	//closestDepth *= 25.0f;  
+    //float closestDepth = texture(3, fragToLight).r;
+	//closestDepth *= 1000.0f;  
 
 	//colour = vec4(vec3(closestDepth / farPlane), 1.0); 
 }
@@ -114,11 +120,11 @@ vec3 create_PointLight(Point_Light light, vec3 normal, vec3 vertPos, vec3 viewDi
 	return (diffuse + specular);
 }
 
-float ShadowCalculation()
+float ShadowCalculation(samplerCube depthMap_In, Point_Light light_In)
 {
-    vec3 fragToLight = VertPos - point_Light[0].position; 
+    vec3 fragToLight = VertPos - light_In.position; 
 	//fragToLight = vec3(inverse(viewMat) * vec4(fragToLight, 1.0));
-    float closestDepth = texture(depthMap, fragToLight).r;
+    float closestDepth = texture(depthMap_In, fragToLight).r;
 	closestDepth *= farPlane;  
 	float currentDepth = length(fragToLight);  
 	float bias = 0.06; 
