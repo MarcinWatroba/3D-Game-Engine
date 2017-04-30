@@ -94,6 +94,12 @@
     <Filter Include="Source Files\Engine\Lighting">
       <UniqueIdentifier>{0be042f8-4c28-420a-b734-6117d9a0097e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Engine\Physics">
+      <UniqueIdentifier>{e2a542ce-c8bc-4bee-8619-148059e5f56a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Physics">
+      <UniqueIdentifier>{e4540f86-b997-4863-ba5b-dc4bfcf29d5c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Engine\State\State.cpp">
@@ -174,6 +180,24 @@
     <ClCompile Include="src\Engine\Lighting\Point_Light.cpp">
       <Filter>Source Files\Engine\Lighting</Filter>
     </ClCompile>
+    <ClCompile Include="src\Engine\Component\BoxCollider_3D.cpp">
+      <Filter>Source Files\Engine\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Component\Collider.cpp">
+      <Filter>Source Files\Engine\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Component\RigidBody.cpp">
+      <Filter>Source Files\Engine\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Physics\CollisionManager.cpp">
+      <Filter>Source Files\Engine\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Physics\Physics.cpp">
+      <Filter>Source Files\Engine\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Component\Respond_Movement.cpp">
+      <Filter>Source Files\Engine\Component</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Engine\App\Application.h">
@@ -253,6 +277,24 @@
     </ClInclude>
     <ClInclude Include="include\Engine\Lighting\Point_Light.h">
       <Filter>Header Files\Engine\Lighting</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Engine\Component\BoxCollider_3D.h">
+      <Filter>Header Files\Engine\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Engine\Component\Collider.h">
+      <Filter>Header Files\Engine\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Engine\Component\RigidBody.h">
+      <Filter>Header Files\Engine\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Engine\Physics\CollisionManager.h">
+      <Filter>Header Files\Engine\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Engine\Physics\Physics.h">
+      <Filter>Header Files\Engine\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Engine\Component\Respond_Movement.h">
+      <Filter>Header Files\Engine\Component</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

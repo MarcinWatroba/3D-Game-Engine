@@ -1,6 +1,9 @@
 #include <Engine\Game_Objects\GameObject_3D.h>
 #include <Engine/Component/RenderComp_3D.h>
 #include <Engine/Component/Transform_3D.h>
+#include <Engine/Component/BoxCollider_3D.h>
+#include <Engine/Component/RigidBody.h>
+#include <Engine\Component\Respond_Movement.h>
 #include <Engine\Creators\Texture.h>
 #include <Engine/Mesh/Mesh_3D.h>
 #include <glad\glad.h>
@@ -30,8 +33,36 @@ void GameObject_3D::add_Component(std::string s_Name_In, Component* p_Component_
 			auto found_Render = mipo_Components.find("RenderComp_3D")->second;
 			static_cast<RenderComp_3D*>(found_Render)->set_Mesh(static_cast<Mesh_3D*>(found_Mesh->second));
 		}
+	}
+	//else if (s_Name_In == "Transform_3D")
+	//{
+	//	auto found_Transform = mipo_Components.find("Transform_3D")->second;
+	//	found_Transform = new Transform_3D();
+	//}
+	else if (s_Name_In == "BoxCollider_3D")
+	{
+		auto found_Mesh = mipo_Components.find("Mesh_3D");
+
+		if (found_Mesh == mipo_Components.end()) std::cout << "Mesh not found" << "\n";
+		else
+		{
+			auto found_Collider = mipo_Components.find("BoxCollider_3D")->second;
+			static_cast<BoxCollider_3D*>(found_Collider)->setUpBox(&static_cast<Mesh_3D*>(found_Mesh->second)->getMinVert(), &static_cast<Mesh_3D*>(found_Mesh->second)->getMaxVert());
+		}
 
 	}
+	else if (s_Name_In == "RigidBody")
+	{
+		auto found_RigidBody = mipo_Components.find("RigidBody")->second;
+		dynamic_cast<RigidBody*>(found_RigidBody)->setValues(1.0f, false, dynamic_cast<Transform_3D*>(mipo_Components.at("Transform_3D"))->get_Position());
+
+	}
+	//else if (s_Name_In == "Respond_Movement")
+	//{
+	//	auto found_Movement = mipo_Components.find("Respond_Movement")->second;
+	//	//found_Movement = new Respond_Movement();
+	//}
+
 }
 
 void GameObject_3D::add_Texture(std::string s_Name_In, Texture* p_Component_In)
@@ -45,8 +76,21 @@ void GameObject_3D::update()
 	{
 		static_cast<Transform_3D*>(mipo_Components.find("Transform_3D")->second)->force_Update(); // Update must be forced to update any children
 		static_cast<Transform_3D*>(mipo_Components.find("Transform_3D")->second)->update(static_cast<GameObject_3D*>(po_Parent)->get_ParentMatrix());
+		if (mipo_Components.count("BoxCollider_3D"))
+		{
+			dynamic_cast<BoxCollider_3D*>(mipo_Components.find("BoxCollider_3D")->second)->updatePos(static_cast<GameObject_3D*>(po_Parent)->get_ParentMatrix());
+		}
 	}
-	else static_cast<Transform_3D*>(mipo_Components.find("Transform_3D")->second)->update();
+	else
+	{
+		static_cast<Transform_3D*>(mipo_Components.find("Transform_3D")->second)->update();
+		if (mipo_Components.count("BoxCollider_3D"))
+		{
+			dynamic_cast<BoxCollider_3D*>(mipo_Components.find("BoxCollider_3D")->second)->updatePos(get_ParentMatrix());
+		}
+	}
+		
+
 }
 
 void GameObject_3D::render(Shader* p_Shader_In)
@@ -120,4 +164,68 @@ void GameObject_3D::set_Tiles(glm::vec2 v2_Tiles_In)
 	static_cast<RenderComp_3D*>(mipo_Components.find("RenderComp_3D")->second)->set_Tiles(v2_Tiles_In);
 }
 
+void GameObject_3D::move(glm::vec3 v3_Direction_In, float f_Speed_In)
+{
+	if (mipo_Components.count("Respond_Movement"))
+	{
+		auto found_Movement = mipo_Components.at("Respond_Movement");
+		bool isPositive;
+		if (f_Speed_In > 0)
+		{
+			isPositive = true;
+		}
+		else
+		{
+			isPositive = false;
+		}
 
+		if (mipo_Components.count("RigidBody"))
+		{
+			bool tempCheck = false;
+			for (auto const& map : mspo_Children)
+			{
+				if (map.second->get_Components().count("BoxCollider_3D"))
+				{
+					if (dynamic_cast<BoxCollider_3D*>(map.second->get_Components().at("BoxCollider_3D"))->getCollisionCheck())
+					{
+						tempCheck = dynamic_cast<BoxCollider_3D*>(map.second->get_Components().at("BoxCollider_3D"))->getCollisionCheck();
+					}
+				}
+			}
+			if (tempCheck && lastDir == isPositive)
+			{
+				dynamic_cast<RigidBody*>(mipo_Components.at("RigidBody"))->setForwardForce(0);
+			}
+			else
+			{
+				dynamic_cast<RigidBody*>(mipo_Components.at("RigidBody"))->setForwardForce(f_Speed_In);
+			}
+			dynamic_cast<RigidBody*>(mipo_Components.at("RigidBody"))->update(get_Position());
+			dynamic_cast<Respond_Movement*>(found_Movement)->move(this, v3_Direction_In, dynamic_cast<RigidBody*>(mipo_Components.at("RigidBody"))->getVelocity());
+		}
+		else
+		{
+			dynamic_cast<Respond_Movement*>(found_Movement)->move(this, v3_Direction_In, f_Speed_In);
+		}
+		lastDir = isPositive;
+	}
+}
+
+void GameObject_3D::jump(glm::vec3 v3_Direction_In)
+{
+	if (mipo_Components.count("Respond_Movement"))
+	{
+		auto found_Movement = mipo_Components.at("Respond_Movement");
+		dynamic_cast<RigidBody*>(mipo_Components.at("RigidBody"))->update(get_Position());
+		dynamic_cast<Respond_Movement*>(found_Movement)->move(this, v3_Direction_In, dynamic_cast<RigidBody*>(mipo_Components.at("RigidBody"))->getJumpVelocity());
+	}
+}
+
+void GameObject_3D::turn(float f_Angle_In, glm::vec3 v3_TurnAxis_In)
+{
+	if (mipo_Components.count("Respond_Movement"))
+	{
+		auto found_Movement = mipo_Components.at("Respond_Movement");
+		dynamic_cast<Respond_Movement*>(found_Movement)->turn(this, f_Angle_In, v3_TurnAxis_In);
+	}
+}

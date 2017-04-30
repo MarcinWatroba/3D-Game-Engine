@@ -29,6 +29,7 @@ void Game_Scene::keyboard_Input(GLfloat f_Delta_In, GLboolean* pab_KeyArray_In, 
 {
 	float f_Speed = 20 * f_Delta_In;
 	float f_MagicNumber = 0.7071f;
+	float moveSpeed = .3f;
 
 	if (pab_KeyArray_In[GLFW_KEY_W])
 	{
@@ -82,7 +83,29 @@ void Game_Scene::keyboard_Input(GLfloat f_Delta_In, GLboolean* pab_KeyArray_In, 
 		lock_mouse(false);
 	}
 	if (!pab_KeyArray_In[GLFW_KEY_ESCAPE]) pab_LockedKeys_In[GLFW_KEY_ESCAPE] = false;
+	if (pab_KeyArray_In[GLFW_KEY_UP])
+	{
+		static_cast<GameObject_3D*>(mspo_Objects.find("Robot")->second)->move(glm::vec3(0, 0, 1), -moveSpeed * f_Delta_In);
+		glm::vec3 tempVec = static_cast<GameObject_3D*>(mspo_Objects.find("Robot")->second)->get_Position();
+		std::cout << "(" << tempVec.x << ", " << tempVec.y << ", " << tempVec.z << " )" << std::endl;
+		//mspo_Objects.find("Robot Left Arm")->second->animate(40.f, f_Delta_In);
+		//mspo_Objects.find("Robot Right Arm")->second->animate(-40.f, f_Delta_In);
+		//mspo_Objects.find("Robot Left Leg")->second->animate(-40.f, f_Delta_In);
+		//mspo_Objects.find("Robot Right Leg")->second->animate(40.f, f_Delta_In);
+	}
 
+	if (pab_KeyArray_In[GLFW_KEY_DOWN])
+	{
+		static_cast<GameObject_3D*>(mspo_Objects.find("Robot")->second)->move(glm::vec3(0, 0, 1), moveSpeed * f_Delta_In);
+
+		//mspo_Objects.find("Robot Left Arm")->second->animate(40.f, f_Delta_In);
+		//mspo_Objects.find("Robot Right Arm")->second->animate(-40.f, f_Delta_In);
+		//mspo_Objects.find("Robot Left Leg")->second->animate(-40.f, f_Delta_In);
+		//mspo_Objects.find("Robot Right Leg")->second->animate(40.f, f_Delta_In);
+	}
+
+	if (pab_KeyArray_In[GLFW_KEY_LEFT]) static_cast<GameObject_3D*>(mspo_Objects.find("Robot")->second)->turn(80.f * f_Delta_In, glm::vec3(0.f, 1.f, 0.f));
+	if (pab_KeyArray_In[GLFW_KEY_RIGHT]) static_cast<GameObject_3D*>(mspo_Objects.find("Robot")->second)->turn(-80.f * f_Delta_In, glm::vec3(0.f, 1.f, 0.f));
 }
 
 void Game_Scene::mouse_Input(GLboolean* pab_MouseArray_In)
@@ -110,6 +133,10 @@ void Game_Scene::update_Scene(GLfloat f_Delta_In, glm::vec2 v2_MousePos_In)
 		camera_3D->move_Mouse(f_Delta_In, v2_MousePos_In);
 		camera_3D->update();
 		camera_3D->reset();
+
+		dynamic_cast<GameObject_3D*>(mspo_Objects.find("Robot")->second)->jump(glm::vec3(0, 1, 0));
+		//Check for Collisions between Game Objects
+		colManage.collisionChecks(mspo_Objects);
 	}
 }
 

@@ -7,6 +7,9 @@ class GameObject_3D : public Game_Object
 {
 protected:
 	glm::mat4 get_ParentMatrix();
+	//Last Direction for Movement
+	bool lastDir = false;
+
 
 public:
 	//Constructor
@@ -35,4 +38,10 @@ public:
 	//Only appropiate for 3D objects
 	void set_Shininess(float f_Shiny_In);
 	void set_Tiles(glm::vec2 v2_Tiles_In);
+
+	void move(glm::vec3 v3_Direction_In, float f_Speed_In);
+	void jump(glm::vec3 v3_Direction_In);
+	void turn(float f_Angle_In, glm::vec3 v3_TurnAxis_In);
+
+	
 };

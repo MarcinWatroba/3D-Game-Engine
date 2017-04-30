@@ -7,6 +7,7 @@
 #include <Engine/State/State.h>
 #include <Engine\Game_Objects\Camera_3D.h>
 #include <Engine\Loaders\SceneLoader.h>
+#include <Engine\Physics\CollisionManager.h>
 //#include <Light.h>
 
 class Loader;
@@ -25,6 +26,11 @@ protected:
 
 	//Cameras
 	Camera_3D* camera_3D;
+
+	//Collision Manager
+	CollisionManager colManage;
+
+	//Game Objects
 	std::map<std::string, Game_Object*> mspo_Objects;
 
 	// Is mouse locked?

@@ -1,0 +1,37 @@
+#ifndef BoxCollider_3D_H
+#define BoxCollider_3D_H
+
+#include <Engine/Component/Collider.h>
+#include <glm\gtx\matrix_decompose.hpp>
+
+
+class BoxCollider_3D : public Collider
+{
+private:
+	unsigned int vaoHandle;
+	float V[24 * 3];
+	float N[24 * 3];
+	GLuint EL[36];
+	double heightExtent;
+	double widthExtent;
+	double depthExtent;
+	glm::vec3 centre;
+	glm::vec3 newMaxExtents;
+	glm::vec3 newMinExtents;
+	glm::vec3 oldPos;
+	glm::quat oldRot;
+	glm::vec3 oldScale;
+	bool oneTime;
+	bool collidingWithImmovable = false;
+public:
+	BoxCollider_3D();
+	~BoxCollider_3D();
+	void setUpBox(glm::vec3* minValues, glm::vec3* maxValues);
+	void renderBox();
+	bool intersects(BoxCollider_3D &other);
+	void updatePos(glm::mat4 parentMatrix);
+	bool getCollisionCheck() { return collidingWithImmovable; }
+	void setCollisionCheck(bool isColliding);
+	
+};
+#endif
