@@ -4,6 +4,9 @@
 #include <Engine\Game_Objects\GameObject_3D.h>
 #include <Engine\Component\Transform_3D.h>
 #include <Engine\Component\RenderComp_3D.h>
+#include <Engine\Component\Respond_Movement.h>
+#include <Engine\Component\BoxCollider_3D.h>
+#include <Engine\Component\RigidBody.h>
 #include <Engine\Lighting\Point_Light.h>
 #include <Game/CharacterController/CharacterController.h>
 #include <glad\glad.h>
@@ -182,9 +185,13 @@ SceneLoader::SceneLoader(const char* pc_FileName_In, Loader* po_Loader_In, std::
 
 void SceneLoader::identify_Component(GameObject_3D* po_GameObject_In, std::string& s_ToProcess_In)
 {
+<<<<<<< HEAD
 	std::cout << "Component name: " << s_ToProcess_In << "\n";
 	if (s_ToProcess_In == "Character_Controller") { po_GameObject_In->add_Component("Character_Controller", new CharacterController(po_GameObject_In)); }
 	//else if (s_ToProcess_In == "Patrol_Path") po_GameObject_In->add_Component("Patrol_Path", );
+	else if (s_ToProcess_In == "Respond_Movement") po_GameObject_In->add_Component("Respond_Movement", new Respond_Movement());
+	else if (s_ToProcess_In == "BoxCollider_3D") po_GameObject_In->add_Component("BoxCollider_3D", new BoxCollider_3D());
+	else if (s_ToProcess_In == "RigidBody") po_GameObject_In->add_Component("RigidBody", new RigidBody());
 	else std::cout << "Unknown component..." << "\n"; // Else we can't find it
 
 	s_ToProcess_In.clear();

@@ -61,6 +61,51 @@ Mesh_3D::Mesh_3D(const char* pc_FileName_In, int i_DrawMode_In)
 			}
 			stream.clear();
 		}
+
+		float minX = vf_Vertices[0].x;
+		float minY = vf_Vertices[0].y;
+		float minZ = vf_Vertices[0].z;
+
+		for (int i = 0; i < vf_Vertices.size(); i++)
+		{
+			if (minX > vf_Vertices[i].x)
+			{
+				minX = vf_Vertices[i].x;
+			}
+			if (minY > vf_Vertices[i].y)
+			{
+				minY = vf_Vertices[i].y;
+			}
+			if (minZ > vf_Vertices[i].z)
+			{
+				minZ = vf_Vertices[i].z;
+			}
+		}
+
+		minVert = glm::vec3(minX, minY, minZ);
+
+		float maxX = vf_Vertices[0].x;
+		float maxY = vf_Vertices[0].y;
+		float maxZ = vf_Vertices[0].z;
+
+		for (int i = 0; i < vf_Vertices.size(); i++)
+		{
+			if (maxX < vf_Vertices[i].x)
+			{
+				maxX = vf_Vertices[i].x;
+			}
+			if (maxY < vf_Vertices[i].y)
+			{
+				maxY = vf_Vertices[i].y;
+			}
+			if (maxZ < vf_Vertices[i].z)
+			{
+				maxZ = vf_Vertices[i].z;
+			}
+		}
+
+		maxVert = glm::vec3(maxX, maxY, maxZ);
+
 		file.close();
 	}
 	else

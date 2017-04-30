@@ -46,6 +46,11 @@ Component* Game_Object::get_Component(std::string s_Name_In)
 	return nullptr;
 }
 
+std::map<std::string, Game_Object*> Game_Object::get_Children()
+{
+	return mspo_Children;
+}
+
 void Game_Object::set_Tag(std::string s_Tag_In)
 {
 	s_Tag = s_Tag_In;
@@ -55,3 +60,9 @@ std::string Game_Object::get_Tag()
 {
 	return s_Tag;
 }
+
+bool Game_Object::is_Container()
+{
+	return b_IsContainer;
+}
+

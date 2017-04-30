@@ -123,10 +123,14 @@
     <ClCompile Include="src\Engine\Astar\AStarPathfinder.cpp" />
     <ClCompile Include="src\Engine\Astar\Node.cpp" />
     <ClCompile Include="src\Engine\Astar\Node_Graph.cpp" />
+    <ClCompile Include="src\Engine\Component\BoxCollider_3D.cpp" />
+    <ClCompile Include="src\Engine\Component\Collider.cpp" />
     <ClCompile Include="src\Engine\Component\Component.cpp" />
     <ClCompile Include="src\Engine\Component\RenderComp.cpp" />
     <ClCompile Include="src\Engine\Component\RenderComp_2D.cpp" />
     <ClCompile Include="src\Engine\Component\RenderComp_3D.cpp" />
+    <ClCompile Include="src\Engine\Component\Respond_Movement.cpp" />
+    <ClCompile Include="src\Engine\Component\RigidBody.cpp" />
     <ClCompile Include="src\Engine\Component\Transform.cpp" />
     <ClCompile Include="src\Engine\Component\Transform_2D.cpp" />
     <ClCompile Include="src\Engine\Component\Transform_3D.cpp" />
@@ -142,6 +146,8 @@
     <ClCompile Include="src\Engine\Loaders\SceneLoader.cpp" />
     <ClCompile Include="src\Engine\Mesh\Mesh.cpp" />
     <ClCompile Include="src\Engine\Mesh\Mesh_3D.cpp" />
+    <ClCompile Include="src\Engine\Physics\CollisionManager.cpp" />
+    <ClCompile Include="src\Engine\Physics\Physics.cpp" />
     <ClCompile Include="src\Engine\Scene\Scene.cpp" />
     <ClCompile Include="src\Engine\State\State.cpp" />
     <ClCompile Include="src\Game\CharacterController\CharacterController.cpp" />
@@ -157,10 +163,14 @@
     <ClInclude Include="include\Engine\Astar\AStarPathfinder.h" />
     <ClInclude Include="include\Engine\Astar\Node.h" />
     <ClInclude Include="include\Engine\Astar\Node_Graph.h" />
+    <ClInclude Include="include\Engine\Component\BoxCollider_3D.h" />
+    <ClInclude Include="include\Engine\Component\Collider.h" />
     <ClInclude Include="include\Engine\Component\Component.h" />
     <ClInclude Include="include\Engine\Component\RenderComp.h" />
     <ClInclude Include="include\Engine\Component\RenderComp_2D.h" />
     <ClInclude Include="include\Engine\Component\RenderComp_3D.h" />
+    <ClInclude Include="include\Engine\Component\Respond_Movement.h" />
+    <ClInclude Include="include\Engine\Component\RigidBody.h" />
     <ClInclude Include="include\Engine\Component\Transform.h" />
     <ClInclude Include="include\Engine\Component\Transform_2D.h" />
     <ClInclude Include="include\Engine\Component\Transform_3D.h" />
@@ -179,6 +189,8 @@
     <ClInclude Include="include\Engine\Loaders\SceneLoader.h" />
     <ClInclude Include="include\Engine\Mesh\Mesh.h" />
     <ClInclude Include="include\Engine\Mesh\Mesh_3D.h" />
+    <ClInclude Include="include\Engine\Physics\CollisionManager.h" />
+    <ClInclude Include="include\Engine\Physics\Physics.h" />
     <ClInclude Include="include\Engine\Scene\Scene.h" />
     <ClInclude Include="include\Engine\State\State.h" />
     <ClInclude Include="include\Game\CharacterController\CharacterController.h" />
