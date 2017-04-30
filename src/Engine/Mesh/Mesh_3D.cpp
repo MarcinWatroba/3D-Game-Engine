@@ -66,7 +66,7 @@ Mesh_3D::Mesh_3D(const char* pc_FileName_In, int i_DrawMode_In)
 		float minY = vf_Vertices[0].y;
 		float minZ = vf_Vertices[0].z;
 
-		for (int i = 0; i < vf_Vertices.size(); i++)
+		for (unsigned int i = 0; i < vf_Vertices.size(); i++)
 		{
 			if (minX > vf_Vertices[i].x)
 			{
@@ -88,7 +88,7 @@ Mesh_3D::Mesh_3D(const char* pc_FileName_In, int i_DrawMode_In)
 		float maxY = vf_Vertices[0].y;
 		float maxZ = vf_Vertices[0].z;
 
-		for (int i = 0; i < vf_Vertices.size(); i++)
+		for (unsigned int i = 0; i < vf_Vertices.size(); i++)
 		{
 			if (maxX < vf_Vertices[i].x)
 			{

@@ -185,7 +185,6 @@ SceneLoader::SceneLoader(const char* pc_FileName_In, Loader* po_Loader_In, std::
 
 void SceneLoader::identify_Component(GameObject_3D* po_GameObject_In, std::string& s_ToProcess_In)
 {
-<<<<<<< HEAD
 	std::cout << "Component name: " << s_ToProcess_In << "\n";
 	if (s_ToProcess_In == "Character_Controller") { po_GameObject_In->add_Component("Character_Controller", new CharacterController(po_GameObject_In)); }
 	//else if (s_ToProcess_In == "Patrol_Path") po_GameObject_In->add_Component("Patrol_Path", );

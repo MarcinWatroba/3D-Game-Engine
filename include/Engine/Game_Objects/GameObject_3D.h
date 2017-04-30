@@ -10,7 +10,6 @@ protected:
 	//Last Direction for Movement
 	bool lastDir = false;
 
-
 public:
 	//Constructor
 	GameObject_3D();

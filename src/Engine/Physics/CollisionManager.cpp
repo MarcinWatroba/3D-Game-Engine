@@ -14,7 +14,6 @@ CollisionManager::~CollisionManager()
 void CollisionManager::collisionChecks(std::map<std::string, Game_Object*> &gameObjects)
 {
 	std::map<Game_Object*, Game_Object*> colChecks; // Body part of Robot, Thing it's colliding with
-	GameObject_3D* Robot;
 	for (auto const& pair : gameObjects)
 	{
 		Game_Object* currentObject = pair.second;

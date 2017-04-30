@@ -32,9 +32,6 @@ protected:
 
 	virtual glm::mat4 get_ParentMatrix() = 0;
 
-	//Last Direction for Movement
-	bool lastDir = false;
-
 public:
 	virtual void add_Component(std::string s_Name_In, Component* p_Component_In) = 0;
 	virtual void add_Texture(std::string s_Name_In, Texture* p_Texture_In) = 0;
