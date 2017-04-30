@@ -5,6 +5,7 @@
 #include <Engine\Component\Transform_3D.h>
 #include <Engine\Component\RenderComp_3D.h>
 #include <Engine\Lighting\Point_Light.h>
+#include <Game/CharacterController/CharacterController.h>
 #include <glad\glad.h>
 
 #include <iostream>
@@ -61,6 +62,7 @@ SceneLoader::SceneLoader(const char* pc_FileName_In, Loader* po_Loader_In, std::
 				auto object = static_cast<GameObject_3D*>(mspo_GameObjects_In.find(s_ObjectName)->second);
 				object->set_Name(s_ObjectName);
 				object->add_Component("Transform_3D", new Transform_3D());
+				if (s_Components != "") add_Components(object, s_Components);
 				object->set_RenderStatus(false);
 				object->set_Position(v3_Position);
 				object->set_Origin(v3_Origin);
@@ -180,7 +182,9 @@ SceneLoader::SceneLoader(const char* pc_FileName_In, Loader* po_Loader_In, std::
 
 void SceneLoader::identify_Component(GameObject_3D* po_GameObject_In, std::string& s_ToProcess_In)
 {
-	if (s_ToProcess_In == "YourCompnentHere") std::cout << "Nope" << "\n";
+	std::cout << "Component name: " << s_ToProcess_In << "\n";
+	if (s_ToProcess_In == "Character_Controller") { po_GameObject_In->add_Component("Character_Controller", new CharacterController(po_GameObject_In)); }
+	//else if (s_ToProcess_In == "Patrol_Path") po_GameObject_In->add_Component("Patrol_Path", );
 	else std::cout << "Unknown component..." << "\n"; // Else we can't find it
 
 	s_ToProcess_In.clear();

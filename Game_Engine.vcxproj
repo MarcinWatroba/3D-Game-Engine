@@ -120,6 +120,9 @@
     <ClCompile Include="src\Engine\App\Application.cpp" />
     <ClCompile Include="src\Engine\App\main.cpp" />
     <ClCompile Include="src\Engine\App\Program_Template.cpp" />
+    <ClCompile Include="src\Engine\Astar\AStarPathfinder.cpp" />
+    <ClCompile Include="src\Engine\Astar\Node.cpp" />
+    <ClCompile Include="src\Engine\Astar\Node_Graph.cpp" />
     <ClCompile Include="src\Engine\Component\Component.cpp" />
     <ClCompile Include="src\Engine\Component\RenderComp.cpp" />
     <ClCompile Include="src\Engine\Component\RenderComp_2D.cpp" />
@@ -141,12 +144,19 @@
     <ClCompile Include="src\Engine\Mesh\Mesh_3D.cpp" />
     <ClCompile Include="src\Engine\Scene\Scene.cpp" />
     <ClCompile Include="src\Engine\State\State.cpp" />
+    <ClCompile Include="src\Game\CharacterController\CharacterController.cpp" />
+    <ClCompile Include="src\Game\CharacterController\State_Attack.cpp" />
+    <ClCompile Include="src\Game\CharacterController\State_Idle.cpp" />
+    <ClCompile Include="src\Game\CharacterController\State_Patrol.cpp" />
     <ClCompile Include="src\Game\Game\Game.cpp" />
     <ClCompile Include="src\Game\Scene\Game_Scene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Engine\App\Application.h" />
     <ClInclude Include="include\Engine\App\Program_Template.h" />
+    <ClInclude Include="include\Engine\Astar\AStarPathfinder.h" />
+    <ClInclude Include="include\Engine\Astar\Node.h" />
+    <ClInclude Include="include\Engine\Astar\Node_Graph.h" />
     <ClInclude Include="include\Engine\Component\Component.h" />
     <ClInclude Include="include\Engine\Component\RenderComp.h" />
     <ClInclude Include="include\Engine\Component\RenderComp_2D.h" />
@@ -156,6 +166,8 @@
     <ClInclude Include="include\Engine\Component\Transform_3D.h" />
     <ClInclude Include="include\Engine\Creators\Shader.h" />
     <ClInclude Include="include\Engine\Creators\Texture.h" />
+    <ClInclude Include="include\Engine\FSM\FSM.h" />
+    <ClInclude Include="include\Engine\FSM\FSM_State.h" />
     <ClInclude Include="include\Engine\Game_Objects\Camera.h" />
     <ClInclude Include="include\Engine\Game_Objects\Camera_2D.h" />
     <ClInclude Include="include\Engine\Game_Objects\Camera_3D.h" />
@@ -169,6 +181,11 @@
     <ClInclude Include="include\Engine\Mesh\Mesh_3D.h" />
     <ClInclude Include="include\Engine\Scene\Scene.h" />
     <ClInclude Include="include\Engine\State\State.h" />
+    <ClInclude Include="include\Game\CharacterController\CharacterController.h" />
+    <ClInclude Include="include\Game\CharacterController\CharacterController_Data.h" />
+    <ClInclude Include="include\Game\CharacterController\State_Attack.h" />
+    <ClInclude Include="include\Game\CharacterController\State_Idle.h" />
+    <ClInclude Include="include\Game\CharacterController\State_Patrol.h" />
     <ClInclude Include="include\Game\Game\Game.h" />
     <ClInclude Include="include\Game\Scene\Game_Scene.h" />
   </ItemGroup>
