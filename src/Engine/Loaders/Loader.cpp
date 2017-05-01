@@ -63,7 +63,7 @@ void Loader::ParseXML_Resources(const char* pc_FileName)
 		int i_FilterMag = std::atoi(i->Attribute("filter_Mag"));
 		int i_SoilColourLoad = std::atoi(i->Attribute("soil_Colour_Load"));
 		int i_OpenGLColour = std::atoi(i->Attribute("openGL_Colour"));
-		int i_GenMipmaps = std::atoi(i->Attribute("gen_Mipmaps"));
+		bool i_GenMipmaps = (std::atoi(i->Attribute("gen_Mipmaps")) != 0);
 
 		//Add texture
 		mipo_TextureFiles.insert(std::make_pair(i_ID, new Texture(s_Name.c_str(), i_TextureMode, i_WrappingS, i_WrappingT, i_FilterMin, i_FilterMag, i_SoilColourLoad, i_OpenGLColour, i_GenMipmaps)));

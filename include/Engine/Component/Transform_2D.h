@@ -13,5 +13,5 @@ public:
 	void set_Origin(glm::vec2 v2_Origin_In);
 	void set_Size(glm::vec2 v2_Size_In);
 
-	glm::vec2& get_Size();
+	glm::vec2 get_Size();
 };

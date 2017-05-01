@@ -50,7 +50,7 @@ void Transform_2D::set_Size(glm::vec2 v2_Size_In)
 	v3_Scale = glm::vec3(v2_Size_In.x, v2_Size_In.y, 0.f);
 }
 
-glm::vec2& Transform_2D::get_Size()
+glm::vec2 Transform_2D::get_Size()
 {
 	return glm::vec2(v3_Scale.x, v3_Scale.y);
 }

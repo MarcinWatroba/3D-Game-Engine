@@ -86,7 +86,7 @@ void Application::run(std::string s_AppType)
 				if (po_Program->is_MouseLocked()) glfwSetInputMode(po_Window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 				else glfwSetInputMode(po_Window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 				
-				f_CurrentFrame = glfwGetTime();
+				f_CurrentFrame = (float)glfwGetTime();
 				f_Delta = f_CurrentFrame - f_LastFrame;
 				f_LastFrame = f_CurrentFrame;
 
