@@ -39,6 +39,21 @@ glm::mat4 Transform_3D::get_ModelMatrix()
 	return mat4_Model;
 }
 
+glm::vec3 Transform_3D::get_Forward()
+{
+	return glm::normalize(glm::vec3(mat4_Model[2][0], mat4_Model[2][1], mat4_Model[2][2]));
+}
+
+glm::vec3 Transform_3D::get_Right()
+{
+	return glm::normalize(glm::vec3(mat4_Model[0][0], mat4_Model[0][1], mat4_Model[0][2]));
+}
+
+glm::vec3 Transform_3D::get_Up()
+{
+	return glm::normalize(glm::vec3(mat4_Model[1][0], mat4_Model[1][1], mat4_Model[1][2]));
+}
+
 void Transform_3D::update_Shader(Shader* p_Shader_In)
 {
 	//Uniform locations

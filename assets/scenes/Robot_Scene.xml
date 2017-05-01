@@ -202,7 +202,7 @@
 		container = "No"
 		tag = "Object"
 		mesh_ID = "7"
-		component = "(BoxCollider_3D, Character_Controller, Patrol_Path)"
+		component = "(RigidBody, BoxCollider_3D, Character_Controller, Patrol_Path)"
 		diffuse_ID = "0"
 		specular_ID = "7"
 		shininess = "1"
