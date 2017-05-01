@@ -5,6 +5,9 @@ class GameObject_3D;
 
 class Respond_Movement : public Component
 {
+private:
+	//Last Direction for Movement
+	//bool lastDir = false;
 public:
 	Respond_Movement() {};
 	void move(GameObject_3D* po_GameObject_In, glm::vec3 v3_Direction_In, float f_Speed_In);

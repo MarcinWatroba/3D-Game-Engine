@@ -6,6 +6,7 @@
 #include <Engine/Component/RenderComp_3D.h>
 #include <Engine\Component\Transform_3D.h>
 #include <Engine\Lighting\Light.h>
+#include <Game\CharacterController\CharacterController.h>
 
 #include <iostream>
 
@@ -127,7 +128,28 @@ void Game_Scene::update_Scene(GLfloat f_Delta_In, glm::vec2 v2_MousePos_In)
 
 	if (b_Init)
 	{
-		for (auto const& pair : mspo_Objects) pair.second->update();
+		for (auto const& pair : mspo_Objects)
+		{
+			Game_Object * po_GameObject = pair.second;
+
+			//update game object
+			po_GameObject->update();
+
+			//update game components
+			Component * po_Component;
+			//Update AI character controller
+			po_Component = po_GameObject->get_Component("Character_Controller");
+			if (po_Component != nullptr) {
+				//cast
+				CharacterController* po_CharacterController = static_cast<CharacterController*>(po_Component);
+				//set data
+				CharacterController_Data* po_ccd = po_CharacterController->AccessData();
+				po_ccd->deltaTime = f_Delta_In;
+				//update
+				po_CharacterController->Update(this);
+			}
+			//other components...
+		}
 		
 		camera_3D->move_Keyboard(f_Delta_In);
 		camera_3D->move_Mouse(f_Delta_In, v2_MousePos_In);

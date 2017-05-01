@@ -36,6 +36,16 @@ std::map<std::string, Component*> Game_Object::get_Components()
 	return mipo_Components;
 }
 
+Component* Game_Object::get_Component(std::string s_Name_In)
+{
+	std::map<std::string, Component*>::iterator iter = mipo_Components.find(s_Name_In);
+	if (iter != mipo_Components.end()) {
+		return iter->second;
+	}
+	//not found
+	return nullptr;
+}
+
 std::map<std::string, Game_Object*> Game_Object::get_Children()
 {
 	return mspo_Children;

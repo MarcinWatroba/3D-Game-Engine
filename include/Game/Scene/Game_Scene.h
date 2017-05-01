@@ -1,7 +1,7 @@
 #pragma once
 
 #include <Engine\Scene\Scene.h>
-//#include <Scene.h>
+#include <Engine\Physics\CollisionManager.h>
 //#include <Label.h>
 //#include <Directional_Light.h>
 //#include <Point_Light.h>
@@ -21,6 +21,10 @@ private:
 	//Label* o_Label;
 	bool b_Render[render::Num];
 	bool b_SwitchCamMode;
+
+	//Collision Manager
+	CollisionManager colManage;
+
 public:
 	//Constructor
 	Game_Scene() {};
