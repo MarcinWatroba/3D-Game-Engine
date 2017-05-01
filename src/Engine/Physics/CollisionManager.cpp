@@ -30,9 +30,11 @@ void CollisionManager::collisionChecks(std::map<std::string, Game_Object*> &game
 						bool check = tempCol->intersects(*secondCol);
 						if (check)
 						{
+							
 							//Collision with immov
 							if (currentObject->get_Parent())
 							{
+								std::cout << "Toppus Kekkus" << std::endl;
 								if (pair.second->get_Components().count("RigidBody") && currentObject->get_Parent()->get_Components().count("RigidBody"))
 								{
 									RigidBody* tempBody = dynamic_cast<RigidBody*>(pair.second->get_Components().at("RigidBody"));

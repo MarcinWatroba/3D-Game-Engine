@@ -19,10 +19,14 @@ private:
 	glm::vec3 newMaxExtents;
 	glm::vec3 newMinExtents;
 	glm::vec3 oldPos;
-	glm::quat oldRot;
+	glm::quat oldRot = glm::quat(1,1,1,1);
 	glm::vec3 oldScale;
+	glm::quat tempQuat;
 	bool oneTime;
 	bool collidingWithImmovable = false;
+	bool isCollidingX = false;
+	bool isCollidingY = false;
+	bool isCollidingZ = false;
 public:
 	BoxCollider_3D();
 	~BoxCollider_3D();

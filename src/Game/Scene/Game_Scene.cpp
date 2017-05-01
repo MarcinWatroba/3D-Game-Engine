@@ -88,13 +88,11 @@ void Game_Scene::keyboard_Input(GLfloat f_Delta_In, GLboolean* pab_KeyArray_In, 
 	{
 		static_cast<GameObject_3D*>(mspo_Objects.find("Robot")->second)->move(glm::vec3(0, 0, 1), -moveSpeed * f_Delta_In);
 		glm::vec3 tempVec = static_cast<GameObject_3D*>(mspo_Objects.find("Robot")->second)->get_Position();
-		std::cout << "(" << tempVec.x << ", " << tempVec.y << ", " << tempVec.z << " )" << std::endl;
 		//mspo_Objects.find("Robot Left Arm")->second->animate(40.f, f_Delta_In);
 		//mspo_Objects.find("Robot Right Arm")->second->animate(-40.f, f_Delta_In);
 		//mspo_Objects.find("Robot Left Leg")->second->animate(-40.f, f_Delta_In);
 		//mspo_Objects.find("Robot Right Leg")->second->animate(40.f, f_Delta_In);
 	}
-
 	if (pab_KeyArray_In[GLFW_KEY_DOWN])
 	{
 		static_cast<GameObject_3D*>(mspo_Objects.find("Robot")->second)->move(glm::vec3(0, 0, 1), moveSpeed * f_Delta_In);
@@ -104,14 +102,21 @@ void Game_Scene::keyboard_Input(GLfloat f_Delta_In, GLboolean* pab_KeyArray_In, 
 		//mspo_Objects.find("Robot Left Leg")->second->animate(-40.f, f_Delta_In);
 		//mspo_Objects.find("Robot Right Leg")->second->animate(40.f, f_Delta_In);
 	}
-
+	
 	if (pab_KeyArray_In[GLFW_KEY_LEFT]) static_cast<GameObject_3D*>(mspo_Objects.find("Robot")->second)->turn(80.f * f_Delta_In, glm::vec3(0.f, 1.f, 0.f));
 	if (pab_KeyArray_In[GLFW_KEY_RIGHT]) static_cast<GameObject_3D*>(mspo_Objects.find("Robot")->second)->turn(-80.f * f_Delta_In, glm::vec3(0.f, 1.f, 0.f));
 }
 
-void Game_Scene::mouse_Input(GLboolean* pab_MouseArray_In)
+void Game_Scene::mouse_Input(GLboolean* pab_MouseArray_In, GLfloat f_Delta_In)
 {
-
+	if (pab_MouseArray_In[GLFW_MOUSE_BUTTON_1])
+	{
+		static_cast<GameObject_3D*>(mspo_Objects.find("Robot")->second)->createBullet(static_cast<GameObject_3D*>(mspo_Objects.find("Bullet")->second));
+		static_cast<GameObject_3D*>(mspo_Objects.find("Robot")->second)->setFiring(true);
+		std::cout << "Shoosting time!!!" << std::endl;
+		//glm::vec3 temp = static_cast<GameObject_3D*>(mspo_Objects.find("Bullet")->second)->get_Position();
+		//std::cout << "(" << temp.x << ", " << temp.y << ", " << temp.z << ")" << std::endl << std::endl;
+	}
 }
 
 void Game_Scene::reload_Scene()

@@ -139,19 +139,67 @@ void BoxCollider_3D::renderBox()
 
 bool BoxCollider_3D::intersects(BoxCollider_3D &other)
 {
-	if (newMaxExtents.x < other.newMinExtents.x|| newMinExtents.x > other.newMaxExtents.x)
+	//if (newMaxExtents.x < other.newMinExtents.x || newMinExtents.x > other.newMaxExtents.x)
+	//{
+	//	return false;
+	//}
+	//if (newMaxExtents.y < other.newMinExtents.y || newMinExtents.y > other.newMaxExtents.y)
+	//{
+	//	return false;
+	//}
+	//if (newMaxExtents.z < other.newMinExtents.z || newMinExtents.z > other.newMaxExtents.z)
+	//{
+	//	return false;
+	//}
+	//return true;
+
+	if ((newMaxExtents.x < other.newMaxExtents.x && other.newMinExtents.x < newMaxExtents.x) || (newMaxExtents.x < other.newMinExtents.x && other.newMaxExtents.x < newMaxExtents.x)) // MaxX is between things
+	{
+		isCollidingX = true;
+	}
+	else if ((newMinExtents.x < other.newMaxExtents.x && other.newMinExtents.x < newMinExtents.x) || (newMinExtents.x < other.newMinExtents.x && other.newMaxExtents.x < newMinExtents.x)) // MinX is between things
+	{
+		isCollidingX = true;
+	}
+	else
+	{
+		isCollidingX = false;
+	}
+
+	if ((newMaxExtents.y < other.newMaxExtents.y && other.newMinExtents.y < newMaxExtents.y) || (newMaxExtents.y < other.newMinExtents.y && other.newMaxExtents.y < newMaxExtents.y)) // MaxY is between things
+	{
+		isCollidingY = true;
+	}
+	else if ((newMinExtents.y < other.newMaxExtents.y && other.newMinExtents.y < newMinExtents.y) || (newMinExtents.y < other.newMinExtents.y && other.newMaxExtents.y < newMinExtents.y)) // MinY is between things
+	{
+		isCollidingY = true;
+	}
+	else
+	{
+		isCollidingY = false;
+	}
+
+	if ((newMaxExtents.z < other.newMaxExtents.z && other.newMinExtents.z < newMaxExtents.z) || (newMaxExtents.z < other.newMinExtents.z && other.newMaxExtents.z < newMaxExtents.z)) // MaxZ is between things
+	{
+		isCollidingZ = true;
+	}
+	else if ((newMinExtents.z < other.newMaxExtents.z && other.newMinExtents.z < newMinExtents.z) || (newMinExtents.z < other.newMinExtents.z && other.newMaxExtents.z < newMinExtents.z)) // MinZ is between things
+	{
+		isCollidingZ = true;
+	}
+	else
+	{
+		isCollidingZ = false;
+	}
+
+	if (isCollidingX && isCollidingY && isCollidingZ)
+	{
+		return true;
+	}
+	else
 	{
 		return false;
 	}
-	if (newMaxExtents.y < other.newMinExtents.y || newMinExtents.y > other.newMaxExtents.y)
-	{
-		return false;
-	}
-	if (newMaxExtents.z < other.newMinExtents.z || newMinExtents.z > other.newMaxExtents.z)
-	{
-		return false;
-	}
-	return true;
 }
 
 void BoxCollider_3D::setCollisionCheck(bool isColliding)
@@ -173,17 +221,27 @@ void BoxCollider_3D::updatePos(glm::mat4 parentMatrix)
 	if (oneTime)
 	{
 		oldScale = scale;
+		//centre = centre * rotation;
 		newMaxExtents = centre + glm::vec3(widthExtent, heightExtent, depthExtent);
 		newMinExtents = centre - glm::vec3(widthExtent, heightExtent, depthExtent);
 		newMaxExtents = newMaxExtents * scale;
 		newMinExtents = newMinExtents * scale;
+		newMaxExtents = newMaxExtents * rotation;
+		newMinExtents = newMinExtents * rotation;
 	}
 
 	//if (oldRot != rotation)
 	//{
-	//	newMaxExtents = newMaxExtents * rotation;
-	//	newMinExtents = newMinExtents * rotation;
+	//	if (oldRot != glm::quat(0, 0, 0, 0))
+	//	{
+	//		tempQuat = rotation * glm::inverse(oldRot);
+	//	}
+	//
+	//	newMaxExtents = newMaxExtents * tempQuat;
+	//	newMinExtents = newMinExtents * tempQuat;
+	//	////Create a rotation point
 	//	
+	//
 	//}
 
 	if (oldPos != translation)

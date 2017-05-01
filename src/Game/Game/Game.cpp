@@ -21,7 +21,7 @@ void Game::process_Input(GLfloat deltaTime)
 	if (!o_State.is_Empty()) // If stack is not empty
 	{
 		o_State.back()->keyboard_Input(deltaTime, ab_Keys, ab_LockedKeys);
-		o_State.back()->mouse_Input(ab_MousePress);
+		o_State.back()->mouse_Input(ab_MousePress, deltaTime);
 	}
 }
 

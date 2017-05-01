@@ -17,6 +17,7 @@ glm::mat4 GameObject_3D::get_ParentMatrix()
 GameObject_3D::GameObject_3D()
 {
 	b_RenderStatus = true;
+	count = fireRate;
 }
 
 void GameObject_3D::add_Component(std::string s_Name_In, Component* p_Component_In)
@@ -34,11 +35,6 @@ void GameObject_3D::add_Component(std::string s_Name_In, Component* p_Component_
 			static_cast<RenderComp_3D*>(found_Render)->set_Mesh(static_cast<Mesh_3D*>(found_Mesh->second));
 		}
 	}
-	//else if (s_Name_In == "Transform_3D")
-	//{
-	//	auto found_Transform = mipo_Components.find("Transform_3D")->second;
-	//	found_Transform = new Transform_3D();
-	//}
 	else if (s_Name_In == "BoxCollider_3D")
 	{
 		auto found_Mesh = mipo_Components.find("Mesh_3D");
@@ -57,11 +53,7 @@ void GameObject_3D::add_Component(std::string s_Name_In, Component* p_Component_
 		dynamic_cast<RigidBody*>(found_RigidBody)->setValues(1.0f, false, dynamic_cast<Transform_3D*>(mipo_Components.at("Transform_3D"))->get_Position());
 
 	}
-	//else if (s_Name_In == "Respond_Movement")
-	//{
-	//	auto found_Movement = mipo_Components.find("Respond_Movement")->second;
-	//	//found_Movement = new Respond_Movement();
-	//}
+
 
 }
 
@@ -89,6 +81,8 @@ void GameObject_3D::update()
 			dynamic_cast<BoxCollider_3D*>(mipo_Components.find("BoxCollider_3D")->second)->updatePos(get_ParentMatrix());
 		}
 	}
+	
+	shootBullet();
 		
 
 }
@@ -208,6 +202,7 @@ void GameObject_3D::move(glm::vec3 v3_Direction_In, float f_Speed_In)
 			dynamic_cast<Respond_Movement*>(found_Movement)->move(this, v3_Direction_In, f_Speed_In);
 		}
 		lastDir = isPositive;
+		//lastRot = get_Rotation();
 	}
 }
 
@@ -227,5 +222,36 @@ void GameObject_3D::turn(float f_Angle_In, glm::vec3 v3_TurnAxis_In)
 	{
 		auto found_Movement = mipo_Components.at("Respond_Movement");
 		dynamic_cast<Respond_Movement*>(found_Movement)->turn(this, f_Angle_In, v3_TurnAxis_In);
+	}
+}
+
+void GameObject_3D::setFiring(bool input)
+{
+	firing = input;
+}
+
+void GameObject_3D::createBullet(GameObject_3D* bulletTemplate)
+{ 
+	if (count == fireRate)
+	{
+		GameObject_3D* bullet = new GameObject_3D(*bulletTemplate);
+		bullet->set_Position(get_Position());
+		bullet->set_Rotation(get_Rotation());
+		//bullet->move(glm::vec3(0, 0, 1), .01f);
+		bulletList.push_back(bullet);
+		count = 0;
+	}
+	else
+	{
+		count++;
+	}
+
+}
+
+void GameObject_3D::shootBullet()
+{
+	for (int i = 0; i < bulletList.size(); i++)
+	{
+		bulletList[i]->move(glm::vec3(0, 0, 1), .01f);
 	}
 }

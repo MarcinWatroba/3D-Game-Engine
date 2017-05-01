@@ -2,6 +2,7 @@
 
 #include <Engine\Game_Objects\Game_Object.h>
 #include <glm\glm.hpp>
+#include <vector>
 
 class GameObject_3D : public Game_Object
 {
@@ -9,7 +10,11 @@ protected:
 	glm::mat4 get_ParentMatrix();
 	//Last Direction for Movement
 	bool lastDir = false;
-
+	bool firing = false;
+	bool bulletActive = false;
+	std::vector<GameObject_3D*> bulletList;
+	float count = 0;
+	float fireRate = 10;
 public:
 	//Constructor
 	GameObject_3D();
@@ -41,6 +46,9 @@ public:
 	void move(glm::vec3 v3_Direction_In, float f_Speed_In);
 	void jump(glm::vec3 v3_Direction_In);
 	void turn(float f_Angle_In, glm::vec3 v3_TurnAxis_In);
+	void setFiring(bool input);
+	void createBullet(GameObject_3D* bulletTemplate);
+	void shootBullet();
 
 	
 };

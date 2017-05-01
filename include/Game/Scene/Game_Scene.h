@@ -34,7 +34,7 @@ public:
 
 	//Do something with keyboard input
 	void keyboard_Input(GLfloat f_Delta_In, GLboolean* pab_KeyArray_In, GLboolean* pab_LockedKeys_In);
-	void mouse_Input(GLboolean* pab_MouseArray_In);
+	void mouse_Input(GLboolean* pab_MouseArray_In, GLfloat f_Delta_In);
 
 	//Update the scene
 	void update_Scene(GLfloat f_Delta_In, glm::vec2 v2_MousePos_In);

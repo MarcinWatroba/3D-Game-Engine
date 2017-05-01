@@ -7,12 +7,12 @@ State_Idle::State_Idle(const int setStateID) :
 
 void State_Idle::OnEnter()
 {
-	std::cout << "Idle_enter\n";
+	//std::cout << "Idle_enter\n";
 }
 
 fsm::FSM_Command State_Idle::OnRun()
 {
-	std::cout << "Idle_run\n";
+	//std::cout << "Idle_run\n";
 	//
 
 	//
@@ -21,5 +21,5 @@ fsm::FSM_Command State_Idle::OnRun()
 
 void State_Idle::OnExit()
 {
-	std::cout << "Idle_exit\n";
+	//std::cout << "Idle_exit\n";
 }

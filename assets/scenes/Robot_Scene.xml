@@ -202,7 +202,7 @@
 		container = "No"
 		tag = "Object"
 		mesh_ID = "7"
-		component = "(BoxCollider_3D, Character_Controller, Patrol_Path)"
+		component = "(Character_Controller, Patrol_Path)"
 		diffuse_ID = "0"
 		specular_ID = "7"
 		shininess = "1"
@@ -307,7 +307,7 @@
 		container = "No"
 		tag = "Object"
 		mesh_ID = "7"
-		component = ""
+		component = "(BoxCollider_3D, RigidBody)"
 		diffuse_ID = "5"
 		specular_ID = "7"
 		shininess = "1"
@@ -328,7 +328,7 @@
 		container = "No"
 		tag = "Object"
 		mesh_ID = "7"
-		component = ""
+		component = "(BoxCollider_3D, RigidBody)"
 		diffuse_ID = "5"
 		specular_ID = "7"
 		shininess = "1"
@@ -577,7 +577,7 @@
 		container = "No"
 		tag = "Object"
 		mesh_ID = "3"
-		component = "(BoxCollider_3D, RigidBody)"
+		component = "(RigidBody)"
 		diffuse_ID = "22"
 		specular_ID = "7"
 		shininess = "1"
@@ -712,6 +712,26 @@
 		scale = "(1, 1, 1)"
 		>
 	</new_Object3D>
+	
+	<new_Object3D
+		name = "Bullet"
+		container = "No"
+		tag = "Object"
+		mesh_ID = "7"
+		component = "(BoxCollider_3D, Respond_Movement, RigidBody)"
+		diffuse_ID = "25"
+		specular_ID = "7"
+		shininess = "1"
+		texture_Tiling = "(4, 4)"	
+		init_Mode = "0"
+		origin = "(0,0, 0)"
+		position = "(0, 10, -10)"
+		orientationX = "0.000, (1, 0, 0)"
+		orientationY = "0.000, (0, 1, 0)"
+		orientationZ = "0, (0, 0, 1)"
+		scale = "(1, 1, 1)"
+		>
+		</new_Object3D>
 </objects>
 
 <lights>

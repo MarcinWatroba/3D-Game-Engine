@@ -57,7 +57,7 @@ public:
 	virtual void keyboard_Input(GLfloat f_Delta_In, GLboolean* pab_KeyArray_In, GLboolean* pab_LockedArray_In) = 0;
 
 	//Mosue input
-	virtual void mouse_Input(GLboolean* pab_MouseArray_In) = 0;
+	virtual void mouse_Input(GLboolean* pab_MouseArray_In, GLfloat f_Delta_In) = 0;
 
 	//Clean up
 	virtual void clean_Up() = 0;
