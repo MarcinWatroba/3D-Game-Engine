@@ -4,6 +4,8 @@
 #include <glm\glm.hpp>
 #include <vector>
 
+class Bullet;
+
 class GameObject_3D : public Game_Object
 {
 protected:
@@ -41,6 +43,8 @@ public:
 	virtual glm::quat get_Rotation();
 	virtual glm::vec3 get_Scale();
 
+	std::vector<GameObject_3D*> get_BulletList();
+
 	//Only appropiate for 3D objects
 	void set_Shininess(float f_Shiny_In);
 	void set_Tiles(glm::vec2 v2_Tiles_In);
@@ -49,8 +53,9 @@ public:
 	void jump(glm::vec3 v3_Direction_In);
 	void turn(float f_Angle_In, glm::vec3 v3_TurnAxis_In);
 	void setFiring(bool input);
-	void createBullet(GameObject_3D bulletTemplate);
+	void createBullet(Bullet* bulletTemplate);
 	void shootBullet();
+	void resetCount();
 
 	
 };

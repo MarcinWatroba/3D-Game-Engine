@@ -7,6 +7,7 @@
 #include <Engine\Component\Transform_3D.h>
 #include <Engine\Lighting\Light.h>
 #include <Game\CharacterController\CharacterController.h>
+#include <Game\Misc\Bullet.h>
 
 #include <iostream>
 
@@ -111,11 +112,17 @@ void Game_Scene::mouse_Input(GLboolean* pab_MouseArray_In, GLfloat f_Delta_In)
 {
 	if (pab_MouseArray_In[GLFW_MOUSE_BUTTON_1])
 	{
-		static_cast<GameObject_3D*>(mspo_Objects.find("Robot")->second)->createBullet(*static_cast<GameObject_3D*>(mspo_Objects.find("Bullet")->second));
+
+		static_cast<GameObject_3D*>(mspo_Objects.find("Robot")->second)->createBullet(new Bullet("Bullet", po_Loader->get_Mesh3D("7"), static_cast<GameObject_3D*>(mspo_Objects.find("Robot")->second), po_Loader->get_Texture("24"), po_Loader->get_Texture("7")));
 		static_cast<GameObject_3D*>(mspo_Objects.find("Robot")->second)->setFiring(true);
+		shooting = true;
 		//std::cout << "Shoosting time!!!" << std::endl;
 		//glm::vec3 temp = static_cast<GameObject_3D*>(mspo_Objects.find("Bullet")->second)->get_Position();
 		//std::cout << "(" << temp.x << ", " << temp.y << ", " << temp.z << ")" << std::endl << std::endl;
+	}
+	if (!pab_MouseArray_In[GLFW_MOUSE_BUTTON_1])
+	{
+		shooting = false;
 	}
 }
 
@@ -165,6 +172,11 @@ void Game_Scene::update_Scene(GLfloat f_Delta_In, glm::vec2 v2_MousePos_In)
 		//shootBullet();
 		//Check for Collisions between Game Objects
 		colManage.collisionChecks(mspo_Objects);
+		if (!shooting)
+		{
+			static_cast<GameObject_3D*>(mspo_Objects.find("Robot")->second)->resetCount();
+		}
+		
 	}
 }
 

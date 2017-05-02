@@ -124,6 +124,7 @@
     <ClCompile Include="src\Engine\Astar\Node.cpp" />
     <ClCompile Include="src\Engine\Astar\Node_Graph.cpp" />
     <ClCompile Include="src\Engine\Component\BoxCollider_3D.cpp" />
+    <ClCompile Include="src\Engine\Component\Character.cpp" />
     <ClCompile Include="src\Engine\Component\Collider.cpp" />
     <ClCompile Include="src\Engine\Component\Component.cpp" />
     <ClCompile Include="src\Engine\Component\RenderComp.cpp" />
@@ -155,15 +156,18 @@
     <ClCompile Include="src\Game\CharacterController\State_Idle.cpp" />
     <ClCompile Include="src\Game\CharacterController\State_Patrol.cpp" />
     <ClCompile Include="src\Game\Game\Game.cpp" />
+    <ClCompile Include="src\Game\Misc\Bullet.cpp" />
     <ClCompile Include="src\Game\Scene\Game_Scene.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Bullet.h" />
     <ClInclude Include="include\Engine\App\Application.h" />
     <ClInclude Include="include\Engine\App\Program_Template.h" />
     <ClInclude Include="include\Engine\Astar\AStarPathfinder.h" />
     <ClInclude Include="include\Engine\Astar\Node.h" />
     <ClInclude Include="include\Engine\Astar\Node_Graph.h" />
     <ClInclude Include="include\Engine\Component\BoxCollider_3D.h" />
+    <ClInclude Include="include\Engine\Component\Character.h" />
     <ClInclude Include="include\Engine\Component\Collider.h" />
     <ClInclude Include="include\Engine\Component\Component.h" />
     <ClInclude Include="include\Engine\Component\RenderComp.h" />

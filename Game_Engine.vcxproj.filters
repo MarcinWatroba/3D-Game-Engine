@@ -234,6 +234,12 @@
     <ClCompile Include="src\Engine\Component\Respond_Movement.cpp">
       <Filter>Source Files\Engine\Component</Filter>
     </ClCompile>
+    <ClCompile Include="src\Game\Misc\Bullet.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Component\Character.cpp">
+      <Filter>Source Files\Engine\Component</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Engine\App\Application.h">
@@ -360,6 +366,12 @@
       <Filter>Header Files\Engine\Physics</Filter>
     </ClInclude>
     <ClInclude Include="include\Engine\Component\Respond_Movement.h">
+      <Filter>Header Files\Engine\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet.h">
+      <Filter>Header Files\Engine\Game_Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Engine\Component\Character.h">
       <Filter>Header Files\Engine\Component</Filter>
     </ClInclude>
   </ItemGroup>

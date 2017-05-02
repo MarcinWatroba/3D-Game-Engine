@@ -21,6 +21,7 @@ private:
 	//Label* o_Label;
 	bool b_Render[render::Num];
 	bool b_SwitchCamMode;
+	bool shooting = false;
 
 	//Collision Manager
 	CollisionManager colManage;

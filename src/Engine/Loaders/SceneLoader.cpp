@@ -9,6 +9,7 @@
 #include <Engine\Component\RigidBody.h>
 #include <Engine\Lighting\Point_Light.h>
 #include <Game/CharacterController/CharacterController.h>
+#include <Engine\Component\Character.h>
 #include <glad\glad.h>
 
 #include <iostream>
@@ -191,6 +192,7 @@ void SceneLoader::identify_Component(GameObject_3D* po_GameObject_In, std::strin
 	else if (s_ToProcess_In == "Respond_Movement") po_GameObject_In->add_Component("Respond_Movement", new Respond_Movement());
 	else if (s_ToProcess_In == "BoxCollider_3D") po_GameObject_In->add_Component("BoxCollider_3D", new BoxCollider_3D());
 	else if (s_ToProcess_In == "RigidBody") po_GameObject_In->add_Component("RigidBody", new RigidBody());
+	else if (s_ToProcess_In == "Character") po_GameObject_In->add_Component("Character", new Character());
 	else std::cout << "Unknown component..." << "\n"; // Else we can't find it
 
 	s_ToProcess_In.clear();

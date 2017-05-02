@@ -4,8 +4,10 @@
 #include <Engine/Component/BoxCollider_3D.h>
 #include <Engine/Component/RigidBody.h>
 #include <Engine\Component\Respond_Movement.h>
+#include <Engine\Component\Character.h>
 #include <Engine\Creators\Texture.h>
 #include <Engine/Mesh/Mesh_3D.h>
+#include <Game\Misc\Bullet.h>
 #include <glad\glad.h>
 #include <iostream>
 
@@ -51,9 +53,13 @@ void GameObject_3D::add_Component(std::string s_Name_In, Component* p_Component_
 	{
 		auto found_RigidBody = mipo_Components.find("RigidBody")->second;
 		dynamic_cast<RigidBody*>(found_RigidBody)->setValues(1.0f, false, dynamic_cast<Transform_3D*>(mipo_Components.at("Transform_3D"))->get_Position());
-
 	}
-
+	else if (s_Name_In == "Character")
+	{
+		auto found_Character = mipo_Components.find("Character")->second;
+		dynamic_cast<Character*>(found_Character)->setHealth(3);
+		dynamic_cast<Character*>(found_Character)->setNumberOfBullets(100);
+	}
 
 }
 
@@ -83,6 +89,22 @@ void GameObject_3D::update()
 	}
 	
 	shootBullet();
+	for (int i = 0; i < bulletList.size(); i++)
+	{
+		if (bulletList.empty())
+		{
+			break;
+		}
+		bulletList[i]->update();
+		if (static_cast<BoxCollider_3D*>(bulletList[i]->get_Components().at("BoxCollider_3D"))->getCollisionCheck())
+		{
+			delete bulletList[i];
+			bulletList.erase(bulletList.begin() + i);
+			bulletNumber--;
+			i--;
+		}
+		
+	}
 		
 
 }
@@ -151,6 +173,11 @@ glm::quat GameObject_3D::get_Rotation()
 glm::vec3 GameObject_3D::get_Scale()
 {
 	return static_cast<Transform_3D*>(mipo_Components.find("Transform_3D")->second)->get_Scale();
+}
+
+std::vector<GameObject_3D*> GameObject_3D::get_BulletList()
+{
+	return bulletList;
 }
 
 void GameObject_3D::set_Shininess(float f_Shiny_In)
@@ -235,15 +262,23 @@ void GameObject_3D::setFiring(bool input)
 	firing = input;
 }
 
-void GameObject_3D::createBullet(GameObject_3D bulletTemplate)
+void GameObject_3D::createBullet(Bullet* bulletTemplate)
 { 
 	if (count == fireRate)
 	{
-		bulletList.push_back(new GameObject_3D(bulletTemplate));
-		bulletList[bulletNumber]->set_Position(get_Position());
-		bulletList[bulletNumber]->set_Rotation(get_Rotation());
-		bulletNumber++;
-		count = 0;
+		if (static_cast<Character*>(mipo_Components.at("Character"))->getNumberOfBullets() != 0)
+		{
+			bulletList.push_back(bulletTemplate);
+			//bulletList[bulletNumber]->set_Position(get_Position());
+			//bulletList[bulletNumber]->set_Rotation(get_Rotation());
+			bulletList[bulletNumber]->set_RenderStatus(true);
+			static_cast<Character*>(mipo_Components.at("Character"))->loseBullets();
+			bulletNumber++;
+			count = 0;
+			float e = static_cast<Character*>(mipo_Components.at("Character"))->getNumberOfBullets();
+			std::cout << e << std::endl;
+		}
+		
 	}
 	else
 	{
@@ -256,13 +291,20 @@ void GameObject_3D::shootBullet()
 {
 	for (int i = 0; i < bulletList.size(); i++)
 	{
-		bulletList[i]->move(glm::vec3(0, 0, 1), .01f);
-		bulletList[i]->update();
+		bulletList[i]->move(glm::vec3(0, 0, 1), -.1);
+
+		
 		
 	}
 	if (!bulletList.empty())
 	{
 		glm::vec3 temp = bulletList[0]->get_Position();
-		std::cout << "(" << temp.x << ", " << temp.y << ", " << temp.z << ")" << std::endl << std::endl;
+		//std::cout << "(" << temp.x << ", " << temp.y << ", " << temp.z << ")" << std::endl << std::endl;
 	}
+}
+
+
+void GameObject_3D::resetCount()
+{
+	count = fireRate;
 }

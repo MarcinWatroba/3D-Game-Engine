@@ -5,6 +5,7 @@
 #include <Engine\Game_Objects\Game_Object.h>
 #include <Engine\Component\BoxCollider_3D.h>
 #include <Engine\Component\RigidBody.h>
+#include <Engine\Component\Character.h>
 
 class CollisionManager
 {
