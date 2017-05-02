@@ -171,7 +171,7 @@
 		orientationY = "0, (0, 1, 0)"
 		orientationZ = "0, (0, 0, 1)"
 		scale = "(0.319, 0.319, 0.319)"
-		>	
+		>
 	</new_Object3D>
 	
 	<new_Object3D
@@ -194,7 +194,6 @@
 					 Robot Left Eye,
 					 Robot Right Eye)"
 		>
-		
 	</new_Object3D>
 	
 	<new_Object3D
@@ -202,7 +201,7 @@
 		container = "No"
 		tag = "Object"
 		mesh_ID = "7"
-		component = "(RigidBody, BoxCollider_3D, Character_Controller, Patrol_Path)"
+		component = "(Respond_Movement, Character_Controller, Patrol_Path)"
 		diffuse_ID = "0"
 		specular_ID = "7"
 		shininess = "1"
@@ -210,12 +209,12 @@
 		
 		init_Mode = "0"
 		origin = "(0, 0.0, 0)"
-		position = "(0, 2.052, 0)"
+		position = "(0, 2, 0)"
 		orientationX = "0, (1, 0, 0)"
 		orientationY = "0, (0, 1, 0)"
 		orientationZ = "0, (0, 0, 1)"
 		scale = "(1.751, 2.156, 1.000)"
-		>	
+		>
 	</new_Object3D>
 	
 	<new_Object3D

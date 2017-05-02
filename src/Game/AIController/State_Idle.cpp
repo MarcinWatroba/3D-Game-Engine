@@ -1,8 +1,8 @@
-#include "Game/CharacterController/State_Idle.h"
+#include "Game/AIController/State_Idle.h"
 #include <iostream>
 
 State_Idle::State_Idle(const int setStateID) :
-	FSM_State<CharacterController_Data>(setStateID)
+	FSM_State<AIController_Data>(setStateID)
 {}
 
 void State_Idle::OnEnter()
@@ -14,7 +14,8 @@ fsm::FSM_Command State_Idle::OnRun()
 {
 	std::cout << "Idle_run\n";
 	//
-
+	nextStateID = ccs::Patrol;
+	return fsm::Switch;
 	//
 	return fsm::Continue;
 }

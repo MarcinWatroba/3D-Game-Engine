@@ -115,26 +115,26 @@ void BoxCollider_3D::setUpBox(glm::vec3* minValues, glm::vec3* maxValues)
 
 void BoxCollider_3D::renderBox()
 {
-	glGenVertexArrays(1, &vaoHandle);
-	glBindVertexArray(vaoHandle);
-
-	unsigned int handle[3];
-	glGenBuffers(3, handle);
-
-	glBindBuffer(GL_ARRAY_BUFFER, handle[0]);
-	glBufferData(GL_ARRAY_BUFFER, 24 * 3 * sizeof(float), V, GL_STATIC_DRAW);
-	glVertexAttribPointer((GLuint)0, 3, GL_FLOAT, false, 0, ((GLubyte *)NULL + (0)));
-	glEnableVertexAttribArray(0);  // Vertex position
-
-	glBindBuffer(GL_ARRAY_BUFFER, handle[1]);
-	glBufferData(GL_ARRAY_BUFFER, 24 * 3 * sizeof(float), N, GL_STATIC_DRAW);
-	glVertexAttribPointer((GLuint)1, 3, GL_FLOAT, false, 0, ((GLubyte *)NULL + (0)));
-	glEnableVertexAttribArray(1);  // Vertex normal
-
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, handle[2]);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, 36 * sizeof(GLuint), EL, GL_STATIC_DRAW);
-
-	glBindVertexArray(0);
+	//glGenVertexArrays(1, &vaoHandle);
+	//glBindVertexArray(vaoHandle);
+	//
+	//unsigned int handle[3];
+	//glGenBuffers(3, handle);
+	//
+	//glBindBuffer(GL_ARRAY_BUFFER, handle[0]);
+	//glBufferData(GL_ARRAY_BUFFER, 24 * 3 * sizeof(float), V, GL_STATIC_DRAW);
+	//glVertexAttribPointer((GLuint)0, 3, GL_FLOAT, false, 0, ((GLubyte *)NULL + (0)));
+	//glEnableVertexAttribArray(0);  // Vertex position
+	//
+	//glBindBuffer(GL_ARRAY_BUFFER, handle[1]);
+	//glBufferData(GL_ARRAY_BUFFER, 24 * 3 * sizeof(float), N, GL_STATIC_DRAW);
+	//glVertexAttribPointer((GLuint)1, 3, GL_FLOAT, false, 0, ((GLubyte *)NULL + (0)));
+	//glEnableVertexAttribArray(1);  // Vertex normal
+	//
+	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, handle[2]);
+	//glBufferData(GL_ELEMENT_ARRAY_BUFFER, 36 * sizeof(GLuint), EL, GL_STATIC_DRAW);
+	//
+	//glBindVertexArray(0);
 }
 
 bool BoxCollider_3D::intersects(BoxCollider_3D &other)
