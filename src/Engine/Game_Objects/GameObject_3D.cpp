@@ -91,6 +91,11 @@ void GameObject_3D::render(Shader* p_Shader_In)
 {
 	static_cast<Transform_3D*>(mipo_Components.find("Transform_3D")->second)->update_Shader(p_Shader_In);
 	if (b_RenderStatus) static_cast<RenderComp_3D*>(mipo_Components.find("RenderComp_3D")->second)->render(GL_TEXTURE_2D, GL_TRIANGLES, p_Shader_In);
+
+	for (int i = 0; i < bulletList.size(); i++)
+	{
+		bulletList[i]->render(p_Shader_In);
+	}
 }
 
 void GameObject_3D::clean_Up()
@@ -230,15 +235,14 @@ void GameObject_3D::setFiring(bool input)
 	firing = input;
 }
 
-void GameObject_3D::createBullet(GameObject_3D* bulletTemplate)
+void GameObject_3D::createBullet(GameObject_3D bulletTemplate)
 { 
 	if (count == fireRate)
 	{
-		GameObject_3D* bullet = new GameObject_3D(*bulletTemplate);
-		bullet->set_Position(get_Position());
-		bullet->set_Rotation(get_Rotation());
-		//bullet->move(glm::vec3(0, 0, 1), .01f);
-		bulletList.push_back(bullet);
+		bulletList.push_back(new GameObject_3D(bulletTemplate));
+		bulletList[bulletNumber]->set_Position(get_Position());
+		bulletList[bulletNumber]->set_Rotation(get_Rotation());
+		bulletNumber++;
 		count = 0;
 	}
 	else
@@ -253,5 +257,12 @@ void GameObject_3D::shootBullet()
 	for (int i = 0; i < bulletList.size(); i++)
 	{
 		bulletList[i]->move(glm::vec3(0, 0, 1), .01f);
+		bulletList[i]->update();
+		
+	}
+	if (!bulletList.empty())
+	{
+		glm::vec3 temp = bulletList[0]->get_Position();
+		std::cout << "(" << temp.x << ", " << temp.y << ", " << temp.z << ")" << std::endl << std::endl;
 	}
 }

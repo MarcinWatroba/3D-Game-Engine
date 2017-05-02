@@ -111,9 +111,9 @@ void Game_Scene::mouse_Input(GLboolean* pab_MouseArray_In, GLfloat f_Delta_In)
 {
 	if (pab_MouseArray_In[GLFW_MOUSE_BUTTON_1])
 	{
-		static_cast<GameObject_3D*>(mspo_Objects.find("Robot")->second)->createBullet(static_cast<GameObject_3D*>(mspo_Objects.find("Bullet")->second));
+		static_cast<GameObject_3D*>(mspo_Objects.find("Robot")->second)->createBullet(*static_cast<GameObject_3D*>(mspo_Objects.find("Bullet")->second));
 		static_cast<GameObject_3D*>(mspo_Objects.find("Robot")->second)->setFiring(true);
-		std::cout << "Shoosting time!!!" << std::endl;
+		//std::cout << "Shoosting time!!!" << std::endl;
 		//glm::vec3 temp = static_cast<GameObject_3D*>(mspo_Objects.find("Bullet")->second)->get_Position();
 		//std::cout << "(" << temp.x << ", " << temp.y << ", " << temp.z << ")" << std::endl << std::endl;
 	}
@@ -162,6 +162,7 @@ void Game_Scene::update_Scene(GLfloat f_Delta_In, glm::vec2 v2_MousePos_In)
 		camera_3D->reset();
 
 		dynamic_cast<GameObject_3D*>(mspo_Objects.find("Robot")->second)->jump(glm::vec3(0, 1, 0));
+		//shootBullet();
 		//Check for Collisions between Game Objects
 		colManage.collisionChecks(mspo_Objects);
 	}
@@ -212,3 +213,5 @@ void Game_Scene::clean_Up()
 	delete o_SceneLoader;
 	delete camera_3D;
 }
+
+

@@ -12,9 +12,11 @@ protected:
 	bool lastDir = false;
 	bool firing = false;
 	bool bulletActive = false;
+	
 	std::vector<GameObject_3D*> bulletList;
 	float count = 0;
 	float fireRate = 10;
+	float bulletNumber = 0;
 public:
 	//Constructor
 	GameObject_3D();
@@ -47,7 +49,7 @@ public:
 	void jump(glm::vec3 v3_Direction_In);
 	void turn(float f_Angle_In, glm::vec3 v3_TurnAxis_In);
 	void setFiring(bool input);
-	void createBullet(GameObject_3D* bulletTemplate);
+	void createBullet(GameObject_3D bulletTemplate);
 	void shootBullet();
 
 	
