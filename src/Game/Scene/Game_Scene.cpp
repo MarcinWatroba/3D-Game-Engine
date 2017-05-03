@@ -5,7 +5,6 @@
 #include <Engine\Loaders\SceneLoader.h>
 #include <Engine/Component/RenderComp_3D.h>
 #include <Engine\Component\Transform_3D.h>
-#include <Engine\Lighting\Light.h>
 
 #include <iostream>
 
@@ -18,6 +17,9 @@ void Game_Scene::init()
 
 	camera_3D = new Camera_3D(45.f, 800.f / 600, 0.1f, 1000.f);
 	camera_3D->set_CameraPos(glm::vec3(0.f, -20.f, 0.f));
+	
+	// Play background audio
+	snd_Audio->find("gameBG")->second->Play({0,0,0}, 0.5);
 
 	//Load the scene
 	o_SceneLoader = new SceneLoader("assets/scenes/Robot_Scene.xml", po_Loader, mspo_Objects);
@@ -29,29 +31,54 @@ void Game_Scene::keyboard_Input(GLfloat f_Delta_In, GLboolean* pab_KeyArray_In, 
 {
 	float f_Speed = 20 * f_Delta_In;
 	float f_MagicNumber = 0.7071f;
-
+	int walkRate = 100;
+	
 	if (pab_KeyArray_In[GLFW_KEY_W])
 	{
 		camera_3D->set_Speed(f_Speed);
 		camera_3D->move_Forward();
+		if (walkCount > walkRate)
+		{
+			snd_Audio->find("foghorn")->second->Play({0,0,0}, 0.8);
+			walkCount = 0;
+		}
+		walkCount++;
 	}
 
 	if (pab_KeyArray_In[GLFW_KEY_S])
 	{
 		camera_3D->set_Speed(f_Speed);
 		camera_3D->move_Backward();
+		if (walkCount > walkRate)
+		{
+			snd_Audio->find("foghorn")->second->Play({ 0,0,0 }, 0.8);
+			walkCount = 0;
+		}
+		walkCount++;
 	}
 		
 	if (pab_KeyArray_In[GLFW_KEY_A])
 	{
 		camera_3D->set_Speed(f_Speed);
 		camera_3D->move_Left();
+		if (walkCount > walkRate)
+		{
+			snd_Audio->find("foghorn")->second->Play({ 0,0,0 }, 0.8);
+			walkCount = 0;
+		}
+		walkCount++;
 	}
 
 	if (pab_KeyArray_In[GLFW_KEY_D])
 	{
 		camera_3D->set_Speed(f_Speed);
 		camera_3D->move_Right();
+		if (walkCount > walkRate)
+		{
+			snd_Audio->find("foghorn")->second->Play({ 0,0,0 }, 0.8);
+			walkCount = 0;
+		}
+		walkCount++;
 	}
 		
 	if (pab_KeyArray_In[GLFW_KEY_SPACE])
@@ -83,11 +110,28 @@ void Game_Scene::keyboard_Input(GLfloat f_Delta_In, GLboolean* pab_KeyArray_In, 
 	}
 	if (!pab_KeyArray_In[GLFW_KEY_ESCAPE]) pab_LockedKeys_In[GLFW_KEY_ESCAPE] = false;
 
+
 }
 
 void Game_Scene::mouse_Input(GLboolean* pab_MouseArray_In)
 {
+	if (pab_MouseArray_In[GLFW_MOUSE_BUTTON_LEFT])
+	{
+		int firerate = 100;
+		if (triggerHoldCount > firerate && ammoRemaining > 0)
+		{
+			snd_Audio->find("gunshot_pistol")->second->Play({0,0,0}, 1.0);
+			triggerHoldCount = 0;
+			ammoRemaining--;
+		}
+		triggerHoldCount++;
+	}
 
+	if (pab_MouseArray_In[GLFW_MOUSE_BUTTON_RIGHT] && ammoRemaining == 0)
+	{
+		snd_Audio->find("reload_pistol")->second->Play({0,0,0}, 1.0);
+		ammoRemaining = 6;
+	}
 }
 
 void Game_Scene::reload_Scene()

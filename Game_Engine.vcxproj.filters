@@ -94,6 +94,12 @@
     <Filter Include="Source Files\Engine\Lighting">
       <UniqueIdentifier>{0be042f8-4c28-420a-b734-6117d9a0097e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Engine\Audio">
+      <UniqueIdentifier>{22118298-73e0-4225-a266-6c6d34bfcfe6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Audio">
+      <UniqueIdentifier>{a6ed2402-d912-4744-a841-422768ad9a24}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Engine\State\State.cpp">
@@ -174,6 +180,12 @@
     <ClCompile Include="src\Engine\Lighting\Point_Light.cpp">
       <Filter>Source Files\Engine\Lighting</Filter>
     </ClCompile>
+    <ClCompile Include="src\Engine\Audio\AudioEngine.cpp">
+      <Filter>Source Files\Engine\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Audio\Sound.cpp">
+      <Filter>Source Files\Engine\Audio</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Engine\App\Application.h">
@@ -253,6 +265,12 @@
     </ClInclude>
     <ClInclude Include="include\Engine\Lighting\Point_Light.h">
       <Filter>Header Files\Engine\Lighting</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Engine\Audio\AudioEngine.h">
+      <Filter>Header Files\Engine\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Engine\Audio\Sound.h">
+      <Filter>Header Files\Engine\Audio</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

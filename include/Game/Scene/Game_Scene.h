@@ -1,10 +1,9 @@
 #pragma once
 
 #include <Engine\Scene\Scene.h>
-//#include <Scene.h>
-//#include <Label.h>
-//#include <Directional_Light.h>
-//#include <Point_Light.h>
+#include <Engine\Scene\Scene.h>
+#include <Engine\Lighting\Light.h>
+#include <Engine\Lighting\Point_Light.h>
 
 namespace render
 {
@@ -18,9 +17,11 @@ namespace render
 class Game_Scene : public Scene
 {
 private:
-	//Label* o_Label;
 	bool b_Render[render::Num];
 	bool b_SwitchCamMode;
+	int walkCount = 0;
+	int triggerHoldCount = 0;	// used in firing
+	int ammoRemaining = 6;
 public:
 	//Constructor
 	Game_Scene() {};

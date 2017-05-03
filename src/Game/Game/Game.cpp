@@ -2,17 +2,28 @@
 #include <Game/Scene/Game_Scene.h>
 #include <Engine\Loaders\Loader.h>
 
+#include <Engine\Audio\AudioEngine.h>
+
 //Constructor
 Game::Game()
 {
 	b_GameIsOver = false;
 	po_Loader = new Loader();
+	
+	// Initialise Audio
+	Audio_Engine = new AudioEngine();
+	snd_Audio.insert(std::pair<std::string, Sound*>("gameBG", new Sound("assets/audio/rain.wav", true, true, false, Audio_Engine)));
+	snd_Audio.insert(std::pair<std::string, Sound*>("walking", new Sound("assets/audio/walking.wav", true, false, false, Audio_Engine)));
+	snd_Audio.insert(std::pair<std::string, Sound*>("gunshot_pistol", new Sound("assets/audio/gunshot_pistol.wav", true, false, false, Audio_Engine)));
+	snd_Audio.insert(std::pair<std::string, Sound*>("reload_pistol", new Sound("assets/audio/reload_pistol.wav", true, false, false, Audio_Engine)));
+	snd_Audio.insert(std::pair<std::string, Sound*>("foghorn", new Sound("assets/audio/foghorn.wav", true, false, false, Audio_Engine)));
 }
 
 void Game::init()
 {
 	po_Loader->start();
 	o_State.push_State(new Game_Scene());
+	
 }
 
 //Process input
@@ -34,7 +45,10 @@ void Game::update(GLfloat deltaTime, glm::vec2 mouse_Pos_In)
 	}
 	else // else process it
 	{
-		if (o_State.back()->is_LoaderEmpty()) o_State.back()->pass_Loader(po_Loader);
+		if (o_State.back()->is_LoaderEmpty()) {
+			o_State.back()->pass_Loader(po_Loader);
+			o_State.back()->pass_Audio(&snd_Audio);
+		}
 		mouse_Lock(o_State.back()->is_MouseLocked());
 		o_State.back()->update_Scene(deltaTime, mouse_Pos_In);
 	}

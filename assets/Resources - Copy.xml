@@ -366,4 +366,11 @@
 		<new_File ID = "0" name = "arial_Fonts.xml"></new_File>
  	</font_Files>
 	
+		<audio_File_Location>assets/audio/</audio_File_Location>
+	<audio_Files>
+		<new_File ID = "0" name = "main_menu_bg.wav"></new_File>
+		<new_File ID = "1" name = "rain.wav"></new_File>
+		<new_File ID = "2" name = "walking.wav"></new_File>
+ 	</audio_Files>
+	
 </resources>

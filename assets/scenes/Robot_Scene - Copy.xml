@@ -711,7 +711,6 @@
 	</new_Object3D>
 </objects>
 
-
 <lights>
 	<new_Light
 	type = "Point"
@@ -741,3 +740,38 @@
 	>
 	</new_Light>
 </lights>
+
+<sounds>
+	<new_sounds
+	name = "background"
+	ID = "0"
+	volume = "1"
+	object = "robot"
+	loop = "true"
+	threeD = "true"
+	stream = "false"
+	>
+	</new_sounds>
+	
+	<new_sounds
+	name = "rain"
+	ID = "1"
+	volume = "1"
+	object = "robot"
+	loop = "true"
+	threeD = "true"
+	stream = "false"
+	>
+	</new_sounds>
+	
+	<new_sounds
+	name = "foot steps"
+	ID = "2"
+	volume = "1"
+	object = "robot"
+	loop = "false"
+	threeD = "true"
+	stream = "false"
+	>
+	</new_sounds>
+</sounds>

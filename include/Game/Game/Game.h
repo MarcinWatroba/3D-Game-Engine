@@ -1,8 +1,17 @@
 #pragma once
 #include <Engine/App/Program_Template.h>
+#include <Engine\Audio\Sound.h>
+
+#include <map>
+
+class AudioEngine;
 
 class Game : public Program_Template
 {
+protected:
+	AudioEngine* Audio_Engine;
+	std::map<std::string, Sound*> snd_Audio;
+	
 public:
 	//Constructor
 	Game();

@@ -8,6 +8,7 @@
 #include <Engine\Game_Objects\Camera_3D.h>
 #include <Engine\Loaders\SceneLoader.h>
 //#include <Light.h>
+#include <Engine\Audio\Sound.h>
 
 class Loader;
 
@@ -26,6 +27,9 @@ protected:
 	//Cameras
 	Camera_3D* camera_3D;
 	std::map<std::string, Game_Object*> mspo_Objects;
+
+	// Audio
+	std::map<std::string, Sound*>* snd_Audio;
 
 	// Is mouse locked?
 	bool b_LockMouse;
@@ -66,6 +70,9 @@ public:
 
 	//Pass loader
 	void pass_Loader(Loader* po_Loader_In);
+
+	// Pass Audio
+	void pass_Audio(std::map<std::string, Sound*>* po_Sound_In);
 
 	//Is loader empty?
 	bool is_LoaderEmpty();
