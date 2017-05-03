@@ -284,9 +284,9 @@
 	<new_Object3D
 		name = "Front Wall"
 		container = "No"
-		tag = "Object"
+		tag = "Enemy"
 		mesh_ID = "7"
-		component = "(BoxCollider_3D, RigidBody)"
+		component = "(BoxCollider_3D, RigidBody, Character)"
 		diffuse_ID = "5"
 		specular_ID = "7"
 		shininess = "1"

@@ -195,7 +195,7 @@ void Game_Scene::render()
 
 		for (auto const& pair : mspo_Objects)
 		{
-			if (pair.second->get_Tag() == "Object") pair.second->render(po_Loader->get_Shader("0"));
+			if (pair.second->get_Tag() == "Object" || pair.second->get_Tag() == "Enemy" ) pair.second->render(po_Loader->get_Shader("0"));
 			else if (pair.second->get_Tag() == "Light")
 			{
 				static_cast<Light*>(pair.second)->update_Shader(po_Loader->get_Shader("0"));
