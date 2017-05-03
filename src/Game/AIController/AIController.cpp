@@ -3,12 +3,22 @@
 #include "Game/AIController/State_Patrol.h"
 #include "Game/AIController/State_Attack.h"
 
-const std::vector<FSM_State<AIController_Data>*> AIController::stateList({ new State_Idle(ccs::Idle), new State_Patrol(ccs::Patrol), new State_Attack(ccs::Attack) });
-
 AIController::AIController(GameObject_3D * character) :
-	FSM(&stateList, ccs::Idle)
+	FSM(&stateList)
 {
+	stateList.push_back(new State_Idle(ccs::Idle));
+	stateList.push_back(new State_Patrol(ccs::Patrol));
+	stateList.push_back(new State_Attack(ccs::Attack));
+	InitializeToState(ccs::Idle);
 	data.character = character;
+}
+
+AIController::~AIController()
+{
+	for (unsigned int i = 0; i < stateList.size(); i++)
+	{
+		delete stateList[i];
+	}
 }
 
 void AIController::Update()

@@ -2,6 +2,7 @@
 
 #include "Engine/Astar/Node_Graph.h"
 #include "Engine/Game_objects/GameObject_3D.h"
+#include <Engine\Loaders\Loader.h>
 
 namespace ccs//character controller states
 {
@@ -26,6 +27,8 @@ struct AIController_Data
 	const float dps = 360.0f;
 	//time step
 	float deltaTime;
+	//scene resources
+	Loader * loader;
 	//AI map
 	Node_Graph * AI_Map;
 	//pointer to this AI character

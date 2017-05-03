@@ -20,20 +20,38 @@ protected:
 	T data;
 	void Run();
 public:
+	//set start state and previous state to the given state
+	void InitializeToState(unsigned int stateID);
+	//set current state
+	void SetState(unsigned int stateID);
+	//get pointer to data
 	T* AccessData();
 	//create a FSM with a given set of states and the ID of the starting state
-	FSM(const std::vector<FSM_State<T>*>* stateList, unsigned int startStateID);
+	FSM(const std::vector<FSM_State<T>*>* stateList);
 };
 
 
 
 
 template <typename T>
-FSM<T>::FSM(const std::vector<FSM_State<T>*>* stateList, unsigned int startStateID) :
+FSM<T>::FSM(const std::vector<FSM_State<T>*>* stateList) :
 	states(stateList)
 {
-	current = FindState(startStateID);
+	current = 0;
+	previous = 0;
+}
+
+template <typename T>
+void FSM<T>::InitializeToState(unsigned int stateID)
+{
+	current = FindState(stateID);
 	previous = current;
+}
+
+template <typename T>
+void FSM<T>::SetState(unsigned int stateID)
+{
+	current = FindState(stateID);
 }
 
 template <typename T>

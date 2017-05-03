@@ -353,9 +353,6 @@
     <ClInclude Include="include\Engine\Component\Respond_Movement.h">
       <Filter>Header Files\Engine\Component</Filter>
     </ClInclude>
-    <ClInclude Include="Bullet.h">
-      <Filter>Header Files\Engine\Game_Objects</Filter>
-    </ClInclude>
     <ClInclude Include="include\Engine\Component\Character.h">
       <Filter>Header Files\Engine\Component</Filter>
     </ClInclude>
@@ -373,6 +370,9 @@
     </ClInclude>
     <ClInclude Include="include\Game\AIController\AIController.h">
       <Filter>Header Files\Game\AIController</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Game\Misc\Bullet.h">
+      <Filter>Header Files\Game</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

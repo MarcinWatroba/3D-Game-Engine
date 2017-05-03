@@ -5,6 +5,7 @@
 #include <iostream>
 #include <glm/gtx/norm.hpp>
 #include <Engine/Component/Respond_Movement.h>
+#include <Game\Misc\Bullet.h>
 
 State_Attack::State_Attack(const int setStateID) :
 	FSM_State<AIController_Data>(setStateID)
@@ -20,16 +21,16 @@ fsm::FSM_Command State_Attack::OnRun()
 	std::cout << "Attack_run\n";
 	//
 	Respond_Movement* movement = static_cast<Respond_Movement*>(data->character->get_Component("Respond_Movement"));
-	glm::vec3 toPoint = data->player->get_Position() - data->character->get_Position();
+	float distSqr = glm::length2(data->player->get_Position() - data->character->get_Position());
 
 	//check if player has gone too far away
-	if (glm::length2(toPoint) > data->stopChaseDistance*data->stopChaseDistance)
+	if (distSqr > data->stopChaseDistance*data->stopChaseDistance)
 	{
 		return fsm::Finish;
 	}
 
 	//if too far away move close enough to attack
-	if (glm::length2(toPoint) > data->attackRange*data->attackRange)
+	if (distSqr > data->attackRange*data->attackRange)
 	{
 		movement->moveToPoint(data->character, data->player->get_Position(), 10.0f * data->deltaTime, data->dps * data->deltaTime);
 	}
@@ -37,11 +38,22 @@ fsm::FSM_Command State_Attack::OnRun()
 	//in attack range
 	else
 	{
-		bool facingTarget = movement->facePoint(data->character, data->player->get_Position(), data->dps * data->deltaTime);
-		if (facingTarget)
-		{
-			std::cout << "pew pew" << std::endl;
-		}
+		//if (distSqr < 7.5f*7.5f)
+		//{
+		//	glm::vec3 pos = data->player->get_Position();
+		//	pos.z += 2;
+		//	movement->moveToPoint(data->character, pos, 10.0f * data->deltaTime, data->dps * data->deltaTime);
+		//	std::cout << "whoad dude back the fuck off" << std::endl;
+		//}
+		//else
+		//{
+			bool facingTarget = movement->facePoint(data->character, data->player->get_Position(), data->dps * data->deltaTime);
+			if (facingTarget)
+			{
+				std::cout << "pew pew" << std::endl;
+				data->character->createBullet(new Bullet("Bullet", data->loader->get_Mesh3D("7"), data->character, data->loader->get_Texture("24"), data->loader->get_Texture("7")));
+			}
+		//}
 	}
 
 	//

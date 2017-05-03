@@ -160,7 +160,6 @@
     <ClCompile Include="src\Game\Scene\Game_Scene.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Bullet.h" />
     <ClInclude Include="include\Engine\App\Application.h" />
     <ClInclude Include="include\Engine\App\Program_Template.h" />
     <ClInclude Include="include\Engine\Astar\AStarPathfinder.h" />
@@ -203,6 +202,7 @@
     <ClInclude Include="include\Game\AIController\State_Idle.h" />
     <ClInclude Include="include\Game\AIController\State_Patrol.h" />
     <ClInclude Include="include\Game\Game\Game.h" />
+    <ClInclude Include="include\Game\Misc\Bullet.h" />
     <ClInclude Include="include\Game\Scene\Game_Scene.h" />
   </ItemGroup>
   <ItemGroup>

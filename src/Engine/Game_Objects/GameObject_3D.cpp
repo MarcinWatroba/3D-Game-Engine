@@ -122,7 +122,8 @@ void GameObject_3D::render(Shader* p_Shader_In)
 
 void GameObject_3D::clean_Up()
 {
-	if (!mipo_Components.empty()) for (auto map : mipo_Components) delete map.second;
+	if (!mipo_Components.empty()) for (auto map : mipo_Components) if(map.first != "Mesh_3D") delete map.second;
+	mipo_Components.clear();
 }
 
 void GameObject_3D::force_Update()
@@ -291,7 +292,7 @@ void GameObject_3D::shootBullet()
 {
 	for (int i = 0; i < bulletList.size(); i++)
 	{
-		bulletList[i]->move(glm::vec3(0, 0, 1), -.1);
+		bulletList[i]->move(glm::vec3(0, 0, 1), .1);
 
 		
 		

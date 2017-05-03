@@ -11,7 +11,8 @@ class CollisionManager
 {
 
 private:
-
+	std::vector<std::string> eraseID;
+	void collision(Game_Object* objectA, Game_Object* objectB, std::map<Game_Object*, Game_Object*>& collisions);
 public:
 	CollisionManager();
 	~CollisionManager();

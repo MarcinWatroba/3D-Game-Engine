@@ -1,5 +1,21 @@
 #include "Engine\Game_Objects\Game_Object.h"
 
+
+Game_Object::Game_Object() :
+	b_toDelete(false)
+{}
+
+bool Game_Object::get_ToDelete()
+{
+	return b_toDelete;
+}
+
+void Game_Object::set_ToDelete()
+{
+	b_toDelete = true;
+}
+
+
 void Game_Object::set_RenderStatus(bool b_RenderStatus_In)
 {
 	b_RenderStatus = b_RenderStatus_In;

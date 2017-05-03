@@ -54,7 +54,7 @@ bool Respond_Movement::facePoint(GameObject_3D* po_GameObject_In, glm::vec3 v3_T
 	float direction = glm::dot(aim, -transform->get_Right());
 
 	//get the desired rotation angle using the dot product
-	float angle = glm::degrees(glm::acos(glm::dot(aim, forward)));
+	float angle = glm::degrees(glm::acos(glm::dot(forward, aim)));
 
 	//rotate toward point by the given rotation amount
 	if (angle > f_rotation)

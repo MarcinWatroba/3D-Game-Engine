@@ -6,10 +6,11 @@
 class Character : public Component
 {
 private:
-	float health = 3;
+	float health;
 	float numberOfBullets;
+	std::string typeOfChar;
 public:
-	Character() {}
+	Character(std::string inType = "");
 	~Character() {}
 	void setHealth(float temp);
 	void setNumberOfBullets(float newAmmo);

@@ -16,7 +16,11 @@ void State_Patrol::OnEnter()
 	//set patrol path and wait times
 	path.push_back(glm::vec3(10.0f, 0.0f, 10.0f));
 	path.push_back(glm::vec3(0.0f, 0.0f, 0.0f));
+	path.push_back(glm::vec3(5.0f, 0.0f, 5.0f));
+	path.push_back(glm::vec3(-15.0f, 0.0f, 5.0f));
 	wait.push_back(1.0f);
+	wait.push_back(1.0f);
+	wait.push_back(2.0f);
 	wait.push_back(1.0f);
 }
 

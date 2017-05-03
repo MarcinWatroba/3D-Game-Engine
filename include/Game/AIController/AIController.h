@@ -9,8 +9,9 @@
 class AIController : public FSM<AIController_Data>, public Component
 {
 private:
-	static const std::vector<FSM_State<AIController_Data>*> stateList;
+	std::vector<FSM_State<AIController_Data>*> stateList;
 public:
 	void Update();
 	AIController(GameObject_3D * character);
+	~AIController();
 };

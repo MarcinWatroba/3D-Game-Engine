@@ -32,6 +32,9 @@ protected:
 
 	virtual glm::mat4 get_ParentMatrix() = 0;
 
+	//
+	bool b_toDelete;
+
 
 public:
 	virtual void add_Component(std::string s_Name_In, Component* p_Component_In) = 0;
@@ -41,6 +44,9 @@ public:
 	virtual void force_Update() = 0;
 	virtual void render(Shader* p_Shader_In) = 0;
 	virtual void clean_Up() = 0;
+
+	bool get_ToDelete();// get whether object should be deleted
+	void set_ToDelete();// set that the object should be deleted
 
 	void set_Name(std::string s_Name_In);
 	std::string get_Name();
@@ -54,4 +60,6 @@ public:
 	void set_Tag(std::string s_Tag_In);
 	std::string get_Tag();
 	bool is_Container();
+
+	Game_Object();
 };

@@ -91,7 +91,7 @@ void Game_Scene::keyboard_Input(GLfloat f_Delta_In, GLboolean* pab_KeyArray_In, 
 
 	if (pab_KeyArray_In[GLFW_KEY_UP])
 	{
-		player->move(glm::vec3(0, 0, 1), -moveSpeed * f_Delta_In);
+		player->move(glm::vec3(0, 0, 1), moveSpeed * f_Delta_In);
 		glm::vec3 tempVec = player->get_Position();
 		std::cout << "(" << tempVec.x << ", " << tempVec.y << ", " << tempVec.z << " )" << std::endl;
 		//mspo_Objects.find("Robot Left Arm")->second->animate(40.f, f_Delta_In);
@@ -101,7 +101,7 @@ void Game_Scene::keyboard_Input(GLfloat f_Delta_In, GLboolean* pab_KeyArray_In, 
 	}
 	if (pab_KeyArray_In[GLFW_KEY_DOWN])
 	{
-		player->move(glm::vec3(0, 0, 1), moveSpeed * f_Delta_In);
+		player->move(glm::vec3(0, 0, 1), -moveSpeed * f_Delta_In);
 
 		//mspo_Objects.find("Robot Left Arm")->second->animate(40.f, f_Delta_In);
 		//mspo_Objects.find("Robot Right Arm")->second->animate(-40.f, f_Delta_In);
@@ -170,6 +170,7 @@ void Game_Scene::update_Scene(GLfloat f_Delta_In, glm::vec2 v2_MousePos_In)
 				AIController_Data* po_ccd = po_AIController->AccessData();
 				po_ccd->deltaTime = f_Delta_In;
 				po_ccd->player = player;
+				po_ccd->loader = po_Loader;
 				//update
 				po_AIController->Update();
 			}
@@ -198,6 +199,17 @@ void Game_Scene::update_Scene(GLfloat f_Delta_In, glm::vec2 v2_MousePos_In)
 			static_cast<GameObject_3D*>(mspo_Objects.find("Robot")->second)->resetCount();
 		}
 		
+
+		//delete objects that have deletion flag
+		auto itr = mspo_Objects.begin();
+		while (itr != mspo_Objects.end()) {
+			if (itr->second->get_ToDelete()) {
+				itr = mspo_Objects.erase(itr++);
+			}
+			else {
+				++itr;
+			}
+		}
 	}
 }
 
@@ -216,7 +228,7 @@ void Game_Scene::render()
 
 		for (auto const& pair : mspo_Objects)
 		{
-			if (pair.second->get_Tag() == "Object" || pair.second->get_Tag() == "Enemy" || pair.second->get_Tag() == "Floor" ) pair.second->render(po_Loader->get_Shader("0"));
+			if (pair.second->get_Tag() == "Object" || pair.second->get_Tag() == "Enemy" || pair.second->get_Tag() == "Floor" || pair.second->get_Tag() == "Ammo" ) pair.second->render(po_Loader->get_Shader("0"));
 			else if (pair.second->get_Tag() == "Light")
 			{
 				static_cast<Light*>(pair.second)->update_Shader(po_Loader->get_Shader("0"));
