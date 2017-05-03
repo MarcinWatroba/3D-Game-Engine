@@ -25,6 +25,7 @@ private:
 
 	//Collision Manager
 	CollisionManager colManage;
+	GameObject_3D* player;
 
 public:
 	//Constructor

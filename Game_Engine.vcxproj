@@ -151,10 +151,10 @@
     <ClCompile Include="src\Engine\Physics\Physics.cpp" />
     <ClCompile Include="src\Engine\Scene\Scene.cpp" />
     <ClCompile Include="src\Engine\State\State.cpp" />
-    <ClCompile Include="src\Game\CharacterController\CharacterController.cpp" />
-    <ClCompile Include="src\Game\CharacterController\State_Attack.cpp" />
-    <ClCompile Include="src\Game\CharacterController\State_Idle.cpp" />
-    <ClCompile Include="src\Game\CharacterController\State_Patrol.cpp" />
+    <ClCompile Include="src\Game\AIController\AIController.cpp" />
+    <ClCompile Include="src\Game\AIController\State_Attack.cpp" />
+    <ClCompile Include="src\Game\AIController\State_Idle.cpp" />
+    <ClCompile Include="src\Game\AIController\State_Patrol.cpp" />
     <ClCompile Include="src\Game\Game\Game.cpp" />
     <ClCompile Include="src\Game\Misc\Bullet.cpp" />
     <ClCompile Include="src\Game\Scene\Game_Scene.cpp" />
@@ -197,11 +197,11 @@
     <ClInclude Include="include\Engine\Physics\Physics.h" />
     <ClInclude Include="include\Engine\Scene\Scene.h" />
     <ClInclude Include="include\Engine\State\State.h" />
-    <ClInclude Include="include\Game\CharacterController\CharacterController.h" />
-    <ClInclude Include="include\Game\CharacterController\CharacterController_Data.h" />
-    <ClInclude Include="include\Game\CharacterController\State_Attack.h" />
-    <ClInclude Include="include\Game\CharacterController\State_Idle.h" />
-    <ClInclude Include="include\Game\CharacterController\State_Patrol.h" />
+    <ClInclude Include="include\Game\AIController\AIController.h" />
+    <ClInclude Include="include\Game\AIController\AIController_Data.h" />
+    <ClInclude Include="include\Game\AIController\State_Attack.h" />
+    <ClInclude Include="include\Game\AIController\State_Idle.h" />
+    <ClInclude Include="include\Game\AIController\State_Patrol.h" />
     <ClInclude Include="include\Game\Game\Game.h" />
     <ClInclude Include="include\Game\Scene\Game_Scene.h" />
   </ItemGroup>

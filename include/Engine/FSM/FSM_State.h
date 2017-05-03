@@ -37,7 +37,7 @@ public:
 	//get state ID
 	const int StateID();
 	//run the state
-	fsm::FSM_Command Run(T* data);
+	fsm::FSM_Command Run(T* data_in);
 	//end and exit the state
 	void Finish();
 	//create state with given ID
@@ -66,8 +66,9 @@ const int FSM_State<T>::StateID()
 }
 
 template <typename T>
-fsm::FSM_Command FSM_State<T>::Run(T* data)
+fsm::FSM_Command FSM_State<T>::Run(T* data_in)
 {
+	data = data_in;
 	if (runStatus == 0)
 	{
 		OnEnter();

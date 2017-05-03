@@ -16,7 +16,6 @@
 		specular_ID = "17"
 		shininess = "320"
 		texture_Tiling = "(0.5, 0.5)"
-		
 		init_Mode = "0"
 		origin = "(0, -0.5, 0)"
 		position = "(0.512, 0.485, -0.00)"
@@ -37,7 +36,6 @@
 		specular_ID = "17"
 		shininess = "320"
 		texture_Tiling = "(0.5, 0.5)"
-		
 		init_Mode = "0"
 		origin = "(0, -0.5, 0)"
 		position = "(-0.512, 0.485, -0.00)"
@@ -56,9 +54,8 @@
 		component = "(Move_Animation)"
 		diffuse_ID = "2"
 		specular_ID = "17"
-		shininess = "320"		
+		shininess = "320"
 		texture_Tiling = "(0.5, 0.5)"
-		
 		init_Mode = "0"
 		origin = "(0, -0.5, 0)"
 		position = "(1.054, 2.026, 0)"
@@ -79,7 +76,6 @@
 		specular_ID = "17"
 		shininess = "320"
 		texture_Tiling = "(0.5, 0.5)"
-		
 		init_Mode = "0"
 		origin = "(0,-0.5, 0)"
 		position = "(-1.054, 2.026, 0.0)"
@@ -100,7 +96,6 @@
 		specular_ID = "7"
 		shininess = "1"
 		texture_Tiling = "(1, 1)"
-		
 		init_Mode = "0"
 		origin = "(0, 0.0, 0)"
 		position = "(0, 2.052, 0)"
@@ -121,7 +116,6 @@
 		specular_ID = "7"
 		shininess = "1"
 		texture_Tiling = "(1, 1)"
-		
 		init_Mode = "0"
 		origin = "(0, 0.0, 0)"
 		position = "(0, 3.521, -0.487)"
@@ -142,7 +136,6 @@
 		specular_ID = "7"
 		shininess = "1"
 		texture_Tiling = "(4, 4)"
-		
 		init_Mode = "0"
 		origin = "(0, 0.0, 0)"
 		position = "(-0.499, 3.647, -0.833)"
@@ -163,7 +156,6 @@
 		specular_ID = "7"
 		shininess = "1"
 		texture_Tiling = "(4, 4)"
-		
 		init_Mode = "0"
 		origin = "(0, 0.0, 0)"
 		position = "(0.499, 3.647, -0.833)"
@@ -171,7 +163,7 @@
 		orientationY = "0, (0, 1, 0)"
 		orientationZ = "0, (0, 0, 1)"
 		scale = "(0.319, 0.319, 0.319)"
-		>	
+		>
 	</new_Object3D>
 	
 	<new_Object3D
@@ -194,7 +186,6 @@
 					 Robot Left Eye,
 					 Robot Right Eye)"
 		>
-		
 	</new_Object3D>
 	
 	<new_Object3D
@@ -202,20 +193,19 @@
 		container = "No"
 		tag = "Object"
 		mesh_ID = "7"
-		component = "(Character_Controller, Patrol_Path)"
+		component = "(Respond_Movement, Character_Controller, Patrol_Path)"
 		diffuse_ID = "0"
 		specular_ID = "7"
 		shininess = "1"
 		texture_Tiling = "(1, 1)"
-		
 		init_Mode = "0"
 		origin = "(0, 0.0, 0)"
-		position = "(0, 2.052, 0)"
+		position = "(0, 2, 0)"
 		orientationX = "0, (1, 0, 0)"
 		orientationY = "0, (0, 1, 0)"
 		orientationZ = "0, (0, 0, 1)"
 		scale = "(1.751, 2.156, 1.000)"
-		>	
+		>
 	</new_Object3D>
 	
 	<new_Object3D
@@ -228,7 +218,6 @@
 		specular_ID = "7"
 		shininess = "1"
 		texture_Tiling = "(8, 8)"
-		
 		init_Mode = "0"
 		origin = "(0,0, 0)"
 		position = "(-0, 0, 0)"
@@ -249,7 +238,6 @@
 		specular_ID = "7"
 		shininess = "1"
 		texture_Tiling = "(8, 8)"
-		
 		init_Mode = "0"
 		origin = "(0,0, 0)"
 		position = "(15.232, 0, 24.198)"
@@ -270,7 +258,6 @@
 		specular_ID = "7"
 		shininess = "1"
 		texture_Tiling = "(8, 8)"
-		
 		init_Mode = "0"
 		origin = "(0,0, 0)"
 		position = "(0.000, 26.582, 39.705)"
@@ -291,7 +278,6 @@
 		specular_ID = "7"
 		shininess = "1"
 		texture_Tiling = "(8, 8)"
-		
 		init_Mode = "0"
 		origin = "(0,0, 0)"
 		position = "(0.000, 26.582, -39.889)"
@@ -312,7 +298,6 @@
 		specular_ID = "7"
 		shininess = "1"
 		texture_Tiling = "(8, 8)"
-		
 		init_Mode = "0"
 		origin = "(0,0, 0)"
 		position = "(-44.491, 26.582, -0.363)"
@@ -333,7 +318,6 @@
 		specular_ID = "7"
 		shininess = "1"
 		texture_Tiling = "(8, 8)"
-		
 		init_Mode = "0"
 		origin = "(0,0, 0)"
 		position = "(44.724, 26.582, -0.363)"
@@ -354,7 +338,6 @@
 		specular_ID = "7"
 		shininess = "1"
 		texture_Tiling = "(8, 8)"
-		
 		init_Mode = "0"
 		origin = "(0,0, 0)"
 		position = "(-26.351, 23.337, -9.334)"
@@ -375,7 +358,6 @@
 		specular_ID = "7"
 		shininess = "1"
 		texture_Tiling = "(8, 8)"
-		
 		init_Mode = "0"
 		origin = "(0,0, 0)"
 		position = "(0.921, 53.500, -0.365)"
@@ -396,7 +378,6 @@
 		specular_ID = "7"
 		shininess = "1"
 		texture_Tiling = "(1, 1)"
-		
 		init_Mode = "0"
 		origin = "(0,0, 0)"
 		position = "(0.000, 49.589, 0)"
@@ -417,7 +398,6 @@
 		specular_ID = "7"
 		shininess = "1"
 		texture_Tiling = "(8, 8)"
-		
 		init_Mode = "0"
 		origin = "(0,0, 0)"
 		position = "(0.000, 43.940, 0)"
@@ -438,7 +418,6 @@
 		specular_ID = "7"
 		shininess = "1"
 		texture_Tiling = "(1, 1)"
-		
 		init_Mode = "0"
 		origin = "(0,0, 0)"
 		position = "(44.416, 22.071, -18.319)"
@@ -459,7 +438,6 @@
 		specular_ID = "7"
 		shininess = "1"
 		texture_Tiling = "(8, 8)"
-		
 		init_Mode = "0"
 		origin = "(0,0, 0)"
 		position = "(16.499, 0.069, 18.405)"
@@ -478,7 +456,7 @@
 		diffuse_ID = "12"
 		specular_ID = "7"
 		shininess = "1"
-		texture_Tiling = "(1, 1)"	
+		texture_Tiling = "(1, 1)"
 		init_Mode = "0"
 		origin = "(0,0, 0)"
 		position = "(-37.745, 12.691, -32.475)"
@@ -499,7 +477,6 @@
 		specular_ID = "7"
 		shininess = "1"
 		texture_Tiling = "(8, 8)"
-		
 		init_Mode = "0"
 		origin = "(0,0, 0)"
 		position = "(-37.515, 25.583, -32.407)"
@@ -520,7 +497,6 @@
 		specular_ID = "7"
 		shininess = "1"
 		texture_Tiling = "(12, 12)"
-		
 		init_Mode = "0"
 		origin = "(0,0, 0)"
 		position = "(11.276, 28.263, 39.460)"
@@ -540,7 +516,7 @@
 		diffuse_ID = "20"
 		specular_ID = "7"
 		shininess = "1"
-		texture_Tiling = "(12, 12)"	
+		texture_Tiling = "(12, 12)"
 		init_Mode = "0"
 		origin = "(0,0, 0)"
 		position = "(-0.520, 41.606, 39.460)"
@@ -581,7 +557,7 @@
 		diffuse_ID = "22"
 		specular_ID = "7"
 		shininess = "1"
-		texture_Tiling = "(12, 12)"	
+		texture_Tiling = "(12, 12)"
 		init_Mode = "0"
 		origin = "(0,0, 0)"
 		position = "(-38.919, 2.547, 36.721)"
@@ -601,7 +577,7 @@
 		diffuse_ID = "23"
 		specular_ID = "7"
 		shininess = "1"
-		texture_Tiling = "(4, 4)"		
+		texture_Tiling = "(4, 4)"
 		init_Mode = "0"
 		origin = "(0,0, 0)"
 		position = "(-38.686, 5.992, 36.338)"
@@ -641,7 +617,7 @@
 		diffuse_ID = "23"
 		specular_ID = "7"
 		shininess = "1"
-		texture_Tiling = "(4, 4)"		
+		texture_Tiling = "(4, 4)"
 		init_Mode = "0"
 		origin = "(0,0, 0)"
 		position = "(-39.842, 8.179, 36.183)"
@@ -662,7 +638,7 @@
 		diffuse_ID = "24"
 		specular_ID = "7"
 		shininess = "1"
-		texture_Tiling = "(4, 4)"	
+		texture_Tiling = "(4, 4)"
 		init_Mode = "0"
 		origin = "(0,0, 0)"
 		position = "(15.469, 2.510, 23.446)"
@@ -682,7 +658,7 @@
 		diffuse_ID = "25"
 		specular_ID = "7"
 		shininess = "1"
-		texture_Tiling = "(4, 4)"	
+		texture_Tiling = "(4, 4)"
 		init_Mode = "0"
 		origin = "(0,0, 0)"
 		position = "(-40.291, 2.717, -35.622)"
@@ -702,7 +678,7 @@
 		diffuse_ID = "26"
 		specular_ID = "7"
 		shininess = "1"
-		texture_Tiling = "(4, 4)"	
+		texture_Tiling = "(4, 4)"
 		init_Mode = "0"
 		origin = "(0,0, 0)"
 		position = "(-42.343, 2.707, 35.577)"

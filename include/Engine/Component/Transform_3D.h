@@ -12,6 +12,11 @@ public:
 	glm::vec3 get_Origin();
 	glm::vec3 get_Position();
 
+	//Get direction vectors
+	glm::vec3 get_Forward();
+	glm::vec3 get_Right();
+	glm::vec3 get_Up();
+
 	//set Scale/Size
 	void set_Scale(glm::vec3 v3_Scale_In);
 

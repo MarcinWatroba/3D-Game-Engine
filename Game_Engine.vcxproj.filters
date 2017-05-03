@@ -103,17 +103,17 @@
     <Filter Include="Source Files\Engine\Astar">
       <UniqueIdentifier>{226c9dae-2d62-4294-8a9b-c1248aca9124}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Game\CharacterController">
-      <UniqueIdentifier>{573bd607-da42-4736-9515-ae6134bb90ce}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Game\CharacterController">
-      <UniqueIdentifier>{177f85b0-f388-48d3-9749-8197e290c70c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Engine\Physics">
       <UniqueIdentifier>{e2a542ce-c8bc-4bee-8619-148059e5f56a}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Engine\Physics">
       <UniqueIdentifier>{e4540f86-b997-4863-ba5b-dc4bfcf29d5c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\AIController">
+      <UniqueIdentifier>{573bd607-da42-4736-9515-ae6134bb90ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\AIController">
+      <UniqueIdentifier>{177f85b0-f388-48d3-9749-8197e290c70c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -204,18 +204,6 @@
     <ClCompile Include="src\Engine\Astar\Node_Graph.cpp">
       <Filter>Source Files\Engine\Astar</Filter>
     </ClCompile>
-    <ClCompile Include="src\Game\CharacterController\CharacterController.cpp">
-      <Filter>Source Files\Game\CharacterController</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Game\CharacterController\State_Attack.cpp">
-      <Filter>Source Files\Game\CharacterController</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Game\CharacterController\State_Idle.cpp">
-      <Filter>Source Files\Game\CharacterController</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Game\CharacterController\State_Patrol.cpp">
-      <Filter>Source Files\Game\CharacterController</Filter>
-    </ClCompile>
     <ClCompile Include="src\Engine\Component\BoxCollider_3D.cpp">
       <Filter>Source Files\Engine\Component</Filter>
     </ClCompile>
@@ -239,6 +227,18 @@
     </ClCompile>
     <ClCompile Include="src\Engine\Component\Character.cpp">
       <Filter>Source Files\Engine\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\AIController\State_Idle.cpp">
+      <Filter>Source Files\Game\AIController</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\AIController\State_Patrol.cpp">
+      <Filter>Source Files\Game\AIController</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\AIController\State_Attack.cpp">
+      <Filter>Source Files\Game\AIController</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\AIController\AIController.cpp">
+      <Filter>Source Files\Game\AIController</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -335,21 +335,6 @@
     <ClInclude Include="include\Engine\Astar\Node_Graph.h">
       <Filter>Header Files\Engine\Astar</Filter>
     </ClInclude>
-    <ClInclude Include="include\Game\CharacterController\CharacterController.h">
-      <Filter>Header Files\Game\CharacterController</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Game\CharacterController\CharacterController_Data.h">
-      <Filter>Header Files\Game\CharacterController</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Game\CharacterController\State_Attack.h">
-      <Filter>Header Files\Game\CharacterController</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Game\CharacterController\State_Idle.h">
-      <Filter>Header Files\Game\CharacterController</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Game\CharacterController\State_Patrol.h">
-      <Filter>Header Files\Game\CharacterController</Filter>
-    </ClInclude>
     <ClInclude Include="include\Engine\Component\BoxCollider_3D.h">
       <Filter>Header Files\Engine\Component</Filter>
     </ClInclude>
@@ -373,6 +358,21 @@
     </ClInclude>
     <ClInclude Include="include\Engine\Component\Character.h">
       <Filter>Header Files\Engine\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Game\AIController\State_Patrol.h">
+      <Filter>Header Files\Game\AIController</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Game\AIController\State_Idle.h">
+      <Filter>Header Files\Game\AIController</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Game\AIController\State_Attack.h">
+      <Filter>Header Files\Game\AIController</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Game\AIController\AIController_Data.h">
+      <Filter>Header Files\Game\AIController</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Game\AIController\AIController.h">
+      <Filter>Header Files\Game\AIController</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -6,7 +6,7 @@
 #include <Engine/Component/RenderComp_3D.h>
 #include <Engine\Component\Transform_3D.h>
 #include <Engine\Lighting\Light.h>
-#include <Game\CharacterController\CharacterController.h>
+#include <Game\AIController\AIController.h>
 #include <Game\Misc\Bullet.h>
 
 #include <iostream>
@@ -24,11 +24,13 @@ void Game_Scene::init()
 	//Load the scene
 	o_SceneLoader = new SceneLoader("assets/scenes/Robot_Scene.xml", po_Loader, mspo_Objects);
 	b_Init = true;
+	player = static_cast<GameObject_3D*>(mspo_Objects.find("Robot")->second);
 }
 
 //Do something with keyboard input
 void Game_Scene::keyboard_Input(GLfloat f_Delta_In, GLboolean* pab_KeyArray_In, GLboolean* pab_LockedKeys_In)
 {
+	if (!b_Init) { return; }
 	float f_Speed = 20 * f_Delta_In;
 	float f_MagicNumber = 0.7071f;
 	float moveSpeed = .3f;
@@ -85,11 +87,13 @@ void Game_Scene::keyboard_Input(GLfloat f_Delta_In, GLboolean* pab_KeyArray_In, 
 		lock_mouse(false);
 	}
 	if (!pab_KeyArray_In[GLFW_KEY_ESCAPE]) pab_LockedKeys_In[GLFW_KEY_ESCAPE] = false;
+
+
 	if (pab_KeyArray_In[GLFW_KEY_UP])
 	{
-		static_cast<GameObject_3D*>(mspo_Objects.find("Robot")->second)->move(glm::vec3(0, 0, 1), -moveSpeed * f_Delta_In);
-		glm::vec3 tempVec = static_cast<GameObject_3D*>(mspo_Objects.find("Robot")->second)->get_Position();
-		std::cout << tempVec.x << " " << tempVec.y << " " << tempVec.z << std::endl;
+		player->move(glm::vec3(0, 0, 1), -moveSpeed * f_Delta_In);
+		glm::vec3 tempVec = player->get_Position();
+		std::cout << "(" << tempVec.x << ", " << tempVec.y << ", " << tempVec.z << " )" << std::endl;
 		//mspo_Objects.find("Robot Left Arm")->second->animate(40.f, f_Delta_In);
 		//mspo_Objects.find("Robot Right Arm")->second->animate(-40.f, f_Delta_In);
 		//mspo_Objects.find("Robot Left Leg")->second->animate(-40.f, f_Delta_In);
@@ -97,15 +101,13 @@ void Game_Scene::keyboard_Input(GLfloat f_Delta_In, GLboolean* pab_KeyArray_In, 
 	}
 	if (pab_KeyArray_In[GLFW_KEY_DOWN])
 	{
-		static_cast<GameObject_3D*>(mspo_Objects.find("Robot")->second)->move(glm::vec3(0, 0, 1), moveSpeed * f_Delta_In);
+		player->move(glm::vec3(0, 0, 1), moveSpeed * f_Delta_In);
 
 		//mspo_Objects.find("Robot Left Arm")->second->animate(40.f, f_Delta_In);
 		//mspo_Objects.find("Robot Right Arm")->second->animate(-40.f, f_Delta_In);
 		//mspo_Objects.find("Robot Left Leg")->second->animate(-40.f, f_Delta_In);
 		//mspo_Objects.find("Robot Right Leg")->second->animate(40.f, f_Delta_In);
 	}
-	if (pab_KeyArray_In[GLFW_KEY_LEFT]) static_cast<GameObject_3D*>(mspo_Objects.find("Robot")->second)->turn(80.f * f_Delta_In, glm::vec3(0.f, 1.f, 0.f));
-	if (pab_KeyArray_In[GLFW_KEY_RIGHT]) static_cast<GameObject_3D*>(mspo_Objects.find("Robot")->second)->turn(-80.f * f_Delta_In, glm::vec3(0.f, 1.f, 0.f));
 
 	if (pab_KeyArray_In[GLFW_KEY_F])
 	{
@@ -113,6 +115,8 @@ void Game_Scene::keyboard_Input(GLfloat f_Delta_In, GLboolean* pab_KeyArray_In, 
 		static_cast<RigidBody*>(mspo_Objects.find("Robot")->second->get_Components().at("RigidBody"))->setGrounded(false);
 	}
 
+	if (pab_KeyArray_In[GLFW_KEY_LEFT]) player->turn(80.f * f_Delta_In, glm::vec3(0.f, 1.f, 0.f));
+	if (pab_KeyArray_In[GLFW_KEY_RIGHT]) player->turn(-80.f * f_Delta_In, glm::vec3(0.f, 1.f, 0.f));
 }
 
 void Game_Scene::mouse_Input(GLboolean* pab_MouseArray_In, GLfloat f_Delta_In)
@@ -149,25 +153,35 @@ void Game_Scene::update_Scene(GLfloat f_Delta_In, glm::vec2 v2_MousePos_In)
 	{
 		for (auto const& pair : mspo_Objects)
 		{
-			Game_Object * po_GameObject = pair.second;
-
+			GameObject_3D* po_GameObject = dynamic_cast<GameObject_3D*>(pair.second);
+		
 			//update game object
 			po_GameObject->update();
-
+		
 			//update game components
 			Component * po_Component;
+		
 			//Update AI character controller
 			po_Component = po_GameObject->get_Component("Character_Controller");
 			if (po_Component != nullptr) {
 				//cast
-				CharacterController* po_CharacterController = static_cast<CharacterController*>(po_Component);
+				AIController* po_AIController = static_cast<AIController*>(po_Component);
 				//set data
-				CharacterController_Data* po_ccd = po_CharacterController->AccessData();
+				AIController_Data* po_ccd = po_AIController->AccessData();
 				po_ccd->deltaTime = f_Delta_In;
+				po_ccd->player = player;
 				//update
-				po_CharacterController->Update(this);
+				po_AIController->Update();
 			}
-			//other components...
+		
+			//Rigid Body
+			po_Component = po_GameObject->get_Component("RigidBody");
+			if (po_Component != nullptr) {
+				//cast
+				RigidBody* po_RigidBody = static_cast<RigidBody*>(po_Component);
+				//update
+				po_RigidBody->update(po_GameObject->get_Position());
+			}
 		}
 		
 		camera_3D->move_Keyboard(f_Delta_In);
