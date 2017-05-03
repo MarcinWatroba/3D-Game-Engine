@@ -19,9 +19,16 @@ class Game_Scene : public Scene
 private:
 	bool b_Render[render::Num];
 	bool b_SwitchCamMode;
+
+	// the following variables are used to help control when audio is played
+	// moving
 	int walkCount = 0;
-	int triggerHoldCount = 0;	// used in firing
+	int walkRate = 35;
+	// firing
+	int triggerHoldCount = 0;
 	int ammoRemaining = 6;
+	int firerate = 100;
+	
 public:
 	//Constructor
 	Game_Scene() {};
