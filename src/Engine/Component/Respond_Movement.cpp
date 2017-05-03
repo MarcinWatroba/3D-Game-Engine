@@ -26,41 +26,43 @@ void Respond_Movement::turn(GameObject_3D* po_GameObject_In, float f_Angle_In, g
 	if (po_GameObject_In->is_Container()) for (auto const& pair : po_GameObject_In->get_Children()) pair.second->force_Update();
 }
 
-#include <iostream>
 bool Respond_Movement::facePoint(GameObject_3D* po_GameObject_In, glm::vec3 v3_Target_In, float f_rotation)
 {
 	if (po_GameObject_In->get_Position() == v3_Target_In) { return false; }
 	glm::vec3 toPoint = v3_Target_In - po_GameObject_In->get_Position();
 	toPoint.y = 0;
-	if (toPoint == glm::vec3(0,0,0)) { return false; }
 
 	Transform_3D* transform = static_cast<Transform_3D*>(po_GameObject_In->get_Component("Transform_3D"));
 	glm::vec3 forward = transform->get_Forward();
-	glm::vec3 up = transform->get_Up();
 	glm::vec3 aim = glm::normalize(toPoint);
+	//if vectors are the same then angle = 0, object is facing point
+	//(without this floating point error causes the dot product to be > 1 creating a nan error)
+	if (glm::length2(forward - aim) < 0.001f) { return true; }
 
 	//dot product of the aim vector and the left direction vector gives
 	//positive values for left turns and negative values for right turns
-	float cosTheta = glm::dot(aim, -transform->get_Right());
-	std::cout << cosTheta << std::endl;
+	float direction = glm::dot(aim, -transform->get_Right());
+
 	//get the desired rotation angle using the dot product
 	float angle = glm::degrees(glm::acos(glm::dot(aim, forward)));
-	if (cosTheta < 0) { angle = -angle; }
-	std::cout << angle << std::endl;
-
 	//rotate toward point by the given rotation amount
 	if (angle > f_rotation)
 	{
-		po_GameObject_In->turn(-f_rotation, up);
-	}
-	else if (angle < -f_rotation)
-	{
-		po_GameObject_In->turn(f_rotation, up);
+		if (direction < 0)
+		{
+			po_GameObject_In->turn(f_rotation, transform->get_Up());
+		}
+		else
+		{
+			po_GameObject_In->turn(-f_rotation, transform->get_Up());
+		}
+		
 	}
 	//rotation will overshoot angle to target, move by smaller amount to face toward point
 	else
 	{
-		po_GameObject_In->turn(angle, up);
+		if (direction < 0) { angle = -angle; }
+		po_GameObject_In->turn(-angle, transform->get_Up());
 		return true;
 	}
 
@@ -70,6 +72,7 @@ bool Respond_Movement::facePoint(GameObject_3D* po_GameObject_In, glm::vec3 v3_T
 
 bool Respond_Movement::atPoint(GameObject_3D* po_GameObject_In, glm::vec3 v3_Target_In, float f_tolerance)
 {
+	v3_Target_In.y = po_GameObject_In->get_Position().y;
 	glm::vec3 dist = v3_Target_In - po_GameObject_In->get_Position();
 	//avoid square root by comparing the sqaured distances
 	return (glm::length2(dist) < f_tolerance*f_tolerance);
@@ -91,20 +94,20 @@ bool Respond_Movement::moveToPoint(GameObject_3D* po_GameObject_In, glm::vec3 v3
 	//if facing point move forward
 	if (facingPoint)
 	{
-		float dist = glm::length(po_GameObject_In->get_Position() - v3_Target_In);
-		move(po_GameObject_In, glm::vec3(0, 0, 1), dist);
-		return true;
+		glm::vec3 separation = po_GameObject_In->get_Position() - v3_Target_In;
+		separation.y = 0;
+		float dist = glm::length(separation);
 		////move toward the point by the given move speed
-		//if (dist > f_Speed_In)
-		//{
-		//	move(po_GameObject_In, glm::vec3(0, 0, 1), f_Speed_In);
-		//}
-		////move step would overshoot target, move exactly to point
-		//else
-		//{
-		//	move(po_GameObject_In, glm::vec3(0, 0, 1), dist);
-		//	return true;
-		//}
+		if (dist > f_Speed_In)
+		{
+			move(po_GameObject_In, glm::vec3(0, 0, 1), f_Speed_In);
+		}
+		//move step would overshoot target, move exactly to point
+		else
+		{
+			move(po_GameObject_In, glm::vec3(0, 0, 1), dist);
+			return true;
+		}
 	}
 	return false;
 }

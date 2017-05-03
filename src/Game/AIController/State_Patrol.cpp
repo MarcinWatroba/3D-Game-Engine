@@ -22,18 +22,14 @@ void State_Patrol::OnEnter()
 
 fsm::FSM_Command State_Patrol::OnRun()
 {
-	std::cout << "Patrol_run\n";
 	//
 	Respond_Movement* movement = static_cast<Respond_Movement*>(data->character->get_Component("Respond_Movement"));
-
-	glm::vec3 *bug = &data->character->get_Position();
-	std::cout << bug->x << " " << bug->y << " " << bug->z << std::endl;
 
 	//check if player is close enough to chase
 	if (movement->withinRange(data->character, data->player->get_Position(), data->startChaseDistance))
 	{
 		nextStateID = ccs::Attack;
-		//return fsm::Switch;
+		return fsm::Switch;
 	}
 
 	//move to point

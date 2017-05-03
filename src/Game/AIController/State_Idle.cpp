@@ -12,7 +12,6 @@ void State_Idle::OnEnter()
 
 fsm::FSM_Command State_Idle::OnRun()
 {
-	std::cout << "Idle_run\n";
 	//
 	nextStateID = ccs::Patrol;
 	return fsm::Switch;

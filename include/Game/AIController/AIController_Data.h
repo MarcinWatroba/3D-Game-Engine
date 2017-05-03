@@ -23,7 +23,7 @@ struct AIController_Data
 	//maximum distance to use character attack
 	const float attackRange = 5.0f;
 	//character turn speed, degrees per seconds
-	const float dps = 60.0f;
+	const float dps = 360.0f;
 	//time step
 	float deltaTime;
 	//AI map
