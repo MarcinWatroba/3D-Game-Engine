@@ -49,6 +49,11 @@ void CollisionManager::collisionChecks(std::map<std::string, Game_Object*> &game
 									{
 
 									}
+									else if (pair.second->get_Tag() == "Floor")
+									{
+										std::cout << "Dab" << std::endl;
+										dynamic_cast<RigidBody*>(pair.second->get_Components().at("RigidBody"))->setGrounded(true);
+									}
 									else if (!tempBody->get_Moveable())
 									{
 										//Stop the object moving in the current direction

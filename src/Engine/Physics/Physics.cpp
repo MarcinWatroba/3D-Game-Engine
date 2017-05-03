@@ -11,13 +11,23 @@ Physics::~Physics()
 
 }
 
-float Physics::eulerIntegration(float force, float mass, float position)
+float Physics::eulerIntegration(float force, float mass, float position, bool grounded)
 {
 	float timestep = 1;
 	float acceleration = 0;
 	float newAcceleration = 0;
 	float time = 0;
+	//force += gravConst * mass;
+	if (grounded)
+	{
+		gravConst = 0;
+	}
+	else
+	{
+		gravConst = -0.982f;
+	}
 
+	;
 	float velocity = 0;
 
 	while (time <= 100)
@@ -34,6 +44,7 @@ float Physics::eulerIntegration(float force, float mass, float position)
 		//newAcceleration = force(time, position, velocity) / mass;
 		//velocity += timestep * (newAcceleration - acceleration) / 2;
 	}
+	velocity += gravConst;
 	return velocity;
 }
 
@@ -79,62 +90,8 @@ float Physics::acceleration(const Active &state, float t)
 	return -k * state.x - b*state.v;
 }
 
-glm::vec3 Physics::applyGravity(glm::vec3 position, float mass)
+glm::vec3 Physics::applyGravity(glm::vec3 position, float mass, float force)
 {
-	// Modify y transform of passed object by -9.82f unless object is grounded
 	return position;
 }
 
-void Physics::beginLoop()
-{
-	std::cout << "Hello user!" << std::endl;
-	std::cout << "Which equation would you like to use?" << std::endl;
-	std::cout << "A - Euler Integration?" << std::endl;
-	std::cout << "B - SUVAT?" << std::endl;
-	std::cout << "C - RK4?" << std::endl;
-	std::cin >> cL;
-	if (cL == 'A' || cL == 'a')
-	{
-		std::cout << "What is the mass of the object?" << std::endl;
-		std::cin >> mass;
-		std::cout << "What is the position of the object?" << std::endl;
-		std::cin >> position;
-		std::cout << "What is the force applied?" << std::endl;
-		std::cin >> force;
-		float result = eulerIntegration(force, mass, position);
-		std::cout << "Using these values, the answer is " << result << std::endl << std::endl;
-		system("PAUSE");
-
-	}
-	if (cL == 'B' || cL == 'b')
-	{
-		std::cout << "What is the acceleration of the object?" << std::endl;
-		std::cin >> a;
-		std::cout << "How long would you like to measure for?" << std::endl;
-		std::cin >> t;
-		float result = SUVAT(a, t);
-		std::cout << "Using these values, the answer is " << result << std::endl << std::endl;
-		system("PAUSE");
-	}
-	if (cL == 'C' || cL == 'c')
-	{
-		std::cout << "What is the position of the object?" << std::endl;
-		std::cin >> stat.x;
-		std::cout << "What is the velocity of the object?" << std::endl;
-		std::cin >> stat.v;
-		std::cout << "How long would you like to measure for?" << std::endl;
-		std::cin >> t;
-		RK4(stat, t, dT);
-		std::cout << "Using these values, the position is " << stat.x << " and the velocity is " << stat.v << std::endl << std::endl;
-		system("PAUSE");
-	}
-	if (cL == 'D' || cL == 'd')
-	{
-
-	}
-	if (cL == 'E' || cL == 'e')
-	{
-
-	}
-	exit(EXIT_SUCCESS);
-}

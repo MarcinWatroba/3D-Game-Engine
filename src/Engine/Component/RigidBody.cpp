@@ -47,7 +47,7 @@ void RigidBody::update(glm::vec3 &pos)
 	centreOfMass = pos;
 	if (grounded)
 	{
-		velocity = phys.eulerIntegration(forward_Force, mass, pos.z);
+		velocity = phys.eulerIntegration(forward_Force, mass, pos.z, grounded);
 	}
 	else
 	{
@@ -59,10 +59,9 @@ void RigidBody::update(glm::vec3 &pos)
 			}
 			else
 			{
-				jumpVelocity = phys.eulerIntegration(jumpForce, mass, pos.y);
+				jumpVelocity = phys.eulerIntegration(jumpForce, mass, pos.y, grounded);
 			}
-			
-			
+
 		}
 		else
 		{
@@ -74,7 +73,7 @@ void RigidBody::update(glm::vec3 &pos)
 			}
 			else
 			{
-				jumpVelocity = phys.eulerIntegration(-jumpForce, mass, pos.y);
+				jumpVelocity = phys.eulerIntegration(0, mass, pos.y, grounded);
 			}
 			
 			

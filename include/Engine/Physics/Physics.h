@@ -1,7 +1,6 @@
 #ifndef PHYSICS_H
 #define PHYSICS_H
 
-#define GRAVITY = 9.8f;
 
 
 #include <glm\glm.hpp>
@@ -33,17 +32,17 @@ private:
 	float a;
 	float t;
 	float dT = 60;
+	float gravConst = -9.82f;
 	Active stat;
 public:
 	Physics();
 	~Physics();
 	void RK4(Active &state, float t, float dt);
 	Derivative evaluate(const Active &initial, float t, float dt, const Derivative &d);
-	float eulerIntegration(float force, float mass, float position);
+	float eulerIntegration(float force, float mass, float position, bool grounded);
 	float SUVAT(float accel, float time);
 	float acceleration(const Active &state, float t);
-	glm::vec3 applyGravity(glm::vec3 position, float mass);
-	void beginLoop();
+	glm::vec3 applyGravity(glm::vec3 position, float mass, float force);
 };
 
 #endif
