@@ -17,9 +17,9 @@ namespace ccs//character controller states
 struct AIController_Data
 {
 	//maximum distance to begin switch to chasing and attacking the player
-	const float startChaseDistance = 15.0f;
+	const float startChaseDistance = 10.0f;
 	//distance to stop chasing the player
-	const float stopChaseDistance = 10.0f;
+	const float stopChaseDistance = 15.0f;
 	//maximum distance to use character attack
 	const float attackRange = 5.0f;
 	//character turn speed, degrees per seconds

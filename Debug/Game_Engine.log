@@ -1,2 +1,41 @@
-﻿  Game_Engine.vcxproj -> H:\Desktop\GAMES PROGRAMMING GROUP PROJECT\NewEngine\Game_Engine_Stan_Lee\Debug\Game_Engine.exe
+﻿  Game_Scene.cpp
+  State_Patrol.cpp
+  State_Idle.cpp
+  State_Attack.cpp
+  AIController.cpp
+  SceneLoader.cpp
+  Transform_3D.cpp
+  Respond_Movement.cpp
+  BoxCollider_3D.cpp
+  Generating Code...
+  Compiling...
+  Bullet.cpp
+  Game.cpp
+  GameObject_3D.cpp
+h:\desktop\games programming group project\newengine\game_engine_stan_lee\src\engine\game_objects\gameobject_3d.cpp(92): warning C4018: '<': signed/unsigned mismatch
+h:\desktop\games programming group project\newengine\game_engine_stan_lee\src\engine\game_objects\gameobject_3d.cpp(117): warning C4018: '<': signed/unsigned mismatch
+h:\desktop\games programming group project\newengine\game_engine_stan_lee\src\engine\game_objects\gameobject_3d.cpp(274): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+h:\desktop\games programming group project\newengine\game_engine_stan_lee\src\engine\game_objects\gameobject_3d.cpp(292): warning C4018: '<': signed/unsigned mismatch
+h:\desktop\games programming group project\newengine\game_engine_stan_lee\src\engine\game_objects\gameobject_3d.cpp(294): warning C4305: 'argument': truncation from 'double' to 'float'
+  Generating Code...
+GLAD.lib(glad.obj) : warning LNK4099: PDB 'GLAD.pdb' was not found with 'GLAD.lib(glad.obj)' or at 'H:\Desktop\GAMES PROGRAMMING GROUP PROJECT\NewEngine\Game_Engine_Stan_Lee\Debug\GLAD.pdb'; linking object as if no debug info
+glfw3.lib(context.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(context.obj)' or at 'H:\Desktop\GAMES PROGRAMMING GROUP PROJECT\NewEngine\Game_Engine_Stan_Lee\Debug\glfw.pdb'; linking object as if no debug info
+glfw3.lib(init.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(init.obj)' or at 'H:\Desktop\GAMES PROGRAMMING GROUP PROJECT\NewEngine\Game_Engine_Stan_Lee\Debug\glfw.pdb'; linking object as if no debug info
+glfw3.lib(input.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(input.obj)' or at 'H:\Desktop\GAMES PROGRAMMING GROUP PROJECT\NewEngine\Game_Engine_Stan_Lee\Debug\glfw.pdb'; linking object as if no debug info
+glfw3.lib(monitor.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(monitor.obj)' or at 'H:\Desktop\GAMES PROGRAMMING GROUP PROJECT\NewEngine\Game_Engine_Stan_Lee\Debug\glfw.pdb'; linking object as if no debug info
+glfw3.lib(vulkan.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(vulkan.obj)' or at 'H:\Desktop\GAMES PROGRAMMING GROUP PROJECT\NewEngine\Game_Engine_Stan_Lee\Debug\glfw.pdb'; linking object as if no debug info
+glfw3.lib(window.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(window.obj)' or at 'H:\Desktop\GAMES PROGRAMMING GROUP PROJECT\NewEngine\Game_Engine_Stan_Lee\Debug\glfw.pdb'; linking object as if no debug info
+glfw3.lib(win32_init.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(win32_init.obj)' or at 'H:\Desktop\GAMES PROGRAMMING GROUP PROJECT\NewEngine\Game_Engine_Stan_Lee\Debug\glfw.pdb'; linking object as if no debug info
+glfw3.lib(win32_joystick.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(win32_joystick.obj)' or at 'H:\Desktop\GAMES PROGRAMMING GROUP PROJECT\NewEngine\Game_Engine_Stan_Lee\Debug\glfw.pdb'; linking object as if no debug info
+glfw3.lib(win32_monitor.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(win32_monitor.obj)' or at 'H:\Desktop\GAMES PROGRAMMING GROUP PROJECT\NewEngine\Game_Engine_Stan_Lee\Debug\glfw.pdb'; linking object as if no debug info
+glfw3.lib(win32_time.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(win32_time.obj)' or at 'H:\Desktop\GAMES PROGRAMMING GROUP PROJECT\NewEngine\Game_Engine_Stan_Lee\Debug\glfw.pdb'; linking object as if no debug info
+glfw3.lib(win32_tls.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(win32_tls.obj)' or at 'H:\Desktop\GAMES PROGRAMMING GROUP PROJECT\NewEngine\Game_Engine_Stan_Lee\Debug\glfw.pdb'; linking object as if no debug info
+glfw3.lib(win32_window.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(win32_window.obj)' or at 'H:\Desktop\GAMES PROGRAMMING GROUP PROJECT\NewEngine\Game_Engine_Stan_Lee\Debug\glfw.pdb'; linking object as if no debug info
+glfw3.lib(wgl_context.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(wgl_context.obj)' or at 'H:\Desktop\GAMES PROGRAMMING GROUP PROJECT\NewEngine\Game_Engine_Stan_Lee\Debug\glfw.pdb'; linking object as if no debug info
+glfw3.lib(egl_context.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(egl_context.obj)' or at 'H:\Desktop\GAMES PROGRAMMING GROUP PROJECT\NewEngine\Game_Engine_Stan_Lee\Debug\glfw.pdb'; linking object as if no debug info
+SOIL.lib(image_DXT.obj) : warning LNK4099: PDB 'SOIL.pdb' was not found with 'SOIL.lib(image_DXT.obj)' or at 'H:\Desktop\GAMES PROGRAMMING GROUP PROJECT\NewEngine\Game_Engine_Stan_Lee\Debug\SOIL.pdb'; linking object as if no debug info
+SOIL.lib(image_helper.obj) : warning LNK4099: PDB 'SOIL.pdb' was not found with 'SOIL.lib(image_helper.obj)' or at 'H:\Desktop\GAMES PROGRAMMING GROUP PROJECT\NewEngine\Game_Engine_Stan_Lee\Debug\SOIL.pdb'; linking object as if no debug info
+SOIL.lib(SOIL.obj) : warning LNK4099: PDB 'SOIL.pdb' was not found with 'SOIL.lib(SOIL.obj)' or at 'H:\Desktop\GAMES PROGRAMMING GROUP PROJECT\NewEngine\Game_Engine_Stan_Lee\Debug\SOIL.pdb'; linking object as if no debug info
+SOIL.lib(stb_image_aug.obj) : warning LNK4099: PDB 'SOIL.pdb' was not found with 'SOIL.lib(stb_image_aug.obj)' or at 'H:\Desktop\GAMES PROGRAMMING GROUP PROJECT\NewEngine\Game_Engine_Stan_Lee\Debug\SOIL.pdb'; linking object as if no debug info
+  Game_Engine.vcxproj -> H:\Desktop\GAMES PROGRAMMING GROUP PROJECT\NewEngine\Game_Engine_Stan_Lee\Debug\Game_Engine.exe
   Game_Engine.vcxproj -> H:\Desktop\GAMES PROGRAMMING GROUP PROJECT\NewEngine\Game_Engine_Stan_Lee\Debug\Game_Engine.pdb (Partial PDB)
