@@ -9,7 +9,7 @@ Character::Character(std::string inType)
 	}
 	else if (typeOfChar == "Player")
 	{
-		health = 3;
+		health = 300;
 		numberOfBullets = 100;
 	}
 	else if (typeOfChar == "Enemy")

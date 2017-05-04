@@ -70,6 +70,7 @@ void GameObject_3D::add_Texture(std::string s_Name_In, Texture* p_Component_In)
 
 void GameObject_3D::update()
 {
+
 	if (po_Parent != nullptr)
 	{
 		static_cast<Transform_3D*>(mipo_Components.find("Transform_3D")->second)->force_Update(); // Update must be forced to update any children

@@ -109,40 +109,19 @@ void CollisionManager::collisionChecks(std::map<std::string, Game_Object*> &game
 					BoxCollider_3D* tempCol = dynamic_cast<BoxCollider_3D*>(bullet->get_Components().at("BoxCollider_3D"));
 					for (auto const& pair2 : gameObjects)
 					{
-						if (pair == pair2) { continue; }//ignore object that bullet belongs to
-
+					//if (currentObject == pair2.second) { continue; }
 						BoxCollider_3D* secondCol = dynamic_cast<BoxCollider_3D*>(pair2.second->get_Component("BoxCollider_3D"));
-
-						//'hack' to fix hitting robot:
-						//if (secondCol == nullptr && pair2.second->get_Children().size() != 0)
-						//{
-						//	for (auto const& pair3 : pair2.second->get_Children())
-						//	{
-						//		//if child has a BoxCollider set collider to that and break out of the loop
-						//		secondCol = dynamic_cast<BoxCollider_3D*>(pair3.second->get_Component("BoxCollider_3D"));
-						//		if (secondCol != nullptr) { break; }
-						//	}
-						//}
-
-
 						if (secondCol != nullptr)
 						{
-							if (pair2.second->get_Name() == "Robot Body")//so I was wrong about child components not being in the list 
-							{
-								bool a = 1;//junk code just so a breakpoint can be placed here, gets here
-							}
-
-							bool check = tempCol->intersects(*secondCol);//always false without hack, but hack works...
+							bool check = tempCol->intersects(*secondCol);
 							if (check)
 							{
-
-								if (pair2.second->get_Name() == "Robot Body")
+								if (pair2.second->get_Tag() == "Player")
 								{
-									bool a = 1;//junk code just so a breakpoint can be placed here, never gets here
+									bool a = 1;
 								}
-
 								//std::cout << "Toppus Kekkus" << std::endl;
-								if ((pair2.second->get_Components().count("RigidBody") && bullet->get_Components().count("RigidBody")))
+								if ((pair2.second->get_Components().count("RigidBody") && bullet->get_Components().count("RigidBody")) || (pair2.second->get_Parent()->get_Components().count("RigidBody") && bullet->get_Components().count("RigidBody")))
 								{
 									RigidBody* tempBody;
 									if (pair2.second->get_Parent())
@@ -154,8 +133,7 @@ void CollisionManager::collisionChecks(std::map<std::string, Game_Object*> &game
 										tempBody = dynamic_cast<RigidBody*>(pair2.second->get_Components().at("RigidBody"));
 									}
 									
-									//enemy shot by player
-									if (currentObject->get_Name() == "Robot")
+									if (currentObject->get_Name() == "Robot") // Player Shooting Enemy
 									{
 										if (pair2.second->get_Tag() == "Enemy")
 										{
@@ -172,23 +150,24 @@ void CollisionManager::collisionChecks(std::map<std::string, Game_Object*> &game
 											colChecks.insert(std::make_pair(bullet, pair2.second));
 										}
 									}
-									else
+									else // Enemy Shooting Player
 									{
-										//player shot by enemy
-										if (pair2.second->get_Name() == "Robot")
+										if (pair2.second->get_Tag() == "Player")
 										{
 											if (currentObject->get_Tag() == "Enemy")
 											{
-												//... exact code as enemy shot player
 												colChecks.insert(std::make_pair(bullet, pair2.second));
-												dynamic_cast<Character*>(pair2.second->get_Components().at("Character"))->loseLife();
-												if (dynamic_cast<Character*>(pair2.second->get_Components().at("Character"))->getHealth() == 0)
+												dynamic_cast<Character*>(pair2.second->get_Parent()->get_Components().at("Character"))->loseLife();
+												if (dynamic_cast<Character*>(pair2.second->get_Parent()->get_Components().at("Character"))->getHealth() == 0)
 												{
-													pair2.second->set_ToDelete();
+													pair2.second->get_Parent()->set_ToDelete();
 												}
 											}
 										}
-										colChecks.insert(std::make_pair(bullet, pair2.second));
+										else
+										{
+											colChecks.insert(std::make_pair(bullet, pair2.second));
+										}
 									}
 								}
 							}
@@ -197,7 +176,6 @@ void CollisionManager::collisionChecks(std::map<std::string, Game_Object*> &game
 				}
 			}
 		}
-
 	}
 	
 

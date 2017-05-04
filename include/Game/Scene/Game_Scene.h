@@ -26,6 +26,7 @@ private:
 	//Collision Manager
 	CollisionManager colManage;
 	GameObject_3D* player;
+	std::map<int, std::string> levelList;
 
 	void destroyGameObject(Game_Object* po_object);
 
@@ -49,6 +50,8 @@ public:
 	void clean_Up();
 
 	void reload_Scene();
+
+	void load_Scene(int i);
 
 
 };

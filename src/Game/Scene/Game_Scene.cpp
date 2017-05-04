@@ -157,12 +157,18 @@ void Game_Scene::reload_Scene()
 //Update the scene
 void Game_Scene::update_Scene(GLfloat f_Delta_In, glm::vec2 v2_MousePos_In)
 {
+	
 	////Initialize
 	if (!b_Init) init();
 
 	auto playerLookup = mspo_Objects.find("Robot");
 	if (playerLookup != mspo_Objects.end()) { player = static_cast<GameObject_3D*>(playerLookup->second); }
-	else { player = nullptr; }
+	else {
+		//player killed
+		player = nullptr;
+		//quit to main menu
+		//
+	}
 
 	if (b_Init)
 	{
@@ -217,7 +223,6 @@ void Game_Scene::update_Scene(GLfloat f_Delta_In, glm::vec2 v2_MousePos_In)
 
 		//Check for Collisions between Game Objects
 		colManage.collisionChecks(mspo_Objects);
-		
 
 		//delete objects that have deletion flag
 		auto itr = mspo_Objects.begin();
@@ -246,7 +251,7 @@ void Game_Scene::render()
 
 		for (auto const& pair : mspo_Objects)
 		{
-			if (pair.second->get_Tag() == "Object" || pair.second->get_Tag() == "Enemy" || pair.second->get_Tag() == "Floor" || pair.second->get_Tag() == "Ammo" ) pair.second->render(po_Loader->get_Shader("0"));
+			if (pair.second->get_Tag() == "Object" || pair.second->get_Tag() == "Enemy" || pair.second->get_Tag() == "Player" || pair.second->get_Tag() == "Floor" || pair.second->get_Tag() == "Ammo" ) pair.second->render(po_Loader->get_Shader("0"));
 			else if (pair.second->get_Tag() == "Light")
 			{
 				static_cast<Light*>(pair.second)->update_Shader(po_Loader->get_Shader("0"));
@@ -254,6 +259,19 @@ void Game_Scene::render()
 			}
 		}
 	}
+}
+
+
+void Game_Scene::load_Scene(int i)
+{
+	if (levelList.count(i))
+	{
+		std::string sLevel = levelList.at(i);
+		o_SceneLoader = new SceneLoader(sLevel.c_str(), po_Loader, mspo_Objects);
+		b_Init = true;
+		player = static_cast<GameObject_3D*>(mspo_Objects.find("Robot")->second);
+	}
+
 }
 
 void Game_Scene::destroyGameObject(Game_Object* po_object)
