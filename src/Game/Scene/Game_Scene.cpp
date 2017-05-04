@@ -24,7 +24,32 @@ void Game_Scene::init()
 	//Load the scene
 	o_SceneLoader = new SceneLoader("assets/scenes/Robot_Scene.xml", po_Loader, mspo_Objects);
 	b_Init = true;
-	player = static_cast<GameObject_3D*>(mspo_Objects.find("Robot")->second);
+
+	//get player pointer
+	findPlayer();
+
+	//count enemies
+	i_numEnemies = 0;
+	for (auto const& pair : mspo_Objects)
+	{
+		if (pair.second->get_Tag() == "Enemy") { i_numEnemies++; }
+	}
+}
+
+bool Game_Scene::findPlayer()
+{
+	for (auto const& pair : mspo_Objects)
+	{
+		//player found
+		if (pair.second->get_Tag() == "Player")
+		{
+			player = static_cast<GameObject_3D*>(pair.second);
+			return true;
+		}
+	}
+	//no player in scene
+	player = nullptr;
+	return false;
 }
 
 //Do something with keyboard input
@@ -71,7 +96,6 @@ void Game_Scene::keyboard_Input(GLfloat f_Delta_In, GLboolean* pab_KeyArray_In, 
 		camera_3D->fly_Down();
 	}
 
-
 	if (pab_KeyArray_In[GLFW_KEY_R] && !pab_LockedKeys_In[GLFW_KEY_R])
 	{
 		reload_Scene();
@@ -89,9 +113,7 @@ void Game_Scene::keyboard_Input(GLfloat f_Delta_In, GLboolean* pab_KeyArray_In, 
 	if (!pab_KeyArray_In[GLFW_KEY_ESCAPE]) pab_LockedKeys_In[GLFW_KEY_ESCAPE] = false;
 
 	//player movement
-	auto playerLookup = mspo_Objects.find("Robot");
-	if (playerLookup == mspo_Objects.end()) { return; }
-	player = static_cast<GameObject_3D*>(playerLookup->second);
+	if (findPlayer() == false) { return; }
 
 	if (pab_KeyArray_In[GLFW_KEY_UP])
 	{
@@ -119,7 +141,7 @@ void Game_Scene::keyboard_Input(GLfloat f_Delta_In, GLboolean* pab_KeyArray_In, 
 		static_cast<RigidBody*>(player->get_Components().at("RigidBody"))->setGrounded(false);
 	}
 
-	if (pab_KeyArray_In[GLFW_KEY_LEFT]) player->turn(80.f * f_Delta_In, glm::vec3(0.f, 1.f, 0.f));
+	if (pab_KeyArray_In[GLFW_KEY_LEFT])  player->turn(80.f * f_Delta_In, glm::vec3(0.f, 1.f, 0.f));
 	if (pab_KeyArray_In[GLFW_KEY_RIGHT]) player->turn(-80.f * f_Delta_In, glm::vec3(0.f, 1.f, 0.f));
 }
 
@@ -128,9 +150,7 @@ void Game_Scene::mouse_Input(GLboolean* pab_MouseArray_In, GLfloat f_Delta_In)
 	if (!b_Init) { return; }
 
 	//player shootsching
-	auto playerLookup = mspo_Objects.find("Robot");
-	if (playerLookup == mspo_Objects.end()) { return; }
-	player = static_cast<GameObject_3D*>(playerLookup->second);
+	if (findPlayer() == false) { return; }
 
 	if (pab_MouseArray_In[GLFW_MOUSE_BUTTON_1])
 	{
@@ -161,13 +181,13 @@ void Game_Scene::update_Scene(GLfloat f_Delta_In, glm::vec2 v2_MousePos_In)
 	////Initialize
 	if (!b_Init) init();
 
-	auto playerLookup = mspo_Objects.find("Robot");
-	if (playerLookup != mspo_Objects.end()) { player = static_cast<GameObject_3D*>(playerLookup->second); }
-	else {
-		//player killed
-		player = nullptr;
+	if (findPlayer() == false) {
 		//quit to main menu
-		//
+		std::cout << "Game Over, Loser!" << std::endl;
+	}
+	if (i_numEnemies == 0) {
+		//level win!
+		std::cout << "Winner Winner Chicken Dinner!" << std::endl;
 	}
 
 	if (b_Init)
@@ -206,8 +226,10 @@ void Game_Scene::update_Scene(GLfloat f_Delta_In, glm::vec2 v2_MousePos_In)
 			}
 		}
 		
-		camera_3D->move_Keyboard(f_Delta_In);
+		//camera_3D->move_Keyboard(f_Delta_In);
+		camera_3D->set_CameraPos(-(player->get_Position()+glm::vec3(0,5,0)));
 		camera_3D->move_Mouse(f_Delta_In, v2_MousePos_In);
+		//player->turn(-camera_3D->yaw, glm::vec3(0.f, 1.f, 0.f));
 		camera_3D->update();
 		camera_3D->reset();
 
@@ -276,6 +298,9 @@ void Game_Scene::load_Scene(int i)
 
 void Game_Scene::destroyGameObject(Game_Object* po_object)
 {
+	//decrement enemy count
+	if (po_object->get_Tag() == "Enemy") { i_numEnemies--; }
+
 	//Remove all components
 	for (auto const& components : po_object->get_Components())
 	{

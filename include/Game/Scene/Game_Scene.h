@@ -25,10 +25,17 @@ private:
 
 	//Collision Manager
 	CollisionManager colManage;
-	GameObject_3D* player;
 	std::map<int, std::string> levelList;
 
+	//remove a game object from the scene
 	void destroyGameObject(Game_Object* po_object);
+
+	//find the player and set player pointer, returns false if no player found in scene
+	bool findPlayer();
+	GameObject_3D* player;
+
+	//number of enemies
+	int i_numEnemies;
 
 public:
 	//Constructor
