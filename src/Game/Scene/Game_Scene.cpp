@@ -13,7 +13,7 @@
 
 Game_Scene::Game_Scene()
 {
-	levelList.push_back("assets/scenes/Robot_Scene.xml");
+	levelList.push_back("assets/scenes/Kitchen.xml");
 
 }
 
@@ -22,15 +22,17 @@ void Game_Scene::init()
 {
 	//Initialize
 	lock_mouse(true);
+
 	b_Init = false;
 
 	camera_3D = new Camera_3D(45.f, 800.f / 600, 0.1f, 1000.f);
 	camera_3D->set_CameraPos(glm::vec3(0.f, -20.f, 0.f));
 
-	//Load the scene
-	//std::string sLevel = levelList.at(i);
-	//o_SceneLoader = new SceneLoader(sLevel.c_str(), po_Loader, mspo_Objects);
-	o_SceneLoader = new SceneLoader("assets/scenes/Robot_Scene.xml", po_Loader, mspo_Objects);
+	if (firstTime)
+	{
+		o_SceneLoader = new SceneLoader(levelList[0].c_str(), po_Loader, mspo_Objects);
+		firstTime = false;
+	}
 	b_Init = true;
 	player = static_cast<GameObject_3D*>(mspo_Objects.find("Robot")->second);
 	//player->set_Rotation(-camera_3D->get_Yaw() / 2.0f);
@@ -42,37 +44,7 @@ void Game_Scene::keyboard_Input(GLfloat f_Delta_In, GLboolean* pab_KeyArray_In, 
 	if (!b_Init) { return; }
 	float f_Speed = 20 * f_Delta_In;
 	float f_MagicNumber = 0.7071f;
-	float moveSpeed = .3f;
-
-	if (pab_KeyArray_In[GLFW_KEY_W])
-	{
-		camera_3D->set_Speed(f_Speed);
-		camera_3D->move_Forward();
-	}
-
-	if (pab_KeyArray_In[GLFW_KEY_S])
-	{
-		camera_3D->set_Speed(f_Speed);
-		camera_3D->move_Backward();
-	}
-		
-	if (pab_KeyArray_In[GLFW_KEY_A])
-	{
-		camera_3D->set_Speed(f_Speed);
-		camera_3D->move_Left();
-	}
-
-	if (pab_KeyArray_In[GLFW_KEY_D])
-	{
-		camera_3D->set_Speed(f_Speed);
-		camera_3D->move_Right();
-	}
-		
-	if (pab_KeyArray_In[GLFW_KEY_SPACE])
-	{
-		camera_3D->set_Speed(f_Speed);
-		camera_3D->fly_Up();
-	}
+	float moveSpeed = 1;
 
 	if (pab_KeyArray_In[GLFW_KEY_LEFT_CONTROL])
 	{
@@ -83,8 +55,8 @@ void Game_Scene::keyboard_Input(GLfloat f_Delta_In, GLboolean* pab_KeyArray_In, 
 
 	if (pab_KeyArray_In[GLFW_KEY_R] && !pab_LockedKeys_In[GLFW_KEY_R])
 	{
-		reload_Scene();
-
+		//reload_Scene();
+		load_Scene(0);
 		pab_LockedKeys_In[GLFW_KEY_R] = true;
 
 	}
@@ -102,7 +74,7 @@ void Game_Scene::keyboard_Input(GLfloat f_Delta_In, GLboolean* pab_KeyArray_In, 
 	if (playerLookup == mspo_Objects.end()) { return; }
 	player = static_cast<GameObject_3D*>(playerLookup->second);
 
-	if (pab_KeyArray_In[GLFW_KEY_UP])
+	if (pab_KeyArray_In[GLFW_KEY_W])
 	{
 		player->move(glm::vec3(0, 0, 1), moveSpeed * f_Delta_In);
 		glm::vec3 tempVec = player->get_Position();
@@ -112,7 +84,7 @@ void Game_Scene::keyboard_Input(GLfloat f_Delta_In, GLboolean* pab_KeyArray_In, 
 		//mspo_Objects.find("Robot Left Leg")->second->animate(-40.f, f_Delta_In);
 		//mspo_Objects.find("Robot Right Leg")->second->animate(40.f, f_Delta_In);
 	}
-	if (pab_KeyArray_In[GLFW_KEY_DOWN])
+	if (pab_KeyArray_In[GLFW_KEY_S])
 	{
 		player->move(glm::vec3(0, 0, 1), -moveSpeed * f_Delta_In);
 
@@ -122,14 +94,14 @@ void Game_Scene::keyboard_Input(GLfloat f_Delta_In, GLboolean* pab_KeyArray_In, 
 		//mspo_Objects.find("Robot Right Leg")->second->animate(40.f, f_Delta_In);
 	}
 
-	if (pab_KeyArray_In[GLFW_KEY_F])
+	if (pab_KeyArray_In[GLFW_KEY_SPACE])
 	{
 		static_cast<RigidBody*>(player->get_Components().at("RigidBody"))->setJumpForce(0.13f);
 		static_cast<RigidBody*>(player->get_Components().at("RigidBody"))->setGrounded(false);
 	}
 
-	if (pab_KeyArray_In[GLFW_KEY_LEFT]) player->move(glm::vec3(1, 0, 0), moveSpeed * f_Delta_In);// player->turn(80.f * f_Delta_In, glm::vec3(0.f, 1.f, 0.f));
-	if (pab_KeyArray_In[GLFW_KEY_RIGHT]) player->move(glm::vec3(1, 0, 0), -moveSpeed * f_Delta_In);//player->turn(-80.f * f_Delta_In, glm::vec3(0.f, 1.f, 0.f));
+	if (pab_KeyArray_In[GLFW_KEY_A]) player->move(glm::vec3(1, 0, 0), moveSpeed * f_Delta_In);// player->turn(80.f * f_Delta_In, glm::vec3(0.f, 1.f, 0.f));
+	if (pab_KeyArray_In[GLFW_KEY_D]) player->move(glm::vec3(1, 0, 0), -moveSpeed * f_Delta_In);//player->turn(-80.f * f_Delta_In, glm::vec3(0.f, 1.f, 0.f));
 }
 
 void Game_Scene::mouse_Input(GLboolean* pab_MouseArray_In, GLfloat f_Delta_In)
@@ -218,29 +190,17 @@ void Game_Scene::update_Scene(GLfloat f_Delta_In, glm::vec2 v2_MousePos_In)
 
 		if (player != nullptr)
 		{
-			dynamic_cast<GameObject_3D*>(mspo_Objects.find("Robot")->second)->jump(glm::vec3(0, 1, 0));
 			//shootBullet();
 			if (!shooting)
 			{
 				static_cast<GameObject_3D*>(mspo_Objects.find("Robot")->second)->resetCount();
 			}
-			camera_3D->set_CameraPos(-player->get_Position() - glm::vec3(0, 5.f, 0));
-			//camera_3D->move_Keyboard(f_Delta_In);
-			//Mouse movement
-			//float deltaMouse_X = v2_MousePos_In.x - v2_LastMousePos.x;
-			
-
-			std::cout << camera_3D->get_Yaw().w << "\n";
-			std::cout << camera_3D->get_Yaw().x << "\n";
-			std::cout << camera_3D->get_Yaw().y<< "\n";
-			std::cout << camera_3D->get_Yaw().z << "\n";
-
-			//player->set_Rotation(camera_3D->get_Quat());
+			camera_3D->set_CameraPos(-player->get_Position() - glm::vec3(0, 5, 0));
 			camera_3D->move_Mouse(f_Delta_In, v2_MousePos_In);
 			player->turn(-camera_3D->get_YawDelta(), glm::vec3(0, 1, 0));
-			//player->set_Rotation();
 			camera_3D->update();
 			camera_3D->reset();
+			dynamic_cast<GameObject_3D*>(mspo_Objects.find("Robot")->second)->jump(glm::vec3(0, 1, 0));
 		}
 
 		//Check for Collisions between Game Objects
@@ -286,13 +246,12 @@ void Game_Scene::render()
 
 void Game_Scene::load_Scene(int i)
 {
+	b_Init = false;
 	clean_Up();
-	//if (levelList.count(i))
-	//{
-	//	
-	//	b_Init = false;
-	//	player = static_cast<GameObject_3D*>(mspo_Objects.find("Robot")->second);
-	//}
+	
+	//Load the scene
+	std::string sLevel = levelList.at(i);
+    o_SceneLoader = new SceneLoader(sLevel.c_str(), po_Loader, mspo_Objects);
 
 }
 

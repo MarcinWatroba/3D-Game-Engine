@@ -124,7 +124,6 @@ Mesh_3D::Mesh_3D(const char* pc_FileName_In, int i_DrawMode_In)
 		if (found == moui_Indices.end())
 		{
 			moui_Indices.insert(std::pair<VertexIndex, unsigned int>(random, i_Counter));
-
 			CompleteVertex comp_Vertex;
 			comp_Vertex.vertex = vf_Vertices.at(vui_Faces.at(i).vertex - 1);
 			comp_Vertex.uv = vf_UVs.at(vui_Faces.at(i).uv - 1);

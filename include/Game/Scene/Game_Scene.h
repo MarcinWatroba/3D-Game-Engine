@@ -23,6 +23,7 @@ private:
 	bool b_Render[render::Num];
 	bool b_SwitchCamMode;
 	bool shooting = false;
+	bool firstTime = true;
 
 	//Collision Manager
 	CollisionManager colManage;

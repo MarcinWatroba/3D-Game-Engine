@@ -7,6 +7,8 @@
 <resources>
 	<object_File_Location>assets/models/</object_File_Location>
 	<object_Files>
+		<new_File  ID = "9" i_DrawMethod = "35048" name = "Dresser1.obj"> </new_File>	
+		<new_File  ID = "8" i_DrawMethod = "35048" name = "Peckington.obj"> </new_File>	
 		<new_File  ID = "7" i_DrawMethod = "35048" name = "Cube.obj"> </new_File>	
 		<new_File  ID = "4" i_DrawMethod = "35048" name = "floor.obj"> </new_File>
 		<new_File  ID = "5" i_DrawMethod = "35048" name = "table.obj"> </new_File>	
@@ -249,8 +251,7 @@
 			openGL_Colour = "6407" 
 			gen_Mipmaps = "1">		
 		</new_File>
-		
-		
+
 		<new_File  
 			ID = "19" 
 			name = "painting_One.png"	 
@@ -355,6 +356,57 @@
 			gen_Mipmaps = "1">		
 		</new_File>
 		
+		<new_File  
+			ID = "27" 
+			name = "Kitchen_Floor.png"	 
+			texture_Mode = "3553" 
+			wrapping_S = "10497"  
+			wrapping_T = "10497"
+			filter_Min = "9729" 
+			filter_Mag = "9729"
+			soil_Colour_Load = "4"  
+			openGL_Colour = "6408" 
+			gen_Mipmaps = "1">		
+		</new_File>
+		
+		<new_File  
+			ID = "28" 
+			name = "Cupboard.jpg"	 
+			texture_Mode = "3553" 
+			wrapping_S = "10497"  
+			wrapping_T = "10497"
+			filter_Min = "9729" 
+			filter_Mag = "9729"
+			soil_Colour_Load = "4"  
+			openGL_Colour = "6408" 
+			gen_Mipmaps = "1">		
+		</new_File>
+		
+		<new_File  
+			ID = "30" 
+			name = "Fridge.jpg"	 
+			texture_Mode = "3553" 
+			wrapping_S = "10497"  
+			wrapping_T = "10497"
+			filter_Min = "9729" 
+			filter_Mag = "9729"
+			soil_Colour_Load = "4"  
+			openGL_Colour = "6408" 
+			gen_Mipmaps = "1">		
+		</new_File>
+		
+		<new_File  
+			ID = "31" 
+			name = "Kitchen_Tiles1.jpg"	 
+			texture_Mode = "3553" 
+			wrapping_S = "10497"  
+			wrapping_T = "10497"
+			filter_Min = "9729" 
+			filter_Mag = "9729"
+			soil_Colour_Load = "4"  
+			openGL_Colour = "6408" 
+			gen_Mipmaps = "1">		
+		</new_File>
 		
 	</texture_Files>
 	
