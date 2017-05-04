@@ -142,5 +142,5 @@ void Camera_3D::set_CameraPos(glm::vec3 v3_Pos_In)
 
 glm::vec3 Camera_3D::get_CameraPos()
 {
-	return vec3_EyePos;
+	return -vec3_EyePos;
 }

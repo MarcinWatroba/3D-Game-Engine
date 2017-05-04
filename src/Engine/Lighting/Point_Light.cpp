@@ -14,6 +14,11 @@ void Point_Light::set_Radius(float f_Radius_In)
 	f_radius = f_Radius_In;
 }
 
+float Point_Light::get_Radius()
+{
+	return f_radius;
+}
+
 
 
 void Point_Light::update_Shader(Shader* p_Shader_In)

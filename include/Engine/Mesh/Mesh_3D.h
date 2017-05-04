@@ -14,4 +14,5 @@ private:
 public:
 	Mesh_3D() {};
 	Mesh_3D(const char* pc_FileName_In, int i_DrawMode_In);
+	//unsigned int get_InstanceBufferHandle();
 };

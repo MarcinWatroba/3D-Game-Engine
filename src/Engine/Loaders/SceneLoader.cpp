@@ -2,8 +2,11 @@
 #include<TinyXML2\tinyxml2.h>
 #include <Engine/Loaders/Loader.h>
 #include <Engine\Game_Objects\GameObject_3D.h>
+#include <Engine\Game_Objects\GameObject_Instanced.h>
 #include <Engine\Component\Transform_3D.h>
+#include <Engine\Component\Transform_Instanced.h>
 #include <Engine\Component\RenderComp_3D.h>
+#include <Engine\Component\RenderComp_Instanced.h>
 #include <Engine\Lighting\Point_Light.h>
 #include <glad\glad.h>
 
@@ -65,6 +68,7 @@ SceneLoader::SceneLoader(const char* pc_FileName_In, Loader* po_Loader_In, std::
 			s_Children = it->Attribute("children");
 			s_Tag = it->Attribute("tag");
 
+
 			//Typical process of adding new 3D object
 			mspo_GameObjects_In.insert(std::pair<std::string, Game_Object*>(s_ObjectName, new GameObject_3D()));
 			auto object = static_cast<GameObject_3D*>(mspo_GameObjects_In.find(s_ObjectName)->second);
@@ -99,12 +103,12 @@ SceneLoader::SceneLoader(const char* pc_FileName_In, Loader* po_Loader_In, std::
 			s_Tag = it->Attribute("tag");
 			i_InitMode = std::atoi(it->Attribute("init_Mode"));
 			f_Shiny = std::strtof(it->Attribute("shininess"), nullptr);
-			glm::vec3 origin = to3DVector(it->Attribute("origin"));
-			glm::vec3 position = to3DVector(it->Attribute("position"));
-			glm::quat orientationX = toQuat(it->Attribute("orientationX"));
-			glm::quat orientationY = toQuat(it->Attribute("orientationY"));
-			glm::quat orientationZ = toQuat(it->Attribute("orientationZ"));
-			glm::vec3 scale = to3DVector(it->Attribute("scale"));
+			v3_Origin = to3DVector(it->Attribute("origin"));
+			v3_Position = to3DVector(it->Attribute("position"));
+			quat_OrientationX = toQuat(it->Attribute("orientationX"));
+			quat_OrientationY = toQuat(it->Attribute("orientationY"));
+			quat_OrientationZ = toQuat(it->Attribute("orientationZ"));
+			v3_Scale = to3DVector(it->Attribute("scale"));
 
 			//Typical process of adding new 3D object
 			mspo_GameObjects_In.insert(std::pair<std::string, Game_Object*>(s_ObjectName, new GameObject_3D()));
@@ -114,10 +118,10 @@ SceneLoader::SceneLoader(const char* pc_FileName_In, Loader* po_Loader_In, std::
 			object->add_Component("Transform_3D", new Transform_3D());
 			object->add_Component("RenderComp_3D", new RenderComp_3D());
 			if (s_Components != "") add_Components(object, s_Components);
-			object->set_Position(position);
-			object->set_Origin(origin);
-			object->set_Rotation(orientationZ * orientationY * orientationX);
-			object->set_Scale(scale);
+			object->set_Position(v3_Position);
+			object->set_Origin(v3_Origin);
+			object->set_Rotation(quat_OrientationZ * quat_OrientationY * quat_OrientationX);
+			object->set_Scale(v3_Scale);
 			object->add_Texture("Diffuse_Map", po_Loader_In->get_Texture(i_DiffuseID));
 			object->add_Texture("Specular_Map", po_Loader_In->get_Texture(i_SpecularID));
 			object->set_Tiles(v2_Tiling);
@@ -125,10 +129,46 @@ SceneLoader::SceneLoader(const char* pc_FileName_In, Loader* po_Loader_In, std::
 			object->set_Tag(s_Tag);
 		}
 	}
+	for (tinyxml2::XMLElement* it = body->FirstChildElement("new_ObjectParticle"); it != nullptr; it = it->NextSiblingElement("new_ObjectParticle"))
+	{
+
+		std::string s_ObjectName = it->Attribute("name");
+		std::string s_Components = it->Attribute("component");
+		std::string i_MeshID = it->Attribute("mesh_ID");
+		std::string s_Tag = it->Attribute("tag");
+		std::string i_DiffuseID = it->Attribute("diffuse_ID");
+		glm::vec2 v2_Tiling = to2DVector(it->Attribute("texture_Tiling"));
+
+		int i_InitMode = std::atoi(it->Attribute("init_Mode"));
+		glm::vec3 v3_Origin = to3DVector(it->Attribute("origin"));
+		glm::vec3 v3_Position = glm::vec3(2.0f, 10.0f, 15.0f);
+		glm::quat quat_OrientationX = toQuat(it->Attribute("orientationX"));
+		glm::quat quat_OrientationY = toQuat(it->Attribute("orientationY"));
+		glm::quat quat_OrientationZ = toQuat(it->Attribute("orientationZ"));
+		glm::vec3 v3_Scale = to3DVector(it->Attribute("scale"));
+		int i_maxParticles = std::atoi(it->Attribute("max_Particles"));
+
+		mspo_GameObjects_In.insert(std::pair<std::string, Game_Object*>(s_ObjectName, new GameObject_Instanced()));
+		auto object = static_cast<GameObject_Instanced*>(mspo_GameObjects_In.find(s_ObjectName)->second);
+		object->set_Name(s_ObjectName);
+		object->add_Component("Mesh_Instanced", po_Loader_In->get_MeshInstanced(i_MeshID));
+		object->add_Component("Transform_Instanced", new Transform_Instanced());
+		object->add_Component("RenderComp_Instanced", new RenderComp_Instanced());
+		//if (s_Components != "") add_Components_Instanced(object, s_Components);
+		object->set_Position(v3_Position);
+		object->set_Origin(v3_Origin);
+		object->set_Rotation(quat_OrientationZ * quat_OrientationY * quat_OrientationX);
+		object->set_Scale(v3_Scale);
+		object->add_Texture("Diffuse_Map", po_Loader_In->get_Texture(i_DiffuseID));
+		object->set_Tiles(v2_Tiling);
+		object->set_Tag(s_Tag);
+
+	}
+
 
 	//Find lights
 	body = object_File.FirstChildElement("lights");
-
+	int num = 0;
 	for (tinyxml2::XMLElement* it = body->FirstChildElement("new_Light"); it != nullptr; it = it->NextSiblingElement("new_Light"))
 	{
 		std::cout << "Adding lights to the scene..." << "\n";
@@ -159,6 +199,7 @@ SceneLoader::SceneLoader(const char* pc_FileName_In, Loader* po_Loader_In, std::
 		}
 		else if (s_Type == "Point_Light")
 		{
+
 			//Point light
 			v3_Position = to3DVector(it->Attribute("position"));
 			v3_Ambient = to3DVector(it->Attribute("ambient"));
@@ -167,7 +208,7 @@ SceneLoader::SceneLoader(const char* pc_FileName_In, Loader* po_Loader_In, std::
 			f_lRadius = std::strtof(it->Attribute("radius"), nullptr);
 			mspo_GameObjects_In.insert(std::pair<std::string, Game_Object*>(s_Name, new Point_Light(v3_Ambient, v3_Diffuse, v3_Specular, f_lRadius, i_LightID)));
 			i_NumOfPointLight++;
-
+			
 			auto point_Light = static_cast<Point_Light*>(mspo_GameObjects_In.find(s_Name)->second);
 			point_Light->add_Component("Mesh_3D", po_Loader_In->get_Mesh3D("7"));
 			point_Light->add_Component("Transform_3D", new Transform_3D());
@@ -179,6 +220,12 @@ SceneLoader::SceneLoader(const char* pc_FileName_In, Loader* po_Loader_In, std::
 			point_Light->set_Tiles(glm::vec2(1.f, 1.f));
 			point_Light->set_Shininess(1.f);
 			point_Light->set_Tag(s_Tag);
+			point_Light->set_Radius(f_lRadius);
+			f_pos[num] = v3_Position;
+			f_radii[num] = f_lRadius;
+			std::cout << "POS " << v3_Position.y << std::endl;
+			std::cout << f_lRadius << std::endl;;
+			num++;
 		}
 	}
 }
@@ -190,6 +237,14 @@ void SceneLoader::identify_Component(GameObject_3D* po_GameObject_In, std::strin
 
 	s_ToProcess_In.clear();
 }
+
+//void SceneLoader::identify_Component_Instanced(GameObject_Instanced* po_GameObject_In, std::string& s_ToProcess_In)
+//{
+//	if (s_ToProcess_In == "YourCompnentHere") std::cout << "Nope" << "\n";
+//	else std::cout << "Unknown component..." << "\n"; // Else we can't find it
+//
+//	s_ToProcess_In.clear();
+//}
 
 glm::vec3 SceneLoader::to3DVector(const char* pc_Vector3D_In)
 {
@@ -423,6 +478,54 @@ void SceneLoader::add_Components(GameObject_3D* po_GameObject_In, std::string s_
 	}
 }
 
+//void SceneLoader::add_Components_Instanced(GameObject_3D* po_GameObject_In, std::string s_ToProcess_In)
+//{
+	//std::string s_Result;
+	//int i_Length = s_ToProcess_In.length();
+
+	//for (int i = 0; i < i_Length; i++)
+	//{
+	//	switch (s_ToProcess_In[i])
+	//	{
+	//	case 40: // This bracket "("
+	//			 //Ignore
+	//		break;
+
+	//	case 41: // This bracket ")"
+	//		//identify_Component_Instanced(po_GameObject_In, s_Result);
+	//		break;
+
+	//	case 44:  // Comma
+	//			  //Find the right component
+	//		//identify_Component_Instanced(po_GameObject_In, s_Result);
+	//		break;
+
+	//	case '\n':
+	//		break;
+
+	//	case '\t':
+	//		break;
+
+	//	case 32:
+	//		break;
+
+	//		//Process
+	//	default:
+	//		s_Result = s_Result + s_ToProcess_In[i];
+	//		break;
+	//	}
+	//}
+//}
+glm::vec3 SceneLoader::get_LightPosition(int i)
+{
+	return f_pos[i];
+}
+
+float SceneLoader::get_LightRadius(int i)
+{
+	return f_radii[i];
+}
+
 void SceneLoader::set_LightAmount(Shader* p_Shader_In)
 {
 	//Send this amount of light to shader
@@ -439,12 +542,10 @@ glm::uvec2 SceneLoader::setup_FBO()
 	unsigned int depthMap;
 
 	glGenFramebuffers(1, &depthMapFBO);
-	// The depth buffer texture
-	//	gl::ActiveTexture(gl::TEXTURE1);
+
 
 	glGenTextures(1, &depthMap);
-	//glActiveTexture(GL_TEXTURE0);
-	//glBindTexture(GL_TEXTURE_CUBE_MAP, depthCubemap);
+
 
 	glBindTexture(GL_TEXTURE_CUBE_MAP, depthMap);
 	for (GLuint i = 0; i < 6; ++i)
@@ -534,6 +635,4 @@ void SceneLoader::prepare_DepthCube(Shader* p_Shader_In, glm::vec3 light_Pos, gl
 	glActiveTexture(GL_TEXTURE2 + tex_Num);
 	glBindTexture(GL_TEXTURE_CUBE_MAP, ui_Depth_In.y);
 
-	//std::cout << depthMap << std::endl;
-	//std::cout << ui_Depth_In << std::endl;
 }

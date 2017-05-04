@@ -27,6 +27,7 @@ protected:
 	Camera_3D* camera_3D;
 	std::map<std::string, Game_Object*> mspo_Objects;
 
+	unsigned int ui_light_Amount;
 	// Is mouse locked?
 	bool b_LockMouse;
 

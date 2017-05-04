@@ -7,7 +7,7 @@ in vec3 VertPos;
 out vec4 colour;
 uniform vec2 tiling;
 
-uniform samplerCube depthMap[2];
+uniform samplerCube depthMap[3];
 
 struct Material
 {
@@ -34,6 +34,10 @@ struct Point_Light
 	vec3 specular;
 
 	float radius;
+
+	int ui_depth_Map;
+
+	bool casts_Shadow;
 };
 
 
@@ -45,7 +49,7 @@ uniform int numOfLights;
 uniform float farPlane;
 
 vec3 point_Lights[20];
-float shadows[2];
+float shadows[20];
 
 vec3 create_DirectionalLight(Directional_Light light, vec3 normal, vec3 viewDir);
 vec3 create_PointLight(Point_Light light, vec3 normal, vec3 VertPos, vec3 viewDir);
@@ -59,21 +63,28 @@ void main()
 	//float shadows = ShadowCalculation();
 	
 	vec3 result;
+	result = ambient;
+	for (int i = 0; i < numOfLights; i++) 
+	{
+		if(point_Light[i].ui_depth_Map < 4)
+		shadows[i] = ShadowCalculation(depthMap[point_Light[i].ui_depth_Map], point_Light[i]);
+		else
+		shadows[i] = 0.0f;
+	}
 
 	for (int i = 0; i < numOfLights; i++) 
 	{
 		point_Lights[i] = create_PointLight(point_Light[i], norm, VertPos, viewDir);
+		result += ((1.0 - shadows[i]) * point_Lights[i]);
 	}
 
-	for (int i = 0; i < 2; i++) 
-	{
-		shadows[i] = ShadowCalculation(depthMap[i], point_Light[i]);
-	}
 
-	result = ambient + ((1.0 - shadows[0]) * point_Lights[0] + (1.0 - shadows[1]) *  point_Lights[1]);
+
+
+
 	colour = vec4(result, 1.f);
 
-	vec3 fragToLight = VertPos - point_Light[1].position; 
+	//vec3 fragToLight = VertPos - point_Light[1].position; 
 		
     //float closestDepth = texture(3, fragToLight).r;
 	//closestDepth *= 1000.0f;  
@@ -89,20 +100,23 @@ vec3 create_DirectionalLight(Directional_Light light, vec3 normal, vec3 viewDir)
 	float spec = pow(max(dot(viewDir, reflectDir), 0), material.shininess);
 
 
-	vec3 diffuse = light.diffuse * diff * vec3(texture(material.diffuse, vec2(TexCoord.x * tiling.x, (1 - TexCoord.y) * tiling.y)));
+	vec3 diffuse = light.diffuse * diff;
 	vec3 specular = light.specular * spec * vec3(texture(material.specular, vec2(TexCoord.x * tiling.x, (1 - TexCoord.y) * tiling.y)));
 	return (diffuse + specular);
 }
 
 vec3 create_PointLight(Point_Light light, vec3 normal, vec3 vertPos, vec3 viewDir)
 {
+	float distance = length(light.position - vertPos);
+	if(distance < light.radius * 10)
+	{
 	vec3 lightDir = normalize(light.position - vertPos);
 	float diff = max(dot(normal, lightDir), 0.f);
 
 	vec3 reflectDir = reflect(-lightDir, normal);
 	float spec = pow(max(dot(viewDir, reflectDir), 0.f), material.shininess);
 
-	float distance = length(light.position - vertPos);
+
 
 
 	float dist = max(distance - light.radius, 0);
@@ -118,12 +132,15 @@ vec3 create_PointLight(Point_Light light, vec3 normal, vec3 vertPos, vec3 viewDi
 	specular *= attenuation;
 
 	return (diffuse + specular);
+	}
+	else
+	return vec3(0.0);
 }
 
 float ShadowCalculation(samplerCube depthMap_In, Point_Light light_In)
 {
     vec3 fragToLight = VertPos - light_In.position; 
-	//fragToLight = vec3(inverse(viewMat) * vec4(fragToLight, 1.0));
+
     float closestDepth = texture(depthMap_In, fragToLight).r;
 	closestDepth *= farPlane;  
 	float currentDepth = length(fragToLight);  

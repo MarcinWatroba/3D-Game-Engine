@@ -35,6 +35,11 @@ public:
 
 	virtual glm::uvec2 get_Depth_Texture();
 
+	virtual void set_Radius(float f_Radius_In) = 0;
+
+	virtual float get_Radius() = 0;
+
 	//Update light
+
 	virtual void update_Shader(Shader* p_Shader_In) = 0;
 };

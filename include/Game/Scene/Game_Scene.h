@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Engine\Scene\Scene.h>
+#include <deque>
 //#include <Scene.h>
 //#include <Label.h>
 //#include <Directional_Light.h>
@@ -22,6 +23,11 @@ private:
 	bool rendered;
 	bool b_Render[render::Num];
 	bool b_SwitchCamMode;
+	glm::vec3 light[30];
+	glm::vec3 pos[100];
+	glm::uvec2 depth[30];
+	float radius[30];
+
 public:
 	//Constructor
 	Game_Scene() {};
