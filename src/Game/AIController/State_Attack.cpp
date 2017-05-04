@@ -18,7 +18,12 @@ void State_Attack::OnEnter()
 
 fsm::FSM_Command State_Attack::OnRun()
 {
-	std::cout << "Attack_run\n";
+	//player destroyed
+	if (data->player == nullptr)
+	{
+		return fsm::Finish;
+	}
+
 	//
 	Respond_Movement* movement = static_cast<Respond_Movement*>(data->character->get_Component("Respond_Movement"));
 	float distSqr = glm::length2(data->player->get_Position() - data->character->get_Position());
@@ -38,22 +43,17 @@ fsm::FSM_Command State_Attack::OnRun()
 	//in attack range
 	else
 	{
-		//if (distSqr < 7.5f*7.5f)
-		//{
-		//	glm::vec3 pos = data->player->get_Position();
-		//	pos.z += 2;
-		//	movement->moveToPoint(data->character, pos, 10.0f * data->deltaTime, data->dps * data->deltaTime);
-		//	std::cout << "whoad dude back the fuck off" << std::endl;
-		//}
-		//else
-		//{
-			bool facingTarget = movement->facePoint(data->character, data->player->get_Position(), data->dps * data->deltaTime);
-			if (facingTarget)
-			{
-				std::cout << "pew pew" << std::endl;
-				data->character->createBullet(new Bullet("Bullet", data->loader->get_Mesh3D("7"), data->character, data->loader->get_Texture("24"), data->loader->get_Texture("7")));
-			}
-		//}
+		//back off if too close
+		if (distSqr < 5.0f)
+		{
+			movement->move(data->character, glm::vec3(0,0,-1), 10.0f * data->deltaTime);
+		}
+		//shoot at player
+		bool facingTarget = movement->facePoint(data->character, data->player->get_Position(), data->dps * data->deltaTime);
+		if (facingTarget)
+		{
+			data->character->createBullet(new Bullet("Bullet", data->loader->get_Mesh3D("7"), data->character, data->loader->get_Texture("24"), data->loader->get_Texture("7")));
+		}
 	}
 
 	//

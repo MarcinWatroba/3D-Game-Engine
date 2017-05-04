@@ -30,7 +30,7 @@ fsm::FSM_Command State_Patrol::OnRun()
 	Respond_Movement* movement = static_cast<Respond_Movement*>(data->character->get_Component("Respond_Movement"));
 
 	//check if player is close enough to chase
-	if (movement->withinRange(data->character, data->player->get_Position(), data->startChaseDistance))
+	if (data->player != nullptr && movement->withinRange(data->character, data->player->get_Position(), data->startChaseDistance))
 	{
 		nextStateID = ccs::Attack;
 		return fsm::Switch;

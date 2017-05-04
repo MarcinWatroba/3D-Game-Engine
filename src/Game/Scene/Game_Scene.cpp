@@ -88,6 +88,10 @@ void Game_Scene::keyboard_Input(GLfloat f_Delta_In, GLboolean* pab_KeyArray_In, 
 	}
 	if (!pab_KeyArray_In[GLFW_KEY_ESCAPE]) pab_LockedKeys_In[GLFW_KEY_ESCAPE] = false;
 
+	//player movement
+	auto playerLookup = mspo_Objects.find("Robot");
+	if (playerLookup == mspo_Objects.end()) { return; }
+	player = static_cast<GameObject_3D*>(playerLookup->second);
 
 	if (pab_KeyArray_In[GLFW_KEY_UP])
 	{
@@ -111,8 +115,8 @@ void Game_Scene::keyboard_Input(GLfloat f_Delta_In, GLboolean* pab_KeyArray_In, 
 
 	if (pab_KeyArray_In[GLFW_KEY_F])
 	{
-		static_cast<RigidBody*>(mspo_Objects.find("Robot")->second->get_Components().at("RigidBody"))->setJumpForce(0.13f);
-		static_cast<RigidBody*>(mspo_Objects.find("Robot")->second->get_Components().at("RigidBody"))->setGrounded(false);
+		static_cast<RigidBody*>(player->get_Components().at("RigidBody"))->setJumpForce(0.13f);
+		static_cast<RigidBody*>(player->get_Components().at("RigidBody"))->setGrounded(false);
 	}
 
 	if (pab_KeyArray_In[GLFW_KEY_LEFT]) player->turn(80.f * f_Delta_In, glm::vec3(0.f, 1.f, 0.f));
@@ -121,11 +125,18 @@ void Game_Scene::keyboard_Input(GLfloat f_Delta_In, GLboolean* pab_KeyArray_In, 
 
 void Game_Scene::mouse_Input(GLboolean* pab_MouseArray_In, GLfloat f_Delta_In)
 {
+	if (!b_Init) { return; }
+
+	//player shootsching
+	auto playerLookup = mspo_Objects.find("Robot");
+	if (playerLookup == mspo_Objects.end()) { return; }
+	player = static_cast<GameObject_3D*>(playerLookup->second);
+
 	if (pab_MouseArray_In[GLFW_MOUSE_BUTTON_1])
 	{
 
-		static_cast<GameObject_3D*>(mspo_Objects.find("Robot")->second)->createBullet(new Bullet("Bullet", po_Loader->get_Mesh3D("7"), static_cast<GameObject_3D*>(mspo_Objects.find("Robot")->second), po_Loader->get_Texture("24"), po_Loader->get_Texture("7")));
-		static_cast<GameObject_3D*>(mspo_Objects.find("Robot")->second)->setFiring(true);
+		player->createBullet(new Bullet("Bullet", po_Loader->get_Mesh3D("7"), static_cast<GameObject_3D*>(mspo_Objects.find("Robot")->second), po_Loader->get_Texture("24"), po_Loader->get_Texture("7")));
+		player->setFiring(true);
 		shooting = true;
 		//std::cout << "Shoosting time!!!" << std::endl;
 		//glm::vec3 temp = static_cast<GameObject_3D*>(mspo_Objects.find("Bullet")->second)->get_Position();
@@ -148,6 +159,10 @@ void Game_Scene::update_Scene(GLfloat f_Delta_In, glm::vec2 v2_MousePos_In)
 {
 	////Initialize
 	if (!b_Init) init();
+
+	auto playerLookup = mspo_Objects.find("Robot");
+	if (playerLookup != mspo_Objects.end()) { player = static_cast<GameObject_3D*>(playerLookup->second); }
+	else { player = nullptr; }
 
 	if (b_Init)
 	{
@@ -190,25 +205,28 @@ void Game_Scene::update_Scene(GLfloat f_Delta_In, glm::vec2 v2_MousePos_In)
 		camera_3D->update();
 		camera_3D->reset();
 
-		dynamic_cast<GameObject_3D*>(mspo_Objects.find("Robot")->second)->jump(glm::vec3(0, 1, 0));
-		//shootBullet();
+		if (player != nullptr)
+		{
+			dynamic_cast<GameObject_3D*>(mspo_Objects.find("Robot")->second)->jump(glm::vec3(0, 1, 0));
+			//shootBullet();
+			if (!shooting)
+			{
+				static_cast<GameObject_3D*>(mspo_Objects.find("Robot")->second)->resetCount();
+			}
+		}
+
 		//Check for Collisions between Game Objects
 		colManage.collisionChecks(mspo_Objects);
-		if (!shooting)
-		{
-			static_cast<GameObject_3D*>(mspo_Objects.find("Robot")->second)->resetCount();
-		}
 		
 
 		//delete objects that have deletion flag
 		auto itr = mspo_Objects.begin();
 		while (itr != mspo_Objects.end()) {
 			if (itr->second->get_ToDelete()) {
+				destroyGameObject(itr->second);
 				itr = mspo_Objects.erase(itr++);
 			}
-			else {
-				++itr;
-			}
+			else { ++itr; }
 		}
 	}
 }
@@ -238,6 +256,19 @@ void Game_Scene::render()
 	}
 }
 
+void Game_Scene::destroyGameObject(Game_Object* po_object)
+{
+	//Remove all components
+	for (auto const& components : po_object->get_Components())
+	{
+		if (components.first != "Mesh_3D") delete components.second;
+	}
+	po_object->get_Components().clear();
+
+	//destroy the game object
+	delete po_object;
+}
+
 void Game_Scene::clean_Up()
 {
 	if (!mspo_Objects.empty())
@@ -245,11 +276,7 @@ void Game_Scene::clean_Up()
 		//For each object
 		for (auto const& pair : mspo_Objects)
 		{
-			//Remove all components
-			for (auto const& components : pair.second->get_Components()) if (components.first != "Mesh_3D") delete components.second;
-
-			pair.second->get_Components().clear();
-			delete pair.second;
+			destroyGameObject(pair.second);
 		}
 
 		mspo_Objects.clear();

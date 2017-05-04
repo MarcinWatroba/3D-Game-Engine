@@ -2,7 +2,8 @@
 
 
 Game_Object::Game_Object() :
-	b_toDelete(false)
+	b_toDelete(false),
+	po_Parent(nullptr)
 {}
 
 bool Game_Object::get_ToDelete()
@@ -12,7 +13,25 @@ bool Game_Object::get_ToDelete()
 
 void Game_Object::set_ToDelete()
 {
-	b_toDelete = true;
+	//first set only highest level parent to be deleted
+	if (po_Parent != nullptr && !po_Parent->get_ToDelete())
+	{
+		po_Parent->set_ToDelete();
+	}
+	else
+	{
+		//if highest level parent or parent has been set to be deleted
+		b_toDelete = true;
+
+		//set all children of object to be destroyed too
+		if (is_Container())
+		{
+			for (auto const& children : get_Children())
+			{
+				children.second->set_ToDelete();
+			}
+		}
+	}
 }
 
 
@@ -23,6 +42,7 @@ void Game_Object::set_RenderStatus(bool b_RenderStatus_In)
 
 void Game_Object::add_Child(Game_Object * po_Child_In)
 {
+	b_IsContainer = true;
 	po_Child_In->set_Parent(this);
 	mspo_Children.insert(std::pair<std::string, Game_Object*>(po_Child_In->get_Name(), po_Child_In));
 }

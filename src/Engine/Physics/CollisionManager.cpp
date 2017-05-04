@@ -13,7 +13,6 @@ CollisionManager::~CollisionManager()
 
 void CollisionManager::collision(Game_Object* objectA, Game_Object* objectB, std::map<Game_Object*, Game_Object*>& collisions)
 {
-	//std::cout << "Toppus Kekkus" << std::endl;
 	//Collision with immov
 	if (objectA->get_Parent())
 	{
@@ -23,7 +22,7 @@ void CollisionManager::collision(Game_Object* objectA, Game_Object* objectB, std
 			return;
 		}
 
-		std::cout << "Toppus Kekkus" << std::endl;
+		//std::cout << "Toppus Kekkus" << std::endl;
 		if (objectB->get_Components().count("RigidBody") && objectA->get_Parent()->get_Components().count("RigidBody"))
 		{
 			//character collectables
@@ -33,13 +32,11 @@ void CollisionManager::collision(Game_Object* objectA, Game_Object* objectB, std
 				if (objectB->get_Tag() == "Ammo")
 				{
 					character->gainBullets(30);
-					//eraseID.push_back(pair.first);
 					objectB->set_ToDelete();
 				}
 				else if (objectB->get_Tag() == "HealthPack")
 				{
 					character->gainLife(1);
-					//eraseID.push_back(pair.first);
 					objectB->set_ToDelete();
 				}
 			}
@@ -107,51 +104,91 @@ void CollisionManager::collisionChecks(std::map<std::string, Game_Object*> &game
 			for (int i = 0; i < static_cast<GameObject_3D*>(currentObject)->get_BulletList().size(); i++)
 			{
 				Game_Object* bullet = static_cast<GameObject_3D*>(currentObject)->get_BulletList()[i];
-				if (bullet->get_Components().count("BoxCollider_3D"))
+				if (bullet->get_Components().count("BoxCollider_3D"))//bullets always have boxcollider
 				{
 					BoxCollider_3D* tempCol = dynamic_cast<BoxCollider_3D*>(bullet->get_Components().at("BoxCollider_3D"));
-					for (auto const& pair : gameObjects)
+					for (auto const& pair2 : gameObjects)
 					{
-						BoxCollider_3D* secondCol = dynamic_cast<BoxCollider_3D*>(pair.second->get_Component("BoxCollider_3D"));
+						if (pair == pair2) { continue; }//ignore object that bullet belongs to
+
+						BoxCollider_3D* secondCol = dynamic_cast<BoxCollider_3D*>(pair2.second->get_Component("BoxCollider_3D"));
+
+						//'hack' to fix hitting robot:
+						//if (secondCol == nullptr && pair2.second->get_Children().size() != 0)
+						//{
+						//	for (auto const& pair3 : pair2.second->get_Children())
+						//	{
+						//		//if child has a BoxCollider set collider to that and break out of the loop
+						//		secondCol = dynamic_cast<BoxCollider_3D*>(pair3.second->get_Component("BoxCollider_3D"));
+						//		if (secondCol != nullptr) { break; }
+						//	}
+						//}
+
+
 						if (secondCol != nullptr)
 						{
-							bool check = tempCol->intersects(*secondCol);
+							if (pair2.second->get_Name() == "Robot Body")//so I was wrong about child components not being in the list 
+							{
+								bool a = 1;//junk code just so a breakpoint can be placed here, gets here
+							}
+
+							bool check = tempCol->intersects(*secondCol);//always false without hack, but hack works...
 							if (check)
 							{
+
+								if (pair2.second->get_Name() == "Robot Body")
+								{
+									bool a = 1;//junk code just so a breakpoint can be placed here, never gets here
+								}
+
 								//std::cout << "Toppus Kekkus" << std::endl;
-								if ((pair.second->get_Components().count("RigidBody") && bullet->get_Components().count("RigidBody")) || (pair.second->get_Parent()->get_Components().count("RigidBody") && bullet->get_Components().count("RigidBody")))
+								if ((pair2.second->get_Components().count("RigidBody") && bullet->get_Components().count("RigidBody")))
 								{
 									RigidBody* tempBody;
-									if (pair.second->get_Parent())
+									if (pair2.second->get_Parent())
 									{
-										tempBody = dynamic_cast<RigidBody*>(pair.second->get_Parent()->get_Components().at("RigidBody"));
+										tempBody = dynamic_cast<RigidBody*>(pair2.second->get_Parent()->get_Components().at("RigidBody"));
 									}
 									else
 									{
-										tempBody = dynamic_cast<RigidBody*>(pair.second->get_Components().at("RigidBody"));
+										tempBody = dynamic_cast<RigidBody*>(pair2.second->get_Components().at("RigidBody"));
 									}
 									
+									//enemy shot by player
 									if (currentObject->get_Name() == "Robot")
 									{
-										if (pair.second->get_Tag() == "Enemy")
+										if (pair2.second->get_Tag() == "Enemy")
 										{
-											colChecks.insert(std::make_pair(bullet, pair.second));
-											dynamic_cast<Character*>(pair.second->get_Components().at("Character"))->loseLife();
-											if (dynamic_cast<Character*>(pair.second->get_Components().at("Character"))->getHealth() == 0)
+											colChecks.insert(std::make_pair(bullet, pair2.second));
+											dynamic_cast<Character*>(pair2.second->get_Components().at("Character"))->loseLife();
+											if (dynamic_cast<Character*>(pair2.second->get_Components().at("Character"))->getHealth() == 0)
 											{
-												pair.second->set_ToDelete();
+												pair2.second->set_ToDelete();
 											}
 										}
 										else if (!tempBody->get_Moveable())
 										{
 											//Stop the object moving in the current direction
-											colChecks.insert(std::make_pair(bullet, pair.second));
+											colChecks.insert(std::make_pair(bullet, pair2.second));
 										}
 									}
 									else
 									{
-
-										colChecks.insert(std::make_pair(bullet, pair.second));
+										//player shot by enemy
+										if (pair2.second->get_Name() == "Robot")
+										{
+											if (currentObject->get_Tag() == "Enemy")
+											{
+												//... exact code as enemy shot player
+												colChecks.insert(std::make_pair(bullet, pair2.second));
+												dynamic_cast<Character*>(pair2.second->get_Components().at("Character"))->loseLife();
+												if (dynamic_cast<Character*>(pair2.second->get_Components().at("Character"))->getHealth() == 0)
+												{
+													pair2.second->set_ToDelete();
+												}
+											}
+										}
+										colChecks.insert(std::make_pair(bullet, pair2.second));
 									}
 								}
 							}
@@ -162,14 +199,6 @@ void CollisionManager::collisionChecks(std::map<std::string, Game_Object*> &game
 		}
 
 	}
-	//for (int i = 0; i < eraseID.size(); i++)
-	//{
-	//	if (gameObjects.count(eraseID[i]))
-	//	{
-	//		gameObjects.erase(eraseID[i]);
-	//	}
-	//}
-	//eraseID.clear();
 	
 
 	if (colChecks.size() != 0)
@@ -181,13 +210,17 @@ void CollisionManager::collisionChecks(std::map<std::string, Game_Object*> &game
 	}
 	else
 	{
-		for (auto const& pair : gameObjects.at("Robot")->get_Children())
+		if (gameObjects.count("Robot"))
 		{
-			if (pair.second->get_Components().count("BoxCollider_3D"))
+			for (auto const& pair : gameObjects.at("Robot")->get_Children())
 			{
-				dynamic_cast<BoxCollider_3D*>(pair.second->get_Components().at("BoxCollider_3D"))->setCollisionCheck(false);
+				if (pair.second->get_Components().count("BoxCollider_3D"))
+				{
+					dynamic_cast<BoxCollider_3D*>(pair.second->get_Components().at("BoxCollider_3D"))->setCollisionCheck(false);
+				}
 			}
 		}
+		
 		for (auto const& pair : gameObjects)
 		{
 			if (static_cast<GameObject_3D*>(pair.second)->get_BulletList().size() != 0)

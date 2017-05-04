@@ -27,6 +27,8 @@ private:
 	CollisionManager colManage;
 	GameObject_3D* player;
 
+	void destroyGameObject(Game_Object* po_object);
+
 public:
 	//Constructor
 	Game_Scene() {};

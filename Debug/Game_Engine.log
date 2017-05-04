@@ -1,5 +1,0 @@
-﻿  CollisionManager.cpp
-h:\desktop\games programming group project\newengine\game_engine_stan_lee\src\engine\physics\collisionmanager.cpp(107): warning C4018: '<': signed/unsigned mismatch
-h:\desktop\games programming group project\newengine\game_engine_stan_lee\src\engine\physics\collisionmanager.cpp(195): warning C4018: '<': signed/unsigned mismatch
-  Game_Engine.vcxproj -> H:\Desktop\GAMES PROGRAMMING GROUP PROJECT\NewEngine\Game_Engine_Stan_Lee\Debug\Game_Engine.exe
-  Game_Engine.vcxproj -> H:\Desktop\GAMES PROGRAMMING GROUP PROJECT\NewEngine\Game_Engine_Stan_Lee\Debug\Game_Engine.pdb (Partial PDB)
