@@ -28,6 +28,8 @@ private:
 	GameObject_3D* player;
 	std::map<int, std::string> levelList;
 
+	void destroyGameObject(Game_Object* po_object);
+
 public:
 	//Constructor
 	Game_Scene() {};

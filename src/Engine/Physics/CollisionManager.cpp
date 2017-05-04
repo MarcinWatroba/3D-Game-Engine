@@ -13,7 +13,6 @@ CollisionManager::~CollisionManager()
 
 void CollisionManager::collision(Game_Object* objectA, Game_Object* objectB, std::map<Game_Object*, Game_Object*>& collisions)
 {
-	//std::cout << "Toppus Kekkus" << std::endl;
 	//Collision with immov
 	if (objectA->get_Parent())
 	{
@@ -23,7 +22,7 @@ void CollisionManager::collision(Game_Object* objectA, Game_Object* objectB, std
 			return;
 		}
 
-		std::cout << "Toppus Kekkus" << std::endl;
+		//std::cout << "Toppus Kekkus" << std::endl;
 		if (objectB->get_Components().count("RigidBody") && objectA->get_Parent()->get_Components().count("RigidBody"))
 		{
 			//character collectables
@@ -105,14 +104,13 @@ void CollisionManager::collisionChecks(std::map<std::string, Game_Object*> &game
 			for (int i = 0; i < static_cast<GameObject_3D*>(currentObject)->get_BulletList().size(); i++)
 			{
 				Game_Object* bullet = static_cast<GameObject_3D*>(currentObject)->get_BulletList()[i];
-				if (bullet->get_Components().count("BoxCollider_3D"))
+				if (bullet->get_Components().count("BoxCollider_3D"))//bullets always have boxcollider
 				{
 					BoxCollider_3D* tempCol = dynamic_cast<BoxCollider_3D*>(bullet->get_Components().at("BoxCollider_3D"));
 					for (auto const& pair2 : gameObjects)
 					{
 						if (currentObject == pair2.second) { continue; }
 						BoxCollider_3D* secondCol = dynamic_cast<BoxCollider_3D*>(pair2.second->get_Component("BoxCollider_3D"));
-						
 						//'hack' to fix hitting robot:
 						//if (secondCol == nullptr && pair2.second->get_Children().size() != 0)
 						//{
@@ -136,6 +134,7 @@ void CollisionManager::collisionChecks(std::map<std::string, Game_Object*> &game
 							}
 								//std::cout << "Toppus Kekkus" << std::endl;
 								if ((pair2.second->get_Components().count("RigidBody") && bullet->get_Components().count("RigidBody")) || (pair2.second->get_Parent()->get_Components().count("RigidBody") && bullet->get_Components().count("RigidBody")))
+
 								{
 									RigidBody* tempBody;
 									if (pair2.second->get_Parent())
@@ -147,6 +146,7 @@ void CollisionManager::collisionChecks(std::map<std::string, Game_Object*> &game
 										tempBody = dynamic_cast<RigidBody*>(pair2.second->get_Components().at("RigidBody"));
 									}
 									
+									//enemy shot by player
 									if (currentObject->get_Name() == "Robot")
 									{
 										if (pair2.second->get_Tag() == "Enemy")
@@ -161,7 +161,7 @@ void CollisionManager::collisionChecks(std::map<std::string, Game_Object*> &game
 										else if (!tempBody->get_Moveable())
 										{
 											//Stop the object moving in the current direction
-											colChecks.insert(std::make_pair(bullet, pair.second));
+											colChecks.insert(std::make_pair(bullet, pair2.second));
 										}
 									}
 									else
@@ -182,7 +182,6 @@ void CollisionManager::collisionChecks(std::map<std::string, Game_Object*> &game
 										{
 											colChecks.insert(std::make_pair(bullet, pair2.second));
 										}
-										
 									}
 								}
 							}
@@ -193,14 +192,6 @@ void CollisionManager::collisionChecks(std::map<std::string, Game_Object*> &game
 		}
 
 	}
-	//for (int i = 0; i < eraseID.size(); i++)
-	//{
-	//	if (gameObjects.count(eraseID[i]))
-	//	{
-	//		gameObjects.erase(eraseID[i]);
-	//	}
-	//}
-	//eraseID.clear();
 	
 
 	if (colChecks.size() != 0)
@@ -212,13 +203,17 @@ void CollisionManager::collisionChecks(std::map<std::string, Game_Object*> &game
 	}
 	else
 	{
-		for (auto const& pair : gameObjects.at("Robot")->get_Children())
+		if (gameObjects.count("Robot"))
 		{
-			if (pair.second->get_Components().count("BoxCollider_3D"))
+			for (auto const& pair : gameObjects.at("Robot")->get_Children())
 			{
-				dynamic_cast<BoxCollider_3D*>(pair.second->get_Components().at("BoxCollider_3D"))->setCollisionCheck(false);
+				if (pair.second->get_Components().count("BoxCollider_3D"))
+				{
+					dynamic_cast<BoxCollider_3D*>(pair.second->get_Components().at("BoxCollider_3D"))->setCollisionCheck(false);
+				}
 			}
 		}
+		
 		for (auto const& pair : gameObjects)
 		{
 			if (static_cast<GameObject_3D*>(pair.second)->get_BulletList().size() != 0)
