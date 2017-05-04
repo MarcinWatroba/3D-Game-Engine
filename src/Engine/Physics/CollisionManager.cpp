@@ -109,32 +109,19 @@ void CollisionManager::collisionChecks(std::map<std::string, Game_Object*> &game
 					BoxCollider_3D* tempCol = dynamic_cast<BoxCollider_3D*>(bullet->get_Components().at("BoxCollider_3D"));
 					for (auto const& pair2 : gameObjects)
 					{
-						if (currentObject == pair2.second) { continue; }
+					//if (currentObject == pair2.second) { continue; }
 						BoxCollider_3D* secondCol = dynamic_cast<BoxCollider_3D*>(pair2.second->get_Component("BoxCollider_3D"));
-						//'hack' to fix hitting robot:
-						//if (secondCol == nullptr && pair2.second->get_Children().size() != 0)
-						//{
-						//	for (auto const& pair3 : pair2.second->get_Children())
-						//	{
-						//		//if child has a BoxCollider set collider to that and break out of the loop
-						//		secondCol = dynamic_cast<BoxCollider_3D*>(pair3.second->get_Component("BoxCollider_3D"));
-						//		if (secondCol != nullptr) { break; }
-						//	}
-						//}
-						
 						if (secondCol != nullptr)
 						{
-							
 							bool check = tempCol->intersects(*secondCol);
 							if (check)
 							{
 								if (pair2.second->get_Tag() == "Player")
-							{
-								bool a = 1;
-							}
+								{
+									bool a = 1;
+								}
 								//std::cout << "Toppus Kekkus" << std::endl;
 								if ((pair2.second->get_Components().count("RigidBody") && bullet->get_Components().count("RigidBody")) || (pair2.second->get_Parent()->get_Components().count("RigidBody") && bullet->get_Components().count("RigidBody")))
-
 								{
 									RigidBody* tempBody;
 									if (pair2.second->get_Parent())
@@ -146,8 +133,7 @@ void CollisionManager::collisionChecks(std::map<std::string, Game_Object*> &game
 										tempBody = dynamic_cast<RigidBody*>(pair2.second->get_Components().at("RigidBody"));
 									}
 									
-									//enemy shot by player
-									if (currentObject->get_Name() == "Robot")
+									if (currentObject->get_Name() == "Robot") // Player Shooting Enemy
 									{
 										if (pair2.second->get_Tag() == "Enemy")
 										{
@@ -164,7 +150,7 @@ void CollisionManager::collisionChecks(std::map<std::string, Game_Object*> &game
 											colChecks.insert(std::make_pair(bullet, pair2.second));
 										}
 									}
-									else
+									else // Enemy Shooting Player
 									{
 										if (pair2.second->get_Tag() == "Player")
 										{
@@ -190,7 +176,6 @@ void CollisionManager::collisionChecks(std::map<std::string, Game_Object*> &game
 				}
 			}
 		}
-
 	}
 	
 

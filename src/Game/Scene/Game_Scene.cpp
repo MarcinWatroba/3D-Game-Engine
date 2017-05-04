@@ -163,7 +163,12 @@ void Game_Scene::update_Scene(GLfloat f_Delta_In, glm::vec2 v2_MousePos_In)
 
 	auto playerLookup = mspo_Objects.find("Robot");
 	if (playerLookup != mspo_Objects.end()) { player = static_cast<GameObject_3D*>(playerLookup->second); }
-	else { player = nullptr; }
+	else {
+		//player killed
+		player = nullptr;
+		//quit to main menu
+		//
+	}
 
 	if (b_Init)
 	{
@@ -218,12 +223,6 @@ void Game_Scene::update_Scene(GLfloat f_Delta_In, glm::vec2 v2_MousePos_In)
 
 		//Check for Collisions between Game Objects
 		colManage.collisionChecks(mspo_Objects);
-		
-		if (mspo_Objects.at("Robot")->get_ToDelete())
-		{
-			//Game over!
-			clean_Up();
-		}
 
 		//delete objects that have deletion flag
 		auto itr = mspo_Objects.begin();
