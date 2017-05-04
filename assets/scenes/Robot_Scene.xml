@@ -175,7 +175,7 @@
 		origin = "(0, 0.0, 0)"
 		position = "(-30, -0.5, 0)"
 		orientationX = "0, (1, 0, 0)"
-		orientationY = "0, (0, 1, 0)"
+		orientationY = "180, (0, 1, 0)"
 		orientationZ = "0, (0, 0, 1)"
 		scale = "(-1, 1, -1)"
 		children = "(Robot Body,

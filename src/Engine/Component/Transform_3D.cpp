@@ -100,7 +100,7 @@ void Transform_3D::set_Rotation(glm::quat quat_Rot_In)
 void Transform_3D::update_Rotation(glm::quat quat_Rot_In)
 {
 	b_Update = true;
-	quat_Orientation = glm::slerp(quat_Orientation, quat_Rot_In, 0.5f);
+	quat_Orientation = glm::slerp(quat_Orientation, quat_Rot_In, 1.0f);
 }
 
 glm::quat Transform_3D::get_Rotation()

@@ -1,13 +1,3 @@
 ﻿  Game_Scene.cpp
-  GameObject_3D.cpp
-h:\desktop\games programming group project\newengine\game_engine_stan_lee\src\engine\game_objects\gameobject_3d.cpp(93): warning C4018: '<': signed/unsigned mismatch
-h:\desktop\games programming group project\newengine\game_engine_stan_lee\src\engine\game_objects\gameobject_3d.cpp(118): warning C4018: '<': signed/unsigned mismatch
-h:\desktop\games programming group project\newengine\game_engine_stan_lee\src\engine\game_objects\gameobject_3d.cpp(276): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
-h:\desktop\games programming group project\newengine\game_engine_stan_lee\src\engine\game_objects\gameobject_3d.cpp(294): warning C4018: '<': signed/unsigned mismatch
-h:\desktop\games programming group project\newengine\game_engine_stan_lee\src\engine\game_objects\gameobject_3d.cpp(296): warning C4305: 'argument': truncation from 'double' to 'float'
-  Generating Code...
-  Skipping... (no relevant changes detected)
-  AIController.cpp
-  Character.cpp
   Game_Engine.vcxproj -> H:\Desktop\GAMES PROGRAMMING GROUP PROJECT\NewEngine\Game_Engine_Stan_Lee\Debug\Game_Engine.exe
   Game_Engine.vcxproj -> H:\Desktop\GAMES PROGRAMMING GROUP PROJECT\NewEngine\Game_Engine_Stan_Lee\Debug\Game_Engine.pdb (Partial PDB)

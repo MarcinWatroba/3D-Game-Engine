@@ -2,6 +2,7 @@
 
 #include <Engine\Scene\Scene.h>
 #include <Engine\Physics\CollisionManager.h>
+#include <vector>
 //#include <Label.h>
 //#include <Directional_Light.h>
 //#include <Point_Light.h>
@@ -26,13 +27,13 @@ private:
 	//Collision Manager
 	CollisionManager colManage;
 	GameObject_3D* player;
-	std::map<int, std::string> levelList;
+	std::vector<std::string> levelList;
 
 	void destroyGameObject(Game_Object* po_object);
 
 public:
 	//Constructor
-	Game_Scene() {};
+	Game_Scene();
 
 	//Initialize
 	void init();
