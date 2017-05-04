@@ -57,7 +57,7 @@ void GameObject_3D::add_Component(std::string s_Name_In, Component* p_Component_
 	else if (s_Name_In == "Character")
 	{
 		auto found_Character = mipo_Components.find("Character")->second;
-		dynamic_cast<Character*>(found_Character)->setHealth(3);
+		dynamic_cast<Character*>(found_Character)->setHealth(50);
 		dynamic_cast<Character*>(found_Character)->setNumberOfBullets(100);
 	}
 

@@ -33,13 +33,11 @@ void CollisionManager::collision(Game_Object* objectA, Game_Object* objectB, std
 				if (objectB->get_Tag() == "Ammo")
 				{
 					character->gainBullets(30);
-					//eraseID.push_back(pair.first);
 					objectB->set_ToDelete();
 				}
 				else if (objectB->get_Tag() == "HealthPack")
 				{
 					character->gainLife(1);
-					//eraseID.push_back(pair.first);
 					objectB->set_ToDelete();
 				}
 			}
@@ -110,36 +108,54 @@ void CollisionManager::collisionChecks(std::map<std::string, Game_Object*> &game
 				if (bullet->get_Components().count("BoxCollider_3D"))
 				{
 					BoxCollider_3D* tempCol = dynamic_cast<BoxCollider_3D*>(bullet->get_Components().at("BoxCollider_3D"));
-					for (auto const& pair : gameObjects)
+					for (auto const& pair2 : gameObjects)
 					{
-						BoxCollider_3D* secondCol = dynamic_cast<BoxCollider_3D*>(pair.second->get_Component("BoxCollider_3D"));
+						if (currentObject == pair2.second) { continue; }
+						BoxCollider_3D* secondCol = dynamic_cast<BoxCollider_3D*>(pair2.second->get_Component("BoxCollider_3D"));
+						
+						//'hack' to fix hitting robot:
+						//if (secondCol == nullptr && pair2.second->get_Children().size() != 0)
+						//{
+						//	for (auto const& pair3 : pair2.second->get_Children())
+						//	{
+						//		//if child has a BoxCollider set collider to that and break out of the loop
+						//		secondCol = dynamic_cast<BoxCollider_3D*>(pair3.second->get_Component("BoxCollider_3D"));
+						//		if (secondCol != nullptr) { break; }
+						//	}
+						//}
+						
 						if (secondCol != nullptr)
 						{
+							
 							bool check = tempCol->intersects(*secondCol);
 							if (check)
 							{
+								if (pair2.second->get_Tag() == "Player")
+							{
+								bool a = 1;
+							}
 								//std::cout << "Toppus Kekkus" << std::endl;
-								if ((pair.second->get_Components().count("RigidBody") && bullet->get_Components().count("RigidBody")) || (pair.second->get_Parent()->get_Components().count("RigidBody") && bullet->get_Components().count("RigidBody")))
+								if ((pair2.second->get_Components().count("RigidBody") && bullet->get_Components().count("RigidBody")) || (pair2.second->get_Parent()->get_Components().count("RigidBody") && bullet->get_Components().count("RigidBody")))
 								{
 									RigidBody* tempBody;
-									if (pair.second->get_Parent())
+									if (pair2.second->get_Parent())
 									{
-										tempBody = dynamic_cast<RigidBody*>(pair.second->get_Parent()->get_Components().at("RigidBody"));
+										tempBody = dynamic_cast<RigidBody*>(pair2.second->get_Parent()->get_Components().at("RigidBody"));
 									}
 									else
 									{
-										tempBody = dynamic_cast<RigidBody*>(pair.second->get_Components().at("RigidBody"));
+										tempBody = dynamic_cast<RigidBody*>(pair2.second->get_Components().at("RigidBody"));
 									}
 									
 									if (currentObject->get_Name() == "Robot")
 									{
-										if (pair.second->get_Tag() == "Enemy")
+										if (pair2.second->get_Tag() == "Enemy")
 										{
-											colChecks.insert(std::make_pair(bullet, pair.second));
-											dynamic_cast<Character*>(pair.second->get_Components().at("Character"))->loseLife();
-											if (dynamic_cast<Character*>(pair.second->get_Components().at("Character"))->getHealth() == 0)
+											colChecks.insert(std::make_pair(bullet, pair2.second));
+											dynamic_cast<Character*>(pair2.second->get_Components().at("Character"))->loseLife();
+											if (dynamic_cast<Character*>(pair2.second->get_Components().at("Character"))->getHealth() == 0)
 											{
-												pair.second->set_ToDelete();
+												pair2.second->set_ToDelete();
 											}
 										}
 										else if (!tempBody->get_Moveable())
@@ -150,8 +166,23 @@ void CollisionManager::collisionChecks(std::map<std::string, Game_Object*> &game
 									}
 									else
 									{
-
-										colChecks.insert(std::make_pair(bullet, pair.second));
+										if (pair2.second->get_Tag() == "Player")
+										{
+											if (currentObject->get_Tag() == "Enemy")
+											{
+												colChecks.insert(std::make_pair(bullet, pair2.second));
+												dynamic_cast<Character*>(pair2.second->get_Parent()->get_Components().at("Character"))->loseLife();
+												if (dynamic_cast<Character*>(pair2.second->get_Parent()->get_Components().at("Character"))->getHealth() == 0)
+												{
+													pair2.second->get_Parent()->set_ToDelete();
+												}
+											}
+										}
+										else
+										{
+											colChecks.insert(std::make_pair(bullet, pair2.second));
+										}
+										
 									}
 								}
 							}

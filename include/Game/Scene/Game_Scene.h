@@ -26,6 +26,7 @@ private:
 	//Collision Manager
 	CollisionManager colManage;
 	GameObject_3D* player;
+	std::map<int, std::string> levelList;
 
 public:
 	//Constructor
@@ -47,6 +48,8 @@ public:
 	void clean_Up();
 
 	void reload_Scene();
+
+	void load_Scene(int i);
 
 
 };
