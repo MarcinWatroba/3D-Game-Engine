@@ -60,13 +60,29 @@ void GameObject_Instanced::renderDepth(Shader * p_Shader_In)
 
 void GameObject_Instanced::render(Shader * p_Shader_In)
 {
+	std::cout << VAO << " " << i_Buffer << " " << index_Size << std::endl;
 	static_cast<Transform_Instanced*>(mipo_Components.find("Transform_Instanced")->second)->update_Shader(p_Shader_In);
-	if (b_RenderStatus) static_cast<RenderComp_Instanced*>(mipo_Components.find("RenderComp_Instanced")->second)->renderInstanced(GL_TEXTURE_2D, GL_TRIANGLES, p_Shader_In, 1000, ParticlesCount, particlePositions);
+	if (b_RenderStatus) static_cast<RenderComp_Instanced*>(mipo_Components.find("RenderComp_Instanced")->second)->renderInstanceed(GL_TEXTURE_2D, GL_TRIANGLES, p_Shader_In, 1000, ParticlesCount, particlePositions, VAO, i_Buffer, index_Size);
 }
 
 void GameObject_Instanced::clean_Up()
 {
 
+}
+
+void GameObject_Instanced::set_VAO(unsigned int ui_VAO_In)
+{
+	VAO = static_cast<Mesh_Instanced*>(mipo_Components.find("Mesh_Instanced")->second)->get_VAO();
+}
+
+void GameObject_Instanced::set_InstanceBuffer(unsigned int ui_IB_In)
+{
+	i_Buffer = static_cast<Mesh_Instanced*>(mipo_Components.find("Mesh_Instanced")->second)->get_InstanceBufferHandle();
+}
+
+void GameObject_Instanced::set_IndexSize(unsigned int ui_Size_In)
+{
+	index_Size = static_cast<Mesh_Instanced*>(mipo_Components.find("Mesh_Instanced")->second)->get_SizeOfIndices();
 }
 
 void GameObject_Instanced::set_Position(glm::vec3 v3_Position_In)

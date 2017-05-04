@@ -96,7 +96,7 @@ Mesh_Instanced::Mesh_Instanced(const char* pc_FileName_In, int i_DrawMode_In)
 	}
 
 	unsigned int handle[3];
-
+	unsigned int vaos;
 	//It's time to create buffers here
 	glGenVertexArrays(1, &ui_VAO);
 	glGenBuffers(1, &ui_EBO);
@@ -139,9 +139,3 @@ Mesh_Instanced::Mesh_Instanced(const char* pc_FileName_In, int i_DrawMode_In)
 	glBindVertexArray(0);
 
 }
-//
-//unsigned int Mesh_Instanced::get_InstanceBufferHandle()
-//{
-//	std::cout << "TEST" << std::endl;
-//	return instanceBufferHandle;
-//}

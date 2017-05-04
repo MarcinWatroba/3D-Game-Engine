@@ -8,6 +8,7 @@ class Model;
 class Loader;
 class Game_Object;
 class GameObject_3D;
+class GameObject_Instanced;
 class Light;
 class Shader;
 
@@ -44,13 +45,15 @@ private:
 	//Add children
 	void add_Components(GameObject_3D* po_GameObject_In, std::string s_ToProcess_In);
 
-	//void add_Components_Instanced(GameObject_Instanced* po_GameObject_In, std::string s_ToProcess_In);
+	void add_Components_Instanced(GameObject_Instanced * po_GameObject_In, std::string s_ToProcess_In);
+
 
 
 	//Identify the component
 	void identify_Component(GameObject_3D* po_GameObject_In, std::string& s_Result_In);
 
-	//void identify_Component_Instanced(GameObject_Instanced* po_GameObject_In, std::string & s_ToProcess_In);
+	void identify_Component_Instanced(GameObject_Instanced * po_GameObject_In, std::string & s_ToProcess_In);
+
 
 
 	//Add children
@@ -62,6 +65,7 @@ public:
 
 	//Main constructor
 	SceneLoader(const char* pc_FileName_In, Loader* po_Loader_In, std::map<std::string, Game_Object*>& mspo_GameObjects3D_In);
+
 
 	//Set amount of lights to shader
 	glm::vec3 get_LightPosition(int i);

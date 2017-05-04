@@ -47,7 +47,7 @@ public:
 	//Model* get_Model(int i_Model_ID);
 	Mesh_3D* get_Mesh3D(std::string s_Name_In);
 
-	Mesh_Instanced * get_MeshInstanced(std::string s_Name_In);
+	Mesh_Instanced* get_MeshInstanced(std::string s_Name_In);
 
 	//Font& get_Font(int i_Font_ID);
 

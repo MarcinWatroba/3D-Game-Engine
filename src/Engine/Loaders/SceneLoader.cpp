@@ -141,7 +141,7 @@ SceneLoader::SceneLoader(const char* pc_FileName_In, Loader* po_Loader_In, std::
 
 		int i_InitMode = std::atoi(it->Attribute("init_Mode"));
 		glm::vec3 v3_Origin = to3DVector(it->Attribute("origin"));
-		glm::vec3 v3_Position = glm::vec3(2.0f, 10.0f, 15.0f);
+		glm::vec3 v3_Position = to3DVector(it->Attribute("position"));
 		glm::quat quat_OrientationX = toQuat(it->Attribute("orientationX"));
 		glm::quat quat_OrientationY = toQuat(it->Attribute("orientationY"));
 		glm::quat quat_OrientationZ = toQuat(it->Attribute("orientationZ"));
@@ -151,18 +151,21 @@ SceneLoader::SceneLoader(const char* pc_FileName_In, Loader* po_Loader_In, std::
 		mspo_GameObjects_In.insert(std::pair<std::string, Game_Object*>(s_ObjectName, new GameObject_Instanced()));
 		auto object = static_cast<GameObject_Instanced*>(mspo_GameObjects_In.find(s_ObjectName)->second);
 		object->set_Name(s_ObjectName);
+		unsigned int i_B = po_Loader_In->get_MeshInstanced(i_MeshID)->get_InstanceBufferHandle();
 		object->add_Component("Mesh_Instanced", po_Loader_In->get_MeshInstanced(i_MeshID));
 		object->add_Component("Transform_Instanced", new Transform_Instanced());
 		object->add_Component("RenderComp_Instanced", new RenderComp_Instanced());
-		//if (s_Components != "") add_Components_Instanced(object, s_Components);
+		if (s_Components != "") add_Components_Instanced(object, s_Components);
 		object->set_Position(v3_Position);
+		object->set_VAO(po_Loader_In->get_MeshInstanced(i_MeshID)->get_VAO());
+		object->set_IndexSize(po_Loader_In->get_MeshInstanced(i_MeshID)->get_SizeOfIndices());
+		object->set_InstanceBuffer(po_Loader_In->get_MeshInstanced(i_MeshID)->get_InstanceBufferHandle());
 		object->set_Origin(v3_Origin);
 		object->set_Rotation(quat_OrientationZ * quat_OrientationY * quat_OrientationX);
 		object->set_Scale(v3_Scale);
 		object->add_Texture("Diffuse_Map", po_Loader_In->get_Texture(i_DiffuseID));
 		object->set_Tiles(v2_Tiling);
 		object->set_Tag(s_Tag);
-
 	}
 
 
@@ -223,8 +226,6 @@ SceneLoader::SceneLoader(const char* pc_FileName_In, Loader* po_Loader_In, std::
 			point_Light->set_Radius(f_lRadius);
 			f_pos[num] = v3_Position;
 			f_radii[num] = f_lRadius;
-			std::cout << "POS " << v3_Position.y << std::endl;
-			std::cout << f_lRadius << std::endl;;
 			num++;
 		}
 	}
@@ -238,13 +239,13 @@ void SceneLoader::identify_Component(GameObject_3D* po_GameObject_In, std::strin
 	s_ToProcess_In.clear();
 }
 
-//void SceneLoader::identify_Component_Instanced(GameObject_Instanced* po_GameObject_In, std::string& s_ToProcess_In)
-//{
-//	if (s_ToProcess_In == "YourCompnentHere") std::cout << "Nope" << "\n";
-//	else std::cout << "Unknown component..." << "\n"; // Else we can't find it
-//
-//	s_ToProcess_In.clear();
-//}
+void SceneLoader::identify_Component_Instanced(GameObject_Instanced* po_GameObject_In, std::string& s_ToProcess_In)
+{
+	if (s_ToProcess_In == "YourCompnentHere") std::cout << "Nope" << "\n";
+	else std::cout << "Unknown component..." << "\n"; // Else we can't find it
+
+	s_ToProcess_In.clear();
+}
 
 glm::vec3 SceneLoader::to3DVector(const char* pc_Vector3D_In)
 {
@@ -478,44 +479,44 @@ void SceneLoader::add_Components(GameObject_3D* po_GameObject_In, std::string s_
 	}
 }
 
-//void SceneLoader::add_Components_Instanced(GameObject_3D* po_GameObject_In, std::string s_ToProcess_In)
-//{
-	//std::string s_Result;
-	//int i_Length = s_ToProcess_In.length();
+void SceneLoader::add_Components_Instanced(GameObject_Instanced* po_GameObject_In, std::string s_ToProcess_In)
+{
+	std::string s_Result;
+	int i_Length = s_ToProcess_In.length();
 
-	//for (int i = 0; i < i_Length; i++)
-	//{
-	//	switch (s_ToProcess_In[i])
-	//	{
-	//	case 40: // This bracket "("
-	//			 //Ignore
-	//		break;
+	for (int i = 0; i < i_Length; i++)
+	{
+		switch (s_ToProcess_In[i])
+		{
+		case 40: // This bracket "("
+				 //Ignore
+			break;
 
-	//	case 41: // This bracket ")"
-	//		//identify_Component_Instanced(po_GameObject_In, s_Result);
-	//		break;
+		case 41: // This bracket ")"
+			identify_Component_Instanced(po_GameObject_In, s_Result);
+			break;
 
-	//	case 44:  // Comma
-	//			  //Find the right component
-	//		//identify_Component_Instanced(po_GameObject_In, s_Result);
-	//		break;
+		case 44:  // Comma
+				  //Find the right component
+			identify_Component_Instanced(po_GameObject_In, s_Result);
+			break;
 
-	//	case '\n':
-	//		break;
+		case '\n':
+			break;
 
-	//	case '\t':
-	//		break;
+		case '\t':
+			break;
 
-	//	case 32:
-	//		break;
+		case 32:
+			break;
 
-	//		//Process
-	//	default:
-	//		s_Result = s_Result + s_ToProcess_In[i];
-	//		break;
-	//	}
-	//}
-//}
+			//Process
+		default:
+			s_Result = s_Result + s_ToProcess_In[i];
+			break;
+		}
+	}
+}
 glm::vec3 SceneLoader::get_LightPosition(int i)
 {
 	return f_pos[i];

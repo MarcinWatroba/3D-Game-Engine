@@ -1,7 +1,6 @@
 #pragma once
 
 #include <Engine\Scene\Scene.h>
-#include <deque>
 //#include <Scene.h>
 //#include <Label.h>
 //#include <Directional_Light.h>

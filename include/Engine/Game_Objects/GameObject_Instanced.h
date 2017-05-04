@@ -16,6 +16,9 @@ struct Particle {
 class GameObject_Instanced : public Game_Object
 {
 private:
+	int VAO;
+	int i_Buffer;
+	int index_Size;
 	unsigned int maxParticles;
 	float particlePositions[3000];
 	Particle ParticlesContainer[1000];
@@ -36,6 +39,12 @@ public:
 	void renderDepth(Shader * p_Shader_In);
 	void render(Shader* p_Shader_In);
 	void clean_Up();
+
+	void set_VAO(unsigned int ui_VAO_In);
+
+	void set_InstanceBuffer(unsigned int ui_IB_In);
+
+	void set_IndexSize(unsigned int ui_Size_In);
 
 	//-----Set Transformations---------------------------
 	void set_Position(glm::vec3 v3_Position_In);

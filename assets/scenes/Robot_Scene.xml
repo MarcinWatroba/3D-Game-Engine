@@ -701,12 +701,29 @@
 		texture_Tiling = "(1, 1)"	
 		init_Mode = "0"
 		origin = "(0,0, 0)"
-		position = "(5.0, 15.707, 5.0)"
+		position = "(5.0, 15.707, -20.0)"
 		orientationX = "0.000, (1, 0, 0)"
 		orientationY = "0.000, (0, 1, 0)"
 		orientationZ = "0, (0, 0, 1)"
 		scale = "(0.1, 0.1, 0.1)"
-		max_Particles = "10000"
+		max_Particles = "1000"
+		>
+	</new_ObjectParticle>
+	<new_ObjectParticle
+		name = "Rain_02"
+		tag = "Particle"
+		mesh_ID = "8"
+		component = ""
+		diffuse_ID = "26"
+		texture_Tiling = "(1, 1)"	
+		init_Mode = "0"
+		origin = "(0,0, 0)"
+		position = "(5.0, 15.707, 15.0)"
+		orientationX = "0.000, (1, 0, 0)"
+		orientationY = "0.000, (0, 1, 0)"
+		orientationZ = "0, (0, 0, 1)"
+		scale = "(0.1, 0.1, 0.1)"
+		max_Particles = "1000"
 		>
 	</new_ObjectParticle>
 </objects>

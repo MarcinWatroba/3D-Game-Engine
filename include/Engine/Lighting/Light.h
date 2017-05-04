@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Engine/Game_Objects/GameObject_3D.h>
+#include <Engine/Game_Objects/GameObject_Instanced.h>
 
 class Light : public GameObject_3D
 {

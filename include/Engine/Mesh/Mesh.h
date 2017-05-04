@@ -32,6 +32,11 @@ struct CompleteVertex
 	Normal normal;
 };
 
+namespace Buffer
+{
+	enum Buffer { Vertex, Normal, UV, Num };
+}
+
 struct VertexIndex
 {
 	//Variables
@@ -62,13 +67,14 @@ protected:
 	std::vector<float> vf_UVsf;
 	std::vector<unsigned int> vui_Facesf;
 	std::map<VertexIndex, unsigned int> moui_Indices;
-	unsigned int instanceBufferHandle;
+
 	unsigned int ui_VAO;
 	unsigned int ui_EBO;
 	unsigned int ui_VAO2;
 	unsigned int VAO2;
 public:
 	Mesh() {};
+	unsigned int instanceBufferHandle;
 	unsigned int get_VAO();
 	unsigned int get_VAO2();
 	unsigned int get_SizeOfIndices();

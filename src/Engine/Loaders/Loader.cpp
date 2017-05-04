@@ -16,6 +16,7 @@ Mesh_3D* Loader::get_Mesh3D(std::string s_Name_In)
 
 Mesh_Instanced* Loader::get_MeshInstanced(std::string s_Name_In)
 {
+	std::cout << mipo_MeshesInstanced.find(s_Name_In)->second->get_VAO() << std::endl;
 	return mipo_MeshesInstanced.find(s_Name_In)->second;
 }
 
@@ -33,6 +34,7 @@ void Loader::clean_Up()
 {
 	//Delete every memory
 	for (const auto& pair : mipo_Meshes3D) delete pair.second;
+	for (const auto& pair : mipo_MeshesInstanced) delete pair.second;
 	for (const auto& pair : mipo_TextureFiles) delete pair.second;
 	for (const auto& pair : mipo_Shaders) delete pair.second;
 }

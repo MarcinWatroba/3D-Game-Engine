@@ -125,8 +125,3 @@ Mesh_3D::Mesh_3D(const char* pc_FileName_In, int i_DrawMode_In)
 
 	glBindVertexArray(0);
 }
-
-//unsigned int Mesh_3D::get_InstanceBufferHandle()
-//{
-//	return 0;
-//}

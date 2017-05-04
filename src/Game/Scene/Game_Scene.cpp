@@ -1,6 +1,7 @@
 #include <Game\Scene\Game_Scene.h>
 #include <GLFW\glfw3.h>
 #include <Engine/Mesh/Mesh_3D.h>
+#include <Engine/Mesh/Mesh_Instanced.h>
 #include <Engine\Game_Objects\GameObject_3D.h>
 #include <Engine\Game_Objects\GameObject_Instanced.h>
 #include <Engine\Loaders\SceneLoader.h>
