@@ -4,8 +4,8 @@
 #include <glm\gtc\type_ptr.hpp>
 #include <map>
 
-class Model;
 class Loader;
+class PrefabLoader;
 class Game_Object;
 class GameObject_3D;
 class GameObject_Instanced;
@@ -68,6 +68,8 @@ public:
 	//SceneLoader(const char* pc_FileName_In, Loader* po_Loader_In, std::map<std::string, Game_Object*>& mspo_GameObjects3D_In);
 
 	SceneLoader(const char* pc_FileName_In, Loader* po_Loader_In, std::map<std::string, Game_Object*>& mspo_GameObjects3D_In, std::map<std::string, Sound*>& snd_Audio_In);
+	//SceneLoader(const char* pc_FileName_In, Loader* po_Loader_In, PrefabLoader* po_PrefLoader_In, std::map<std::string, Game_Object*>& mspo_GameObjects_In);
+
 	//Set amount of lights to shader
 	glm::vec3 get_LightPosition(int i);
 	float get_LightRadius(int i);

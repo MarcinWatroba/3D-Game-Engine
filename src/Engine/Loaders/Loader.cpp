@@ -1,6 +1,7 @@
 #include <Engine\Loaders\Loader.h>
 #include <iostream>
 #include <glad\glad.h>
+#include <string>
 
 void Loader::start()
 {
@@ -9,9 +10,14 @@ void Loader::start()
 	std::cout << "Pasrsing completed..." << "\n";
 }
 
-Mesh_3D* Loader::get_Mesh3D(std::string s_Name_In)
+Mesh* Loader::get_Mesh(std::string s_Name_In)
 {
-	return mipo_Meshes3D.find(s_Name_In)->second;
+	return mipo_Meshes.find(s_Name_In)->second;
+}
+
+Font* Loader::get_Font(std::string s_Name_In)
+{
+	return mipo_Fonts.find(s_Name_In)->second;
 }
 
 Mesh_Instanced* Loader::get_MeshInstanced(std::string s_Name_In)
@@ -43,6 +49,7 @@ void Loader::clean_Up()
 	for (const auto& pair : mipo_TextureFiles) delete pair.second;
 	for (const auto& pair : mipo_Shaders) delete pair.second;
 	for (const auto& pair : snd_Audio) delete pair.second;
+	for (const auto& pair : mipo_Meshes) delete pair.second;
 }
 
 void Loader::ParseXML_Resources(const char* pc_FileName)
@@ -60,7 +67,7 @@ void Loader::ParseXML_Resources(const char* pc_FileName)
 		std::string s_Name = obj_FileLoc + i->Attribute("name");
 		int i_DrawMethod = std::atoi(i->Attribute("i_DrawMethod"));
 
-		mipo_Meshes3D.insert(std::pair<std::string, Mesh_3D*>(i_ID, new Mesh_3D(s_Name.c_str(), i_DrawMethod)));
+		mipo_Meshes.insert(std::pair<std::string, Mesh_3D*>(i_ID, new Mesh_3D(s_Name.c_str(), i_DrawMethod, i_ID)));
 	}
 
 	for (tinyxml2::XMLElement* i = po_Body->FirstChildElement("particle_Files")->FirstChildElement("new_File"); i != nullptr; i = i->NextSiblingElement("new_File"))
@@ -89,7 +96,7 @@ void Loader::ParseXML_Resources(const char* pc_FileName)
 		bool i_GenMipmaps = (std::atoi(i->Attribute("gen_Mipmaps")) != 0);
 
 		//Add texture
-		mipo_TextureFiles.insert(std::make_pair(i_ID, new Texture(s_Name.c_str(), i_TextureMode, i_WrappingS, i_WrappingT, i_FilterMin, i_FilterMag, i_SoilColourLoad, i_OpenGLColour, i_GenMipmaps)));
+		mipo_TextureFiles.insert(std::make_pair(i_ID, new Texture(s_Name.c_str(), i_TextureMode, i_WrappingS, i_WrappingT, i_FilterMin, i_FilterMag, i_SoilColourLoad, i_OpenGLColour, i_GenMipmaps, i_ID)));
 	}
 
 	std::string shader_FileLoc = po_Body->FirstChildElement("shader_File_Location")->GetText();
@@ -144,6 +151,33 @@ void Loader::ParseXML_Resources(const char* pc_FileName)
 	//	}
 	//}
 
+	
+	std::string font_FileLoc = po_Body->FirstChildElement("font_File_Location")->GetText();
+	for (tinyxml2::XMLElement* i = po_Body->FirstChildElement("font_Files")->FirstChildElement("new_File"); i != nullptr; i = i->NextSiblingElement("new_File"))
+	{
+		//Create variables
+		std::string s_ID = i->Attribute("ID");
+		std::string s_Font = i->Attribute("font");
+		std::string s_Directory = font_FileLoc + s_Font;
+		std::string s_Texture = i->Attribute("texture");
+		
+		//Add font
+		mipo_Fonts.insert(std::make_pair(s_ID, new Font(s_Directory.c_str(), mipo_TextureFiles.find(s_Texture)->second)));
+	}
+
+	for (tinyxml2::XMLElement* i = po_Body->FirstChildElement("meshes_2D")->FirstChildElement("new_File"); i != nullptr; i = i->NextSiblingElement("new_File"))
+	{
+		//Create variables
+		std::string s_ID = i->Attribute("ID");
+		glm::vec2 v2_Position = to2DVector(i->Attribute("position"));
+		glm::vec2 v2_Size = get_Texture(i->Attribute("texture"))->get_Size();
+		glm::vec2 v2_Dimension = to2DVector(i->Attribute("dimensions"));
+		glm::vec3 v3_Colour = to3DVector(i->Attribute("colour"));
+
+		//Add font
+		mipo_Meshes.insert(std::make_pair(s_ID, new Mesh_2D(v2_Position, v2_Size, v2_Dimension, v3_Colour)));
+	}
+
 	std::string audio_FileLoc = po_Body->FirstChildElement("audio_File_Location")->GetText();
 	for (tinyxml2::XMLElement* i = po_Body->FirstChildElement("audio_Files")->FirstChildElement("new_File"); i != nullptr; i = i->NextSiblingElement("new_File"))
 	{
@@ -155,4 +189,94 @@ void Loader::ParseXML_Resources(const char* pc_FileName)
 		snd_Audio.insert(std::make_pair(i_ID, new Sound(s_Name.c_str())));
 
 	}
+}
+
+glm::vec3 Loader::to3DVector(const char* pc_Vector3D_In)
+{
+	std::string s_Result;
+	int i_DataCounter = 0;
+	int i_Length = std::strlen(pc_Vector3D_In);
+	glm::vec3 v3_Vector;
+
+	for (int i = 0; i < i_Length; i++)
+	{
+		switch (pc_Vector3D_In[i])
+		{
+		case 32: // Empty space
+				 //Ignore
+			break;
+
+		case 44: // Comma
+			i_DataCounter++;
+
+			switch (i_DataCounter)
+			{
+			case 1:
+				v3_Vector.x = std::strtof(s_Result.c_str(), NULL);
+				s_Result.clear();
+				break;
+
+			case 2:
+				v3_Vector.y = std::strtof(s_Result.c_str(), NULL);
+				s_Result.clear();
+				break;
+			}
+			break;
+			break;
+
+		case 40: // This bracker "(" 
+				 //Ignore
+			break;
+
+		case 41: // This bracket ")"
+			v3_Vector.z = std::strtof(s_Result.c_str(), NULL);
+			break;
+
+			//Process
+		default:
+			s_Result += pc_Vector3D_In[i];
+			break;
+		}
+	}
+
+	return glm::vec3(v3_Vector.x, v3_Vector.y, v3_Vector.z);
+}
+
+glm::vec2 Loader::to2DVector(const char* pc_Vector2D_In)
+{
+	std::string s_Result;
+	int i_DataCounter = 0;
+	int i_Length = std::strlen(pc_Vector2D_In);
+	glm::vec2 v2_Vector;
+
+	for (int i = 0; i < i_Length; i++)
+	{
+		switch (pc_Vector2D_In[i])
+		{
+		case 32: // Empty space
+				 //Ignore
+			break;
+
+		case 44: // Comma
+			v2_Vector.x = std::strtof(s_Result.c_str(), nullptr);
+			s_Result.clear();
+			break;
+
+		case 40: // This bracker "(" 
+				 //Ignore
+			break;
+
+		case 41: // This bracket ")"
+			v2_Vector.y = std::strtof(s_Result.c_str(), nullptr);
+			break;
+
+			//Process
+		default:
+			s_Result += pc_Vector2D_In[i];
+			break;
+		}
+	}
+
+	return glm::vec2(v2_Vector.x, v2_Vector.y);
+>>>>>>> origin/NewEditor
 }

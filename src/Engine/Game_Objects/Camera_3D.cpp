@@ -16,7 +16,6 @@ Camera_3D::Camera_3D(float f_FoV_In, float f_Ratio_In, float f_NearPlane_In, flo
 	f_DeltaX = 0.f;
 	f_DeltaY = 0.f;
 	f_DeltaZ = 0.f;
-
 }
 
 void Camera_3D::update()
@@ -51,8 +50,6 @@ void Camera_3D::update()
 	mat4_Shadow_View[3][2] = mat4_View[3][2];
 
 	f_Pitch = f_Yaw = 0;
-
-
 }
 
 void Camera_3D::update_Shader(Shader* p_Shader_In)
@@ -71,6 +68,14 @@ void Camera_3D::set_Speed(float f_Speed_In)
 	f_Speed = f_Speed_In;
 }
 
+int Camera_3D::get_CameraSide()
+{
+	glm::vec3 euler = glm::eulerAngles(quat_Orientation);
+
+	if (euler.y >= 0) return 1;
+	if (euler.y < 0) return -1;
+}
+
 void Camera_3D::move_Keyboard(float f_Delta_In)
 {
 	//Extract view matrix to calculate movement
@@ -81,11 +86,15 @@ void Camera_3D::move_Keyboard(float f_Delta_In)
 	vec3_EyePos += (-f_DeltaZ * forward + f_DeltaX * strafe + f_DeltaY * glm::vec3(0.f, 1.f, 0.f));
 }
 
-void Camera_3D::move_Mouse(float f_Delta_In, glm::vec2 v2_MousePos_In)
+void Camera_3D::move_Mouse(float f_Delta_In, glm::vec2 v2_MousePos_In, glm::vec2 v2_WindowSize_In)
 {
 	//Mouse movement
-	float deltaMouse_X = v2_MousePos_In.x - v2_LastMousePos.x;
-	float deltaMouse_Y = v2_MousePos_In.y - v2_LastMousePos.y;
+	v2_LastClickPos.x += v2_MousePos_In.x - (v2_WindowSize_In.x / 2.f);
+	v2_LastClickPos.y += v2_MousePos_In.y - (v2_WindowSize_In.y / 2.f);
+
+	//Mouse movement
+	float deltaMouse_X = v2_LastClickPos.x - v2_LastMousePos.x;
+	float deltaMouse_Y = v2_LastClickPos.y - v2_LastMousePos.y;
 
 	//Sensitivity
 	float mouseX_Sensitivity = 1.f * f_Delta_In;
@@ -96,7 +105,7 @@ void Camera_3D::move_Mouse(float f_Delta_In, glm::vec2 v2_MousePos_In)
 	f_YawDelta = mouseX_Sensitivity * deltaMouse_X;
 	f_Pitch += mouseY_Sensitivity * deltaMouse_Y;
 
-	v2_LastMousePos = v2_MousePos_In;
+	v2_LastMousePos = v2_LastClickPos;
 }
 
 void Camera_3D::move_Forward()
@@ -134,6 +143,61 @@ void Camera_3D::reset()
 	f_DeltaZ = 0.f;
 	f_DeltaY = 0.f;
 	f_DeltaX = 0.f;
+	f_YawOther = f_PitchOther = 0.f;
+}
+
+void Camera_3D::move_MouseEditor(float f_Delta_In, glm::vec2 v2_MousePos_In, glm::vec2 v2_WindowSize_In)
+{
+	//Mouse movement
+	v2_LastClickPos.x += v2_MousePos_In.x - (v2_WindowSize_In.x / 2.f);
+	v2_LastClickPos.y += v2_MousePos_In.y - (v2_WindowSize_In.y / 2.f);
+
+	//Mouse movement
+	float deltaMouse_X = v2_LastClickPos.x - v2_LastMousePos.x;
+	float deltaMouse_Y = v2_LastClickPos.y - v2_LastMousePos.y;
+
+	//Sensitivity
+	float mouseX_Sensitivity = 1.f * f_Delta_In;
+	float mouseY_Sensitivity = 1.f * f_Delta_In;
+
+	//Calculate yaw and pitch
+	f_YawOther += mouseX_Sensitivity * deltaMouse_X;
+	f_PitchOther += mouseY_Sensitivity * deltaMouse_Y;
+
+	v2_LastMousePos = v2_LastClickPos;
+
+	//Extract view matrix to calculate movement
+	glm::vec3 forward(mat4_View[0][2], mat4_View[1][2], mat4_View[2][2]);
+	glm::vec3 strafe(mat4_View[0][0], mat4_View[1][0], mat4_View[2][0]);
+
+	f_DeltaX = -f_YawOther;
+	f_DeltaY = f_PitchOther;
+
+	//Keyboard movement
+	vec3_EyePos += (-f_DeltaZ * forward + f_DeltaX * strafe + f_DeltaY * glm::vec3(0.f, 1.f, 0.f));
+}
+
+glm::vec2 Camera_3D::get_PitchYaw(float f_Delta_In, glm::vec2 v2_MousePos_In, glm::vec2 v2_WindowSize_In)
+{
+	//Mouse movement
+	v2_LastClickPos.x += v2_MousePos_In.x - (v2_WindowSize_In.x / 2.f);
+	v2_LastClickPos.y += v2_MousePos_In.y - (v2_WindowSize_In.y / 2.f);
+
+	//Mouse movement
+	float deltaMouse_X = v2_LastClickPos.x - v2_LastMousePos.x;
+	float deltaMouse_Y = v2_LastClickPos.y - v2_LastMousePos.y;
+
+	//Sensitivity
+	float mouseX_Sensitivity = 1.f * f_Delta_In;
+	float mouseY_Sensitivity = 1.f * f_Delta_In;
+
+	//Calculate yaw and pitch
+	f_YawOther += mouseX_Sensitivity * deltaMouse_X;
+	f_PitchOther += mouseY_Sensitivity * deltaMouse_Y;
+
+	v2_LastMousePos = v2_LastClickPos;
+
+	return glm::vec2(f_YawOther, f_PitchOther);
 }
 
 void Camera_3D::set_CameraPos(glm::vec3 v3_Pos_In)

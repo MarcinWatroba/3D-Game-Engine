@@ -16,6 +16,10 @@ unsigned int Mesh::get_SizeOfIndices()
 {
 	return vui_Indices.size();
 }
+std::string Mesh::get_ID()
+{
+	return s_ID;
+}
 
 unsigned int Mesh::get_SizeOfVertices()
 {

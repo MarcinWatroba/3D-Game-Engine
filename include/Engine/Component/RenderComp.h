@@ -17,6 +17,8 @@ protected:
 public:
 	//Constructor
 	RenderComp() {};
+	RenderComp(const RenderComp &p_NewComp_In);
+	~RenderComp() {};
 	virtual void render(int i_DrawMode_In, int i_DrawShape_In, Shader* p_Shader_In) = 0; //Render
 	virtual void renderInstanced(int draw_Mode_In, int draw_Shape_In, Shader* p_Shader_In, int max, int count, float positions[]) = 0;
 
@@ -27,5 +29,5 @@ public:
 	glm::vec2 get_Tiles();
 
 	void add_Texture(std::string s_Name_In, Texture* p_Texture_In);
-	unsigned int get_Texture(std::string s_Name_In);
+	Texture* get_Texture(std::string s_Name_In);
 };

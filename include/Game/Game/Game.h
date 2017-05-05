@@ -31,6 +31,7 @@ public:
 	//Receive the key
 	void process_Key(int i_KeyCode_In, GLboolean b_State_In);
 	void process_Mouse(int i_Button_In, GLboolean b_State_In);
+	void process_Scroll(glm::vec2 v2_Scroll_In);
 
 	//Clean up everything
 	void clean_Up();
