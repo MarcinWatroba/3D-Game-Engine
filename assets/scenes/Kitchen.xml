@@ -410,7 +410,7 @@
 	<new_Object3D
 		name = "Lamp's Metal"
 		container = "No"
-		tag = "Object"
+		tag = "Object_Lamp"
 		mesh_ID = "7"
 		component = ""
 		diffuse_ID = "12"
@@ -430,7 +430,7 @@
 	<new_Object3D
 		name = "Lamp"
 		container = "No"
-		tag = "Object"
+		tag = "Object_Lamp"
 		mesh_ID = "6"
 		component = ""
 		diffuse_ID = "13"
@@ -451,7 +451,7 @@
 	<new_Object3D
 		name = "Lamp's Metal 2"
 		container = "No"
-		tag = "Object"
+		tag = "Object_Lamp"
 		mesh_ID = "7"
 		component = ""
 		diffuse_ID = "12"
@@ -471,7 +471,7 @@
 	<new_Object3D
 		name = "Lamp 2"
 		container = "No"
-		tag = "Object"
+		tag = "Object_Lamp"
 		mesh_ID = "6"
 		component = ""
 		diffuse_ID = "13"
@@ -491,7 +491,7 @@
 	<new_Object3D
 		name = "Lamp's Metal 3"
 		container = "No"
-		tag = "Object"
+		tag = "Object_Lamp"
 		mesh_ID = "7"
 		component = ""
 		diffuse_ID = "12"
@@ -511,7 +511,7 @@
 	<new_Object3D
 		name = "Lamp 3"
 		container = "No"
-		tag = "Object"
+		tag = "Object_Lamp"
 		mesh_ID = "6"
 		component = ""
 		diffuse_ID = "13"
@@ -795,41 +795,44 @@
 	type = "Point_Light"
 	tag = "Light"
 	light_ID = "0"
-	position = "(0, 38.940, 0)"
-	ambient = "(0.5, 0.5, 0.5)"
+	position = "(0, 40.940, 0)"
+	ambient = "(0.05, 0.05, 0.05)"
 	diffuse = "(0.8, 0.8, 0.8)"
-	specular = "(0.5, 0.5, 0.5)"
-	constant = "1"
-	linear = "0.0022"
-	quadratic = "0.0019"
+	specular = "(1, 1, 1)"
+	radius = "24.0"
 	>
 	</new_Light>
-	
 	<new_Light
 	type = "Point_Light"
 	tag = "Light"
 	light_ID = "1"
-	position = "(-37.515, 25.583, -32.407)"
-	ambient = "(0.5, 0.5, 0.5)"
+	position = "(-37.515, 28.583, -32.407)"
+	ambient = "(0.05, 0.05, 0.05)"
 	diffuse = "(0.8, 0.8, 0.8)"
 	specular = "(1, 1, 1)"
-	constant = "1"
-	linear = "0.14"
-	quadratic = "0.07"
+	radius = "8.0"
 	>
 	</new_Light>
-	
 	<new_Light
 	type = "Point_Light"
 	tag = "Light"
 	light_ID = "2"
-	position = "(-44, 38.940, 0)"
-	ambient = "(0.5, 0.5, 0.5)"
+	position = "(37.515, 1.583, 32.407)"
+	ambient = "(0.05, 0.05, 0.05)"
 	diffuse = "(0.8, 0.8, 0.8)"
-	specular = "(0.5, 0.5, 0.5)"
-	constant = "1"
-	linear = "0.0022"
-	quadratic = "0.0019"
+	specular = "(1, 1, 1)"
+	radius = "4.0"
+	>
+	</new_Light>
+  <new_Light
+	type = "Point_Light"
+	tag = "Light"
+	light_ID = "3"
+	position = "(-33.515, 5.583, -32.407)"
+	ambient = "(0.05, 0.05, 0.05)"
+	diffuse = "(0.8, 0.8, 0.8)"
+	specular = "(1, 1, 1)"
+	radius = "4.0"
 	>
 	</new_Light>
 </lights>

@@ -73,6 +73,7 @@ void CollisionManager::collisionChecks(std::map<std::string, Game_Object*> &game
 		Game_Object* currentObject = pair.second;
 		//skip if object is pending deletion
 		if (currentObject->get_ToDelete()) { continue; }
+		if (currentObject->get_Tag() == "Particle") { continue; }
 
 		if (currentObject->get_Components().count("BoxCollider_3D"))
 		{
@@ -81,6 +82,7 @@ void CollisionManager::collisionChecks(std::map<std::string, Game_Object*> &game
 			//for every collidable object iterate over list of objects again to check for collisions
 			for (auto const& pair : gameObjects)
 			{
+				if (currentObject->get_Tag() == "Particle") { continue; }
 				//skip if second object is same as first or if second object is pending deletion
 				if (currentObject == pair.second || pair.second->get_ToDelete()) 
 				{ 
@@ -201,6 +203,8 @@ void CollisionManager::collisionChecks(std::map<std::string, Game_Object*> &game
 		
 		for (auto const& pair : gameObjects)
 		{
+
+			if (pair.second->get_Tag() == "Particle") { continue; }
 			if (static_cast<GameObject_3D*>(pair.second)->get_BulletList().size() != 0)
 			{
 				for (int i = 0; i < static_cast<GameObject_3D*>(pair.second)->get_BulletList().size(); i++)

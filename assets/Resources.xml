@@ -8,7 +8,6 @@
 	<object_File_Location>assets/models/</object_File_Location>
 	<object_Files>
 		<new_File  ID = "9" i_DrawMethod = "35048" name = "Bookcase.obj"> </new_File>	
-		<new_File  ID = "8" i_DrawMethod = "35048" name = "Peckington.obj"> </new_File>	
 		<new_File  ID = "7" i_DrawMethod = "35048" name = "Cube.obj"> </new_File>	
 		<new_File  ID = "4" i_DrawMethod = "35048" name = "floor.obj"> </new_File>
 		<new_File  ID = "5" i_DrawMethod = "35048" name = "table.obj"> </new_File>	

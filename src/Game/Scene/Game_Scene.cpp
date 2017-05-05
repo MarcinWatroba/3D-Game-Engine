@@ -217,7 +217,13 @@ void Game_Scene::update_Scene(GLfloat f_Delta_In, glm::vec2 v2_MousePos_In)
 	{
 		for (auto const& pair : mspo_Objects)
 		{
-<<<<<<< HEAD
+			if (pair.second->get_Tag() == "Particle")
+			{
+				static_cast<GameObject_Instanced*>(pair.second)->update_Particles(f_Delta_In, 1.0f, 1.0f, glm::vec3(1.0f));
+				pair.second->update();
+				continue;
+			}
+
 			GameObject_3D* po_GameObject = dynamic_cast<GameObject_3D*>(pair.second);
 		
 			//update game object
@@ -225,12 +231,6 @@ void Game_Scene::update_Scene(GLfloat f_Delta_In, glm::vec2 v2_MousePos_In)
 		
 			//update game components
 			Component * po_Component;
-
-			if (pair.second->get_Tag() == "Particle")
-			{
-				static_cast<GameObject_Instanced*>(pair.second)->update_Particles(f_Delta_In, 1.0f, 1.0f, glm::vec3(1.0f));
-			}
-			pair.second->update();
 		
 			//Update AI character controller
 			po_Component = po_GameObject->get_Component("Character_Controller");
@@ -426,7 +426,7 @@ void Game_Scene::render()
 		for (auto const& pair : mspo_Objects)
 		{
 
-			if (pair.second->get_Tag() == "Object" || pair.second->get_Tag() == "Enemy" || pair.second->get_Tag() == "Player" || pair.second->get_Tag() == "Floor" || pair.second->get_Tag() == "Ammo" || pair.second->get_Tag() = "Object_Light" )
+			if (pair.second->get_Tag() == "Object" || pair.second->get_Tag() == "Enemy" || pair.second->get_Tag() == "Player" || pair.second->get_Tag() == "Floor" || pair.second->get_Tag() == "Ammo" || pair.second->get_Tag() == "Object_Lamp" )
 			{
 				glUseProgram(po_Loader->get_Shader("0")->get_Program());
 				pair.second->render(po_Loader->get_Shader("0"));
@@ -462,7 +462,7 @@ void Game_Scene::destroyGameObject(Game_Object* po_object)
 	//Remove all components
 	for (auto const& components : po_object->get_Components())
 	{
-		if (components.first != "Mesh_3D") delete components.second;
+		if (components.first != "Mesh_3D" && components.first != "Mesh_Instanced") delete components.second;
 	}
 	po_object->get_Components().clear();
 
