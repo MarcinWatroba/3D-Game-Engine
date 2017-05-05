@@ -29,6 +29,7 @@ private:
 	bool isCollidingZ = false;
 public:
 	BoxCollider_3D();
+	BoxCollider_3D(const BoxCollider_3D &tempComp);
 	~BoxCollider_3D();
 	void setUpBox(glm::vec3* minValues, glm::vec3* maxValues);
 	void renderBox();

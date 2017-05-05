@@ -19,6 +19,7 @@ Game_Scene::Game_Scene()
 {
 	levelList.push_back("assets/scenes/Robot_Scene.xml");
 	levelList.push_back("assets/scenes/Kitchen.xml");
+	levelList.push_back("assets/scenes/Living_Room_Scene.xml");
 }
 
 //Initialize everything once
@@ -426,7 +427,6 @@ void Game_Scene::render()
 
 
 			unsigned int obj_No = 0;
-
 			o_SceneLoader->prepare_DepthCube(po_Loader->get_Shader("3"), light[no], depth[i], i);
 
 
@@ -528,7 +528,14 @@ void Game_Scene::clean_Up()
 		mspo_Objects.clear();
 	}
 
-
+	//if (!snd_Audio->empty())
+	//{
+	//	for (auto const& pair : (*snd_Audio))
+	//	{
+	//		delete pair.second;
+	//	}
+	//	snd_Audio->clear();
+	//}
 
 	delete o_SceneLoader;
 	delete camera_3D;

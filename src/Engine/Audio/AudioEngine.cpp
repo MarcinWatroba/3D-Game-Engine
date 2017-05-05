@@ -33,6 +33,10 @@ void Implementation::Update() {
 Implementation* sgpImplementation = nullptr;
 
 /* -----Main Class----- */ 
+AudioEngine::~AudioEngine()
+{
+	Shutdown();
+}
 void AudioEngine::Init() {
 	sgpImplementation = new Implementation;
 }
@@ -64,7 +68,8 @@ void AudioEngine::LoadSound(const string& strSoundName, bool b3d, bool bLooping,
 	eMode != bStream ? FMOD_CREATESTREAM : FMOD_CREATECOMPRESSEDSAMPLE;
 
 	FMOD::Sound* pSound = nullptr;
-	AudioEngine::ErrorCheck(sgpImplementation->mpSystem->createSound(strSoundName.c_str(), eMode, nullptr, &pSound));
+	//AudioEngine::ErrorCheck();
+	sgpImplementation->mpSystem->createSound(strSoundName.c_str(), eMode, nullptr, &pSound);
 	if (pSound) {
 		sgpImplementation->mSounds[strSoundName] = pSound;
 		cout << "Sound Loaded" << endl;

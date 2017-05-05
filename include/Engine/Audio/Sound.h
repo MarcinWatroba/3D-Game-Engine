@@ -10,10 +10,9 @@ class AudioEngine;
 class Sound
 {
 public:
-	Sound() {};
 	Sound(string strAudioName);	// load in via XML
 	//Sound(string strAudioName, bool b3d, bool bloop, bool bstream, AudioEngine* engine_used);	// load in via game scene
-	~Sound() {};
+	~Sound();
 	void Load(bool b3d, bool bloop, bool bstream);
 	void Play();	// XML
 	//void Play(glm::vec3 position_In, float volume_In);	// game scene

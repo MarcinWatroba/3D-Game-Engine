@@ -5,7 +5,10 @@ Sound::Sound(string strAudioName) {
 	Audio->Init();
 	AudioName = strAudioName;
 }
-
+Sound::~Sound() {
+	Audio->UnloadSound(AudioName);
+	//delete Audio;
+}
 //Sound::Sound(string strAudioName, bool b3d, bool bloop, bool bstream, AudioEngine* engine_used)
 //{
 //	engine_used = new AudioEngine();

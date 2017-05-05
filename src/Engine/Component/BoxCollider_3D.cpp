@@ -8,6 +8,11 @@ BoxCollider_3D::~BoxCollider_3D()
 
 }
 
+BoxCollider_3D::BoxCollider_3D(const BoxCollider_3D &tempComp)
+{
+
+}
+
 void BoxCollider_3D::setUpBox(glm::vec3* minValues, glm::vec3* maxValues)
 {
 	centre = glm::vec3(((minValues->x + maxValues->x) / 2), ((minValues->y + maxValues->y) / 2), ((minValues->z + maxValues->z) / 2));
