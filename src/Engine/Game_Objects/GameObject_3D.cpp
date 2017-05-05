@@ -90,7 +90,7 @@ void GameObject_3D::update()
 	}
 	
 	shootBullet();
-	for (int i = 0; i < bulletList.size(); i++)
+	for (int i = 0; i < (signed)bulletList.size(); i++)
 	{
 		if (bulletList.empty())
 		{
@@ -121,7 +121,7 @@ void GameObject_3D::render(Shader* p_Shader_In)
 	static_cast<Transform_3D*>(mipo_Components.find("Transform_3D")->second)->update_Shader(p_Shader_In);
 	if (b_RenderStatus) static_cast<RenderComp_3D*>(mipo_Components.find("RenderComp_3D")->second)->render(GL_TEXTURE_2D, GL_TRIANGLES, p_Shader_In);
 
-	for (int i = 0; i < bulletList.size(); i++)
+	for (unsigned int i = 0; i < bulletList.size(); i++)
 	{
 		bulletList[i]->render(p_Shader_In);
 	}
@@ -297,12 +297,9 @@ void GameObject_3D::createBullet(Bullet* bulletTemplate)
 
 void GameObject_3D::shootBullet()
 {
-	for (int i = 0; i < bulletList.size(); i++)
+	for (unsigned int i = 0; i < bulletList.size(); i++)
 	{
-		bulletList[i]->move(glm::vec3(0, 0, 1), .1);
-
-		
-		
+		bulletList[i]->move(glm::vec3(0, 0, 1), 0.1f);
 	}
 	if (!bulletList.empty())
 	{

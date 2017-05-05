@@ -251,7 +251,7 @@ void BoxCollider_3D::updatePos(glm::mat4 parentMatrix)
 		newMinExtents += translation - oldPos;
 	}
 
-	
+
 
 	oneTime = false;
 	//std::cout << "Plant Pot collider extents:" << std::endl;

@@ -12,7 +12,6 @@
 #include <Engine\Lighting\Light.h>
 #include <Game\AIController\AIController.h>
 #include <Game\Misc\Bullet.h>
-
 #include <iostream>
 
 Game_Scene::Game_Scene()
@@ -32,7 +31,7 @@ void Game_Scene::init()
 
 	b_Init = false;
 
-	camera_3D = new Camera_3D(45.f, 800.f / 600, 0.1f, 1000.f);
+	camera_3D = new Camera_3D(45.f, 1080.f / 720.0f, 0.1f, 1000.f);
 	camera_3D->set_CameraPos(glm::vec3(0.f, -20.f, 0.f));
 
 	if (firstTime)
@@ -41,9 +40,18 @@ void Game_Scene::init()
 		firstTime = false;
 	}
 	b_Init = true;
-	
-	player = static_cast<GameObject_3D*>(mspo_Objects.find("Robot")->second);
 
+	//get player pointer
+	findPlayer();
+
+	//count enemies
+	i_numEnemies = 0;
+	for (auto const& pair : mspo_Objects)
+	{
+		if (pair.second->get_Tag() == "Enemy") { i_numEnemies++; }
+	}
+	
+	//add lighting
 	glUseProgram(po_Loader->get_Shader("3")->get_Program());
 	int num = 0;
 	int posNum = 0;
@@ -69,12 +77,12 @@ void Game_Scene::init()
 		posNum++;
 	}
 
-	for (int i = 0; i < ui_light_Amount; i++)
+	for (unsigned int i = 0; i < ui_light_Amount; i++)
 	{
 		light[i] = o_SceneLoader->get_LightPosition(i);
 		radius[i] = o_SceneLoader->get_LightRadius(1);
 	}
-	for (int i = 0; i < 3; i++)
+	for (unsigned int i = 0; i < 3; i++)
 	{
 		depth[i] = o_SceneLoader->setup_FBO();
 	}
@@ -100,6 +108,22 @@ void Game_Scene::init()
 	glUniform1f(far_Loc, 1000.0f);
 }
 
+bool Game_Scene::findPlayer()
+{
+	for (auto const& pair : mspo_Objects)
+	{
+		//player found
+		if (pair.second->get_Tag() == "Player")
+		{
+			player = static_cast<GameObject_3D*>(pair.second);
+			return true;
+		}
+	}
+	//no player in scene
+	player = nullptr;
+	return false;
+}
+
 //Do something with keyboard input
 void Game_Scene::keyboard_Input(GLfloat f_Delta_In, GLboolean* pab_KeyArray_In, GLboolean* pab_LockedKeys_In)
 {
@@ -114,7 +138,6 @@ void Game_Scene::keyboard_Input(GLfloat f_Delta_In, GLboolean* pab_KeyArray_In, 
 		camera_3D->set_Speed(f_Speed);
 		camera_3D->fly_Down();
 	}
-
 
 	if (pab_KeyArray_In[GLFW_KEY_R] && !pab_LockedKeys_In[GLFW_KEY_R])
 	{
@@ -132,28 +155,15 @@ void Game_Scene::keyboard_Input(GLfloat f_Delta_In, GLboolean* pab_KeyArray_In, 
 	if (!pab_KeyArray_In[GLFW_KEY_ESCAPE]) pab_LockedKeys_In[GLFW_KEY_ESCAPE] = false;
 
 	//player movement
-	auto playerLookup = mspo_Objects.find("Robot");
-	if (playerLookup == mspo_Objects.end()) { return; }
-	player = static_cast<GameObject_3D*>(playerLookup->second);
+	if (findPlayer() == false) { return; }
 
 	if (pab_KeyArray_In[GLFW_KEY_W])
 	{
 		player->move(glm::vec3(0, 0, 1), moveSpeed * f_Delta_In);
-		glm::vec3 tempVec = player->get_Position();
-		std::cout << "(" << tempVec.x << ", " << tempVec.y << ", " << tempVec.z << " )" << std::endl;
-		//mspo_Objects.find("Robot Left Arm")->second->animate(40.f, f_Delta_In);
-		//mspo_Objects.find("Robot Right Arm")->second->animate(-40.f, f_Delta_In);
-		//mspo_Objects.find("Robot Left Leg")->second->animate(-40.f, f_Delta_In);
-		//mspo_Objects.find("Robot Right Leg")->second->animate(40.f, f_Delta_In);
 	}
 	if (pab_KeyArray_In[GLFW_KEY_S])
 	{
 		player->move(glm::vec3(0, 0, 1), -moveSpeed * f_Delta_In);
-
-		//mspo_Objects.find("Robot Left Arm")->second->animate(40.f, f_Delta_In);
-		//mspo_Objects.find("Robot Right Arm")->second->animate(-40.f, f_Delta_In);
-		//mspo_Objects.find("Robot Left Leg")->second->animate(-40.f, f_Delta_In);
-		//mspo_Objects.find("Robot Right Leg")->second->animate(40.f, f_Delta_In);
 	}
 
 	if (pab_KeyArray_In[GLFW_KEY_SPACE])
@@ -162,8 +172,10 @@ void Game_Scene::keyboard_Input(GLfloat f_Delta_In, GLboolean* pab_KeyArray_In, 
 		static_cast<RigidBody*>(player->get_Components().at("RigidBody"))->setGrounded(false);
 	}
 
+
 	if (pab_KeyArray_In[GLFW_KEY_A]) player->move(glm::vec3(1, 0, 0), moveSpeed * f_Delta_In);// player->turn(80.f * f_Delta_In, glm::vec3(0.f, 1.f, 0.f));
 	if (pab_KeyArray_In[GLFW_KEY_D]) player->move(glm::vec3(1, 0, 0), -moveSpeed * f_Delta_In);//player->turn(-80.f * f_Delta_In, glm::vec3(0.f, 1.f, 0.f));
+
 }
 
 void Game_Scene::mouse_Input(GLboolean* pab_MouseArray_In, GLfloat f_Delta_In)
@@ -171,9 +183,7 @@ void Game_Scene::mouse_Input(GLboolean* pab_MouseArray_In, GLfloat f_Delta_In)
 	if (!b_Init) { return; }
 
 	//player shootsching
-	auto playerLookup = mspo_Objects.find("Robot");
-	if (playerLookup == mspo_Objects.end()) { return; }
-	player = static_cast<GameObject_3D*>(playerLookup->second);
+	if (findPlayer() == false) { return; }
 
 	if (pab_MouseArray_In[GLFW_MOUSE_BUTTON_1])
 	{
@@ -204,13 +214,13 @@ void Game_Scene::update_Scene(GLfloat f_Delta_In, glm::vec2 v2_MousePos_In)
 	////Initialize
 	if (!b_Init) init();
 
-	auto playerLookup = mspo_Objects.find("Robot");
-	if (playerLookup != mspo_Objects.end()) { player = static_cast<GameObject_3D*>(playerLookup->second); }
-	else {
-		//player killed
-		player = nullptr;
+	if (findPlayer() == false) {
 		//quit to main menu
-		//
+		std::cout << "Game Over, Loser!" << std::endl;
+	}
+	if (i_numEnemies == 0) {
+		//level win!
+		std::cout << "Winner Winner Chicken Dinner!" << std::endl;
 	}
 
 	if (b_Init)
@@ -304,7 +314,7 @@ void Game_Scene::render()
 		std::string ui_Shadow;
 		GLint ui_Shadow_Loc;
 
-		for (int i = 0; i < ui_light_Amount; i++)
+		for (unsigned int i = 0; i < ui_light_Amount; i++)
 		{
 			d[i] = glm::distance(camera_3D->get_CameraPos(), light[i]);
 			b_Shadow = "point_Light[" + std::to_string(i) + "].casts_Shadow";
@@ -319,7 +329,7 @@ void Game_Scene::render()
 		unsigned int light_Nom[3];
 		light_Nom[0] = 0;
 		float closest_Distance = 9999.0f;
-		for (int i = 0; i < ui_light_Amount; i++)
+		for (unsigned int i = 0; i < ui_light_Amount; i++)
 		{
 			if (d[i] < closest_Distance)
 			{
@@ -335,7 +345,7 @@ void Game_Scene::render()
 		ui_Shadow_Loc = glGetUniformLocation(po_Loader->get_Shader("0")->get_Program(), ui_Shadow.c_str());
 		glUniform1i(ui_Shadow_Loc, 0);
 		float closest_Distance2 = 9999.0f;
-		for (int i = 0; i < ui_light_Amount; i++)
+		for (unsigned int i = 0; i < ui_light_Amount; i++)
 		{
 			if (d[i] < closest_Distance2 && d[i] > closest_Distance)
 			{
@@ -352,7 +362,7 @@ void Game_Scene::render()
 		ui_Shadow_Loc = glGetUniformLocation(po_Loader->get_Shader("0")->get_Program(), ui_Shadow.c_str());
 		glUniform1i(ui_Shadow_Loc, 1);
 		float closest_Distance3 = 9999.0f;
-		for (int i = 0; i < ui_light_Amount; i++)
+		for (unsigned int i = 0; i < ui_light_Amount; i++)
 		{
 			if (d[i] < closest_Distance3 && d[i] > closest_Distance2)
 			{
@@ -374,38 +384,29 @@ void Game_Scene::render()
 
 		for (int i = 0; i < 3; i++)
 		{
-
 			unsigned no = light_Nom[i];
 
+			unsigned int obj_No = 0;
 
-				unsigned int obj_No = 0;
+			o_SceneLoader->prepare_DepthCube(po_Loader->get_Shader("3"), light[no], depth[i], i);
 
-				o_SceneLoader->prepare_DepthCube(po_Loader->get_Shader("3"), light[no], depth[i], i);
-
-
-				for (auto const& pair : mspo_Objects)
+			for (auto const& pair : mspo_Objects)
+			{
+				if (glm::distance(pos[obj_No], light[no]) < (o_SceneLoader->get_LightRadius(no) * 10))
 				{
-					
-					if (glm::distance(pos[obj_No], light[no]) < (o_SceneLoader->get_LightRadius(no) * 10))
+					if (pair.second->get_Tag() == "Object")
 					{
-						if (pair.second->get_Tag() == "Object")
-						{
-
-
-							pair.second->renderDepth(po_Loader->get_Shader("3"));
-						}
-						else if (pair.second->get_Tag() == "Light")
-						{
-	
-							pair.second->renderDepth(po_Loader->get_Shader("3"));
-						}
+						pair.second->renderDepth(po_Loader->get_Shader("3"));
 					}
-					obj_No++;
+					else if (pair.second->get_Tag() == "Light")
+					{
+						pair.second->renderDepth(po_Loader->get_Shader("3"));
+					}
 				}
-				glBindFramebuffer(GL_FRAMEBUFFER, 0);
-
+				obj_No++;
+			}
+			glBindFramebuffer(GL_FRAMEBUFFER, 0);
 		}
-
 
 		glViewport(0, 0, 1080, 720);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -422,13 +423,7 @@ void Game_Scene::render()
 
 		for (auto const& pair : mspo_Objects)
 		{
-
-			if (pair.second->get_Tag() == "Object" || pair.second->get_Tag() == "Enemy" || pair.second->get_Tag() == "Player" || pair.second->get_Tag() == "Floor" || pair.second->get_Tag() == "Ammo" || pair.second->get_Tag() == "Object_Lamp" )
-			{
-				glUseProgram(po_Loader->get_Shader("0")->get_Program());
-				pair.second->render(po_Loader->get_Shader("0"));
-			}
-			else if (pair.second->get_Tag() == "Light")
+			if (pair.second->get_Tag() == "Light")
 			{
 				static_cast<Light*>(pair.second)->update_Shader(po_Loader->get_Shader("0"));
 				pair.second->render(po_Loader->get_Shader("0"));
@@ -438,6 +433,12 @@ void Game_Scene::render()
 				glUseProgram(po_Loader->get_Shader("4")->get_Program());
 				pair.second->render(po_Loader->get_Shader("4"));
 			}
+			else
+			{
+				glUseProgram(po_Loader->get_Shader("0")->get_Program());
+				pair.second->render(po_Loader->get_Shader("0"));
+			}
+			
 		}
 	}
 }
@@ -456,6 +457,9 @@ void Game_Scene::load_Scene(int i)
 
 void Game_Scene::destroyGameObject(Game_Object* po_object)
 {
+	//decrement enemy count
+	if (po_object->get_Tag() == "Enemy") { i_numEnemies--; }
+
 	//Remove all components
 	for (auto const& components : po_object->get_Components())
 	{
