@@ -2,6 +2,7 @@
 
 #include <Engine\Scene\Scene.h>
 #include <Engine\Physics\CollisionManager.h>
+#include <vector>
 //#include <Label.h>
 //#include <Directional_Light.h>
 //#include <Point_Light.h>
@@ -19,13 +20,15 @@ class Game_Scene : public Scene
 {
 private:
 	//Label* o_Label;
+	bool rendered;
 	bool b_Render[render::Num];
 	bool b_SwitchCamMode;
 	bool shooting = false;
+	bool firstTime = true;
 
 	//Collision Manager
 	CollisionManager colManage;
-	std::map<int, std::string> levelList;
+	std::vector<std::string> levelList;
 
 	//remove a game object from the scene
 	void destroyGameObject(Game_Object* po_object);
@@ -37,9 +40,14 @@ private:
 	//number of enemies
 	int i_numEnemies;
 
+	//lighting
+	glm::vec3 light[30];
+	glm::vec3 pos[100];
+	glm::uvec2 depth[30];
+	float radius[30];
 public:
 	//Constructor
-	Game_Scene() {};
+	Game_Scene();
 
 	//Initialize
 	void init();

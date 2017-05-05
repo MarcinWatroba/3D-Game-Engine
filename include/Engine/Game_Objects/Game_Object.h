@@ -42,6 +42,7 @@ public:
 	virtual void set_Tiles(glm::vec2 v2_Tiles_In) = 0;
 	virtual void update() = 0;
 	virtual void force_Update() = 0;
+	virtual void renderDepth(Shader* p_Shader_In) = 0;
 	virtual void render(Shader* p_Shader_In) = 0;
 	virtual void clean_Up() = 0;
 

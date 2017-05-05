@@ -1,0 +1,75 @@
+﻿'Game_Engine.exe' (Win32): Loaded 'C:\Users\Marcin\Documents\YEAR 3\Game_Engine_Stan_Lee\Debug\Game_Engine.exe'. Symbols loaded.
+'Game_Engine.exe' (Win32): Loaded 'C:\Windows\SysWOW64\ntdll.dll'. Symbols loaded.
+'Game_Engine.exe' (Win32): Loaded 'C:\Windows\SysWOW64\kernel32.dll'. Symbols loaded.
+'Game_Engine.exe' (Win32): Loaded 'C:\Windows\SysWOW64\KernelBase.dll'. Symbols loaded.
+'Game_Engine.exe' (Win32): Loaded 'C:\Users\Marcin\Documents\YEAR 3\Game_Engine_Stan_Lee\tinyxml2.dll'. Cannot find or open the PDB file.
+'Game_Engine.exe' (Win32): Loaded 'C:\Windows\SysWOW64\vcruntime140d.dll'. Symbols loaded.
+'Game_Engine.exe' (Win32): Loaded 'C:\Windows\SysWOW64\ucrtbased.dll'. Symbols loaded.
+'Game_Engine.exe' (Win32): Loaded 'C:\Windows\SysWOW64\api-ms-win-core-timezone-l1-1-0.dll'. Symbols loaded.
+'Game_Engine.exe' (Win32): Loaded 'C:\Windows\SysWOW64\api-ms-win-core-file-l2-1-0.dll'. Symbols loaded.
+'Game_Engine.exe' (Win32): Loaded 'C:\Windows\SysWOW64\api-ms-win-core-localization-l1-2-0.dll'. Symbols loaded.
+'Game_Engine.exe' (Win32): Loaded 'C:\Windows\SysWOW64\api-ms-win-core-synch-l1-2-0.dll'. Symbols loaded.
+'Game_Engine.exe' (Win32): Loaded 'C:\Windows\SysWOW64\api-ms-win-core-processthreads-l1-1-1.dll'. Symbols loaded.
+'Game_Engine.exe' (Win32): Loaded 'C:\Windows\SysWOW64\api-ms-win-core-file-l1-2-0.dll'. Symbols loaded.
+'Game_Engine.exe' (Win32): Loaded 'C:\Windows\SysWOW64\user32.dll'. Symbols loaded.
+'Game_Engine.exe' (Win32): Loaded 'C:\Windows\SysWOW64\gdi32.dll'. Symbols loaded.
+'Game_Engine.exe' (Win32): Loaded 'C:\Windows\SysWOW64\lpk.dll'. Symbols loaded.
+'Game_Engine.exe' (Win32): Loaded 'C:\Windows\SysWOW64\usp10.dll'. Symbols loaded.
+'Game_Engine.exe' (Win32): Loaded 'C:\Windows\SysWOW64\msvcrt.dll'. Symbols loaded.
+'Game_Engine.exe' (Win32): Loaded 'C:\Windows\SysWOW64\advapi32.dll'. Symbols loaded.
+'Game_Engine.exe' (Win32): Loaded 'C:\Windows\SysWOW64\sechost.dll'. Symbols loaded.
+'Game_Engine.exe' (Win32): Loaded 'C:\Windows\SysWOW64\rpcrt4.dll'. Symbols loaded.
+'Game_Engine.exe' (Win32): Loaded 'C:\Windows\SysWOW64\sspicli.dll'. Symbols loaded.
+'Game_Engine.exe' (Win32): Loaded 'C:\Windows\SysWOW64\cryptbase.dll'. Symbols loaded.
+'Game_Engine.exe' (Win32): Loaded 'C:\Windows\SysWOW64\shell32.dll'. Symbols loaded.
+'Game_Engine.exe' (Win32): Loaded 'C:\Windows\SysWOW64\shlwapi.dll'. Symbols loaded.
+'Game_Engine.exe' (Win32): Loaded 'C:\Windows\SysWOW64\msvcp140d.dll'. Symbols loaded.
+'Game_Engine.exe' (Win32): Loaded 'C:\Windows\SysWOW64\opengl32.dll'. Symbols loaded.
+'Game_Engine.exe' (Win32): Loaded 'C:\Windows\SysWOW64\glu32.dll'. Symbols loaded.
+'Game_Engine.exe' (Win32): Loaded 'C:\Windows\SysWOW64\ddraw.dll'. Symbols loaded.
+'Game_Engine.exe' (Win32): Loaded 'C:\Windows\SysWOW64\dciman32.dll'. Symbols loaded.
+'Game_Engine.exe' (Win32): Loaded 'C:\Windows\SysWOW64\setupapi.dll'. Symbols loaded.
+'Game_Engine.exe' (Win32): Loaded 'C:\Windows\SysWOW64\cfgmgr32.dll'. Symbols loaded.
+'Game_Engine.exe' (Win32): Loaded 'C:\Windows\SysWOW64\oleaut32.dll'. Symbols loaded.
+'Game_Engine.exe' (Win32): Loaded 'C:\Windows\SysWOW64\ole32.dll'. Symbols loaded.
+'Game_Engine.exe' (Win32): Loaded 'C:\Windows\SysWOW64\devobj.dll'. Symbols loaded.
+'Game_Engine.exe' (Win32): Loaded 'C:\Windows\SysWOW64\dwmapi.dll'. Symbols loaded.
+'Game_Engine.exe' (Win32): Loaded 'C:\Windows\SysWOW64\imm32.dll'. Symbols loaded.
+'Game_Engine.exe' (Win32): Loaded 'C:\Windows\SysWOW64\msctf.dll'. Symbols loaded.
+'Game_Engine.exe' (Win32): Loaded 'C:\Windows\SysWOW64\uxtheme.dll'. Symbols loaded.
+'Game_Engine.exe' (Win32): Loaded 'C:\Windows\SysWOW64\winmm.dll'. Symbols loaded.
+'Game_Engine.exe' (Win32): Loaded 'C:\Windows\SysWOW64\dinput8.dll'. Symbols loaded.
+'Game_Engine.exe' (Win32): Loaded 'C:\Windows\SysWOW64\xinput1_3.dll'. Symbols loaded.
+'Game_Engine.exe' (Win32): Loaded 'C:\Fraps\fraps32.dll'. Module was built without symbols.
+'Game_Engine.exe' (Win32): Loaded 'C:\Windows\SysWOW64\hid.dll'. Symbols loaded.
+'Game_Engine.exe' (Win32): Loaded 'C:\Windows\SysWOW64\wintrust.dll'. Symbols loaded.
+'Game_Engine.exe' (Win32): Loaded 'C:\Windows\SysWOW64\crypt32.dll'. Symbols loaded.
+'Game_Engine.exe' (Win32): Loaded 'C:\Windows\SysWOW64\msasn1.dll'. Symbols loaded.
+'Game_Engine.exe' (Win32): Loaded 'C:\Windows\SysWOW64\atiglpxx.dll'. Cannot find or open the PDB file.
+'Game_Engine.exe' (Win32): Loaded 'C:\Windows\SysWOW64\atioglxx.dll'. Cannot find or open the PDB file.
+'Game_Engine.exe' (Win32): Loaded 'C:\Windows\SysWOW64\version.dll'. Symbols loaded.
+'Game_Engine.exe' (Win32): Loaded 'C:\Windows\SysWOW64\atiadlxy.dll'. Cannot find or open the PDB file.
+'Game_Engine.exe' (Win32): Loaded 'C:\Windows\SysWOW64\propsys.dll'. Symbols loaded.
+'Game_Engine.exe' (Win32): Loaded 'C:\Windows\SysWOW64\userenv.dll'. Symbols loaded.
+'Game_Engine.exe' (Win32): Loaded 'C:\Windows\SysWOW64\profapi.dll'. Symbols loaded.
+'Game_Engine.exe' (Win32): Loaded 'C:\Windows\SysWOW64\wtsapi32.dll'. Symbols loaded.
+'Game_Engine.exe' (Win32): Loaded 'C:\Windows\SysWOW64\psapi.dll'. Symbols loaded.
+'Game_Engine.exe' (Win32): Loaded 'C:\Windows\SysWOW64\ws2_32.dll'. Symbols loaded.
+'Game_Engine.exe' (Win32): Loaded 'C:\Windows\SysWOW64\nsi.dll'. Symbols loaded.
+'Game_Engine.exe' (Win32): Loaded 'C:\Windows\SysWOW64\IPHLPAPI.DLL'. Symbols loaded.
+'Game_Engine.exe' (Win32): Loaded 'C:\Windows\SysWOW64\winnsi.dll'. Symbols loaded.
+'Game_Engine.exe' (Win32): Loaded 'C:\Windows\SysWOW64\atigktxx.dll'. Cannot find or open the PDB file.
+'Game_Engine.exe' (Win32): Loaded 'C:\Windows\SysWOW64\aticfx32.dll'. Cannot find or open the PDB file.
+'Game_Engine.exe' (Win32): Unloaded 'C:\Windows\SysWOW64\atigktxx.dll'
+'Game_Engine.exe' (Win32): Loaded 'C:\Windows\SysWOW64\atigktxx.dll'. Cannot find or open the PDB file.
+'Game_Engine.exe' (Win32): Loaded 'C:\Windows\SysWOW64\ole32.dll'. Symbols loaded.
+'Game_Engine.exe' (Win32): Unloaded 'C:\Windows\SysWOW64\ole32.dll'
+The thread 0x2738 has exited with code 0 (0x0).
+The thread 0x21f4 has exited with code 0 (0x0).
+The thread 0x2588 has exited with code 0 (0x0).
+The thread 0x1f78 has exited with code 0 (0x0).
+'Game_Engine.exe' (Win32): Unloaded 'C:\Windows\SysWOW64\xinput1_3.dll'
+'Game_Engine.exe' (Win32): Unloaded 'C:\Windows\SysWOW64\dinput8.dll'
+'Game_Engine.exe' (Win32): Unloaded 'C:\Windows\SysWOW64\hid.dll'
+The thread 0x264c has exited with code 0 (0x0).
+The program '[5476] Game_Engine.exe' has exited with code 0 (0x0).

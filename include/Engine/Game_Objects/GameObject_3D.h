@@ -27,6 +27,7 @@ public:
 	void force_Update();
 	void add_Component(std::string s_Name_In, Component* p_Component_In);
 	void add_Texture(std::string s_Name_In, Texture* p_Texture_In);
+	void renderDepth(Shader * p_Shader_In);
 	void render(Shader* p_Shader_In);
 	void clean_Up();
 

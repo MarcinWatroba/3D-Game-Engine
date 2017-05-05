@@ -7,12 +7,16 @@
 <resources>
 	<object_File_Location>assets/models/</object_File_Location>
 	<object_Files>
+		<new_File  ID = "9" i_DrawMethod = "35048" name = "Bookcase.obj"> </new_File>	
 		<new_File  ID = "7" i_DrawMethod = "35048" name = "Cube.obj"> </new_File>	
 		<new_File  ID = "4" i_DrawMethod = "35048" name = "floor.obj"> </new_File>
 		<new_File  ID = "5" i_DrawMethod = "35048" name = "table.obj"> </new_File>	
 		<new_File  ID = "6" i_DrawMethod = "35048" name = "Cube_BottomGone.obj"> </new_File>
 		<new_File  ID = "3" i_DrawMethod = "35048" name = "Cube_BottomGoneNotInversed.obj"> </new_File>
 	</object_Files>
+	<particle_Files>
+		<new_File  ID = "8" i_DrawMethod = "35040" name = "plane.obj"> </new_File>	
+	</particle_Files>
 	
 	<texture_File_Location>assets/textures/</texture_File_Location>
 	<texture_Files>
@@ -249,8 +253,7 @@
 			openGL_Colour = "6407" 
 			gen_Mipmaps = "1">		
 		</new_File>
-		
-		
+
 		<new_File  
 			ID = "19" 
 			name = "painting_One.png"	 
@@ -355,6 +358,57 @@
 			gen_Mipmaps = "1">		
 		</new_File>
 		
+		<new_File  
+			ID = "27" 
+			name = "Kitchen_Floor.png"	 
+			texture_Mode = "3553" 
+			wrapping_S = "10497"  
+			wrapping_T = "10497"
+			filter_Min = "9729" 
+			filter_Mag = "9729"
+			soil_Colour_Load = "4"  
+			openGL_Colour = "6408" 
+			gen_Mipmaps = "1">		
+		</new_File>
+		
+		<new_File  
+			ID = "28" 
+			name = "Cupboard.jpg"	 
+			texture_Mode = "3553" 
+			wrapping_S = "10497"  
+			wrapping_T = "10497"
+			filter_Min = "9729" 
+			filter_Mag = "9729"
+			soil_Colour_Load = "4"  
+			openGL_Colour = "6408" 
+			gen_Mipmaps = "1">		
+		</new_File>
+		
+		<new_File  
+			ID = "30" 
+			name = "Fridge.jpg"	 
+			texture_Mode = "3553" 
+			wrapping_S = "10497"  
+			wrapping_T = "10497"
+			filter_Min = "9729" 
+			filter_Mag = "9729"
+			soil_Colour_Load = "4"  
+			openGL_Colour = "6408" 
+			gen_Mipmaps = "1">		
+		</new_File>
+		
+		<new_File  
+			ID = "31" 
+			name = "Kitchen_Tiles1.jpg"	 
+			texture_Mode = "3553" 
+			wrapping_S = "10497"  
+			wrapping_T = "10497"
+			filter_Min = "9729" 
+			filter_Mag = "9729"
+			soil_Colour_Load = "4"  
+			openGL_Colour = "6408" 
+			gen_Mipmaps = "1">		
+		</new_File>
 		
 	</texture_Files>
 	
@@ -363,5 +417,7 @@
 		<new_File ID = "0" vertex = "passIn.vert" fragment = "passIn.frag" geometry = ""> </new_File>
 		<new_File ID = "1" vertex = "font_Shader.vert" fragment = "font_Shader.frag" geometry = ""> </new_File>
 		<new_File ID = "2" vertex = "light_Shader.vert" fragment = "light_Shader.frag" geometry = ""> </new_File>
+		<new_File ID = "3" vertex = "depth_Shader.vert" fragment = "depth_Shader.frag" geometry = "depth_Shader.geom"> </new_File>
+		<new_File ID = "4" vertex = "particle_Shader.vert" fragment = "particle_Shader.frag" geometry = ""> </new_File>
  	</shader_Files>
 </resources>

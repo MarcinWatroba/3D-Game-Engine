@@ -141,9 +141,6 @@
     <ClCompile Include="src\Engine\Component\Component.cpp">
       <Filter>Source Files\Engine\Component</Filter>
     </ClCompile>
-    <ClCompile Include="src\Engine\Mesh\Mesh.cpp">
-      <Filter>Source Files\Engine\Mesh</Filter>
-    </ClCompile>
     <ClCompile Include="src\Engine\Mesh\Mesh_3D.cpp">
       <Filter>Source Files\Engine\Mesh</Filter>
     </ClCompile>
@@ -239,6 +236,21 @@
     </ClCompile>
     <ClCompile Include="src\Game\AIController\AIController.cpp">
       <Filter>Source Files\Game\AIController</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Component\RenderComp_Instanced.cpp">
+      <Filter>Source Files\Engine\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Mesh\Mesh.cpp">
+      <Filter>Source Files\Engine\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Mesh\Mesh_Instanced.cpp">
+      <Filter>Source Files\Engine\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Game_Objects\GameObject_Instanced.cpp">
+      <Filter>Source Files\Engine\Game_Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Component\Transform_Instanced.cpp">
+      <Filter>Source Files\Engine\Component</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -374,6 +386,18 @@
     <ClInclude Include="include\Game\Misc\Bullet.h">
       <Filter>Header Files\Game</Filter>
     </ClInclude>
+    <ClInclude Include="include\Engine\Component\RenderComp_Instanced.h">
+      <Filter>Header Files\Engine\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Engine\Mesh\Mesh_Instanced.h">
+      <Filter>Header Files\Engine\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Engine\Game_Objects\GameObject_Instanced.h">
+      <Filter>Header Files\Engine\Game_Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Engine\Component\Transform_Instanced.h">
+      <Filter>Header Files\Engine\Component</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\shaders\font_Shader.frag">
@@ -392,6 +416,21 @@
       <Filter>Resource Files\Shaders</Filter>
     </None>
     <None Include="assets\shaders\passIn.vert">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="assets\shaders\depth_Shader.frag">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="assets\shaders\depth_Shader.geom">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="assets\shaders\depth_Shader.vert">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="assets\shaders\particle_Shader.frag">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="assets\shaders\particle_Shader.vert">
       <Filter>Resource Files\Shaders</Filter>
     </None>
   </ItemGroup>

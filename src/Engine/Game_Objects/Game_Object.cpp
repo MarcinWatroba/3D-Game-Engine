@@ -92,6 +92,8 @@ void Game_Object::set_Tag(std::string s_Tag_In)
 	s_Tag = s_Tag_In;
 }
 
+
+
 std::string Game_Object::get_Tag()
 {
 	return s_Tag;

@@ -3,28 +3,23 @@
 #include <Engine\Creators\Shader.h>
 
 
-Point_Light::Point_Light(glm::vec3 v3_Ambient_In, glm::vec3 v3_Diffuse_In, glm::vec3 v3_Specular_In, float f_Constant_In, float f_Linear_In, float f_Quadratic_In, unsigned int i_ID_In) : Light(v3_Ambient_In, v3_Diffuse_In, v3_Specular_In)
+Point_Light::Point_Light(glm::vec3 v3_Ambient_In, glm::vec3 v3_Diffuse_In, glm::vec3 v3_Specular_In, float f_Radius_In, unsigned int i_ID_In) : Light(v3_Ambient_In, v3_Diffuse_In, v3_Specular_In)
 {
-	f_Constant = f_Constant_In;
-	f_Linear = f_Linear_In;
-	f_Quadratic = f_Quadratic_In;
+	f_radius = f_Radius_In;
 	i_ID = i_ID_In;
 }
 
-void Point_Light::set_Constant(float f_Constant_In)
+void Point_Light::set_Radius(float f_Radius_In)
 {
-	f_Constant = f_Constant_In;
+	f_radius = f_Radius_In;
 }
 
-void Point_Light::set_Linear(float f_Linear_In)
+float Point_Light::get_Radius()
 {
-	f_Linear = f_Linear_In;
+	return f_radius;
 }
 
-void Point_Light::set_Quadratic(float f_Quadratic_In)
-{
-	f_Quadratic = f_Quadratic_In;
-}
+
 
 void Point_Light::update_Shader(Shader* p_Shader_In)
 {
@@ -46,15 +41,8 @@ void Point_Light::update_Shader(Shader* p_Shader_In)
 	GLint specularLoc = glGetUniformLocation(p_Shader_In->get_Program(), spec.c_str());
 	glUniform3f(specularLoc, v3_Specular.x, v3_Specular.y, v3_Specular.z);
 
-	std::string cons = point_Light + ".constant";
-	GLint constantLoc = glGetUniformLocation(p_Shader_In->get_Program(), cons.c_str());
-	glUniform1f(constantLoc, f_Constant);
+	std::string rad = point_Light + ".radius";
+	GLint radiusLoc = glGetUniformLocation(p_Shader_In->get_Program(), rad.c_str());
+	glUniform1f(radiusLoc, f_radius);
 
-	std::string lin = point_Light + ".linear";
-	GLint linearLoc = glGetUniformLocation(p_Shader_In->get_Program(), lin.c_str());
-	glUniform1f(linearLoc, f_Linear);
-
-	std::string quad = point_Light + ".quadratic";
-	GLint quadraticLoc = glGetUniformLocation(p_Shader_In->get_Program(), quad.c_str());
-	glUniform1f(quadraticLoc, f_Quadratic);
 }

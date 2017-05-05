@@ -32,6 +32,11 @@ struct CompleteVertex
 	Normal normal;
 };
 
+namespace Buffer
+{
+	enum Buffer { Vertex, Normal, UV, Num };
+}
+
 struct VertexIndex
 {
 	//Variables
@@ -65,9 +70,14 @@ protected:
 
 	unsigned int ui_VAO;
 	unsigned int ui_EBO;
-
+	unsigned int ui_VAO2;
+	unsigned int VAO2;
 public:
 	Mesh() {};
+	unsigned int instanceBufferHandle;
 	unsigned int get_VAO();
+	unsigned int get_VAO2();
 	unsigned int get_SizeOfIndices();
+	unsigned int get_SizeOfVertices();
+	unsigned int get_InstanceBufferHandle();
 };

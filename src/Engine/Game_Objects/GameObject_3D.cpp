@@ -63,9 +63,9 @@ void GameObject_3D::add_Component(std::string s_Name_In, Component* p_Component_
 
 }
 
-void GameObject_3D::add_Texture(std::string s_Name_In, Texture* p_Component_In)
+void GameObject_3D::add_Texture(std::string s_Name_In, Texture* p_Texture_In)
 {
-	static_cast<RenderComp_3D*>(mipo_Components.find("RenderComp_3D")->second)->add_Texture(s_Name_In, p_Component_In);
+	static_cast<RenderComp_3D*>(mipo_Components.find("RenderComp_3D")->second)->add_Texture(s_Name_In, p_Texture_In);
 }
 
 void GameObject_3D::update()
@@ -108,6 +108,12 @@ void GameObject_3D::update()
 	}
 		
 
+}
+
+void GameObject_3D::renderDepth(Shader* p_Shader_In)
+{
+	static_cast<Transform_3D*>(mipo_Components.find("Transform_3D")->second)->update_Shader(p_Shader_In);
+	if (b_RenderStatus) static_cast<RenderComp_3D*>(mipo_Components.find("RenderComp_3D")->second)->renderDepth(GL_TEXTURE_2D, GL_TRIANGLES, p_Shader_In);
 }
 
 void GameObject_3D::render(Shader* p_Shader_In)

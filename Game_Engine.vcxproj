@@ -73,6 +73,11 @@
     <LibraryPath>./lib;$(LibraryPath)</LibraryPath>
     <SourcePath>./src;$(SourcePath)</SourcePath>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <IncludePath>./include;$(IncludePath)</IncludePath>
+    <LibraryPath>./lib;$(LibraryPath)</LibraryPath>
+    <SourcePath>./src;$(SourcePath)</SourcePath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -101,6 +106,7 @@
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>opengl32.lib;GLAD.lib;glfw3.lib;SOIL.lib;tinyxml2.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -132,14 +138,17 @@
     <ClCompile Include="src\Engine\Component\RenderComp_3D.cpp" />
     <ClCompile Include="src\Engine\Component\Respond_Movement.cpp" />
     <ClCompile Include="src\Engine\Component\RigidBody.cpp" />
+    <ClCompile Include="src\Engine\Component\RenderComp_Instanced.cpp" />
     <ClCompile Include="src\Engine\Component\Transform.cpp" />
     <ClCompile Include="src\Engine\Component\Transform_2D.cpp" />
     <ClCompile Include="src\Engine\Component\Transform_3D.cpp" />
+    <ClCompile Include="src\Engine\Component\Transform_Instanced.cpp" />
     <ClCompile Include="src\Engine\Creators\Shader.cpp" />
     <ClCompile Include="src\Engine\Creators\Texture.cpp" />
     <ClCompile Include="src\Engine\Game_Objects\Camera_2D.cpp" />
     <ClCompile Include="src\Engine\Game_Objects\Camera_3D.cpp" />
     <ClCompile Include="src\Engine\Game_Objects\GameObject_3D.cpp" />
+    <ClCompile Include="src\Engine\Game_Objects\GameObject_Instanced.cpp" />
     <ClCompile Include="src\Engine\Game_Objects\Game_Object.cpp" />
     <ClCompile Include="src\Engine\Lighting\Light.cpp" />
     <ClCompile Include="src\Engine\Lighting\Point_Light.cpp" />
@@ -149,6 +158,7 @@
     <ClCompile Include="src\Engine\Mesh\Mesh_3D.cpp" />
     <ClCompile Include="src\Engine\Physics\CollisionManager.cpp" />
     <ClCompile Include="src\Engine\Physics\Physics.cpp" />
+    <ClCompile Include="src\Engine\Mesh\Mesh_Instanced.cpp" />
     <ClCompile Include="src\Engine\Scene\Scene.cpp" />
     <ClCompile Include="src\Engine\State\State.cpp" />
     <ClCompile Include="src\Game\AIController\AIController.cpp" />
@@ -174,9 +184,11 @@
     <ClInclude Include="include\Engine\Component\RenderComp_3D.h" />
     <ClInclude Include="include\Engine\Component\Respond_Movement.h" />
     <ClInclude Include="include\Engine\Component\RigidBody.h" />
+    <ClInclude Include="include\Engine\Component\RenderComp_Instanced.h" />
     <ClInclude Include="include\Engine\Component\Transform.h" />
     <ClInclude Include="include\Engine\Component\Transform_2D.h" />
     <ClInclude Include="include\Engine\Component\Transform_3D.h" />
+    <ClInclude Include="include\Engine\Component\Transform_Instanced.h" />
     <ClInclude Include="include\Engine\Creators\Shader.h" />
     <ClInclude Include="include\Engine\Creators\Texture.h" />
     <ClInclude Include="include\Engine\FSM\FSM.h" />
@@ -186,6 +198,7 @@
     <ClInclude Include="include\Engine\Game_Objects\Camera_3D.h" />
     <ClInclude Include="include\Engine\Game_Objects\GameObject_3D.h" />
     <ClInclude Include="include\Engine\Game_Objects\Game_Object.h" />
+    <ClInclude Include="include\Engine\Game_Objects\GameObject_Instanced.h" />
     <ClInclude Include="include\Engine\Lighting\Light.h" />
     <ClInclude Include="include\Engine\Lighting\Point_Light.h" />
     <ClInclude Include="include\Engine\Loaders\Loader.h" />
@@ -194,6 +207,7 @@
     <ClInclude Include="include\Engine\Mesh\Mesh_3D.h" />
     <ClInclude Include="include\Engine\Physics\CollisionManager.h" />
     <ClInclude Include="include\Engine\Physics\Physics.h" />
+    <ClInclude Include="include\Engine\Mesh\Mesh_Instanced.h" />
     <ClInclude Include="include\Engine\Scene\Scene.h" />
     <ClInclude Include="include\Engine\State\State.h" />
     <ClInclude Include="include\Game\AIController\AIController.h" />
@@ -206,10 +220,15 @@
     <ClInclude Include="include\Game\Scene\Game_Scene.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="assets\shaders\depth_Shader.frag" />
+    <None Include="assets\shaders\depth_Shader.geom" />
+    <None Include="assets\shaders\depth_Shader.vert" />
     <None Include="assets\shaders\font_Shader.frag" />
     <None Include="assets\shaders\font_Shader.vert" />
     <None Include="assets\shaders\light_Shader.frag" />
     <None Include="assets\shaders\light_Shader.vert" />
+    <None Include="assets\shaders\particle_Shader.frag" />
+    <None Include="assets\shaders\particle_Shader.vert" />
     <None Include="assets\shaders\passIn.frag" />
     <None Include="assets\shaders\passIn.vert" />
   </ItemGroup>
