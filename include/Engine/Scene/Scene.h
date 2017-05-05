@@ -3,11 +3,12 @@
 #include <glad/glad.h>
 #include <glm\glm.hpp>
 #include <Engine\Loaders\Loader.h>
+#include <Engine\Loaders\PrefabLoader.h>
 #include <Engine/Game_Objects/Game_Object.h>
 #include <Engine/State/State.h>
 #include <Engine\Game_Objects\Camera_3D.h>
 #include <Engine\Loaders\SceneLoader.h>
-//#include <Light.h>
+#include <Engine\Audio\Sound.h>
 
 class Loader;
 
@@ -16,6 +17,7 @@ class Scene
 protected:
 	//Main resource loader
 	Loader* po_Loader;
+	PrefabLoader* po_PrefabLoader;
 
 	//State manager
 	State* po_GameState;
@@ -25,7 +27,14 @@ protected:
 
 	//Cameras
 	Camera_3D* camera_3D;
+
+	//Game Objects
 	std::map<std::string, Game_Object*> mspo_Objects;
+
+
+	unsigned int ui_light_Amount;
+	// Audio
+	std::map<std::string, Sound*>* snd_Audio;
 
 	// Is mouse locked?
 	bool b_LockMouse;
@@ -35,6 +44,10 @@ protected:
 
 	//Initalize the scene
 	bool b_Init;
+
+	glm::vec2 v2_WindowSize;
+
+	int i_KeyPress;
 
 public:
 	//Constructor
@@ -53,10 +66,12 @@ public:
 	virtual void update_Scene(GLfloat f_Delta_In, glm::vec2 v2_MousePos_In) = 0;
 
 	//Keyboard input
-	virtual void keyboard_Input(GLfloat f_Delta_In, GLboolean* pab_KeyArray_In, GLboolean* pab_LockedArray_In) = 0;
+	virtual void keyboard_Input(GLfloat f_Delta_In, GLboolean* pab_KeyArray_In, GLboolean* pab_LockedArray_In, int i_KeyPress) = 0;
 
 	//Mosue input
-	virtual void mouse_Input(GLboolean* pab_MouseArray_In) = 0;
+	virtual void mouse_Input(GLboolean* pab_MouseArray_In, GLboolean* pab_LockedMouse_In) = 0;
+
+	virtual void scroll_Input(glm::vec2 v2_Scroll_In) = 0;
 
 	//Clean up
 	virtual void clean_Up() = 0;
@@ -67,6 +82,9 @@ public:
 	//Pass loader
 	void pass_Loader(Loader* po_Loader_In);
 
+	// Pass Audio
+	void pass_Audio(std::map<std::string, Sound*>* po_Sound_In);
+
 	//Is loader empty?
 	bool is_LoaderEmpty();
 
@@ -75,4 +93,6 @@ public:
 
 	//Is mouse locked?
 	bool is_MouseLocked();
+
+	void set_WindowSize(glm::vec2 v2_WindowSize_In);
 };

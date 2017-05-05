@@ -1,6 +1,7 @@
-#include <Engine/Component/Component.h>
+#include <Engine\Component\Component.h>
 
-std::string Component::get_Type()
-{
-	return typeid(*this).name();
-}
+Component::Component() {}
+
+Component::Component(const Component &p_NewComp_In) {};
+
+Component::~Component() {}
