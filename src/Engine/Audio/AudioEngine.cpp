@@ -112,7 +112,7 @@ void AudioEngine::LoadEvent(const string& strEventName) {
 }
 
 /* ---Play Functions--- */
-int AudioEngine::PlaySound(const string& strSoundName, const Vector3& vPos, float fVolumeB) {
+int AudioEngine::PlaySound(const string& strSoundName, const glm::vec3& vPos, float fVolumeB) {
 	int nChannelId = sgpImplementation->mnNextChannelId++;
 	auto tFoundIt = sgpImplementation->mSounds.find(strSoundName);
 	if (tFoundIt == sgpImplementation->mSounds.end()) {
@@ -207,7 +207,7 @@ bool AudioEngine::IsPlaying(int nChannelID) const {
 }
 
 /* ---Other Functions--- */
-void AudioEngine::Set3dListenerAndOrientation(const Vector3& vPos, const Vector3& vOri, float fVolumeB) {
+void AudioEngine::Set3dListenerAndOrientation(const glm::vec3& vPos, const glm::vec3& vOri, float fVolumeB) {
 	// Position and Orientation
 	auto tFoundPos = sgpImplementation->mpSystem->set3DListenerAttributes(0, &VectorToFMOD(vPos), NULL, &VectorToFMOD(vOri), &VectorToFMOD(upVec));
 	AudioEngine::ErrorCheck(tFoundPos);
@@ -235,7 +235,7 @@ void AudioEngine::setEventParameter(const string& strEventName, const string& st
 	AudioEngine::ErrorCheck(tFoundIt->second->getParameter(strParameterName.c_str(), &pParameter));
 	AudioEngine::ErrorCheck(pParameter->setValue(fValue));
 }
-void AudioEngine::SetChannel3dPosition(int channelId, const Vector3 vPos) {
+void AudioEngine::SetChannel3dPosition(int channelId, const glm::vec3 vPos) {
 	auto tFoundIt = sgpImplementation->mChannels.find(channelId);
 	if(tFoundIt == sgpImplementation->mChannels.end()) {
 		return;
@@ -258,7 +258,7 @@ float AudioEngine::dbToVolume(float db) {
 float AudioEngine::VolumeTodb(float volume) {
 	return 20.0f * log10f(volume);
 }
-FMOD_VECTOR AudioEngine::VectorToFMOD(const Vector3& vPos) {
+FMOD_VECTOR AudioEngine::VectorToFMOD(const glm::vec3& vPos) {
 	FMOD_VECTOR fVec;
 	fVec.x = vPos.x;
 	fVec.y = vPos.y;

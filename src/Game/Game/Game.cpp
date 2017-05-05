@@ -12,11 +12,10 @@ Game::Game()
 	
 	// Initialise Audio
 	Audio_Engine = new AudioEngine();
-	snd_Audio.insert(std::pair<std::string, Sound*>("gameBG", new Sound("assets/audio/rain.wav", true, true, false, Audio_Engine)));
+	/*snd_Audio.insert(std::pair<std::string, Sound*>("rain", new Sound("assets/audio/rain.wav", true, true, false, Audio_Engine)));
 	snd_Audio.insert(std::pair<std::string, Sound*>("walking", new Sound("assets/audio/walking.wav", true, false, false, Audio_Engine)));
-	snd_Audio.insert(std::pair<std::string, Sound*>("gunshot_pistol", new Sound("assets/audio/gunshot_pistol.wav", true, false, false, Audio_Engine)));
-	snd_Audio.insert(std::pair<std::string, Sound*>("reload_pistol", new Sound("assets/audio/reload_pistol.wav", true, false, false, Audio_Engine)));
-	snd_Audio.insert(std::pair<std::string, Sound*>("foghorn", new Sound("assets/audio/foghorn.wav", true, false, false, Audio_Engine)));
+	snd_Audio.insert(std::pair<std::string, Sound*>("shooting_pistol", new Sound("assets/audio/shooting_pistol.wav", true, false, false, Audio_Engine)));
+	snd_Audio.insert(std::pair<std::string, Sound*>("reload_pistol", new Sound("assets/audio/reload_pistol.wav", true, false, false, Audio_Engine)));*/
 }
 
 void Game::init()
