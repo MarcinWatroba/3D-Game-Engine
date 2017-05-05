@@ -12,7 +12,6 @@
 #include <Engine\Lighting\Light.h>
 #include <Game\AIController\AIController.h>
 #include <Game\Misc\Bullet.h>
-
 #include <iostream>
 
 Game_Scene::Game_Scene()
@@ -32,7 +31,7 @@ void Game_Scene::init()
 
 	b_Init = false;
 
-	camera_3D = new Camera_3D(45.f, 800.f / 600, 0.1f, 1000.f);
+	camera_3D = new Camera_3D(45.f, 1080.f / 720.0f, 0.1f, 1000.f);
 	camera_3D->set_CameraPos(glm::vec3(0.f, -20.f, 0.f));
 
 	if (firstTime)
@@ -78,12 +77,12 @@ void Game_Scene::init()
 		posNum++;
 	}
 
-	for (int i = 0; i < ui_light_Amount; i++)
+	for (unsigned int i = 0; i < ui_light_Amount; i++)
 	{
 		light[i] = o_SceneLoader->get_LightPosition(i);
 		radius[i] = o_SceneLoader->get_LightRadius(1);
 	}
-	for (int i = 0; i < 3; i++)
+	for (unsigned int i = 0; i < 3; i++)
 	{
 		depth[i] = o_SceneLoader->setup_FBO();
 	}
@@ -301,10 +300,6 @@ void Game_Scene::update_Scene(GLfloat f_Delta_In, glm::vec2 v2_MousePos_In)
 //Render all scene objects
 void Game_Scene::render()
 {
-
-
-
-
 	if (b_Init)
 	{
 		glEnable(GL_BLEND);
@@ -318,7 +313,7 @@ void Game_Scene::render()
 		std::string ui_Shadow;
 		GLint ui_Shadow_Loc;
 
-		for (int i = 0; i < ui_light_Amount; i++)
+		for (unsigned int i = 0; i < ui_light_Amount; i++)
 		{
 			d[i] = glm::distance(camera_3D->get_CameraPos(), light[i]);
 			b_Shadow = "point_Light[" + std::to_string(i) + "].casts_Shadow";
@@ -333,7 +328,7 @@ void Game_Scene::render()
 		unsigned int light_Nom[3];
 		light_Nom[0] = 0;
 		float closest_Distance = 9999.0f;
-		for (int i = 0; i < ui_light_Amount; i++)
+		for (unsigned int i = 0; i < ui_light_Amount; i++)
 		{
 			if (d[i] < closest_Distance)
 			{
@@ -349,7 +344,7 @@ void Game_Scene::render()
 		ui_Shadow_Loc = glGetUniformLocation(po_Loader->get_Shader("0")->get_Program(), ui_Shadow.c_str());
 		glUniform1i(ui_Shadow_Loc, 0);
 		float closest_Distance2 = 9999.0f;
-		for (int i = 0; i < ui_light_Amount; i++)
+		for (unsigned int i = 0; i < ui_light_Amount; i++)
 		{
 			if (d[i] < closest_Distance2 && d[i] > closest_Distance)
 			{
@@ -366,7 +361,7 @@ void Game_Scene::render()
 		ui_Shadow_Loc = glGetUniformLocation(po_Loader->get_Shader("0")->get_Program(), ui_Shadow.c_str());
 		glUniform1i(ui_Shadow_Loc, 1);
 		float closest_Distance3 = 9999.0f;
-		for (int i = 0; i < ui_light_Amount; i++)
+		for (unsigned int i = 0; i < ui_light_Amount; i++)
 		{
 			if (d[i] < closest_Distance3 && d[i] > closest_Distance2)
 			{
@@ -388,49 +383,40 @@ void Game_Scene::render()
 
 		for (int i = 0; i < 3; i++)
 		{
-
 			unsigned no = light_Nom[i];
 
+			unsigned int obj_No = 0;
 
-				unsigned int obj_No = 0;
+			o_SceneLoader->prepare_DepthCube(po_Loader->get_Shader("3"), light[no], depth[i], i);
 
-				o_SceneLoader->prepare_DepthCube(po_Loader->get_Shader("3"), light[no], depth[i], i);
-
-
-				for (auto const& pair : mspo_Objects)
+			for (auto const& pair : mspo_Objects)
+			{
+				if (glm::distance(pos[obj_No], light[no]) < (o_SceneLoader->get_LightRadius(no) * 10))
 				{
-					
-					if (glm::distance(pos[obj_No], light[no]) < (o_SceneLoader->get_LightRadius(no) * 10))
+					if (pair.second->get_Tag() == "Object")
 					{
-						if (pair.second->get_Tag() == "Object")
-						{
-
-
-							pair.second->renderDepth(po_Loader->get_Shader("3"));
-						}
-						else if (pair.second->get_Tag() == "Light")
-						{
-	
-							pair.second->renderDepth(po_Loader->get_Shader("3"));
-						}
+						pair.second->renderDepth(po_Loader->get_Shader("3"));
 					}
-					obj_No++;
+					else if (pair.second->get_Tag() == "Light")
+					{
+						pair.second->renderDepth(po_Loader->get_Shader("3"));
+					}
 				}
-				glBindFramebuffer(GL_FRAMEBUFFER, 0);
-
+				obj_No++;
+			}
+			glBindFramebuffer(GL_FRAMEBUFFER, 0);
 		}
 
+		glViewport(0, 0, 1080, 720);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-				glViewport(0, 0, 1600, 900);
-				glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		glUseProgram(po_Loader->get_Shader("0")->get_Program());
 
-				glUseProgram(po_Loader->get_Shader("0")->get_Program());
+		camera_3D->update_Shader(po_Loader->get_Shader("0"));
 
-				camera_3D->update_Shader(po_Loader->get_Shader("0"));
+		glUseProgram(po_Loader->get_Shader("4")->get_Program());
 
-				glUseProgram(po_Loader->get_Shader("4")->get_Program());
-
-				camera_3D->update_Shader(po_Loader->get_Shader("4"));
+		camera_3D->update_Shader(po_Loader->get_Shader("4"));
 
 
 

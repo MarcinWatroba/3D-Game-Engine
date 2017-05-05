@@ -103,7 +103,7 @@ void CollisionManager::collisionChecks(std::map<std::string, Game_Object*> &game
 
 		if (static_cast<GameObject_3D*>(currentObject)->get_BulletList().size() != 0)
 		{
-			for (int i = 0; i < static_cast<GameObject_3D*>(currentObject)->get_BulletList().size(); i++)
+			for (unsigned int i = 0; i < static_cast<GameObject_3D*>(currentObject)->get_BulletList().size(); i++)
 			{
 				Game_Object* bullet = static_cast<GameObject_3D*>(currentObject)->get_BulletList()[i];
 				if (bullet->get_Components().count("BoxCollider_3D"))//bullets always have boxcollider
@@ -207,7 +207,7 @@ void CollisionManager::collisionChecks(std::map<std::string, Game_Object*> &game
 			if (pair.second->get_Tag() == "Particle") { continue; }
 			if (static_cast<GameObject_3D*>(pair.second)->get_BulletList().size() != 0)
 			{
-				for (int i = 0; i < static_cast<GameObject_3D*>(pair.second)->get_BulletList().size(); i++)
+				for (unsigned int i = 0; i < static_cast<GameObject_3D*>(pair.second)->get_BulletList().size(); i++)
 				{
 					static_cast<BoxCollider_3D*>(static_cast<GameObject_3D*>(pair.second)->get_BulletList()[i]->get_Components().at("BoxCollider_3D"))->setCollisionCheck(false);
 				}

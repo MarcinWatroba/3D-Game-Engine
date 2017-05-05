@@ -155,9 +155,6 @@ void GameObject_Instanced::update_Particles(float t, float y, float z, glm::vec3
 		ParticlesContainer[iParticle].position = glm::vec3(random, random2, -random3);
 		ParticlesContainer[iParticle].size = 1.0f;
 		ParticlesContainer[iParticle].speed = glm::vec3(0.0, -32.0, 0.0);
-		ParticlesContainer[iParticle].r = 1.0f;
-		ParticlesContainer[iParticle].g = 1.0f;
-		ParticlesContainer[iParticle].b = 1.0f;
 	}
 	for (int i = 0; i<1000; i++) {
 
