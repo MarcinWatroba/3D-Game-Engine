@@ -6,6 +6,12 @@ void Scene::pass_Loader(Loader* po_Loader_In)
 	po_Loader = po_Loader_In;
 }
 
+// Pass Audio
+void Scene::pass_Audio(std::map<std::string, Sound*>* po_Sound_In)
+{
+	snd_Audio = po_Sound_In;
+}
+
 //Is loader empty?
 bool Scene::is_LoaderEmpty()
 {

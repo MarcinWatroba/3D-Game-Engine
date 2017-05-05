@@ -12,6 +12,7 @@
 #include <Engine\Lighting\Light.h>
 #include <Game\AIController\AIController.h>
 #include <Game\Misc\Bullet.h>
+
 #include <iostream>
 
 Game_Scene::Game_Scene()
@@ -33,12 +34,20 @@ void Game_Scene::init()
 
 	camera_3D = new Camera_3D(45.f, 1080.f / 720.0f, 0.1f, 1000.f);
 	camera_3D->set_CameraPos(glm::vec3(0.f, -20.f, 0.f));
-
+	
+	// Play background audio - hard code
+	//snd_Audio->find("rain")->second->Play(glm::vec3(0,0,0), 0.5);
 	if (firstTime)
 	{
 		o_SceneLoader = new SceneLoader(levelList[0].c_str(), po_Loader, mspo_Objects);
+		//o_SceneLoader = new SceneLoader("assets/scenes/Living_Room_scene.xml", po_Loader, mspo_Objects, *snd_Audio);
+
 		firstTime = false;
 	}
+
+	// Play background Audio - loaded via XML
+	snd_Audio->find("rain")->second->Play();
+
 	b_Init = true;
 
 	//get player pointer
@@ -50,6 +59,7 @@ void Game_Scene::init()
 	{
 		if (pair.second->get_Tag() == "Enemy") { i_numEnemies++; }
 	}
+
 	
 	//add lighting
 	glUseProgram(po_Loader->get_Shader("3")->get_Program());
@@ -75,6 +85,7 @@ void Game_Scene::init()
 
 		}
 		posNum++;
+		
 	}
 
 	for (unsigned int i = 0; i < ui_light_Amount; i++)
@@ -133,12 +144,6 @@ void Game_Scene::keyboard_Input(GLfloat f_Delta_In, GLboolean* pab_KeyArray_In, 
 	float moveSpeed = 1;
 
 
-	if (pab_KeyArray_In[GLFW_KEY_LEFT_CONTROL])
-	{
-		camera_3D->set_Speed(f_Speed);
-		camera_3D->fly_Down();
-	}
-
 	if (pab_KeyArray_In[GLFW_KEY_R] && !pab_LockedKeys_In[GLFW_KEY_R])
 	{
 		//reload_Scene();
@@ -160,10 +165,24 @@ void Game_Scene::keyboard_Input(GLfloat f_Delta_In, GLboolean* pab_KeyArray_In, 
 	if (pab_KeyArray_In[GLFW_KEY_W])
 	{
 		player->move(glm::vec3(0, 0, 1), moveSpeed * f_Delta_In);
+		if (walkCount > walkRate)
+		{
+			snd_Audio->find("walking")->second->Play();
+			//snd_Audio->find("walking")->second->Play(glm::vec3(0,0,0), 0.8);
+			walkCount = 0;
+		}
+		walkCount++;
 	}
 	if (pab_KeyArray_In[GLFW_KEY_S])
 	{
 		player->move(glm::vec3(0, 0, 1), -moveSpeed * f_Delta_In);
+		if (walkCount > walkRate)
+		{
+			snd_Audio->find("walking")->second->Play();
+			//snd_Audio->find("walking")->second->Play(glm::vec3(0,0,0), 0.8);
+			walkCount = 0;
+		}
+		walkCount++;
 	}
 
 	if (pab_KeyArray_In[GLFW_KEY_SPACE])
@@ -173,8 +192,28 @@ void Game_Scene::keyboard_Input(GLfloat f_Delta_In, GLboolean* pab_KeyArray_In, 
 	}
 
 
-	if (pab_KeyArray_In[GLFW_KEY_A]) player->move(glm::vec3(1, 0, 0), moveSpeed * f_Delta_In);// player->turn(80.f * f_Delta_In, glm::vec3(0.f, 1.f, 0.f));
-	if (pab_KeyArray_In[GLFW_KEY_D]) player->move(glm::vec3(1, 0, 0), -moveSpeed * f_Delta_In);//player->turn(-80.f * f_Delta_In, glm::vec3(0.f, 1.f, 0.f));
+	if (pab_KeyArray_In[GLFW_KEY_A])
+	{
+		player->move(glm::vec3(1, 0, 0), moveSpeed * f_Delta_In);
+		if (walkCount > walkRate)
+		{
+			snd_Audio->find("walking")->second->Play();
+			//snd_Audio->find("walking")->second->Play(glm::vec3(0,0,0), 0.8);
+			walkCount = 0;
+		}
+		walkCount++;
+	}
+	if (pab_KeyArray_In[GLFW_KEY_D])
+	{
+		player->move(glm::vec3(1, 0, 0), -moveSpeed * f_Delta_In);
+		if (walkCount > walkRate)
+		{
+			snd_Audio->find("walking")->second->Play();
+			//snd_Audio->find("walking")->second->Play(glm::vec3(0,0,0), 0.8);
+			walkCount = 0;
+		}
+		walkCount++;
+	}//player->turn(-80.f * f_Delta_In, glm::vec3(0.f, 1.f, 0.f));
 
 }
 
@@ -190,15 +229,26 @@ void Game_Scene::mouse_Input(GLboolean* pab_MouseArray_In, GLfloat f_Delta_In)
 		player->createBullet(new Bullet("Bullet", po_Loader->get_Mesh3D("7"), static_cast<GameObject_3D*>(mspo_Objects.find("Robot")->second), po_Loader->get_Texture("24"), po_Loader->get_Texture("7")));
 		player->setFiring(true);
 		shooting = true;
-		//std::cout << "Shoosting time!!!" << std::endl;
-		//glm::vec3 temp = static_cast<GameObject_3D*>(mspo_Objects.find("Bullet")->second)->get_Position();
-		//std::cout << "(" << temp.x << ", " << temp.y << ", " << temp.z << ")" << std::endl << std::endl;
+		if (triggerHoldCount > firerate && ammoRemaining > 0)
+		{
+			snd_Audio->find("shooting_pistol")->second->Play();
+			//snd_Audio->find("shooting_pistol")->second->Play(glm::vec3(0,0,0), 1.0);
+			triggerHoldCount = 0;
+			ammoRemaining--;
+		}
+		triggerHoldCount++;
 	}
 	if (!pab_MouseArray_In[GLFW_MOUSE_BUTTON_1])
 	{
 		shooting = false;
 	}
 
+	if (pab_MouseArray_In[GLFW_MOUSE_BUTTON_RIGHT] && ammoRemaining == 0)
+	{
+		snd_Audio->find("reload_pistol")->second->Play();
+		//snd_Audio->find("reload_pistol")->second->Play(glm::vec3(0,0,0), 1.0);
+		ammoRemaining = 6;
+	}
 }
 
 void Game_Scene::reload_Scene()

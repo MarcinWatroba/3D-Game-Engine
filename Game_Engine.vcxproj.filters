@@ -115,6 +115,15 @@
     <Filter Include="Header Files\Game\AIController">
       <UniqueIdentifier>{177f85b0-f388-48d3-9749-8197e290c70c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Engine\Audio">
+      <UniqueIdentifier>{676eab07-10d0-460b-a645-ed8122fff19b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Audio">
+      <UniqueIdentifier>{0b42c561-9ff0-4f45-8b06-f4b2903468b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Audio">
+      <UniqueIdentifier>{566af830-fedd-4af8-b9bb-bc81944d0c74}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Engine\State\State.cpp">
@@ -251,6 +260,12 @@
     </ClCompile>
     <ClCompile Include="src\Engine\Component\Transform_Instanced.cpp">
       <Filter>Source Files\Engine\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Audio\AudioEngine.cpp">
+      <Filter>Source Files\Engine\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Audio\Sound.cpp">
+      <Filter>Source Files\Engine\Audio</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -397,6 +412,12 @@
     </ClInclude>
     <ClInclude Include="include\Engine\Component\Transform_Instanced.h">
       <Filter>Header Files\Engine\Component</Filter>
+	</ClInclude>
+    <ClInclude Include="include\Engine\Audio\AudioEngine.h">
+      <Filter>Header Files\Engine\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Engine\Audio\Sound.h">
+      <Filter>Header Files\Engine\Audio</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -441,5 +462,19 @@
     <Xml Include="assets\scenes\Robot_Scene.xml">
       <Filter>Resource Files</Filter>
     </Xml>
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="assets\audio\shooting_pistol.wav">
+      <Filter>Resource Files\Audio</Filter>
+    </Media>
+    <Media Include="assets\audio\reload_pistol.wav">
+      <Filter>Resource Files\Audio</Filter>
+    </Media>
+    <Media Include="assets\audio\rain.wav">
+      <Filter>Resource Files\Audio</Filter>
+    </Media>
+    <Media Include="assets\audio\walking.wav">
+      <Filter>Resource Files\Audio</Filter>
+    </Media>
   </ItemGroup>
 </Project>

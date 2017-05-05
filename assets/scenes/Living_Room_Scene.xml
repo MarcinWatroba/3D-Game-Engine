@@ -1,0 +1,423 @@
+<?xml version = "1.0" encoding="UTF-8"?>
+
+<!-- If you want to understand what IDs represent look at "Model_IDs.h" file; -->
+<!-- (0,0,0) = This is a 3D vector -->
+<!-- 0, (0, 1, 0) = This is a quaterion. First parameter is an angle, 
+					Second parameter is a 3D vector that is an axis at which this rotation occurs -->
+
+<objects>
+	<new_Object3D
+		name = "Floor"
+		container = "No"
+		tag = "Object"
+		mesh_ID = "4"
+		component = ""
+		diffuse_ID = "4"
+		specular_ID = "7"
+		shininess = "1"
+		texture_Tiling = "(8, 8)"
+		
+		init_Mode = "0"
+		origin = "(0,0, 0)"
+		position = "(-0, 0, 0)"
+		orientationX = "0, (1, 0, 0)"
+		orientationY = "0, (0, 1, 0)"
+		orientationZ = "0, (0, 0, 1)"
+		scale = "(1, 1, 1)"
+		>
+	</new_Object3D>
+
+	<new_Object3D
+		name = "Back Wall"
+		container = "No"
+		tag = "Object"
+		mesh_ID = "7"
+		component = ""
+		diffuse_ID = "5"
+		specular_ID = "7"
+		shininess = "1"
+		texture_Tiling = "(8, 8)"
+		
+		init_Mode = "0"
+		origin = "(0,0, 0)"
+		position = "(0.000, 26.582, 39.705)"
+		orientationX = "0, (1, 0, 0)"
+		orientationY = "0, (0, 1, 0)"
+		orientationZ = "0, (0, 0, 1)"
+		scale = "(90.995, 54.860, 1)"
+		>
+	</new_Object3D>
+	
+	<new_Object3D
+		name = "Front Wall"
+		container = "No"
+		tag = "Object"
+		mesh_ID = "7"
+		component = ""
+		diffuse_ID = "5"
+		specular_ID = "7"
+		shininess = "1"
+		texture_Tiling = "(8, 8)"
+		
+		init_Mode = "0"
+		origin = "(0,0, 0)"
+		position = "(0.000, 26.582, -39.889)"
+		orientationX = "0, (1, 0, 0)"
+		orientationY = "0, (0, 1, 0)"
+		orientationZ = "0, (0, 0, 1)"
+		scale = "(90.995, 54.860, 1)"
+		>
+	</new_Object3D>
+	
+	<new_Object3D
+		name = "Left Wall"
+		container = "No"
+		tag = "Object"
+		mesh_ID = "7"
+		component = ""
+		diffuse_ID = "5"
+		specular_ID = "7"
+		shininess = "1"
+		texture_Tiling = "(8, 8)"
+		
+		init_Mode = "0"
+		origin = "(0,0, 0)"
+		position = "(-44.491, 26.582, -0.363)"
+		orientationX = "0, (1, 0, 0)"
+		orientationY = "90.000, (0, 1, 0)"
+		orientationZ = "0, (0, 0, 1)"
+		scale = "(79.935, 54.860, 1)"
+		>
+	</new_Object3D>
+	
+	<new_Object3D
+		name = "Right Wall"
+		container = "No"
+		tag = "Object"
+		mesh_ID = "7"
+		component = ""
+		diffuse_ID = "5"
+		specular_ID = "7"
+		shininess = "1"
+		texture_Tiling = "(8, 8)"
+		
+		init_Mode = "0"
+		origin = "(0,0, 0)"
+		position = "(44.724, 26.582, -0.363)"
+		orientationX = "0, (1, 0, 0)"
+		orientationY = "90.000, (0, 1, 0)"
+		orientationZ = "0, (0, 0, 1)"
+		scale = "(79.935, 54.860, 1)"
+		>
+	</new_Object3D>
+	
+	<new_Object3D
+		name = "Wooden Wall"
+		container = "No"
+		tag = "Object"
+		mesh_ID = "7"
+		component = ""
+		diffuse_ID = "11"
+		specular_ID = "7"
+		shininess = "1"
+		texture_Tiling = "(8, 8)"
+		
+		init_Mode = "0"
+		origin = "(0,0, 0)"
+		position = "(0.921, 53.500, -0.365)"
+		orientationX = "90.000, (1, 0, 0)"
+		orientationY = "0.000, (0, 1, 0)"
+		orientationZ = "0, (0, 0, 1)"
+		scale = "(104.515, 85.177, 1)"
+		>
+	</new_Object3D>
+	
+	<new_Object3D
+		name = "Door"
+		container = "No"
+		tag = "Object"
+		mesh_ID = "7"
+		component = ""
+		diffuse_ID = "16"
+		specular_ID = "7"
+		shininess = "1"
+		texture_Tiling = "(1, 1)"
+		
+		init_Mode = "0"
+		origin = "(0,0, 0)"
+		position = "(0, 22.071, -39.416)"
+		orientationX = "0.000, (1, 0, 0)"
+		orientationY = "90.000, (0, 1, 0)"
+		orientationZ = "0, (0, 0, 1)"
+		scale = "(1, 43.959, 22.507)"
+		>
+	</new_Object3D>
+	
+	<new_Object3D
+		name = "Door 2"
+		container = "No"
+		tag = "Object"
+		mesh_ID = "7"
+		component = ""
+		diffuse_ID = "16"
+		specular_ID = "7"
+		shininess = "1"
+		texture_Tiling = "(1, 1)"
+		
+		init_Mode = "0"
+		origin = "(0,0, 0)"
+		position = "(0, 22.071, 39.416)"
+		orientationX = "0.000, (1, 0, 0)"
+		orientationY = "90.000, (0, 1, 0)"
+		orientationZ = "0, (0, 0, 1)"
+		scale = "(1, 43.959, 22.507)"
+		>
+	</new_Object3D>
+	
+	<new_Object3D
+		name = "Carpet"
+		container = "No"
+		tag = "Object"
+		mesh_ID = "7"
+		component = ""
+		diffuse_ID = "18"
+		specular_ID = "7"
+		shininess = "1"
+		texture_Tiling = "(8, 8)"
+		
+		init_Mode = "0"
+		origin = "(0,0, 0)"
+		position = "(0, 0.069, -5)"
+		orientationX = "0, (1, 0, 0)"
+		orientationY = "90.000, (0, 1, 0)"
+		orientationZ = "0, (0, 0, 1)"
+		scale = "(52.508, 0.242, 40.321)">
+	</new_Object3D>
+	
+	<new_Object3D
+		name = "Stairs"
+		container = "No"
+		tag = "Object"
+		mesh_ID = "7"
+		component = ""
+		diffuse_ID = "10"
+		specular_ID = "7"
+		shininess = "1"
+		texture_Tiling = "(8, 8)"
+		
+		init_Mode = "0"
+		origin = "(0,0, 0)"
+		position = "(-26.351, 23.337, 0.666)"
+		orientationX = "-43.924, (1, 0, 0)"
+		orientationY = "0.000, (0, 1, 0)"
+		orientationZ = "0, (0, 0, 1)"
+		scale = "(34.953, 85.177, 1)"
+		>
+	</new_Object3D>
+	
+	<new_Object3D
+		name = "Lamp's Metal"
+		container = "No"
+		tag = "Object"
+		mesh_ID = "7"
+		component = ""
+		diffuse_ID = "12"
+		specular_ID = "7"
+		shininess = "1"
+		texture_Tiling = "(1, 1)"
+		
+		init_Mode = "0"
+		origin = "(0,0, 0)"
+		position = "(0.000, 49.589, 0)"
+		orientationX = "0.000, (1, 0, 0)"
+		orientationY = "0.000, (0, 1, 0)"
+		orientationZ = "0, (0, 0, 1)"
+		scale = "(1, 10.08, 1)"
+		>
+	</new_Object3D>
+	
+	<new_Object3D
+		name = "Lamp"
+		container = "No"
+		tag = "Object"
+		mesh_ID = "6"
+		component = ""
+		diffuse_ID = "13"
+		specular_ID = "7"
+		shininess = "1"
+		texture_Tiling = "(8, 8)"
+		
+		init_Mode = "0"
+		origin = "(0,0, 0)"
+		position = "(0.000, 43.940, 0)"
+		orientationX = "0.000, (1, 0, 0)"
+		orientationY = "0.000, (0, 1, 0)"
+		orientationZ = "0, (0, 0, 1)"
+		scale = "(7.645, 7.645, 7.645)"
+		>
+	</new_Object3D>
+	
+		<new_Object3D
+		name = "Lamp's Metal 2"
+		container = "No"
+		tag = "Object"
+		mesh_ID = "7"
+		component = ""
+		diffuse_ID = "12"
+		specular_ID = "7"
+		shininess = "1"
+		texture_Tiling = "(1, 1)"	
+		init_Mode = "0"
+		origin = "(0,0, 0)"
+		position = "(-37.745, 7.691, -32.475)"
+		orientationX = "0.000, (1, 0, 0)"
+		orientationY = "0.000, (0, 1, 0)"
+		orientationZ = "0, (0, 0, 1)"
+		scale = "(1, 15.775, 1)"
+		>
+	</new_Object3D>
+	
+	<new_Object3D
+		name = "Lamp 2"
+		container = "No"
+		tag = "Object"
+		mesh_ID = "6"
+		component = ""
+		diffuse_ID = "13"
+		specular_ID = "7"
+		shininess = "1"
+		texture_Tiling = "(8, 8)"
+		
+		init_Mode = "0"
+		origin = "(0,0, 0)"
+		position = "(-37.515, 15.583, -32.407)"
+		orientationX = "180.00.000, (1, 0, 0)"
+		orientationY = "0.000, (0, 1, 0)"
+		orientationZ = "0, (0, 0, 1)"
+		scale = "(7.645, 7.645, 7.645)"
+		>
+	</new_Object3D>
+	
+	<new_Object3D
+		name = "Painting 1"
+		container = "No"
+		tag = "Object"
+		mesh_ID = "7"
+		component = ""
+		diffuse_ID = "19"
+		specular_ID = "7"
+		shininess = "1"
+		texture_Tiling = "(12, 12)"
+		
+		init_Mode = "0"
+		origin = "(0,0, 0)"
+		position = "(44.052, 28.263, -14.460)"
+		orientationX = "0.000, (1, 0, 0)"
+		orientationY = "90.000, (0, 1, 0)"
+		orientationZ = "0, (0, 0, 1)"
+		scale = "(9.276, 9.276, 1.186)"
+		>
+	</new_Object3D>
+	
+	<new_Object3D
+		name = "Painting 2"
+		container = "No"
+		tag = "Object"
+		mesh_ID = "7"
+		component = ""
+		diffuse_ID = "20"
+		specular_ID = "7"
+		shininess = "1"
+		texture_Tiling = "(12, 12)"	
+		init_Mode = "0"
+		origin = "(0,0, 0)"
+		position = "(44.052, 41.606, 14.460)"
+		orientationX = "0.000, (1, 0, 0)"
+		orientationY = "90.000, (0, 1, 0)"
+		orientationZ = "0, (0, 0, 1)"
+		scale = "(9.276, 9.276, 1.186)"
+		>
+	</new_Object3D>
+	
+	
+</objects>
+					
+<lights>
+	<new_Light
+	type = "Point_Light"
+	tag = "Light"
+	light_ID = "0"
+	position = "(0, 38.940, 0)"
+	ambient = "(0.05, 0.05, 0.05)"
+	diffuse = "(0.8, 0.8, 0.8)"
+	specular = "(0.5, 0.5, 0.5)"
+	constant = "1"
+	linear = "0.0022"
+	quadratic = "0.0019"
+	>
+	</new_Light>
+	
+	<new_Light
+	type = "Point_Light"
+	tag = "Light"
+	light_ID = "1"
+	position = "(-37.515, 15.583, -32.407)"
+	ambient = "(0.05, 0.05, 0.05)"
+	diffuse = "(0.8, 0.8, 0.8)"
+	specular = "(1, 1, 1)"
+	constant = "1"
+	linear = "0.14"
+	quadratic = "0.07"
+	>
+	</new_Light>
+</lights>					
+
+<sounds>
+	<new_sound
+	name = "rain"
+	ID = "0"
+	volume = "0.3"
+	object = ""
+	position = "(0,0,0)"
+	loop = "true"
+	threeD = "true"
+	stream = "false"
+	>
+	</new_sound>
+	
+	<new_sound
+	name = "walking"
+	ID = "1"
+	volume = "0.8"
+	object = "Robot"
+	position = "(0,0,0)"
+	loop = "true"
+	threeD = "true"
+	stream = "false"
+	>
+	</new_sound>
+	
+	<new_sound
+	name = "shooting_pistol"
+	ID = "2"
+	volume = "1"
+	object = "Robot Right Arm"
+	position = "(0,0,0)"
+	loop = "false"
+	threeD = "true"
+	stream = "false"
+	>
+	</new_sound>
+	
+	<new_sound
+	name = "reload_pistol"
+	ID = "3"
+	volume = "1"
+	object = "Robot Right Arm"
+	position = "(0,0,0)"
+	loop = "false"
+	threeD = "true"
+	stream = "false"
+	>
+	</new_sound>
+</sounds>

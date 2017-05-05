@@ -83,9 +83,11 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>..\FMOD SoundSystem\FMOD Studio API Windows\api\studio\inc;..\FMOD SoundSystem\FMOD Studio API Windows\api\lowlevel\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>opengl32.lib;GLAD.lib;glfw3.lib;SOIL.lib;tinyxml2.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;GLAD.lib;glfw3.lib;SOIL.lib;tinyxml2.lib;fmodL_vc.lib;fmodstudioL_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\FMOD SoundSystem\FMOD Studio API Windows\api\studio\lib;..\FMOD SoundSystem\FMOD Studio API Windows\api\lowlevel\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -106,7 +108,7 @@
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>opengl32.lib;GLAD.lib;glfw3.lib;SOIL.lib;tinyxml2.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;GLAD.lib;glfw3.lib;SOIL.lib;tinyxml2.lib;fmod_vc.lib;fmodstudio_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -132,6 +134,8 @@
     <ClCompile Include="src\Engine\Component\BoxCollider_3D.cpp" />
     <ClCompile Include="src\Engine\Component\Character.cpp" />
     <ClCompile Include="src\Engine\Component\Collider.cpp" />
+    <ClCompile Include="src\Engine\Audio\AudioEngine.cpp" />
+    <ClCompile Include="src\Engine\Audio\Sound.cpp" />
     <ClCompile Include="src\Engine\Component\Component.cpp" />
     <ClCompile Include="src\Engine\Component\RenderComp.cpp" />
     <ClCompile Include="src\Engine\Component\RenderComp_2D.cpp" />
@@ -178,6 +182,8 @@
     <ClInclude Include="include\Engine\Component\BoxCollider_3D.h" />
     <ClInclude Include="include\Engine\Component\Character.h" />
     <ClInclude Include="include\Engine\Component\Collider.h" />
+    <ClInclude Include="include\Engine\Audio\AudioEngine.h" />
+    <ClInclude Include="include\Engine\Audio\Sound.h" />
     <ClInclude Include="include\Engine\Component\Component.h" />
     <ClInclude Include="include\Engine\Component\RenderComp.h" />
     <ClInclude Include="include\Engine\Component\RenderComp_2D.h" />
@@ -235,6 +241,12 @@
   <ItemGroup>
     <Xml Include="assets\Resources.xml" />
     <Xml Include="assets\scenes\Robot_Scene.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="assets\audio\rain.wav" />
+    <Media Include="assets\audio\reload_pistol.wav" />
+    <Media Include="assets\audio\shooting_pistol.wav" />
+    <Media Include="assets\audio\walking.wav" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

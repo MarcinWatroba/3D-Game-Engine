@@ -25,6 +25,12 @@ private:
 	bool b_SwitchCamMode;
 	bool shooting = false;
 	bool firstTime = true;
+	//Matt's Stuff
+	int walkRate = 35;
+	int walkCount = 0;
+	int triggerHoldCount = 0;	// used in firing
+	int ammoRemaining = 6;
+	int firerate = 100;
 
 	//Collision Manager
 	CollisionManager colManage;
@@ -45,6 +51,7 @@ private:
 	glm::vec3 pos[100];
 	glm::uvec2 depth[30];
 	float radius[30];
+
 public:
 	//Constructor
 	Game_Scene();

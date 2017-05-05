@@ -166,7 +166,6 @@
 		>
 	</new_Object3D>
 	
-	
 	<new_Object3D
 		name = "Robot"
 		container = "Yes"
@@ -564,7 +563,7 @@
 		texture_Tiling = "(8, 8)"
 		init_Mode = "0"
 		origin = "(0,0, 0)"
-		position = "(-26.351, 23.337, -9.334)"
+		position = "(-26.351, 23.337, 0.66)"
 		orientationX = "-43.924, (1, 0, 0)"
 		orientationY = "0.000, (0, 1, 0)"
 		orientationZ = "0, (0, 0, 1)"
@@ -845,6 +844,53 @@
 		scale = "(1, 1, 1)"
 		>
 	</new_Object3D>
-	
-	
 </prefabs>
+<sounds>
+	<new_sound
+	name = "rain"
+	ID = "0"
+	volume = "0.3"
+	object = ""
+	position = "(0,0,0)"
+	loop = "true"
+	threeD = "true"
+	stream = "false"
+	>
+	</new_sound>
+	
+	<new_sound
+	name = "walking"
+	ID = "1"
+	volume = "0.8"
+	object = "Robot"
+	position = "(0,0,0)"
+	loop = "true"
+	threeD = "true"
+	stream = "false"
+	>
+	</new_sound>
+	
+	<new_sound
+	name = "shooting_pistol"
+	ID = "2"
+	volume = "1"
+	object = "Robot Right Arm"
+	position = "(0,0,0)"
+	loop = "false"
+	threeD = "true"
+	stream = "false"
+	>
+	</new_sound>
+	
+	<new_sound
+	name = "reload_pistol"
+	ID = "3"
+	volume = "1"
+	object = "Robot Right Arm"
+	position = "(0,0,0)"
+	loop = "false"
+	threeD = "true"
+	stream = "false"
+	>
+	</new_sound>
+</sounds>

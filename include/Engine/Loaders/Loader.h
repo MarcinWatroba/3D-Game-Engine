@@ -8,6 +8,8 @@
 #include <Engine\Mesh\Mesh_Instanced.h>
 //#include <Model_IDs.h>
 //#include <Font.h>
+#include <Engine\Audio\AudioEngine.h>
+#include <Engine\Audio\Sound.h>
 
 ///3rd party///
 #include <TinyXML2\tinyxml2.h>
@@ -28,6 +30,9 @@ private:
 	std::map<std::string, Texture*> mipo_TextureFiles;
 	//Fonts
 	//std::map<int, Font> mipo_Fonts;
+	// Audio
+	std::map<std::string, Sound*> snd_Audio;
+
 
 	void ParseXML_Resources(const char* pc_FileName); // Parse the shaders
 public:
@@ -50,6 +55,9 @@ public:
 	Mesh_Instanced* get_MeshInstanced(std::string s_Name_In);
 
 	//Font& get_Font(int i_Font_ID);
+
+	// Get the Audio
+	Sound* get_Sound(std::string s_Name_In);
 
 	//Clean up the memory
 	void clean_Up();
