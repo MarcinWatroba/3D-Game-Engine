@@ -291,9 +291,6 @@ void Game_Scene::update_Scene(GLfloat f_Delta_In, glm::vec2 v2_MousePos_In)
 void Game_Scene::render()
 {
 
-
-
-
 	if (b_Init)
 	{
 		glEnable(GL_BLEND);
@@ -410,16 +407,16 @@ void Game_Scene::render()
 		}
 
 
-				glViewport(0, 0, 1600, 900);
-				glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		glViewport(0, 0, 1080, 720);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-				glUseProgram(po_Loader->get_Shader("0")->get_Program());
+		glUseProgram(po_Loader->get_Shader("0")->get_Program());
 
-				camera_3D->update_Shader(po_Loader->get_Shader("0"));
+		camera_3D->update_Shader(po_Loader->get_Shader("0"));
 
-				glUseProgram(po_Loader->get_Shader("4")->get_Program());
+		glUseProgram(po_Loader->get_Shader("4")->get_Program());
 
-				camera_3D->update_Shader(po_Loader->get_Shader("4"));
+		camera_3D->update_Shader(po_Loader->get_Shader("4"));
 
 
 
