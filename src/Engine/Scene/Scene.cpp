@@ -25,6 +25,11 @@ bool Scene::is_MouseLocked()
 	return b_LockMouse;
 }
 
+void Scene::set_WindowSize(glm::vec2 v2_WindowSize_In)
+{
+	v2_WindowSize = v2_WindowSize_In;
+}
+
 //Extract state
 void Scene::extract_State(State* po_State_In)
 {

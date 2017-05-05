@@ -6,7 +6,6 @@
 #include <Engine/Component/RenderComp_3D.h>
 #include <Engine\Component\Transform_3D.h>
 #include <Engine\Lighting\Light.h>
-
 #include <iostream>
 
 //Initialize everything once
@@ -16,16 +15,16 @@ void Game_Scene::init()
 	lock_mouse(true);
 	b_Init = false;
 
-	camera_3D = new Camera_3D(45.f, 800.f / 600, 0.1f, 1000.f);
+	camera_3D = new Camera_3D(45.f, v2_WindowSize.x / v2_WindowSize.y, 0.1f, 1000.f);
 	camera_3D->set_CameraPos(glm::vec3(0.f, -20.f, 0.f));
 
 	//Load the scene
-	o_SceneLoader = new SceneLoader("assets/scenes/Robot_Scene.xml", po_Loader, mspo_Objects);
+	//o_SceneLoader = new SceneLoader("assets/scenes/Robot_Scene.xml", po_Loader, mspo_Objects);
 	b_Init = true;
 }
 
 //Do something with keyboard input
-void Game_Scene::keyboard_Input(GLfloat f_Delta_In, GLboolean* pab_KeyArray_In, GLboolean* pab_LockedKeys_In)
+void Game_Scene::keyboard_Input(GLfloat f_Delta_In, GLboolean* pab_KeyArray_In, GLboolean* pab_LockedKeys_In, int i_KeyPress)
 {
 	float f_Speed = 20 * f_Delta_In;
 	float f_MagicNumber = 0.7071f;
@@ -85,7 +84,12 @@ void Game_Scene::keyboard_Input(GLfloat f_Delta_In, GLboolean* pab_KeyArray_In, 
 
 }
 
-void Game_Scene::mouse_Input(GLboolean* pab_MouseArray_In)
+void Game_Scene::mouse_Input(GLboolean* pab_MouseArray_In, GLboolean* pab_LockedMouse_In)
+{
+
+}
+
+void Game_Scene::scroll_Input(glm::vec2 v2_Scroll_In)
 {
 
 }
@@ -106,8 +110,8 @@ void Game_Scene::update_Scene(GLfloat f_Delta_In, glm::vec2 v2_MousePos_In)
 	{
 		for (auto const& pair : mspo_Objects) pair.second->update();
 		
-		camera_3D->move_Keyboard(f_Delta_In);
-		camera_3D->move_Mouse(f_Delta_In, v2_MousePos_In);
+		camera_3D->move_Keyboard(f_Delta_In);		
+		camera_3D->move_Mouse(f_Delta_In, v2_MousePos_In, v2_WindowSize);
 		camera_3D->update();
 		camera_3D->reset();
 	}
@@ -145,10 +149,7 @@ void Game_Scene::clean_Up()
 		//For each object
 		for (auto const& pair : mspo_Objects)
 		{
-			//Remove all components
-			for (auto const& components : pair.second->get_Components()) if (components.first != "Mesh_3D") delete components.second;
-
-			pair.second->get_Components().clear();
+			pair.second->clean_Up();
 			delete pair.second;
 		}
 

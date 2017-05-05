@@ -13,5 +13,7 @@ private:
 	unsigned int ui_VBO[Buffer::Num];
 public:
 	Mesh_3D() {};
-	Mesh_3D(const char* pc_FileName_In, int i_DrawMode_In);
+	Mesh_3D(const char* pc_FileName_In, int i_DrawMode_In, std::string s_ID_In);
+	std::string get_Type();
+	unsigned int get_SizeOfIndices();
 };

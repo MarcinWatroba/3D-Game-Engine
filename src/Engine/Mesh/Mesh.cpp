@@ -5,8 +5,8 @@ unsigned int Mesh::get_VAO()
 	return ui_VAO;
 }
 
-unsigned int Mesh::get_SizeOfIndices()
+std::string Mesh::get_ID()
 {
-	return vui_Indices.size();
+	return s_ID;
 }
 

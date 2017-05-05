@@ -4,11 +4,10 @@
 #include <glm\gtc\type_ptr.hpp>
 #include <map>
 
-class Model;
 class Loader;
+class PrefabLoader;
 class Game_Object;
 class GameObject_3D;
-class Light;
 class Shader;
 
 class SceneLoader
@@ -40,7 +39,8 @@ public:
 	SceneLoader() {};
 
 	//Main constructor
-	SceneLoader(const char* pc_FileName_In, Loader* po_Loader_In, std::map<std::string, Game_Object*>& mspo_GameObjects3D_In);
+	SceneLoader(const char* pc_FileName_In, Loader* po_Loader_In, PrefabLoader* po_PrefLoader_In, std::map<std::string, Game_Object*>& mspo_GameObjects_In);
+
 	//Set amount of lights to shader
 	void set_LightAmount(Shader* p_Shader_In);
 };

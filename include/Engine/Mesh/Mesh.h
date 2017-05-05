@@ -56,18 +56,16 @@ protected:
 	std::vector<Face> vui_Faces;
 	std::vector<CompleteVertex> vf_Data;
 	std::vector<unsigned int> vui_Indices;
-
-	std::vector<float> vf_Verticesf;
-	std::vector<float> vf_Normalsf;
-	std::vector<float> vf_UVsf;
-	std::vector<unsigned int> vui_Facesf;
 	std::map<VertexIndex, unsigned int> moui_Indices;
 
 	unsigned int ui_VAO;
 	unsigned int ui_EBO;
 
+	std::string s_ID;
+
 public:
 	Mesh() {};
 	unsigned int get_VAO();
-	unsigned int get_SizeOfIndices();
+	virtual unsigned int get_SizeOfIndices() = 0;
+	std::string get_ID();
 };

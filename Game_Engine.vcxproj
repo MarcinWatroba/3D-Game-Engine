@@ -73,6 +73,11 @@
     <LibraryPath>./lib;$(LibraryPath)</LibraryPath>
     <SourcePath>./src;$(SourcePath)</SourcePath>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <IncludePath>./include;$(IncludePath)</IncludePath>
+    <LibraryPath>./lib;$(LibraryPath)</LibraryPath>
+    <SourcePath>./src;$(SourcePath)</SourcePath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -101,6 +106,7 @@
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>opengl32.lib;GLAD.lib;glfw3.lib;SOIL.lib;tinyxml2.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -117,10 +123,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Editor\Editor\Editor.cpp" />
+    <ClCompile Include="src\Editor\Objects\Arrow_3D.cpp" />
+    <ClCompile Include="src\Editor\Scene\Scene_2D.cpp" />
+    <ClCompile Include="src\Editor\Scene\Scene_3D.cpp" />
     <ClCompile Include="src\Engine\App\Application.cpp" />
     <ClCompile Include="src\Engine\App\main.cpp" />
     <ClCompile Include="src\Engine\App\Program_Template.cpp" />
-    <ClCompile Include="src\Engine\Component\Component.cpp" />
     <ClCompile Include="src\Engine\Component\RenderComp.cpp" />
     <ClCompile Include="src\Engine\Component\RenderComp_2D.cpp" />
     <ClCompile Include="src\Engine\Component\RenderComp_3D.cpp" />
@@ -131,13 +140,24 @@
     <ClCompile Include="src\Engine\Creators\Texture.cpp" />
     <ClCompile Include="src\Engine\Game_Objects\Camera_2D.cpp" />
     <ClCompile Include="src\Engine\Game_Objects\Camera_3D.cpp" />
+    <ClCompile Include="src\Engine\Game_Objects\GameObject_2D.cpp" />
     <ClCompile Include="src\Engine\Game_Objects\GameObject_3D.cpp" />
     <ClCompile Include="src\Engine\Game_Objects\Game_Object.cpp" />
+    <ClCompile Include="src\Engine\GUI\Button.cpp" />
+    <ClCompile Include="src\Engine\GUI\Font.cpp" />
+    <ClCompile Include="src\Engine\GUI\Glyph.cpp" />
+    <ClCompile Include="src\Engine\GUI\Letter.cpp" />
+    <ClCompile Include="src\Engine\GUI\Text.cpp" />
+    <ClCompile Include="src\Engine\GUI\Textbox.cpp" />
+    <ClCompile Include="src\Engine\GUI\Tile.cpp" />
     <ClCompile Include="src\Engine\Lighting\Light.cpp" />
     <ClCompile Include="src\Engine\Lighting\Point_Light.cpp" />
     <ClCompile Include="src\Engine\Loaders\Loader.cpp" />
+    <ClCompile Include="src\Engine\Loaders\PrefabLoader.cpp" />
     <ClCompile Include="src\Engine\Loaders\SceneLoader.cpp" />
+    <ClCompile Include="src\Engine\Loaders\SceneSaver.cpp" />
     <ClCompile Include="src\Engine\Mesh\Mesh.cpp" />
+    <ClCompile Include="src\Engine\Mesh\Mesh_2D.cpp" />
     <ClCompile Include="src\Engine\Mesh\Mesh_3D.cpp" />
     <ClCompile Include="src\Engine\Scene\Scene.cpp" />
     <ClCompile Include="src\Engine\State\State.cpp" />
@@ -145,6 +165,10 @@
     <ClCompile Include="src\Game\Scene\Game_Scene.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\Editor\Editor\Editor.h" />
+    <ClInclude Include="include\Editor\Objects\Arrow_3D.h" />
+    <ClInclude Include="include\Editor\Scene\Scene_2D.h" />
+    <ClInclude Include="include\Editor\Scene\Scene_3D.h" />
     <ClInclude Include="include\Engine\App\Application.h" />
     <ClInclude Include="include\Engine\App\Program_Template.h" />
     <ClInclude Include="include\Engine\Component\Component.h" />
@@ -159,13 +183,24 @@
     <ClInclude Include="include\Engine\Game_Objects\Camera.h" />
     <ClInclude Include="include\Engine\Game_Objects\Camera_2D.h" />
     <ClInclude Include="include\Engine\Game_Objects\Camera_3D.h" />
+    <ClInclude Include="include\Engine\Game_Objects\GameObject_2D.h" />
     <ClInclude Include="include\Engine\Game_Objects\GameObject_3D.h" />
     <ClInclude Include="include\Engine\Game_Objects\Game_Object.h" />
+    <ClInclude Include="include\Engine\GUI\Button.h" />
+    <ClInclude Include="include\Engine\GUI\Font.h" />
+    <ClInclude Include="include\Engine\GUI\Glyph.h" />
+    <ClInclude Include="include\Engine\GUI\Letter.h" />
+    <ClInclude Include="include\Engine\GUI\Text.h" />
+    <ClInclude Include="include\Engine\GUI\Textbox.h" />
+    <ClInclude Include="include\Engine\GUI\Tile.h" />
     <ClInclude Include="include\Engine\Lighting\Light.h" />
     <ClInclude Include="include\Engine\Lighting\Point_Light.h" />
     <ClInclude Include="include\Engine\Loaders\Loader.h" />
+    <ClInclude Include="include\Engine\Loaders\PrefabLoader.h" />
     <ClInclude Include="include\Engine\Loaders\SceneLoader.h" />
+    <ClInclude Include="include\Engine\Loaders\SceneSaver.h" />
     <ClInclude Include="include\Engine\Mesh\Mesh.h" />
+    <ClInclude Include="include\Engine\Mesh\Mesh_2D.h" />
     <ClInclude Include="include\Engine\Mesh\Mesh_3D.h" />
     <ClInclude Include="include\Engine\Scene\Scene.h" />
     <ClInclude Include="include\Engine\State\State.h" />
@@ -173,16 +208,14 @@
     <ClInclude Include="include\Game\Scene\Game_Scene.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="assets\shaders\editor_Shader.frag" />
+    <None Include="assets\shaders\editor_Shader.vert" />
     <None Include="assets\shaders\font_Shader.frag" />
     <None Include="assets\shaders\font_Shader.vert" />
     <None Include="assets\shaders\light_Shader.frag" />
     <None Include="assets\shaders\light_Shader.vert" />
     <None Include="assets\shaders\passIn.frag" />
     <None Include="assets\shaders\passIn.vert" />
-  </ItemGroup>
-  <ItemGroup>
-    <Xml Include="assets\Resources.xml" />
-    <Xml Include="assets\scenes\Robot_Scene.xml" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
