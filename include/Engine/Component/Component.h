@@ -15,5 +15,5 @@ public:
 	Component(const Component &p_NewComp_In) {};
 	~Component() {};
 	//get Type
-	virtual std::string get_Type() = 0;
+	std::string get_Type();
 };

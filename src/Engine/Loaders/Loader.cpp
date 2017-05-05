@@ -15,10 +15,10 @@ Mesh* Loader::get_Mesh(std::string s_Name_In)
 	return mipo_Meshes.find(s_Name_In)->second;
 }
 
-Font* Loader::get_Font(std::string s_Name_In)
-{
-	return mipo_Fonts.find(s_Name_In)->second;
-}
+//Font* Loader::get_Font(std::string s_Name_In)
+//{
+//	return mipo_Fonts.find(s_Name_In)->second;
+//}
 
 Mesh_Instanced* Loader::get_MeshInstanced(std::string s_Name_In)
 {
@@ -119,64 +119,27 @@ void Loader::ParseXML_Resources(const char* pc_FileName)
 	//for (tinyxml2::XMLElement* i = po_Body->FirstChildElement("font_Files")->FirstChildElement("new_File"); i != nullptr; i = i->NextSiblingElement("new_File"))
 	//{
 	//	//Create variables
-	//	int i_ID = std::atoi(i->Attribute("ID"));
-	//	std::string s_FileName = font_FileLoc + i->Attribute("name");
+	//	std::string s_ID = i->Attribute("ID");
+	//	std::string s_Font = i->Attribute("font");
+	//	std::string s_Directory = font_FileLoc + s_Font;
+	//	std::string s_Texture = i->Attribute("texture");
 	//	
-	//	tinyxml2::XMLDocument fonts_File; // Create a file template
-	//	fonts_File.LoadFile(s_FileName.c_str()); // Load the file
-	//	tinyxml2::XMLElement* po_FontBody = fonts_File.FirstChildElement("font"); // Start from <models>
-	//	
-	//	float f_FontSizeX = std::atof(po_FontBody->FirstChildElement("common")->Attribute("scaleW"));
-	//	float f_FontSizeY = std::atof(po_FontBody->FirstChildElement("common")->Attribute("scaleH"));
-	//	int i_FontTextureID = std::atoi(po_FontBody->FirstChildElement("id")->Attribute("texture_ID"));
-	//	int i_FontShaderID = std::atoi(po_FontBody->FirstChildElement("id")->Attribute("shader_ID"));
-
-	//	//Add new font
-	//	mipo_Fonts.insert(std::make_pair(i_ID, Font(glm::vec2(f_FontSizeX, f_FontSizeY), i_FontTextureID, i_FontShaderID)));
-
-	//	for (tinyxml2::XMLElement* i = po_FontBody->FirstChildElement("chars")->FirstChildElement("char"); i != nullptr; i = i->NextSiblingElement("char"))
-	//	{
-	//		//Create variables
-	//		char c_ID = std::atoi(i->Attribute("id"));
-	//		float f_PosX = std::atof(i->Attribute("x"));
-	//		float f_PosY = std::atof(i->Attribute("y"));
-	//		float f_Width = std::atof(i->Attribute("width"));
-	//		float f_Height = std::atof(i->Attribute("height"));
-	//		float f_OffsetX = std::atof(i->Attribute("xoffset"));
-	//		float f_OffsetY = std::atof(i->Attribute("yoffset"));
-	//		float f_AdvanceX = std::atof(i->Attribute("xadvance"));
-
-	//		//Add new glyph
-	//		mipo_Fonts.find(i_ID)->second.add_Glyph(c_ID, Glyph(glm::vec2(f_PosX, f_PosY), glm::vec2(f_FontSizeX, f_FontSizeY), glm::vec2(f_Width, f_Height), glm::vec2(f_OffsetX, f_OffsetY), f_AdvanceX));
-	//	}
+	//	//Add font
+	//	mipo_Fonts.insert(std::make_pair(s_ID, new Font(s_Directory.c_str(), mipo_TextureFiles.find(s_Texture)->second)));
 	//}
-
-	
-	std::string font_FileLoc = po_Body->FirstChildElement("font_File_Location")->GetText();
-	for (tinyxml2::XMLElement* i = po_Body->FirstChildElement("font_Files")->FirstChildElement("new_File"); i != nullptr; i = i->NextSiblingElement("new_File"))
-	{
-		//Create variables
-		std::string s_ID = i->Attribute("ID");
-		std::string s_Font = i->Attribute("font");
-		std::string s_Directory = font_FileLoc + s_Font;
-		std::string s_Texture = i->Attribute("texture");
-		
-		//Add font
-		mipo_Fonts.insert(std::make_pair(s_ID, new Font(s_Directory.c_str(), mipo_TextureFiles.find(s_Texture)->second)));
-	}
-
-	for (tinyxml2::XMLElement* i = po_Body->FirstChildElement("meshes_2D")->FirstChildElement("new_File"); i != nullptr; i = i->NextSiblingElement("new_File"))
-	{
-		//Create variables
-		std::string s_ID = i->Attribute("ID");
-		glm::vec2 v2_Position = to2DVector(i->Attribute("position"));
-		glm::vec2 v2_Size = get_Texture(i->Attribute("texture"))->get_Size();
-		glm::vec2 v2_Dimension = to2DVector(i->Attribute("dimensions"));
-		glm::vec3 v3_Colour = to3DVector(i->Attribute("colour"));
-
-		//Add font
-		mipo_Meshes.insert(std::make_pair(s_ID, new Mesh_2D(v2_Position, v2_Size, v2_Dimension, v3_Colour)));
-	}
+	//
+	//for (tinyxml2::XMLElement* i = po_Body->FirstChildElement("meshes_2D")->FirstChildElement("new_File"); i != nullptr; i = i->NextSiblingElement("new_File"))
+	//{
+	//	//Create variables
+	//	std::string s_ID = i->Attribute("ID");
+	//	glm::vec2 v2_Position = to2DVector(i->Attribute("position"));
+	//	glm::vec2 v2_Size = get_Texture(i->Attribute("texture"))->get_Size();
+	//	glm::vec2 v2_Dimension = to2DVector(i->Attribute("dimensions"));
+	//	glm::vec3 v3_Colour = to3DVector(i->Attribute("colour"));
+	//
+	//	//Add font
+	//	mipo_Meshes.insert(std::make_pair(s_ID, new Mesh_2D(v2_Position, v2_Size, v2_Dimension, v3_Colour)));
+	//}
 
 	std::string audio_FileLoc = po_Body->FirstChildElement("audio_File_Location")->GetText();
 	for (tinyxml2::XMLElement* i = po_Body->FirstChildElement("audio_Files")->FirstChildElement("new_File"); i != nullptr; i = i->NextSiblingElement("new_File"))
@@ -278,5 +241,4 @@ glm::vec2 Loader::to2DVector(const char* pc_Vector2D_In)
 	}
 
 	return glm::vec2(v2_Vector.x, v2_Vector.y);
->>>>>>> origin/NewEditor
 }

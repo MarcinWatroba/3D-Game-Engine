@@ -22,10 +22,9 @@
 
 //SceneLoader::SceneLoader(const char* pc_FileName_In, Loader* po_Loader_In, std::map<std::string, Game_Object*>& mspo_GameObjects_In, std::map<std::string, Sound*>& snd_Audio_In)
 
+//PrefabLoader* po_PrefLoader_In
 
-
-SceneLoader::SceneLoader(const char* pc_FileName_In, Loader* po_Loader_In, PrefabLoader* po_PrefLoader_In, std::map<std::string, Game_Object*>& mspo_GameObjects_In)
-
+SceneLoader::SceneLoader(const char* pc_FileName_In, PrefabLoader* po_PrefLoader_In, Loader* po_Loader_In, std::map<std::string, Game_Object*>& mspo_GameObjects_In, std::map<std::string, Sound*>& snd_Audio_In)
 {
 	glClearColor(0.1f, 0.1f, 0.1f, 1.f);
 	glEnable(GL_DEPTH_TEST);
@@ -64,12 +63,14 @@ SceneLoader::SceneLoader(const char* pc_FileName_In, Loader* po_Loader_In, Prefa
 		glm::vec3 v3_Scale;
 		std::string s_Children;
 		std::string s_Tag;
+		std::string s_Container = it->Attribute("container");
 		std::string s_ObjectName = it->Attribute("name");
 		std::string s_Prefab = it->Attribute("prefab");
 		glm::vec3 v3_Position = to3DVector(it->Attribute("position"));
 		glm::vec3 v3_Scale = to3DVector(it->Attribute("scale"));
 		glm::vec3 v3_Origin = to3DVector(it->Attribute("origin"));
 		glm::quat v3_Orientation = toQuat(it->Attribute("orientation"));
+		
 
 		if (s_Container == "Yes") // This object has children
 		{
@@ -83,7 +84,7 @@ SceneLoader::SceneLoader(const char* pc_FileName_In, Loader* po_Loader_In, Prefa
 			v3_Scale = to3DVector(it->Attribute("scale"));
 			s_Children = it->Attribute("children");
 			s_Tag = it->Attribute("tag");
-				
+
 			//Typical process of adding new 3D object
 			mspo_GameObjects_In.insert(std::pair<std::string, Game_Object*>(s_ObjectName, new GameObject_3D()));
 			auto object = static_cast<GameObject_3D*>(mspo_GameObjects_In.find(s_ObjectName)->second);
@@ -129,7 +130,7 @@ SceneLoader::SceneLoader(const char* pc_FileName_In, Loader* po_Loader_In, Prefa
 			mspo_GameObjects_In.insert(std::pair<std::string, Game_Object*>(s_ObjectName, new GameObject_3D()));
 			auto object = static_cast<GameObject_3D*>(mspo_GameObjects_In.find(s_ObjectName)->second);
 			object->set_Name(s_ObjectName);
-			object->add_Component("Mesh_3D", po_Loader_In->get_Mesh3D(i_MeshID));
+			object->add_Component("Mesh_3D", po_Loader_In->get_Mesh(i_MeshID));
 			object->add_Component("Transform_3D", new Transform_3D());
 			object->add_Component("RenderComp_3D", new RenderComp_3D());
 			if (s_Components != "") add_Components(object, s_Components);
@@ -142,34 +143,35 @@ SceneLoader::SceneLoader(const char* pc_FileName_In, Loader* po_Loader_In, Prefa
 			object->set_Tiles(v2_Tiling);
 			object->set_Shininess(f_Shiny);
 			object->set_Tag(s_Tag);
-		//auto desired_Prefab = static_cast<GameObject_3D*>(po_PrefLoader_In->get_Prefab(s_Prefab));
-		//mspo_GameObjects_In.insert(std::pair<std::string, Game_Object*>(s_ObjectName, new GameObject_3D(*desired_Prefab)));
-		//auto desired_Object = static_cast<GameObject_3D*>(mspo_GameObjects_In.find(s_ObjectName)->second);
+			auto desired_Prefab = static_cast<GameObject_3D*>(po_PrefLoader_In->get_Prefab(s_Prefab));
+			mspo_GameObjects_In.insert(std::pair<std::string, Game_Object*>(s_ObjectName, new GameObject_3D(*desired_Prefab)));
+			auto desired_Object = static_cast<GameObject_3D*>(mspo_GameObjects_In.find(s_ObjectName)->second);
 
-		//if (!desired_Prefab->get_ChildrenNames().empty())
-		//{
-		//	for (int i = 0; i < desired_Prefab->get_ChildrenNames().size(); i++)
-		//	{
-		//		std::string s_ChildName = s_ObjectName + " Child " + std::to_string(i_Incrementor + i);
-		//
-		//		auto prefab_Child = static_cast<GameObject_3D*>(po_PrefLoader_In->get_Prefab(desired_Prefab->get_ChildrenNames()[i]));
-		//		mspo_GameObjects_In.insert(std::pair<std::string, GameObject_3D*>(s_ChildName, new GameObject_3D(*prefab_Child)));
-		//		auto found_Child = mspo_GameObjects_In.find(s_ChildName)->second;
-		//		found_Child->set_Name(s_ChildName);
-		//		found_Child->set_ObjectID(i_Incrementor);
-		//		found_Child->set_Tag("Object_NonSavable");
-		//		desired_Object->add_Child(found_Child);
-		//		desired_Object->add_ChildName(desired_Prefab->get_ChildrenNames()[i]);
-		//	}
+			if (!desired_Prefab->get_ChildrenNames().empty())
+			{
+				for (int i = 0; i < desired_Prefab->get_ChildrenNames().size(); i++)
+				{
+					std::string s_ChildName = s_ObjectName + " Child " + std::to_string(i_Incrementor + i);
+
+					auto prefab_Child = static_cast<GameObject_3D*>(po_PrefLoader_In->get_Prefab(desired_Prefab->get_ChildrenNames()[i]));
+					mspo_GameObjects_In.insert(std::pair<std::string, GameObject_3D*>(s_ChildName, new GameObject_3D(*prefab_Child)));
+					auto found_Child = mspo_GameObjects_In.find(s_ChildName)->second;
+					found_Child->set_Name(s_ChildName);
+					found_Child->set_ObjectID(i_Incrementor);
+					found_Child->set_Tag("Object_NonSavable");
+					desired_Object->add_Child(found_Child);
+					desired_Object->add_ChildName(desired_Prefab->get_ChildrenNames()[i]);
+				}
+			}
+
+			desired_Object->set_Name(s_ObjectName);
+			desired_Object->set_Position(v3_Position);
+			desired_Object->set_Scale(v3_Scale);
+			desired_Object->set_Rotation(v3_Orientation);
+			desired_Object->set_Origin(v3_Origin);
+			desired_Object->set_ObjectID(i_Incrementor);
+			i_Incrementor++;
 		}
-
-		desired_Object->set_Name(s_ObjectName);
-		desired_Object->set_Position(v3_Position);
-		desired_Object->set_Scale(v3_Scale);
-		desired_Object->set_Rotation(v3_Orientation);
-		desired_Object->set_Origin(v3_Origin);
-		desired_Object->set_ObjectID(i_Incrementor);
-		i_Incrementor++;
 	}
 	for (tinyxml2::XMLElement* it = body->FirstChildElement("new_ObjectParticle"); it != nullptr; it = it->NextSiblingElement("new_ObjectParticle"))
 	{
@@ -254,7 +256,7 @@ SceneLoader::SceneLoader(const char* pc_FileName_In, Loader* po_Loader_In, Prefa
 			i_NumOfPointLight++;
 			
 			auto point_Light = static_cast<Point_Light*>(mspo_GameObjects_In.find(s_Name)->second);
-			point_Light->add_Component("Mesh_3D", po_Loader_In->get_Mesh3D("7"));
+			point_Light->add_Component("Mesh_3D", po_Loader_In->get_Mesh("7"));
 			point_Light->add_Component("Transform_3D", new Transform_3D());
 			point_Light->add_Component("RenderComp_3D", new RenderComp_3D());
 			point_Light->set_Position(v3_Position);
@@ -274,7 +276,8 @@ SceneLoader::SceneLoader(const char* pc_FileName_In, Loader* po_Loader_In, Prefa
 	// Find Sounds
 	body = object_File.FirstChildElement("sounds");
 
-	for (tinyxml2::XMLElement* it = body->FirstChildElement("new_sound"); it != nullptr; it = it->NextSiblingElement("new_sound")) {
+	for (tinyxml2::XMLElement* it = body->FirstChildElement("new_sound"); it != nullptr; it = it->NextSiblingElement("new_sound"))
+	{
 		std::cout << "Adding sound to the scene" << "\n";
 
 		// Add Variables
@@ -317,7 +320,8 @@ SceneLoader::SceneLoader(const char* pc_FileName_In, Loader* po_Loader_In, Prefa
 		if (parent)
 		{
 			sound->setParent(parent);
-
+		}
+	}
 	i_NumOfPointLight = 0;
 	//for (tinyxml2::XMLElement* it = body->FirstChildElement("new_Light"); it != nullptr; it = it->NextSiblingElement("new_Light"))
 	//{
@@ -342,7 +346,7 @@ SceneLoader::SceneLoader(const char* pc_FileName_In, Loader* po_Loader_In, Prefa
 		//	i_Incrementor++;
 		//}
 		
-	}
+	//}
 
 	////Find lights
 	//body = object_File.FirstChildElement("lights");
@@ -541,47 +545,47 @@ glm::quat SceneLoader::toQuat(const char* pc_Quaternion_In)
 			case 1:
 				f_Angle = std::strtof(s_Result.c_str(), nullptr);
 				s_Result.clear();
-				//switch (i_DataCounter)
-				//{
-				//	case 1:
-				//		temp.w = std::strtof(s_Result.c_str(), nullptr);
-				//		s_Result.clear();
-				//	break;
-//
-				//	case 2:
-				//		temp.x = std::strtof(s_Result.c_str(), nullptr);
-				//		s_Result.clear();
-				//	break;
-//
-				//	case 3:
-				//		temp.y = std::strtof(s_Result.c_str(), nullptr);
-				//		s_Result.clear();
-				//	break;
-				//}
-				break;
-
-			case 2:
-				v3_Vector.x = std::strtof(s_Result.c_str(), nullptr);
-				s_Result.clear();
-				break;
-
-			case 3:
-				v3_Vector.y = std::strtof(s_Result.c_str(), nullptr);
-				s_Result.clear();
+				switch (i_DataCounter)
+				{
+				case 1:
+					temp.w = std::strtof(s_Result.c_str(), nullptr);
+					s_Result.clear();
+					break;
+					//
+				case 2:
+					temp.x = std::strtof(s_Result.c_str(), nullptr);
+					s_Result.clear();
+					break;
+					//
+				case 3:
+					temp.y = std::strtof(s_Result.c_str(), nullptr);
+					s_Result.clear();
+					break;
+				}
 				break;
 			}
-			break;
+			//case 2:
+			//	v3_Vector.x = std::strtof(s_Result.c_str(), nullptr);
+			//	s_Result.clear();
+			//	break;
+			//
+			//case 3:
+			//	v3_Vector.y = std::strtof(s_Result.c_str(), nullptr);
+			//	s_Result.clear();
+			//	break;
+			//}
+			//break;
 
 		case 40: // This bracket "("
 				 //Ignore
 			break;
 
-		case 41: // This bracket ")"
-			v3_Vector.z = std::strtof(s_Result.c_str(), nullptr);
-			//temp.z = std::strtof(s_Result.c_str(), nullptr);
-			break;
-
-			//Process
+		//case 41: // This bracket ")"
+		//	v3_Vector.z = std::strtof(s_Result.c_str(), nullptr);
+		//	//temp.z = std::strtof(s_Result.c_str(), nullptr);
+		//	break;
+		//
+		//	//Process
 		default:
 			s_Result = s_Result + pc_Quaternion_In[i];
 			break;

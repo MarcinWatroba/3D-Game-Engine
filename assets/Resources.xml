@@ -6,8 +6,7 @@
 <resources>
 	<object_File_Location>assets/models/</object_File_Location>
 	<object_Files>
-		<new_File  ID = "9" i_DrawMethod = "35048" name = "Bookcase.obj"> </new_File>
-	    <new_File  ID = "A" i_DrawMethod = "35048" name = "Arrow.obj"> </new_File>
+	    <new_File  ID = "9" i_DrawMethod = "35048" name = "Arrow.obj"> </new_File>	  
 		<new_File  ID = "7" i_DrawMethod = "35048" name = "Cube.obj"> </new_File>	
 		<new_File  ID = "4" i_DrawMethod = "35048" name = "floor.obj"> </new_File>
 		<new_File  ID = "5" i_DrawMethod = "35048" name = "table.obj"> </new_File>	
@@ -49,7 +48,10 @@
 		<new_File  ID = "27" name = "red_Arrow.jpg"	 texture_Mode = "3553" wrapping_S = "10497"  wrapping_T = "10497" filter_Min = "9729" filter_Mag = "9729" soil_Colour_Load = "4"  openGL_Colour = "6408" gen_Mipmaps = "0"></new_File>
 		<new_File  ID = "28" name = "green_Arrow.jpg" texture_Mode = "3553" wrapping_S = "10497"  wrapping_T = "10497" filter_Min = "9729" filter_Mag = "9729" soil_Colour_Load = "4"  openGL_Colour = "6408" gen_Mipmaps = "0"></new_File>
 		<new_File  ID = "29" name = "blue_Arrow.jpg"	 texture_Mode = "3553" wrapping_S = "10497"  wrapping_T = "10497" filter_Min = "9729" filter_Mag = "9729" soil_Colour_Load = "3"  openGL_Colour = "6407" gen_Mipmaps = "0"></new_File>
-		
+		<new_File  ID = "30" name = "Kitchen_Floor.png"	 texture_Mode = "3553" wrapping_S = "10497"  wrapping_T = "10497"filter_Min = "9729" filter_Mag = "9729"soil_Colour_Load = "4"  openGL_Colour = "6408" gen_Mipmaps = "1"></new_File>
+		<new_File  ID = "31" name = "Cupboard.jpg"	 texture_Mode = "3553" wrapping_S = "10497"  wrapping_T = "10497"filter_Min = "9729" filter_Mag = "9729"soil_Colour_Load = "4"  openGL_Colour = "6408" gen_Mipmaps = "1"></new_File>
+		<new_File  ID = "32" name = "Fridge.jpg"	 texture_Mode = "3553" wrapping_S = "10497"  wrapping_T = "10497"filter_Min = "9729" filter_Mag = "9729"soil_Colour_Load = "4"  openGL_Colour = "6408" gen_Mipmaps = "1"></new_File>
+		<new_File  ID = "33" name = "Kitchen_Tiles1.jpg"	 texture_Mode = "3553" wrapping_S = "10497"  wrapping_T = "10497"filter_Min = "9729" filter_Mag = "9729"soil_Colour_Load = "4"  openGL_Colour = "6408" gen_Mipmaps = "1"></new_File>
 	</texture_Files>
 	
 	<shader_File_Location>assets/shaders/</shader_File_Location>
@@ -63,18 +65,15 @@
 		<new_File ID = "6" vertex = "gui_Shader.vert" fragment = "gui_Shader.frag" geometry = ""> </new_File>
 		<new_File ID = "7" vertex = "arrow_Shader.vert" fragment = "arrow_Shader.frag" geometry = ""> </new_File>
  	</shader_Files>
- 	
 	<font_File_Location>assets/fonts/</font_File_Location>
 	<font_Files>
 		<new_File ID = "0" font = "font.fnt" texture = "1"> </new_File>
  	</font_Files>
-
 	<meshes_2D>
 		<new_File ID = "0" position = "(0, 0)" texture = "8" dimensions = "(333, 69)" colour = "(1, 1, 1)"></new_File>
 		<new_File ID = "1" position = "(0, 69)" texture = "8" dimensions = "(333, 69)" colour = "(1, 1, 1)"></new_File>
 		<new_File ID = "2" position = "(0, 138)" texture = "8" dimensions = "(332, 33)" colour = "(1, 1, 1)"></new_File>
  	</meshes_2D>
- 	
 	<audio_File_Location>assets/audio/</audio_File_Location>
 	<audio_Files>
 		<new_File ID = "0" name = "rain.wav"></new_File>
@@ -82,6 +81,4 @@
 		<new_File ID = "2" name = "shooting_pistol.wav"></new_File>
 		<new_File ID = "3" name = "reload_pistol.wav"></new_File>
  	</audio_Files>
-	
-	
 </resources>

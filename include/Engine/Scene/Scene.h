@@ -3,7 +3,7 @@
 #include <glad/glad.h>
 #include <glm\glm.hpp>
 #include <Engine\Loaders\Loader.h>
-#include <Engine\Loaders\PrefabLoader.h>
+//#include <Engine\Loaders\PrefabLoader.h>
 #include <Engine/Game_Objects/Game_Object.h>
 #include <Engine/State/State.h>
 #include <Engine\Game_Objects\Camera_3D.h>
@@ -17,7 +17,7 @@ class Scene
 protected:
 	//Main resource loader
 	Loader* po_Loader;
-	PrefabLoader* po_PrefabLoader;
+	//PrefabLoader* po_PrefabLoader;
 
 	//State manager
 	State* po_GameState;

@@ -76,6 +76,6 @@ public:
 	unsigned int get_SizeOfIndices();
 	unsigned int get_SizeOfVertices();
 	unsigned int get_InstanceBufferHandle();
-	virtual unsigned int get_SizeOfIndices() = 0;
+	//virtual unsigned int get_SizeOfIndices() = 0;
 	std::string get_ID();
 };

@@ -177,7 +177,6 @@
     <ClCompile Include="src\Game\Scene\Game_Scene.cpp">
       <Filter>Source Files\Game\Scene</Filter>
     </ClCompile>
-<<<<<<< HEAD
     <ClCompile Include="src\Engine\Component\Component.cpp">
       <Filter>Source Files\Engine\Component</Filter>
 	</ClCompile>

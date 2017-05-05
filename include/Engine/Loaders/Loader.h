@@ -11,10 +11,10 @@
 #include <Engine\Audio\AudioEngine.h>
 #include <Engine\Audio\Sound.h>
 
-#include <Engine\Mesh\Mesh_2D.h>
+//#include <Engine\Mesh\Mesh_2D.h>
 ///3rd party///
 #include <TinyXML2\tinyxml2.h>
-#include <Engine\GUI\Font.h>
+//#include <Engine\GUI\Font.h>
 
 class Loader
 {
@@ -31,7 +31,7 @@ private:
 	//std::map<int, Font> mipo_Fonts;
 	// Audio
 	std::map<std::string, Sound*> snd_Audio;
-	std::map<std::string, Font*> mipo_Fonts;
+	//std::map<std::string, Font*> mipo_Fonts;
 
 	void ParseXML_Resources(const char* pc_FileName); // Parse the shaders
 	glm::vec3 to3DVector(const char * pc_Vector3D_In);
@@ -54,7 +54,7 @@ public:
 	Mesh* get_Mesh(std::string s_Name_In);
 
 	//Get font
-	Font* get_Font(std::string s_Name_In);
+	//Font* get_Font(std::string s_Name_In);
 
 	Mesh_Instanced* get_MeshInstanced(std::string s_Name_In);
 

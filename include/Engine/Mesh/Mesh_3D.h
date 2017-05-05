@@ -12,8 +12,7 @@ private:
 	glm::vec3 maxVert;
 public:
 	Mesh_3D() {};
-<<<<<<< HEAD
-	Mesh_3D(const char* pc_FileName_In, int i_DrawMode_In);
+	//Mesh_3D(const char* pc_FileName_In, int i_DrawMode_In);
 	glm::vec3 getMinVert()
 	{
 		return minVert;
@@ -22,7 +21,7 @@ public:
 	{
 		return maxVert;
 	}
-	//Mesh_3D(const char* pc_FileName_In, int i_DrawMode_In, std::string s_ID_In);
+	Mesh_3D(const char* pc_FileName_In, int i_DrawMode_In, std::string s_ID_In);
 	std::string get_Type();
 	unsigned int get_SizeOfIndices();
 };

@@ -71,22 +71,22 @@ public:
 	void add_Child(Game_Object* po_Child_In);
 	void set_Parent(Game_Object* po_Parent_In);
 	Game_Object* get_Parent();
-	std::map<std::string, Component*> get_Components();
+	std::map<std::string, Component*>& get_Components();
 	Component* get_Component(std::string s_Name_In);
-	std::map<std::string, Game_Object*> get_Children();
+	std::map<std::string, Game_Object*>& get_Children();
 	void set_Tag(std::string s_Tag_In);
 	std::string get_Tag();
 	bool is_Container();
 
-	Game_Object();
-	std::map<std::string, Component*>& get_Components();
-	std::map<std::string, Game_Object*>& get_Children();
-	void set_Tag(std::string s_Tag_In);
-	std::string get_Tag();
+	//Game_Object();
+	//std::map<std::string, Component*>& get_Components();
+	//std::map<std::string, Game_Object*>& get_Children();
+	//void set_Tag(std::string s_Tag_In);
+	//std::string get_Tag();
 	std::string get_ObjectType();
 
 	void set_ObjectID(int i_ID_In);
 	int get_ObjectID();
 
-	virtual std::string get_Type() = 0;
+	//std::string get_Type();
 };
