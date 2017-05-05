@@ -709,6 +709,66 @@
 	</new_Object3D>
 	
 	<new_Object3D
+		name = "KitchenCupboards1"
+		container = "No"
+		tag = "Object"
+		mesh_ID = "7"
+		component = "(BoxCollider_3D, RigidBody)"
+		diffuse_ID = "28"
+		specular_ID = "7"
+		shininess = "1"
+		texture_Tiling = "(1, 1)"
+		init_Mode = "0"
+		origin = "(0,0, 0)"
+		position = "(-15, 48, 35)"
+		orientationX = "0.000, (1, 0, 0)"
+		orientationY = "180.000, (0, 1, 0)"
+		orientationZ = "0, (0, 0, 1)"
+		scale = "(30, 20, 20)"
+		>
+	</new_Object3D>
+	
+	<new_Object3D
+		name = "KitchenCupboards2"
+		container = "No"
+		tag = "Object"
+		mesh_ID = "7"
+		component = "(BoxCollider_3D, RigidBody)"
+		diffuse_ID = "28"
+		specular_ID = "7"
+		shininess = "1"
+		texture_Tiling = "(1, 1)"
+		init_Mode = "0"
+		origin = "(0,0, 0)"
+		position = "(15, 48, 35)"
+		orientationX = "0.000, (1, 0, 0)"
+		orientationY = "180.000, (0, 1, 0)"
+		orientationZ = "0, (0, 0, 1)"
+		scale = "(30, 20, 20)"
+		>
+	</new_Object3D>
+	
+	<new_Object3D
+		name = "KitchenCupboards3"
+		container = "No"
+		tag = "Object"
+		mesh_ID = "7"
+		component = "(BoxCollider_3D, RigidBody)"
+		diffuse_ID = "28"
+		specular_ID = "7"
+		shininess = "1"
+		texture_Tiling = "(1, 1)"
+		init_Mode = "0"
+		origin = "(0,0, 0)"
+		position = "(45, 48, 35)"
+		orientationX = "0.000, (1, 0, 0)"
+		orientationY = "-90.000, (0, 1, 0)"
+		orientationZ = "0, (0, 0, 1)"
+		scale = "(30, 20, 20)"
+		>
+	</new_Object3D>
+	
+	<new_Object3D
 		name = "Fridge"
 		container = "No"
 		tag = "Object"

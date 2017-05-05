@@ -13,7 +13,9 @@
 
 Game_Scene::Game_Scene()
 {
+	levelList.push_back("assets/scenes/Robot_Scene.xml");
 	levelList.push_back("assets/scenes/Kitchen.xml");
+
 
 }
 
@@ -35,7 +37,6 @@ void Game_Scene::init()
 	}
 	b_Init = true;
 	player = static_cast<GameObject_3D*>(mspo_Objects.find("Robot")->second);
-	//player->set_Rotation(-camera_3D->get_Yaw() / 2.0f);
 }
 
 //Do something with keyboard input
@@ -56,7 +57,7 @@ void Game_Scene::keyboard_Input(GLfloat f_Delta_In, GLboolean* pab_KeyArray_In, 
 	if (pab_KeyArray_In[GLFW_KEY_R] && !pab_LockedKeys_In[GLFW_KEY_R])
 	{
 		//reload_Scene();
-		load_Scene(0);
+		load_Scene(1);
 		pab_LockedKeys_In[GLFW_KEY_R] = true;
 
 	}

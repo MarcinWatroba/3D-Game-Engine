@@ -775,7 +775,7 @@
 		tag = "Object"
 		mesh_ID = "9"
 		component = ""
-		diffuse_ID = "0"
+		diffuse_ID = "6"
 		specular_ID = "7"
 		shininess = "1"
 		texture_Tiling = "(4, 4)"
@@ -785,7 +785,7 @@
 		orientationX = "0.000, (1, 0, 0)"
 		orientationY = "0.000, (0, 1, 0)"
 		orientationZ = "0, (0, 0, 1)"
-		scale = "(0.1, 0.1, 0.1)"
+		scale = "(0.01, 0.01, 0.01)"
 		>
 	</new_Object3D>
 	
@@ -798,7 +798,7 @@
 	tag = "Light"
 	light_ID = "0"
 	position = "(0, 38.940, 0)"
-	ambient = "(0.2, 0.2, 0.2)"
+	ambient = "(1.0,1.0, 1.0)"
 	diffuse = "(0.8, 0.8, 0.8)"
 	specular = "(0.5, 0.5, 0.5)"
 	constant = "1"
@@ -812,7 +812,7 @@
 	tag = "Light"
 	light_ID = "1"
 	position = "(-37.515, 25.583, -32.407)"
-	ambient = "(0.2, 0.2, 0.2)"
+	ambient = "(1.0,1.0, 1.0)"
 	diffuse = "(0.8, 0.8, 0.8)"
 	specular = "(1, 1, 1)"
 	constant = "1"
