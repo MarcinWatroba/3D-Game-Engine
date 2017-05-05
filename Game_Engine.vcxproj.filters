@@ -95,10 +95,13 @@
       <UniqueIdentifier>{0be042f8-4c28-420a-b734-6117d9a0097e}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Engine\Audio">
-      <UniqueIdentifier>{22118298-73e0-4225-a266-6c6d34bfcfe6}</UniqueIdentifier>
+      <UniqueIdentifier>{676eab07-10d0-460b-a645-ed8122fff19b}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Engine\Audio">
-      <UniqueIdentifier>{a6ed2402-d912-4744-a841-422768ad9a24}</UniqueIdentifier>
+      <UniqueIdentifier>{0b42c561-9ff0-4f45-8b06-f4b2903468b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Audio">
+      <UniqueIdentifier>{566af830-fedd-4af8-b9bb-bc81944d0c74}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -300,5 +303,19 @@
     <Xml Include="assets\scenes\Robot_Scene.xml">
       <Filter>Resource Files</Filter>
     </Xml>
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="assets\audio\shooting_pistol.wav">
+      <Filter>Resource Files\Audio</Filter>
+    </Media>
+    <Media Include="assets\audio\reload_pistol.wav">
+      <Filter>Resource Files\Audio</Filter>
+    </Media>
+    <Media Include="assets\audio\rain.wav">
+      <Filter>Resource Files\Audio</Filter>
+    </Media>
+    <Media Include="assets\audio\walking.wav">
+      <Filter>Resource Files\Audio</Filter>
+    </Media>
   </ItemGroup>
 </Project>

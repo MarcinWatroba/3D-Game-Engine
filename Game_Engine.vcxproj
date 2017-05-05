@@ -81,7 +81,7 @@
       <AdditionalIncludeDirectories>..\FMOD SoundSystem\FMOD Studio API Windows\api\studio\inc;..\FMOD SoundSystem\FMOD Studio API Windows\api\lowlevel\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>opengl32.lib;GLAD.lib;glfw3.lib;SOIL.lib;fmodL_vc.lib;fmodstudioL_vc.lib;tinyxml2.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;GLAD.lib;glfw3.lib;SOIL.lib;tinyxml2.lib;fmodL_vc.lib;fmodstudioL_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\FMOD SoundSystem\FMOD Studio API Windows\api\studio\lib;..\FMOD SoundSystem\FMOD Studio API Windows\api\lowlevel\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
@@ -190,6 +190,12 @@
   <ItemGroup>
     <Xml Include="assets\Resources.xml" />
     <Xml Include="assets\scenes\Robot_Scene.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="assets\audio\rain.wav" />
+    <Media Include="assets\audio\reload_pistol.wav" />
+    <Media Include="assets\audio\shooting_pistol.wav" />
+    <Media Include="assets\audio\walking.wav" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
