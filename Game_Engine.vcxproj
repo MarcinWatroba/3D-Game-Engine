@@ -69,12 +69,12 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>./include;$(IncludePath)</IncludePath>
+    <IncludePath>./include;./include/FMOD/lowlevel;./include/FMOD/Studio;$(IncludePath)</IncludePath>
     <LibraryPath>./lib;$(LibraryPath)</LibraryPath>
     <SourcePath>./src;$(SourcePath)</SourcePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>./include;$(IncludePath)</IncludePath>
+    <IncludePath>./include;./include/FMOD/lowlevel;./include/FMOD/Studio;$(IncludePath)</IncludePath>
     <LibraryPath>./lib;$(LibraryPath)</LibraryPath>
     <SourcePath>./src;$(SourcePath)</SourcePath>
   </PropertyGroup>
@@ -83,7 +83,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>..\FMOD SoundSystem\FMOD Studio API Windows\api\studio\inc;..\FMOD SoundSystem\FMOD Studio API Windows\api\lowlevel\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalDependencies>opengl32.lib;GLAD.lib;glfw3.lib;SOIL.lib;tinyxml2.lib;fmodL_vc.lib;fmodstudioL_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>

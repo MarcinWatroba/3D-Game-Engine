@@ -167,16 +167,11 @@
 	</new_Object3D>
 	
 	<new_Object3D
-		name = "Robot"
+		name = "Robot_Prefab"
 		container = "Yes"
 		tag = "Object"
 		component = "(Respond_Movement, RigidBody, Character)"
 		origin = "(0, 0.0, 0)"
-		position = "(25, 0, 0)"
-		orientationX = "0, (1, 0, 0)"
-		orientationY = "0, (0, 1, 0)"
-		orientationZ = "0, (0, 0, 1)"
-		scale = "(-1, 1, -1)"
 		children = "(Robot Body,
 					 Robot Left Leg, 
 					 Robot Right Leg, 
@@ -185,6 +180,7 @@
 					 Robot Head,
 					 Robot Left Eye,
 					 Robot Right Eye)"
+		character = "Player"
 		>
 	</new_Object3D>
 	
@@ -349,16 +345,11 @@
 	</new_Object3D>
 	
 	<new_Object3D
-		name = "AIControlled Robot"
+		name = "AIControlledRobot_Prefab"
 		container = "Yes"
 		tag = "Enemy"
 		component = "(Respond_Movement, Character_Controller, Patrol_Path, RigidBody, Character)"
 		origin = "(0, 0.0, 0)"
-		position = "(0, 2, 0)"
-		orientationX = "0, (1, 0, 0)"
-		orientationY = "-45, (0, 1, 0)"
-		orientationZ = "0, (0, 0, 1)"
-		scale = "(1.751, 2.156, 1.000)"
 		children = "(AI Body,
 					 AI Left Leg, 
 					 AI Right Leg, 
@@ -372,7 +363,7 @@
 	</new_Object3D>
 	
 	<new_Object3D
-		name = "AmmoPack"
+		name = "AmmoPack_Prefab"
 		container = "No"
 		tag = "Ammo"
 		mesh_ID = "7"
@@ -383,11 +374,6 @@
 		texture_Tiling = "(1, 1)"
 		init_Mode = "0"
 		origin = "(0, 0.0, 0)"
-		position = "(20, 1, 20)"
-		orientationX = "0, (1, 0, 0)"
-		orientationY = "0, (0, 1, 0)"
-		orientationZ = "0, (0, 0, 1)"
-		scale = "(1.751, 2.156, 1.000)"
 		>
 	</new_Object3D>
 	
@@ -512,66 +498,6 @@
 	</new_Object3D>
 	
 	<new_Object3D
-		name = "LivingRoom"
-		container = "Yes"
-		tag = "Room"
-		component = ""
-		origin = "(0, 0.0, 0)"
-		position = "(0, 2, 0)"
-		orientationX = "0, (1, 0, 0)"
-		orientationY = "-45, (0, 1, 0)"
-		orientationZ = "0, (0, 0, 1)"
-		scale = "(1.751, 2.156, 1.000)"
-		children = "(Floor,
-					 Back Wall,
-					 Front Wall,
-					 Left Wall,
-					 Right Wall,
-					 Door)"
-		>
-	</new_Object3D>
-	
-	<new_Object3D
-		name = "Table"
-		container = "No"
-		tag = "Object"
-		mesh_ID = "5"
-		component = ""
-		diffuse_ID = "6"
-		specular_ID = "7"
-		shininess = "1"
-		texture_Tiling = "(8, 8)"
-		init_Mode = "0"
-		origin = "(0,0, 0)"
-		position = "(15.232, 0, 24.198)"
-		orientationX = "0, (1, 0, 0)"
-		orientationY = "0, (0, 1, 0)"
-		orientationZ = "0, (0, 0, 1)"
-		scale = "(1, 1, 1)"
-		>
-	</new_Object3D>
-	
-	<new_Object3D
-		name = "Stairs"
-		container = "No"
-		tag = "Object"
-		mesh_ID = "7"
-		component = ""
-		diffuse_ID = "10"
-		specular_ID = "7"
-		shininess = "1"
-		texture_Tiling = "(8, 8)"
-		init_Mode = "0"
-		origin = "(0,0, 0)"
-		position = "(-26.351, 23.337, 0.66)"
-		orientationX = "-43.924, (1, 0, 0)"
-		orientationY = "0.000, (0, 1, 0)"
-		orientationZ = "0, (0, 0, 1)"
-		scale = "(34.953, 85.177, 1)"
-		>
-	</new_Object3D>
-	
-	<new_Object3D
 		name = "Wooden Wall"
 		container = "No"
 		tag = "Object"
@@ -588,6 +514,37 @@
 		orientationY = "0.000, (0, 1, 0)"
 		orientationZ = "0, (0, 0, 1)"
 		scale = "(104.515, 85.177, 1)"
+		>
+	</new_Object3D>
+	
+	<new_Object3D
+		name = "Bedroom_Prefab"
+		container = "Yes"
+		tag = "Room"
+		component = ""
+		origin = "(0, 0.0, 0)"
+		children = "(Floor,
+					 Back Wall,
+					 Front Wall,
+					 Left Wall,
+					 Right Wall,
+					 Wooden Wall,
+					 Door)"
+		>
+	</new_Object3D>
+	
+	<new_Object3D
+		name = "Table_Prefab"
+		container = "No"
+		tag = "Object"
+		mesh_ID = "5"
+		component = ""
+		diffuse_ID = "6"
+		specular_ID = "7"
+		shininess = "1"
+		texture_Tiling = "(8, 8)"
+		init_Mode = "0"
+		origin = "(0,0, 0)"
 		>
 	</new_Object3D>
 	
@@ -632,42 +589,18 @@
 	</new_Object3D>
 	
 	<new_Object3D
-		name = "Lamp"
+		name = "Lamp_Prefab"
 		container = "Yes"
 		tag = "Lamp"
 		component = ""
 		origin = "(0, 0.0, 0)"
-		position = "(0, 2, 0)"
-		orientationX = "0, (1, 0, 0)"
-		orientationY = "-45, (0, 1, 0)"
-		orientationZ = "0, (0, 0, 1)"
-		scale = "(1.751, 2.156, 1.000)"
 		children = "(Lamp's Metal,
 					 Lamp Head)"
 		>
 	</new_Object3D>
 	
 	<new_Object3D
-		name = "Carpet"
-		container = "No"
-		tag = "Object"
-		mesh_ID = "7"
-		component = ""
-		diffuse_ID = "18"
-		specular_ID = "7"
-		shininess = "1"
-		texture_Tiling = "(8, 8)"
-		init_Mode = "0"
-		origin = "(0,0, 0)"
-		position = "(16.499, 0.069, 18.405)"
-		orientationX = "0, (1, 0, 0)"
-		orientationY = "0.000, (0, 1, 0)"
-		orientationZ = "0, (0, 0, 1)"
-		scale = "(52.508, 0.242, 40.321)">
-	</new_Object3D>
-	
-	<new_Object3D
-		name = "Painting 1"
+		name = "Painting_Prefab"
 		container = "No"
 		tag = "Object"
 		mesh_ID = "7"
@@ -678,51 +611,6 @@
 		texture_Tiling = "(12, 12)"
 		init_Mode = "0"
 		origin = "(0,0, 0)"
-		position = "(11.276, 28.263, 39.460)"
-		orientationX = "0.000, (1, 0, 0)"
-		orientationY = "0.000, (0, 1, 0)"
-		orientationZ = "0, (0, 0, 1)"
-		scale = "(9.276, 9.276, 1.186)"
-		>
-	</new_Object3D>
-	
-	<new_Object3D
-		name = "Painting 2"
-		container = "No"
-		tag = "Object"
-		mesh_ID = "7"
-		component = ""
-		diffuse_ID = "20"
-		specular_ID = "7"
-		shininess = "1"
-		texture_Tiling = "(12, 12)"
-		init_Mode = "0"
-		origin = "(0,0, 0)"
-		position = "(-0.520, 41.606, 39.460)"
-		orientationX = "0.000, (1, 0, 0)"
-		orientationY = "0.000, (0, 1, 0)"
-		orientationZ = "0, (0, 0, 1)"
-		scale = "(9.276, 9.276, 1.186)"
-		>
-	</new_Object3D>
-	
-	<new_Object3D
-		name = "Painting 3"
-		container = "No"
-		tag = "Object"
-		mesh_ID = "7"
-		component = ""
-		diffuse_ID = "21"
-		specular_ID = "7"
-		shininess = "1"
-		texture_Tiling = "(12, 12)"
-		init_Mode = "0"
-		origin = "(0,0, 0)"
-		position = "(-12, 28.263, 39.460)"
-		orientationX = "0.000, (1, 0, 0)"
-		orientationY = "0.000, (0, 1, 0)"
-		orientationZ = "0, (0, 0, 1)"
-		scale = "(9.276, 9.276, 1.186)"
 		>
 	</new_Object3D>
 	
@@ -807,16 +695,11 @@
 	</new_Object3D>
 	
 	<new_Object3D
-		name = "Plant"
+		name = "Plant_Prefab"
 		container = "Yes"
 		tag = "Plant"
 		component = ""
 		origin = "(0, 0.0, 0)"
-		position = "(0, 2, 0)"
-		orientationX = "0, (1, 0, 0)"
-		orientationY = "-45, (0, 1, 0)"
-		orientationZ = "0, (0, 0, 1)"
-		scale = "(1.751, 2.156, 1.000)"
 		children = "(Pot,
 					 Plant_01,
 					 Plant_02,
@@ -826,7 +709,7 @@
 	
 	
 	<new_Object3D
-		name = "PickUp"
+		name = "PickUp_Prefab"
 		container = "No"
 		tag = "Collectable"
 		mesh_ID = "7"
@@ -837,11 +720,6 @@
 		texture_Tiling = "(4, 4)"
 		init_Mode = "0"
 		origin = "(0,0, 0)"
-		position = "(15.469, 2.510, 23.446)"
-		orientationX = "0.000, (1, 0, 0)"
-		orientationY = "0.000, (0, 1, 0)"
-		orientationZ = "0, (0, 0, 1)"
-		scale = "(1, 1, 1)"
 		>
 	</new_Object3D>
 </prefabs>

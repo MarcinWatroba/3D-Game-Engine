@@ -65,9 +65,9 @@ public:
 	SceneLoader() {};
 
 	//Main constructor
-	SceneLoader(const char* pc_FileName_In, Loader* po_Loader_In, std::map<std::string, Game_Object*>& mspo_GameObjects3D_In);
+	//SceneLoader(const char* pc_FileName_In, Loader* po_Loader_In, std::map<std::string, Game_Object*>& mspo_GameObjects3D_In);
 
-	//SceneLoader(const char* pc_FileName_In, Loader* po_Loader_In, std::map<std::string, Game_Object*>& mspo_GameObjects3D_In, std::map<std::string, Sound*>& snd_Audio_In);
+	SceneLoader(const char* pc_FileName_In, Loader* po_Loader_In, std::map<std::string, Game_Object*>& mspo_GameObjects3D_In, std::map<std::string, Sound*>& snd_Audio_In);
 	//Set amount of lights to shader
 	glm::vec3 get_LightPosition(int i);
 	float get_LightRadius(int i);

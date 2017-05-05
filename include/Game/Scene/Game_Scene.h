@@ -31,6 +31,7 @@ private:
 	int triggerHoldCount = 0;	// used in firing
 	int ammoRemaining = 6;
 	int firerate = 100;
+	int currentLevel;
 
 	//Collision Manager
 	CollisionManager colManage;

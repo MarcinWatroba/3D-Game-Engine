@@ -5,6 +5,7 @@
 #include <vector>
 
 class Bullet;
+class Sound;
 
 class GameObject_3D : public Game_Object
 {
@@ -54,7 +55,7 @@ public:
 	void jump(glm::vec3 v3_Direction_In);
 	void turn(float f_Angle_In, glm::vec3 v3_TurnAxis_In);
 	void setFiring(bool input);
-	void createBullet(Bullet* bulletTemplate);
+	void createBullet(Bullet* bulletTemplate, Sound*temp_Audio);
 	void shootBullet();
 	void resetCount();
 

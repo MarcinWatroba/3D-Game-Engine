@@ -5,7 +5,7 @@
 void Loader::start()
 {
 	std::cout << "Parsing XML resource file..." << "\n";
-	ParseXML_Resources("assets/Resources - Copy.xml");
+	ParseXML_Resources("assets/Resources.xml");
 	std::cout << "Pasrsing completed..." << "\n";
 }
 

@@ -7,6 +7,7 @@
 #include <Engine\Component\Character.h>
 #include <Engine\Creators\Texture.h>
 #include <Engine/Mesh/Mesh_3D.h>
+#include <Engine\Audio\Sound.h>
 #include <Game\Misc\Bullet.h>
 #include <glad\glad.h>
 #include <iostream>
@@ -270,7 +271,7 @@ void GameObject_3D::setFiring(bool input)
 	firing = input;
 }
 
-void GameObject_3D::createBullet(Bullet* bulletTemplate)
+void GameObject_3D::createBullet(Bullet* bulletTemplate, Sound* temp_Audio)
 { 
 	if (count == fireRate)
 	{
@@ -284,6 +285,7 @@ void GameObject_3D::createBullet(Bullet* bulletTemplate)
 			bulletNumber++;
 			count = 0;
 			float e = static_cast<Character*>(mipo_Components.at("Character"))->getNumberOfBullets();
+			temp_Audio->Play();
 			std::cout << e << std::endl;
 		}
 		

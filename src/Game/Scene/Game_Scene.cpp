@@ -19,8 +19,6 @@ Game_Scene::Game_Scene()
 {
 	levelList.push_back("assets/scenes/Robot_Scene.xml");
 	levelList.push_back("assets/scenes/Kitchen.xml");
-
-
 }
 
 //Initialize everything once
@@ -38,10 +36,11 @@ void Game_Scene::init()
 	// Play background audio - hard code
 	//snd_Audio->find("rain")->second->Play(glm::vec3(0,0,0), 0.5);
 	if (firstTime)
-	{
-		o_SceneLoader = new SceneLoader(levelList[0].c_str(), po_Loader, mspo_Objects);
-		//o_SceneLoader = new SceneLoader("assets/scenes/Living_Room_scene.xml", po_Loader, mspo_Objects, *snd_Audio);
-
+	{	
+		currentLevel = 0;
+		//o_SceneLoader = new SceneLoader(levelList[0].c_str(), po_Loader, mspo_Objects);
+		o_SceneLoader = new SceneLoader(levelList[currentLevel].c_str(), po_Loader, mspo_Objects, *snd_Audio);
+		
 		firstTime = false;
 	}
 
@@ -168,7 +167,6 @@ void Game_Scene::keyboard_Input(GLfloat f_Delta_In, GLboolean* pab_KeyArray_In, 
 		if (walkCount > walkRate)
 		{
 			snd_Audio->find("walking")->second->Play();
-			//snd_Audio->find("walking")->second->Play(glm::vec3(0,0,0), 0.8);
 			walkCount = 0;
 		}
 		walkCount++;
@@ -179,7 +177,6 @@ void Game_Scene::keyboard_Input(GLfloat f_Delta_In, GLboolean* pab_KeyArray_In, 
 		if (walkCount > walkRate)
 		{
 			snd_Audio->find("walking")->second->Play();
-			//snd_Audio->find("walking")->second->Play(glm::vec3(0,0,0), 0.8);
 			walkCount = 0;
 		}
 		walkCount++;
@@ -198,7 +195,6 @@ void Game_Scene::keyboard_Input(GLfloat f_Delta_In, GLboolean* pab_KeyArray_In, 
 		if (walkCount > walkRate)
 		{
 			snd_Audio->find("walking")->second->Play();
-			//snd_Audio->find("walking")->second->Play(glm::vec3(0,0,0), 0.8);
 			walkCount = 0;
 		}
 		walkCount++;
@@ -209,11 +205,10 @@ void Game_Scene::keyboard_Input(GLfloat f_Delta_In, GLboolean* pab_KeyArray_In, 
 		if (walkCount > walkRate)
 		{
 			snd_Audio->find("walking")->second->Play();
-			//snd_Audio->find("walking")->second->Play(glm::vec3(0,0,0), 0.8);
 			walkCount = 0;
 		}
 		walkCount++;
-	}//player->turn(-80.f * f_Delta_In, glm::vec3(0.f, 1.f, 0.f));
+	}
 
 }
 
@@ -221,34 +216,25 @@ void Game_Scene::mouse_Input(GLboolean* pab_MouseArray_In, GLfloat f_Delta_In)
 {
 	if (!b_Init) { return; }
 
-	//player shootsching
 	if (findPlayer() == false) { return; }
 
 	if (pab_MouseArray_In[GLFW_MOUSE_BUTTON_1])
 	{
-		player->createBullet(new Bullet("Bullet", po_Loader->get_Mesh3D("7"), static_cast<GameObject_3D*>(mspo_Objects.find("Robot")->second), po_Loader->get_Texture("24"), po_Loader->get_Texture("7")));
+		player->createBullet(new Bullet("Bullet", po_Loader->get_Mesh3D("7"), static_cast<GameObject_3D*>(mspo_Objects.find("Robot")->second), po_Loader->get_Texture("24"), po_Loader->get_Texture("7")),snd_Audio->find("shooting_pistol")->second);
 		player->setFiring(true);
 		shooting = true;
-		if (triggerHoldCount > firerate && ammoRemaining > 0)
-		{
-			snd_Audio->find("shooting_pistol")->second->Play();
-			//snd_Audio->find("shooting_pistol")->second->Play(glm::vec3(0,0,0), 1.0);
-			triggerHoldCount = 0;
-			ammoRemaining--;
-		}
-		triggerHoldCount++;
 	}
 	if (!pab_MouseArray_In[GLFW_MOUSE_BUTTON_1])
 	{
 		shooting = false;
 	}
 
-	if (pab_MouseArray_In[GLFW_MOUSE_BUTTON_RIGHT] && ammoRemaining == 0)
-	{
-		snd_Audio->find("reload_pistol")->second->Play();
-		//snd_Audio->find("reload_pistol")->second->Play(glm::vec3(0,0,0), 1.0);
-		ammoRemaining = 6;
-	}
+	//if (pab_MouseArray_In[GLFW_MOUSE_BUTTON_RIGHT] && ammoRemaining == 0)
+	//{
+	//	snd_Audio->find("reload_pistol")->second->Play();
+	//	//snd_Audio->find("reload_pistol")->second->Play(glm::vec3(0,0,0), 1.0);
+	//	ammoRemaining = 6;
+	//}
 }
 
 void Game_Scene::reload_Scene()
@@ -270,6 +256,15 @@ void Game_Scene::update_Scene(GLfloat f_Delta_In, glm::vec2 v2_MousePos_In)
 	}
 	if (i_numEnemies == 0) {
 		//level win!
+		if (currentLevel < levelList.size()-1)
+		{
+			currentLevel++;
+			load_Scene(currentLevel);
+		}
+		else
+		{
+			//game win
+		}
 		std::cout << "Winner Winner Chicken Dinner!" << std::endl;
 	}
 
@@ -501,7 +496,7 @@ void Game_Scene::load_Scene(int i)
 	
 	//Load the scene
 	std::string sLevel = levelList.at(i);
-    o_SceneLoader = new SceneLoader(sLevel.c_str(), po_Loader, mspo_Objects);
+    o_SceneLoader = new SceneLoader(sLevel.c_str(), po_Loader, mspo_Objects, *snd_Audio);
 
 }
 
