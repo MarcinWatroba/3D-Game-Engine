@@ -10,7 +10,7 @@ private:
 	//Attenutation constant
 
 
-	int i_ID; // ID of the point light
+	unsigned int i_ID; // ID of the point light
 
 public:
 	//Constructor
@@ -21,23 +21,9 @@ public:
 
 	void set_Radius(float f_Radius_In);
 	float get_Radius();
-	Point_Light(const Point_Light &point_Light);
 
 	//Set attenutation constant
-	void set_Constant(float f_Constant_In);
-
-	//Set attenutation constant
-
-	void set_ID(int i_ID_In);
 
 	//Update light
 	void update_Shader(Shader* p_Shader_In);
-
-	std::string get_Type();
-
-	int get_ID();
-
-	float get_Constant();
-	float get_Linear();
-	float get_Quadratic();
 };

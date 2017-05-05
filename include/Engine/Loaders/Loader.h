@@ -11,10 +11,12 @@
 #include <Engine\Audio\AudioEngine.h>
 #include <Engine\Audio\Sound.h>
 
-//#include <Engine\Mesh\Mesh_2D.h>
 ///3rd party///
 #include <TinyXML2\tinyxml2.h>
-//#include <Engine\GUI\Font.h>
+
+//Include all components here
+/// Cube ///
+//#include <RenderComp_3D.h>
 
 class Loader
 {
@@ -22,7 +24,6 @@ private:
 	//Models
 	std::map<std::string, Mesh_3D*> mipo_Meshes3D;
 	std::map<std::string, Mesh_Instanced*> mipo_MeshesInstanced;
-	std::map<std::string, Mesh*> mipo_Meshes;
 	//Shader
 	std::map<std::string, Shader*> mipo_Shaders;
 	//Texture files
@@ -31,11 +32,9 @@ private:
 	//std::map<int, Font> mipo_Fonts;
 	// Audio
 	std::map<std::string, Sound*> snd_Audio;
-	//std::map<std::string, Font*> mipo_Fonts;
+
 
 	void ParseXML_Resources(const char* pc_FileName); // Parse the shaders
-	glm::vec3 to3DVector(const char * pc_Vector3D_In);
-	glm::vec2 to2DVector(const char * pc_Vector2D_In);
 public:
 	//Constructor
 	Loader() {};
@@ -51,10 +50,7 @@ public:
 
 	//Get the model
 	//Model* get_Model(int i_Model_ID);
-	Mesh* get_Mesh(std::string s_Name_In);
-
-	//Get font
-	//Font* get_Font(std::string s_Name_In);
+	Mesh_3D* get_Mesh3D(std::string s_Name_In);
 
 	Mesh_Instanced* get_MeshInstanced(std::string s_Name_In);
 

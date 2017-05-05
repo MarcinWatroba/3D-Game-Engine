@@ -32,8 +32,6 @@ void Game::process_Input(GLfloat deltaTime)
 	{
 		o_State.back()->keyboard_Input(deltaTime, ab_Keys, ab_LockedKeys);
 		o_State.back()->mouse_Input(ab_MousePress, deltaTime);
-		//o_State.back()->keyboard_Input(deltaTime, ab_Keys, ab_LockedKeys, i_KeyPress);
-		//o_State.back()->mouse_Input(ab_MousePress, ab_LockedMouse);
 	}
 }
 
@@ -46,15 +44,12 @@ void Game::update(GLfloat deltaTime, glm::vec2 mouse_Pos_In)
 	}
 	else // else process it
 	{
-<<<<<<< HEAD
 		if (o_State.back()->is_LoaderEmpty()) {
 			o_State.back()->pass_Loader(po_Loader);
 			o_State.back()->pass_Audio(&snd_Audio);
 		}
-		if (o_State.back()->is_LoaderEmpty()) o_State.back()->pass_Loader(po_Loader);
-		o_State.back()->set_WindowSize(v2_WindowSize);
-		o_State.back()->update_Scene(deltaTime, mouse_Pos_In);
 		mouse_Lock(o_State.back()->is_MouseLocked());
+		o_State.back()->update_Scene(deltaTime, mouse_Pos_In);
 	}
 }
 
@@ -68,17 +63,11 @@ void Game::draw()
 void Game::process_Key(int key, GLboolean state)
 {
 	ab_Keys[key] = state;
-	i_KeyPress = key;
 }
 
 void Game::process_Mouse(int button, GLboolean state)
 {
 	ab_MousePress[button] = state;
-}
-
-void Game::process_Scroll(glm::vec2 v2_Scroll_In)
-{
-
 }
 
 void Game::clean_Up()

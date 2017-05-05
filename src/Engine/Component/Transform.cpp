@@ -3,12 +3,10 @@
 Transform::Transform()
 {
 	b_Update = false;
-}
-
-Transform::Transform(const Transform & p_NewComp_In)
-{
-	mat4_Model = p_NewComp_In.mat4_Model;
-	b_Update = p_NewComp_In.b_Update;
+	v3_Position = glm::vec3(0.f, 0.f, 0.f);
+	quat_Orientation = glm::quat(1.f, 0.f, 0.f, 0.f);
+	v3_Origin = glm::vec3(0.f, 0.f, 0.f);
+	v3_Scale = glm::vec3(1.f, 1.f, 1.f);
 }
 
 glm::mat4* Transform::get_ModelMatrix()

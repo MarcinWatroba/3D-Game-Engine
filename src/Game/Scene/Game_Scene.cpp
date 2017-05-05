@@ -30,9 +30,7 @@ void Game_Scene::init()
 
 	b_Init = false;
 
-	//camera_3D = new Camera_3D(45.f, 1080.f / 720.0f, 0.1f, 1000.f);
-	camera_3D = new Camera_3D(45.f, v2_WindowSize.x / v2_WindowSize.y, 0.1f, 1000.f);
-
+	camera_3D = new Camera_3D(45.f, 1080.f / 720.0f, 0.1f, 1000.f);
 	camera_3D->set_CameraPos(glm::vec3(0.f, -20.f, 0.f));
 	
 	// Play background audio - hard code
@@ -50,7 +48,6 @@ void Game_Scene::init()
 	snd_Audio->find("rain")->second->Play();
 
 	b_Init = true;
-
 
 	//get player pointer
 	findPlayer();
@@ -138,9 +135,6 @@ bool Game_Scene::findPlayer()
 }
 
 //Do something with keyboard input
-//void Game_Scene::keyboard_Input(GLfloat f_Delta_In, GLboolean* pab_KeyArray_In, GLboolean* pab_LockedKeys_In, int i_KeyPress)
-
-//Do something with keyboard input
 void Game_Scene::keyboard_Input(GLfloat f_Delta_In, GLboolean* pab_KeyArray_In, GLboolean* pab_LockedKeys_In)
 {
 	if (!b_Init) { return; }
@@ -218,9 +212,7 @@ void Game_Scene::keyboard_Input(GLfloat f_Delta_In, GLboolean* pab_KeyArray_In, 
 
 }
 
-
 void Game_Scene::mouse_Input(GLboolean* pab_MouseArray_In, GLfloat f_Delta_In)
-//void Game_Scene::mouse_Input(GLboolean* pab_MouseArray_In, GLboolean* pab_LockedMouse_In)
 {
 	if (!b_Init) { return; }
 
@@ -243,10 +235,6 @@ void Game_Scene::mouse_Input(GLboolean* pab_MouseArray_In, GLfloat f_Delta_In)
 	//	//snd_Audio->find("reload_pistol")->second->Play(glm::vec3(0,0,0), 1.0);
 	//	ammoRemaining = 6;
 	//}
-}
-
-void Game_Scene::scroll_Input(glm::vec2 v2_Scroll_In)
-{
 }
 
 void Game_Scene::reload_Scene()
@@ -298,6 +286,7 @@ void Game_Scene::update_Scene(GLfloat f_Delta_In, glm::vec2 v2_MousePos_In)
 		
 			//update game components
 			Component * po_Component;
+		
 			//Update AI character controller
 			po_Component = po_GameObject->get_Component("Character_Controller");
 			if (po_Component != nullptr) {
@@ -350,11 +339,6 @@ void Game_Scene::update_Scene(GLfloat f_Delta_In, glm::vec2 v2_MousePos_In)
 			}
 			else { ++itr; }
 		}
-		//camera_3D->move_Keyboard(f_Delta_In);		
-		//camera_3D->move_Mouse(f_Delta_In, v2_MousePos_In, v2_WindowSize);
-		//camera_3D->update();
-		//camera_3D->reset();
-		
 	}
 }
 

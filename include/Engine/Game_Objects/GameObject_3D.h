@@ -23,7 +23,6 @@ protected:
 public:
 	//Constructor
 	GameObject_3D();
-	GameObject_3D(const GameObject_3D &p_NewObject_In);
 
 	void update();
 	void force_Update();
@@ -59,5 +58,6 @@ public:
 	void createBullet(Bullet* bulletTemplate, Sound*temp_Audio);
 	void shootBullet();
 	void resetCount();
-	std::string get_Type();
+
+	
 };

@@ -4,9 +4,8 @@
 #include <fstream>
 #include <iostream>
 
-Mesh_3D::Mesh_3D(const char* pc_FileName_In, int i_DrawMode_In, std::string s_ID_In)
+Mesh_3D::Mesh_3D(const char* pc_FileName_In, int i_DrawMode_In)
 {
-	s_ID = s_ID_In;
 	std::ifstream file;
 	std::istringstream stream;
 	std::string line;
@@ -152,31 +151,21 @@ Mesh_3D::Mesh_3D(const char* pc_FileName_In, int i_DrawMode_In, std::string s_ID
 	glBindBuffer(GL_ARRAY_BUFFER, ui_VBO[Buffer::Vertex]);
 	glBufferData(GL_ARRAY_BUFFER, vf_Data.size() * sizeof(CompleteVertex), vf_Data.data(), i_DrawMode_In);
 
-	//Vertex attributes
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(CompleteVertex), (GLvoid*)0);
-
-	//UV attributes
-	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(CompleteVertex), (GLvoid*)(sizeof(Vertex)));
-
-	//Normal attributes
-	glEnableVertexAttribArray(2);
-	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(CompleteVertex), (GLvoid*)(sizeof(Vertex) + sizeof(UV)));
-
 	//Bind object buffer
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ui_EBO);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, vui_Indices.size() * sizeof(GLuint), vui_Indices.data(), i_DrawMode_In);
 
+	//Vertex attributes
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(CompleteVertex), (GLvoid*)0);
+	glEnableVertexAttribArray(0);
+
+	//UV attributes
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(CompleteVertex), (GLvoid*)(sizeof(Vertex)));
+	glEnableVertexAttribArray(1);
+
+	//Normal attributes
+	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(CompleteVertex), (GLvoid*)(sizeof(Vertex) + sizeof(UV)));
+	glEnableVertexAttribArray(2);
+
 	glBindVertexArray(0);
-}
-
-std::string Mesh_3D::get_Type()
-{
-	return "Mesh_3D";
-}
-
-unsigned int Mesh_3D::get_SizeOfIndices()
-{
-	return vui_Indices.size();
 }

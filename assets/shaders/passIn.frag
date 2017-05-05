@@ -40,18 +40,16 @@ struct Point_Light
 	bool casts_Shadow;
 };
 
-#define numOfPointLights 20
 
 uniform Directional_Light directional_Light;
-uniform Point_Light point_Light[numOfPointLights];
+uniform Point_Light point_Light[20];
 uniform vec3 viewPos;
 uniform Material material;
 uniform int numOfLights;
 uniform float farPlane;
 
-vec3 point_Lights[numOfPointLights];
+vec3 point_Lights[20];
 float shadows[20];
-
 
 vec3 create_DirectionalLight(Directional_Light light, vec3 normal, vec3 viewDir);
 vec3 create_PointLight(Point_Light light, vec3 normal, vec3 VertPos, vec3 viewDir);

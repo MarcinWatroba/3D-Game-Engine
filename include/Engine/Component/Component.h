@@ -12,8 +12,7 @@ class Component
 public:
 	//Constructor
 	Component() {};
-	Component(const Component &p_NewComp_In) {};
-	~Component() {};
+
 	//get Type
-	std::string get_Type();
+	virtual std::string get_Type();
 };

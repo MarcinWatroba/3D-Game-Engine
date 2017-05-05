@@ -23,30 +23,6 @@ GameObject_3D::GameObject_3D()
 	count = fireRate;
 }
 
-GameObject_3D::GameObject_3D(const GameObject_3D & p_NewObject_In) : Game_Object(p_NewObject_In)
-{
-	for (auto const& pair : p_NewObject_In.mipo_Components)
-	{
-		if (pair.second->get_Type() == "Mesh_3D")
-		{
-			auto mesh_3D = static_cast<Mesh_3D*>(pair.second);
-			add_Component("Mesh_3D", mesh_3D);
-		}
-		else if (pair.second->get_Type() == "Transform_3D")
-		{
-			auto transform_3D = static_cast<Transform_3D*>(pair.second);
-			add_Component("Transform_3D", new Transform_3D(*transform_3D));
-		}
-		else if (pair.second->get_Type() == "RenderComp_3D")
-		{
-			auto renderComp_3D = static_cast<RenderComp_3D*>(pair.second);
-			add_Component("RenderComp_3D", new RenderComp_3D(*renderComp_3D));
-		}
-	}
-
-	s_PrefabName = p_NewObject_In.s_PrefabName;
-}
-
 void GameObject_3D::add_Component(std::string s_Name_In, Component* p_Component_In)
 {
 	mipo_Components.insert(std::pair<std::string, Component*>(s_Name_In, p_Component_In));
@@ -131,7 +107,6 @@ void GameObject_3D::update()
 		}
 		
 	}
-<<<<<<< HEAD
 		
 
 }
@@ -140,10 +115,6 @@ void GameObject_3D::renderDepth(Shader* p_Shader_In)
 {
 	static_cast<Transform_3D*>(mipo_Components.find("Transform_3D")->second)->update_Shader(p_Shader_In);
 	if (b_RenderStatus) static_cast<RenderComp_3D*>(mipo_Components.find("RenderComp_3D")->second)->renderDepth(GL_TEXTURE_2D, GL_TRIANGLES, p_Shader_In);
-	else
-	{
-		static_cast<Transform_3D*>(mipo_Components.find("Transform_3D")->second)->update();
-	}
 }
 
 void GameObject_3D::render(Shader* p_Shader_In)
@@ -227,6 +198,7 @@ void GameObject_3D::set_Tiles(glm::vec2 v2_Tiles_In)
 {
 	static_cast<RenderComp_3D*>(mipo_Components.find("RenderComp_3D")->second)->set_Tiles(v2_Tiles_In);
 }
+
 void GameObject_3D::move(glm::vec3 v3_Direction_In, float f_Speed_In)
 {
 	if (mipo_Components.count("Respond_Movement"))
@@ -324,10 +296,7 @@ void GameObject_3D::createBullet(Bullet* bulletTemplate, Sound* temp_Audio)
 	}
 
 }
-std::string GameObject_3D::get_Type()
-{
-	return "GameObject_3D";
-}
+
 void GameObject_3D::shootBullet()
 {
 	for (unsigned int i = 0; i < bulletList.size(); i++)

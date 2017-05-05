@@ -3,15 +3,7 @@
 
 class Transform_3D : public Transform
 {
-private:
-	glm::vec3 v3_Position; // Position
-	glm::vec3 v3_Scale; // Scale
-	glm::quat quat_Orientation; // Orientation
-	glm::vec3 v3_Origin;  // Origin
 public:
-	Transform_3D() {};
-	Transform_3D(const Transform_3D &p_NewComp_In);
-	~Transform_3D() {};
 	//------------------Transformations-------------------------
 	void set_Position(glm::vec3 v3_Position_In); //Set position
 	void set_Origin(glm::vec3 v3_Origin_In); //Set origin
@@ -44,6 +36,4 @@ public:
 	void update_Shader(Shader* p_Shader_In);
 
 	glm::mat4 get_ModelMatrix();
-
-	std::string get_Type();
 };

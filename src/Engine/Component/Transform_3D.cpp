@@ -53,10 +53,6 @@ glm::vec3 Transform_3D::get_Up()
 {
 	return glm::normalize(glm::vec3(mat4_Model[1][0], mat4_Model[1][1], mat4_Model[1][2]));
 }
-std::string Transform_3D::get_Type()
-{
-	return "Transform_3D";
-}
 
 void Transform_3D::update_Shader(Shader* p_Shader_In)
 {
@@ -64,14 +60,6 @@ void Transform_3D::update_Shader(Shader* p_Shader_In)
 	int modelLoc = glGetUniformLocation(p_Shader_In->get_Program(), "model");
 	//Pass them to shaders
 	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(mat4_Model));
-}
-
-Transform_3D::Transform_3D(const Transform_3D & p_NewComp_In)
-{
-	v3_Position = p_NewComp_In.v3_Position;
-	v3_Scale = p_NewComp_In.v3_Scale;
-	quat_Orientation = p_NewComp_In.quat_Orientation;
-	v3_Origin = p_NewComp_In.v3_Origin;
 }
 
 void Transform_3D::set_Position(glm::vec3 v3_Position_In)

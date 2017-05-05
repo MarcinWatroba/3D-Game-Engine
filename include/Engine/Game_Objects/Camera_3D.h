@@ -3,10 +3,9 @@
 
 class Camera_3D : public Camera
 {
-protected:
+private:
 	glm::mat4 mat4_View;
 	glm::mat4 mat4_Shadow_View;
-	glm::vec2 v2_LastClickPos;
 	//Deltas for camera movement
 	float f_DeltaX;
 	float f_DeltaY;
@@ -24,8 +23,6 @@ protected:
 
 	glm::quat quat_Pitch;
 	glm::quat quat_Yaw;
-	float f_YawOther;
-	float f_PitchOther;
 
 	//Vectors
 	glm::vec3 vec3_EyePos; // Camera position
@@ -35,8 +32,6 @@ protected:
 	glm::mat4 mat4_Roll;
 	glm::mat4 mat4_Pitch;
 	glm::mat4 mat4_Yaw;
-
-
 
 	//Matrices
 public:
@@ -62,7 +57,7 @@ public:
 	float get_CameraSide();
 
 	//Move camera using mouse
-	void move_Mouse(float f_Delta_In, glm::vec2 v2_MousePos_In, glm::vec2 v2_WindowSize_In);
+	void move_Mouse(float f_Delta_In, glm::vec2 v2_MousePos_In);
 
 	//--------Keyboard movement-------------------
 	void move_Forward();
@@ -72,10 +67,6 @@ public:
 	void fly_Up();
 	void fly_Down();
 	void reset();
-	void move_MouseEditor(float f_Delta_In, glm::vec2 v2_MousePos_In, glm::vec2 v2_WindowSize_In);
-	glm::vec2 get_PitchYaw(float f_Delta_In, glm::vec2 v2_MousePos_In, glm::vec2 v2_WindowSize_In);
 
 	void set_Speed(float f_Speed_In);
-
-	int get_CameraSide();
 };
