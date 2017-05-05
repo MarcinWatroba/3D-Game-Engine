@@ -15,6 +15,9 @@
 		<new_File  ID = "6" i_DrawMethod = "35048" name = "Cube_BottomGone.obj"> </new_File>
 		<new_File  ID = "3" i_DrawMethod = "35048" name = "Cube_BottomGoneNotInversed.obj"> </new_File>
 	</object_Files>
+	<particle_Files>
+		<new_File  ID = "8" i_DrawMethod = "35040" name = "plane.obj"> </new_File>	
+	</particle_Files>
 	
 	<texture_File_Location>assets/textures/</texture_File_Location>
 	<texture_Files>
@@ -415,5 +418,7 @@
 		<new_File ID = "0" vertex = "passIn.vert" fragment = "passIn.frag" geometry = ""> </new_File>
 		<new_File ID = "1" vertex = "font_Shader.vert" fragment = "font_Shader.frag" geometry = ""> </new_File>
 		<new_File ID = "2" vertex = "light_Shader.vert" fragment = "light_Shader.frag" geometry = ""> </new_File>
+		<new_File ID = "3" vertex = "depth_Shader.vert" fragment = "depth_Shader.frag" geometry = "depth_Shader.geom"> </new_File>
+		<new_File ID = "4" vertex = "particle_Shader.vert" fragment = "particle_Shader.frag" geometry = ""> </new_File>
  	</shader_Files>
 </resources>

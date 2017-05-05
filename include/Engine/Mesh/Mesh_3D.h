@@ -2,10 +2,7 @@
 
 #include <Engine/Mesh/Mesh.h>
 
-namespace Buffer
-{
-	enum Buffer{ Vertex, Normal, UV, Num};
-}
+
 
 class Mesh_3D : public Mesh
 {

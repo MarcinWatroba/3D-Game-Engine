@@ -2,34 +2,49 @@
 
 #include <Engine\Game_Objects\Game_Object.h>
 #include <glm\glm.hpp>
-#include <vector>
 
-class Bullet;
+struct Particle {
+	glm::vec3 position, speed;
+	glm::vec3 lastPos;
+	unsigned char r, g, b; // Color
+	float size, angle, weight;
+	float life; // Remaining life of the particle. if < 0 : dead and unused.
+	float cameraDistance;
 
-class GameObject_3D : public Game_Object
+};
+
+class GameObject_Instanced : public Game_Object
 {
-protected:
+private:
+	int VAO;
+	int i_Buffer;
+	int index_Size;
+	unsigned int maxParticles;
+	float particlePositions[3000];
+	Particle ParticlesContainer[1000];
+	int ParticlesCount, iParticle, LastUsedParticle;
+	float random, random2, random3;
+	//std::vector<float> positions;
 	glm::mat4 get_ParentMatrix();
-	//Last Direction for Movement
-	bool lastDir = false;
-	bool firing = false;
-	bool bulletActive = false;
-	
-	std::vector<GameObject_3D*> bulletList;
-	float count = 0;
-	float fireRate = 10;
-	float bulletNumber = 0;
 public:
 	//Constructor
-	GameObject_3D();
+	GameObject_Instanced();
 
 	void update();
+	void update_Particles(float t, float y, float z, glm::vec3 delta);
+	int FindUnusedParticle();
 	void force_Update();
 	void add_Component(std::string s_Name_In, Component* p_Component_In);
 	void add_Texture(std::string s_Name_In, Texture* p_Texture_In);
 	void renderDepth(Shader * p_Shader_In);
 	void render(Shader* p_Shader_In);
 	void clean_Up();
+
+	void set_VAO(unsigned int ui_VAO_In);
+
+	void set_InstanceBuffer(unsigned int ui_IB_In);
+
+	void set_IndexSize(unsigned int ui_Size_In);
 
 	//-----Set Transformations---------------------------
 	void set_Position(glm::vec3 v3_Position_In);
@@ -44,19 +59,5 @@ public:
 	virtual glm::quat get_Rotation();
 	virtual glm::vec3 get_Scale();
 
-	std::vector<GameObject_3D*> get_BulletList();
-
-	//Only appropiate for 3D objects
-	void set_Shininess(float f_Shiny_In);
 	void set_Tiles(glm::vec2 v2_Tiles_In);
-
-	void move(glm::vec3 v3_Direction_In, float f_Speed_In);
-	void jump(glm::vec3 v3_Direction_In);
-	void turn(float f_Angle_In, glm::vec3 v3_TurnAxis_In);
-	void setFiring(bool input);
-	void createBullet(Bullet* bulletTemplate);
-	void shootBullet();
-	void resetCount();
-
-	
 };

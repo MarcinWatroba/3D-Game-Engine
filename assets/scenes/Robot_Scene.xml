@@ -17,7 +17,7 @@
 		shininess = "320"
 		texture_Tiling = "(0.5, 0.5)"
 		init_Mode = "0"
-		origin = "(0, -0.5, 0)"
+		origin = "(-25.515, -0.5, -20.407)"
 		position = "(0.512, 0.485, -0.00)"
 		orientationX = "0, (1, 0, 0)"
 		orientationY = "0, (0, 1, 0)"
@@ -37,7 +37,7 @@
 		shininess = "320"
 		texture_Tiling = "(0.5, 0.5)"
 		init_Mode = "0"
-		origin = "(0, -0.5, 0)"
+		origin = "(-25.515, -0.5, -20.407)"
 		position = "(-0.512, 0.485, -0.00)"
 		orientationX = "0, (1, 0, 0)"
 		orientationY = "0, (0, 1, 0)"
@@ -57,7 +57,7 @@
 		shininess = "320"
 		texture_Tiling = "(0.5, 0.5)"
 		init_Mode = "0"
-		origin = "(0, -0.5, 0)"
+		origin = "(-25.515, -0.5, -20.407)"
 		position = "(1.054, 2.026, 0)"
 		orientationX = "90, (1, 0, 0)"
 		orientationY = "0, (0, 1, 0)"
@@ -77,7 +77,7 @@
 		shininess = "320"
 		texture_Tiling = "(0.5, 0.5)"
 		init_Mode = "0"
-		origin = "(0,-0.5, 0)"
+		origin = "(-25.515, -0.5, -20.407)"
 		position = "(-1.054, 2.026, 0.0)"
 		orientationX = "0, (1, 0, 0)"
 		orientationY = "0, (0, 1, 0)"
@@ -97,7 +97,7 @@
 		shininess = "1"
 		texture_Tiling = "(1, 1)"
 		init_Mode = "0"
-		origin = "(0, 0.0, 0)"
+		origin = "(-25.515, 0.0, -20.407)"
 		position = "(0, 2.052, 0)"
 		orientationX = "0, (1, 0, 0)"
 		orientationY = "0, (0, 1, 0)"
@@ -117,7 +117,7 @@
 		shininess = "1"
 		texture_Tiling = "(1, 1)"
 		init_Mode = "0"
-		origin = "(0, 0.0, 0)"
+		origin = "(-25.515, 0.0, -20.407)"
 		position = "(0, 3.521, -0.487)"
 		orientationX = "0, (1, 0, 0)"
 		orientationY = "0, (0, 1, 0)"
@@ -137,7 +137,7 @@
 		shininess = "1"
 		texture_Tiling = "(4, 4)"
 		init_Mode = "0"
-		origin = "(0, 0.0, 0)"
+		origin = "(-25.515, 0.0, -20.407)"
 		position = "(-0.499, 3.647, -0.833)"
 		orientationX = "0, (1, 0, 0)"
 		orientationY = "0, (0, 1, 0)"
@@ -157,7 +157,7 @@
 		shininess = "1"
 		texture_Tiling = "(4, 4)"
 		init_Mode = "0"
-		origin = "(0, 0.0, 0)"
+		origin = "(-25.515, 0.0, -20.407)"
 		position = "(0.499, 3.647, -0.833)"
 		orientationX = "0, (1, 0, 0)"
 		orientationY = "0, (0, 1, 0)"
@@ -431,7 +431,7 @@
 	<new_Object3D
 		name = "Lamp's Metal"
 		container = "No"
-		tag = "Object"
+		tag = "Object_Lamp"
 		mesh_ID = "7"
 		component = ""
 		diffuse_ID = "12"
@@ -451,7 +451,7 @@
 	<new_Object3D
 		name = "Lamp"
 		container = "No"
-		tag = "Object"
+		tag = "Object_Lamp"
 		mesh_ID = "6"
 		component = ""
 		diffuse_ID = "13"
@@ -510,7 +510,7 @@
 	<new_Object3D
 		name = "Lamp's Metal 2"
 		container = "No"
-		tag = "Object"
+		tag = "Object_Lamp"
 		mesh_ID = "7"
 		component = ""
 		diffuse_ID = "12"
@@ -527,10 +527,10 @@
 		>
 	</new_Object3D>
 	
-	<new_Object3D
+ 	<new_Object3D
 		name = "Lamp 2"
 		container = "No"
-		tag = "Object"
+		tag = "Object_Light"
 		mesh_ID = "6"
 		component = ""
 		diffuse_ID = "13"
@@ -789,7 +789,40 @@
 		>
 	</new_Object3D>
 	
-	
+	<new_ObjectParticle
+		name = "Rain"
+		tag = "Particle"
+		mesh_ID = "8"
+		component = ""
+		diffuse_ID = "26"
+		texture_Tiling = "(1, 1)"	
+		init_Mode = "0"
+		origin = "(0,0, 0)"
+		position = "(5.0, 15.707, -20.0)"
+		orientationX = "0.000, (1, 0, 0)"
+		orientationY = "0.000, (0, 1, 0)"
+		orientationZ = "0, (0, 0, 1)"
+		scale = "(0.1, 0.1, 0.1)"
+		max_Particles = "1000"
+		>
+	</new_ObjectParticle>
+	<new_ObjectParticle
+		name = "Rain_02"
+		tag = "Particle"
+		mesh_ID = "8"
+		component = ""
+		diffuse_ID = "26"
+		texture_Tiling = "(1, 1)"	
+		init_Mode = "0"
+		origin = "(0,0, 0)"
+		position = "(5.0, 15.707, 15.0)"
+		orientationX = "0.000, (1, 0, 0)"
+		orientationY = "0.000, (0, 1, 0)"
+		orientationZ = "0, (0, 0, 1)"
+		scale = "(0.1, 0.1, 0.1)"
+		max_Particles = "1000"
+		>
+	</new_ObjectParticle>
 </objects>
 
 <lights>
@@ -797,27 +830,44 @@
 	type = "Point_Light"
 	tag = "Light"
 	light_ID = "0"
-	position = "(0, 38.940, 0)"
-	ambient = "(1.0,1.0, 1.0)"
+	position = "(0, 40.940, 0)"
+	ambient = "(0.05, 0.05, 0.05)"
 	diffuse = "(0.8, 0.8, 0.8)"
-	specular = "(0.5, 0.5, 0.5)"
-	constant = "1"
-	linear = "0.0022"
-	quadratic = "0.0019"
+	specular = "(1, 1, 1)"
+	radius = "16.0"
 	>
 	</new_Light>
-	
 	<new_Light
 	type = "Point_Light"
 	tag = "Light"
 	light_ID = "1"
-	position = "(-37.515, 25.583, -32.407)"
-	ambient = "(1.0,1.0, 1.0)"
+	position = "(-37.515, 28.583, -32.407)"
+	ambient = "(0.05, 0.05, 0.05)"
 	diffuse = "(0.8, 0.8, 0.8)"
 	specular = "(1, 1, 1)"
-	constant = "1"
-	linear = "0.14"
-	quadratic = "0.07"
+	radius = "8.0"
+	>
+	</new_Light>
+	<new_Light
+	type = "Point_Light"
+	tag = "Light"
+	light_ID = "2"
+	position = "(37.515, 1.583, 32.407)"
+	ambient = "(0.05, 0.05, 0.05)"
+	diffuse = "(0.8, 0.8, 0.8)"
+	specular = "(1, 1, 1)"
+	radius = "4.0"
+	>
+	</new_Light>
+  <new_Light
+	type = "Point_Light"
+	tag = "Light"
+	light_ID = "3"
+	position = "(-33.515, 5.583, -32.407)"
+	ambient = "(0.05, 0.05, 0.05)"
+	diffuse = "(0.8, 0.8, 0.8)"
+	specular = "(1, 1, 1)"
+	radius = "4.0"
 	>
 	</new_Light>
 </lights>

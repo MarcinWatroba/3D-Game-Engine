@@ -5,7 +5,7 @@ class Camera_3D : public Camera
 {
 private:
 	glm::mat4 mat4_View;
-
+	glm::mat4 mat4_Shadow_View;
 	//Deltas for camera movement
 	float f_DeltaX;
 	float f_DeltaY;
@@ -13,7 +13,7 @@ private:
 
 	float f_Speed; // Camera speed
 
-	//Position
+				   //Position
 	float f_Yaw;
 	float f_Pitch;
 
@@ -28,7 +28,7 @@ private:
 	glm::vec3 vec3_EyePos; // Camera position
 	glm::quat quat_Orientation; // Camera orientation
 
-	//Matrices
+								//Matrices
 	glm::mat4 mat4_Roll;
 	glm::mat4 mat4_Pitch;
 	glm::mat4 mat4_Yaw;
