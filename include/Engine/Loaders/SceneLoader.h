@@ -10,6 +10,7 @@ class Game_Object;
 class GameObject_3D;
 class Light;
 class Shader;
+class Sound;
 
 class SceneLoader
 {
@@ -40,7 +41,7 @@ public:
 	SceneLoader() {};
 
 	//Main constructor
-	SceneLoader(const char* pc_FileName_In, Loader* po_Loader_In, std::map<std::string, Game_Object*>& mspo_GameObjects3D_In);
+	SceneLoader(const char* pc_FileName_In, Loader* po_Loader_In, std::map<std::string, Game_Object*>& mspo_GameObjects3D_In, std::map<std::string, Sound*>& snd_Audio_In);
 	//Set amount of lights to shader
 	void set_LightAmount(Shader* p_Shader_In);
 };

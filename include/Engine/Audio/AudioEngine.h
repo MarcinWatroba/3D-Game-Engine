@@ -12,15 +12,11 @@
 #include <math.h>
 #include <iostream>
 
+#include<glm\glm.hpp>
+
 using namespace std;
 
-struct Vector3 {
-	float x;
-	float y;
-	float z;
-};
-
-const Vector3 upVec = {0, 1, 0};
+const glm::vec3 upVec = {0, 1, 0};
 
 const int maxChannels = 32;
 
@@ -60,7 +56,7 @@ public:
 	void LoadSound(const string& strSoundName, bool b3d = true, bool bLooping = false, bool bStream = false);
 	void UnloadSound(const string& strSoundName);
 	// play functions
-	int PlaySound(const string& strSoundName, const Vector3& vPos = Vector3{0,0,0}, float fVolumeB = 0.0f);	// return a channel ID
+	int PlaySound(const string& strSoundName, const glm::vec3& vPos = glm::vec3{0,0,0}, float fVolumeB = 0.0f);	// return a channel ID
 	void PlayEvent(const string& strEventName);
 	// stop functions
 	void StopChannel(int nChannelID);
@@ -70,14 +66,14 @@ public:
 	bool IsPlaying(int nChannelID) const;
 	bool isEventPlaying(const string& strEventName) const;
 	// other functions
-	void Set3dListenerAndOrientation(const Vector3& vPos = Vector3{ 0,0,0 }, const Vector3& vOri = Vector3{0, 0, 0}, float fVolumeB = 0.0f);
+	void Set3dListenerAndOrientation(const glm::vec3& vPos = glm::vec3{ 0,0,0 }, const glm::vec3& vOri = glm::vec3{0, 0, 0}, float fVolumeB = 0.0f);
 	void GetEventParameter(const string& strEventName, const string& strEventParameter, float* parameter);
 	void setEventParameter(const string& strEventName, const string& strParameterName, float fValue);
-	void SetChannel3dPosition(int nChannelID, const Vector3 vPos);
+	void SetChannel3dPosition(int nChannelID, const glm::vec3 vPos);
 	void setChannelVolume(int nChannelId, float fVolumeB);
 	float dbToVolume(float db);
 	float VolumeTodb(float volume);
-	FMOD_VECTOR VectorToFMOD(const Vector3& vPos);
+	FMOD_VECTOR VectorToFMOD(const glm::vec3& vPos);
 };
 
 #endif // !AUDIOENGINE_H
