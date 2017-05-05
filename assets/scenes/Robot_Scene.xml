@@ -530,7 +530,7 @@
  	<new_Object3D
 		name = "Lamp 2"
 		container = "No"
-		tag = "Object_Light"
+		tag = "Object_Lamp"
 		mesh_ID = "6"
 		component = ""
 		diffuse_ID = "13"
@@ -784,6 +784,10 @@
 		orientationZ = "0, (0, 0, 1)"
 		scale = "(0.1, 0.1, 0.1)"
 		max_Particles = "1000"
+    particle_Range = "(100, 100, 100)"
+    particle_Colour = "(1.0, 0.0, 0.0)"
+    particle_Speed  = "(0.0, -32.0, 0.0)"
+    particle_Life = "1.0"
 		>
 	</new_ObjectParticle>
 	<new_ObjectParticle
@@ -795,12 +799,16 @@
 		texture_Tiling = "(1, 1)"	
 		init_Mode = "0"
 		origin = "(0,0, 0)"
-		position = "(5.0, 15.707, 15.0)"
+		position = "(5.0, 15.707, -20.0)"
 		orientationX = "0.000, (1, 0, 0)"
 		orientationY = "0.000, (0, 1, 0)"
 		orientationZ = "0, (0, 0, 1)"
 		scale = "(0.1, 0.1, 0.1)"
-		max_Particles = "1000"
+		max_Particles = "10000"
+    particle_Range = "(100, -200, 100)"
+    particle_Colour = "(0.0, 1.0, 0.0)"
+    particle_Speed  = "(0.0, 32.0, 0.0)"
+    particle_Life = "1.0"
 		>
 	</new_ObjectParticle>
 </objects>

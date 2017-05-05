@@ -116,6 +116,7 @@ SceneLoader::SceneLoader(const char* pc_FileName_In, Loader* po_Loader_In, std::
 			quat_OrientationZ = toQuat(it->Attribute("orientationZ"));
 			v3_Scale = to3DVector(it->Attribute("scale"));
 
+
 			//Typical process of adding new 3D object
 			mspo_GameObjects_In.insert(std::pair<std::string, Game_Object*>(s_ObjectName, new GameObject_3D()));
 			auto object = static_cast<GameObject_3D*>(mspo_GameObjects_In.find(s_ObjectName)->second);
@@ -133,6 +134,7 @@ SceneLoader::SceneLoader(const char* pc_FileName_In, Loader* po_Loader_In, std::
 			object->set_Tiles(v2_Tiling);
 			object->set_Shininess(f_Shiny);
 			object->set_Tag(s_Tag);
+
 		}
 	}
 	for (tinyxml2::XMLElement* it = body->FirstChildElement("new_ObjectParticle"); it != nullptr; it = it->NextSiblingElement("new_ObjectParticle"))
@@ -152,7 +154,11 @@ SceneLoader::SceneLoader(const char* pc_FileName_In, Loader* po_Loader_In, std::
 		glm::quat quat_OrientationY = toQuat(it->Attribute("orientationY"));
 		glm::quat quat_OrientationZ = toQuat(it->Attribute("orientationZ"));
 		glm::vec3 v3_Scale = to3DVector(it->Attribute("scale"));
-		int i_maxParticles = std::atoi(it->Attribute("max_Particles"));
+		unsigned int i_maxParticles = std::atoi(it->Attribute("max_Particles"));
+		float life = std::atof(it->Attribute("particle_Life"));
+		glm::vec3 v3_Range = to3DVector(it->Attribute("particle_Range"));
+		glm::vec3 v3_Speed = to3DVector(it->Attribute("particle_Speed"));
+		glm::vec3 v3_Colour = to3DVector(it->Attribute("particle_Colour"));
 
 		mspo_GameObjects_In.insert(std::pair<std::string, Game_Object*>(s_ObjectName, new GameObject_Instanced()));
 		auto object = static_cast<GameObject_Instanced*>(mspo_GameObjects_In.find(s_ObjectName)->second);
@@ -172,6 +178,11 @@ SceneLoader::SceneLoader(const char* pc_FileName_In, Loader* po_Loader_In, std::
 		object->add_Texture("Diffuse_Map", po_Loader_In->get_Texture(i_DiffuseID));
 		object->set_Tiles(v2_Tiling);
 		object->set_Tag(s_Tag);
+		object->setMax(i_maxParticles);
+		object->set_Range(v3_Range);
+		object->set_Particle_Speed(v3_Speed);
+		object->set_Colour(v3_Colour);
+		object->set_Life(life);
 	}
 
 

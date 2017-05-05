@@ -8,14 +8,14 @@ void RenderComp_Instanced::renderInstanced(int draw_Mode_In, int draw_Shape_In, 
 
 }
 
-void RenderComp_Instanced::renderInstanceed(int draw_Mode_In, int draw_Shape_In, Shader * p_Shader_In, int max, int count, float positions[], int VAO_In, int buff_In, int size_In)
+void RenderComp_Instanced::renderInstanceed(int draw_Mode_In, int draw_Shape_In, Shader * p_Shader_In, int max, int count, float positions[], int VAO_In, int buff_In, int size_In, glm::vec3 colour_In)
 {
 	//Bind lightning maps
 	//glActiveTexture(GL_TEXTURE0);
 	//glBindTexture(GL_TEXTURE_2D, get_Texture("Diffuse_Map"));
 
-	//GLint diffuseLoc = glGetUniformLocation(p_Shader_In->get_Program(), "diffuse");
-	//glUniform1i(diffuseLoc, 0);
+	GLint colourLoc = glGetUniformLocation(p_Shader_In->get_Program(), "colour");
+	glUniform3f(colourLoc, colour_In.x, colour_In.y, colour_In.z);
 
 
 	glBindBuffer(GL_ARRAY_BUFFER, buff_In);

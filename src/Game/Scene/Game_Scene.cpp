@@ -69,21 +69,13 @@ void Game_Scene::init()
 	{
 
 		pos[posNum] = static_cast<GameObject_3D*>(pair.second)->get_Position();
-		
+		posNum++;
 		if (pair.second->get_Tag() == "Light")
 		{
-
-			//static_cast<Light*>(pair.second)->set_Depth_Texture(o_SceneLoader->setup_FBO());
-			//light[ui_light_Amount] = static_cast<Light*>(pair.second)->get_Position();
-			//radius[ui_light_Amount] = static_cast<Light*>(pair.second)->get_Radius();
-
-			//depth[ui_light_Amount] = static_cast<Light*>(pair.second)->get_Depth_Texture();
-
 			ui_light_Amount++;
 			num++;
-
 		}
-		posNum++;
+
 		
 	}
 
@@ -429,28 +421,35 @@ void Game_Scene::render()
 
 		for (int i = 0; i < 3; i++)
 		{
+
 			unsigned no = light_Nom[i];
+
 
 			unsigned int obj_No = 0;
 
 			o_SceneLoader->prepare_DepthCube(po_Loader->get_Shader("3"), light[no], depth[i], i);
 
+
 			for (auto const& pair : mspo_Objects)
 			{
-				if (glm::distance(pos[obj_No], light[no]) < (o_SceneLoader->get_LightRadius(no) * 10))
+
+				if (glm::distance(pos[obj_No], light[no]) < (o_SceneLoader->get_LightRadius(no) * 10) || pair.second->get_Tag() == "Player" || pair.second->get_Tag() == "Enemy")
 				{
-					if (pair.second->get_Tag() == "Object")
+					if (pair.second->get_Tag() != "Object_Lamp" &&  pair.second->get_Tag() != "Particle")
 					{
+
 						pair.second->renderDepth(po_Loader->get_Shader("3"));
 					}
 					else if (pair.second->get_Tag() == "Light")
 					{
+
 						pair.second->renderDepth(po_Loader->get_Shader("3"));
 					}
 				}
 				obj_No++;
 			}
 			glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
 		}
 
 		glViewport(0, 0, 1080, 720);
