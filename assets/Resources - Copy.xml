@@ -12,6 +12,7 @@
 		<new_File ID = "9" i_DrawMethod = "35048" name = "Window_Wall_1.obj"> </new_File>
 		<new_File ID = "10" i_DrawMethod = "35048" name = "Window_Wall_2.obj"> </new_File>
 		<new_File ID = "11" i_DrawMethod = "35048" name = "Window_Wall_Double.obj"> </new_File>
+		<new_File ID = "12" i_DrawMethod = "35048" name = "TV.obj"> </new_File>
 	</object_Files>
 	
 	<texture_File_Location>assets/textures/</texture_File_Location>

@@ -792,6 +792,45 @@
 					Chair Back Left Leg 2)"
 	>
 	</new_Object3D>
+	
+	<new_Object3D
+	name = "Drawers"
+		container = "No"
+		tag = "Object"
+		mesh_ID = "7"
+		component = ""
+		diffuse_ID = "6"
+		specular_ID = "7"
+		shininess = "1"
+		texture_Tiling = "(8, 8)"
+		init_Mode= "0"
+		origin = "(0, 0, 0)"
+		position = "(-36, 5, -31)"
+		orientationX = "0, (1, 0, 0)"
+		orientationY = "45, (0, 1, 0)"
+		orientationZ = "0, (0, 0, 1)"
+		scale = "(10, 10, 10)"
+	>
+	</new_Object3D>
+	<new_Object3D
+	name = "TV"
+		container = "No"
+		tag = "Object"
+		mesh_ID = "12"
+		component = ""
+		diffuse_ID = "0"
+		specular_ID = "0"
+		shininess = "1"
+		texture_Tiling = "(8, 8)"
+		init_Mode= "0"
+		origin = "(0, 0, 0)"
+		position = "(-36, 10, -31)"
+		orientationX = "0, (1, 0, 0)"
+		orientationY = "45, (0, 1, 0)"
+		orientationZ = "0, (0, 0, 1)"
+		scale = "(5, 5, 5)"
+	>
+	</new_Object3D>
 </objects>
 					
 <lights>
