@@ -61,7 +61,7 @@ void GameObject_Instanced::renderDepth(Shader * p_Shader_In)
 void GameObject_Instanced::render(Shader * p_Shader_In)
 {
 	static_cast<Transform_Instanced*>(mipo_Components.find("Transform_Instanced")->second)->update_Shader(p_Shader_In);
-	if (b_RenderStatus) static_cast<RenderComp_Instanced*>(mipo_Components.find("RenderComp_Instanced")->second)->renderInstanceed(GL_TEXTURE_2D, GL_TRIANGLES, p_Shader_In, maxParticles, ParticlesCount, particlePositions, VAO, i_Buffer, index_Size, colour);
+	if (b_RenderStatus) static_cast<RenderComp_Instanced*>(mipo_Components.find("RenderComp_Instanced")->second)->renderInstanced(GL_TEXTURE_2D, GL_TRIANGLES, p_Shader_In, maxParticles, ParticlesCount, particlePositions, VAO, i_Buffer, index_Size, colour);
 }
 
 void GameObject_Instanced::clean_Up()

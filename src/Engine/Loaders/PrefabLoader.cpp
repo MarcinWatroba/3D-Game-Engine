@@ -98,7 +98,7 @@ PrefabLoader::PrefabLoader(const char * pc_FileName_In, Loader * po_Loader_In)
 
 		//Add variables
 		std::string s_Type;
-		int i_LightID;
+		int i_LightID = 0;
 		glm::vec3 v3_Ambient;
 		glm::vec3 v3_Diffuse;
 		glm::vec3 v3_Specular;
@@ -145,6 +145,7 @@ PrefabLoader::PrefabLoader(const char * pc_FileName_In, Loader * po_Loader_In)
 			point_Light->set_Tag(s_Tag);
 			point_Light->set_Radius(f_lRadius);
 			point_Light->set_Prefab(s_Name);
+			i_LightID++;
 		}
 	}
 }
@@ -289,7 +290,7 @@ glm::quat PrefabLoader::toQuat(const char * pc_Quaternion_In)
 	std::string s_Result;
 	int i_DataCounter = 0;
 	int i_Length = std::strlen(pc_Quaternion_In);
-	float f_Angle;
+	//float f_Angle;
 	//glm::vec3 v3_Vector;
 	glm::quat temp;
 	for (int i = 0; i < i_Length; i++)

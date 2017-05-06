@@ -36,7 +36,7 @@ void Game_Scene::init()
 	if (firstTime)
 	{	
 		currentLevel = 0;
-		o_SceneLoader = new SceneLoader(levelList[currentLevel].c_str(), po_Loader, mspo_Objects, *snd_Audio);
+		o_SceneLoader = new SceneLoader(levelList[currentLevel].c_str(), po_Loader, po_PrefabLoader, mspo_Objects, *snd_Audio);
 		
 		firstTime = false;
 	}
@@ -498,7 +498,7 @@ void Game_Scene::load_Scene(int i)
 	
 	//Load the scene
 	std::string sLevel = levelList.at(i);
-    o_SceneLoader = new SceneLoader(sLevel.c_str(), po_Loader, mspo_Objects, *snd_Audio);
+    o_SceneLoader = new SceneLoader(sLevel.c_str(), po_Loader, po_PrefabLoader, mspo_Objects, *snd_Audio);
 
 }
 

@@ -12,6 +12,7 @@ public:
 	void update();
 	void force_Update();
 	void render(Shader* p_Shader_In);
+	virtual void renderDepth(Shader* p_Shader_In) {};
 	void clean_Up();
 
 	void set_Position(glm::vec2 v2_Position_In);

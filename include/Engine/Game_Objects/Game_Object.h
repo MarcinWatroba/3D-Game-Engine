@@ -38,7 +38,7 @@ protected:
 	//Status of rendering
 	bool b_RenderStatus;
 
-	virtual glm::mat4 get_ParentMatrix() = 0;
+	virtual glm::mat4 get_ParentMatrix();
 
 	//
 	bool b_toDelete;

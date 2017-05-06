@@ -83,4 +83,5 @@ public:
 	unsigned int get_InstanceBufferHandle();
 	std::string get_ID();
 	unsigned int get_SizeOfVertices();
+	std::string get_Type();
 };

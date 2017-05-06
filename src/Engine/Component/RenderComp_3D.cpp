@@ -26,7 +26,11 @@ void RenderComp_3D::renderInstanced(int draw_Mode_In, int draw_Shape_In, Shader*
 
 }
 
-void RenderComp_3D::renderInstanceed(int draw_Mode_In, int draw_Shape_In, Shader * p_Shader_In, int max, int count, float positions[], int VAO_In, int buff_In, int size_In, glm::vec3 colour_In)
+void RenderComp_3D::renderInstanced(int draw_Mode_In, int draw_Shape_In, Shader * p_Shader_In, int max, int count, float positions[], int VAO_In, int buff_In, int size_In, glm::vec3 colour_In)
+{
+}
+
+void RenderComp_3D::renderInstanced(int draw_Mode_In, int draw_Shape_In, Shader * p_Shader_In, int max, int count, float positions[], int VAO_In, int buff_In, int size_In)
 {
 }
 

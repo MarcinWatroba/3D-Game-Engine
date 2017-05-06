@@ -34,6 +34,7 @@ void Game_Object::set_ToDelete()
 	}
 }
 
+glm::mat4 Game_Object::get_ParentMatrix() { return glm::mat4(1.0f); }
 
 void Game_Object::set_RenderStatus(bool b_RenderStatus_In)
 {

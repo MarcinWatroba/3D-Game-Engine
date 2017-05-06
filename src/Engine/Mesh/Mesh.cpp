@@ -1,5 +1,9 @@
 #include <Engine/Mesh/Mesh.h>
 
+std::string Mesh::get_Type()
+{
+	return "Mesh";
+}
 unsigned int Mesh::get_VAO()
 {
 	//std::cout << "TEST" << std::endl;
