@@ -98,7 +98,6 @@ PrefabLoader::PrefabLoader(const char * pc_FileName_In, Loader * po_Loader_In)
 
 		//Add variables
 		std::string s_Type;
-		int i_LightID = 0;
 		glm::vec3 v3_Ambient;
 		glm::vec3 v3_Diffuse;
 		glm::vec3 v3_Specular;
@@ -109,8 +108,7 @@ PrefabLoader::PrefabLoader(const char * pc_FileName_In, Loader * po_Loader_In)
 
 		s_Type = it->Attribute("type");
 		s_Tag = it->Attribute("tag");
-		//std::string s_Name = it->Attribute("name");
-		std::string s_Name = s_Type + "_" + std::to_string(i_LightID);
+		std::string s_Name = it->Attribute("name");
 
 		if (s_Type == "Directional") // Later
 		{
@@ -129,7 +127,7 @@ PrefabLoader::PrefabLoader(const char * pc_FileName_In, Loader * po_Loader_In)
 			v3_Diffuse = to3DVector(it->Attribute("diffuse"));
 			v3_Specular = to3DVector(it->Attribute("specular"));
 			f_lRadius = std::strtof(it->Attribute("radius"), nullptr);
-			mipo_Prefabs.insert(std::pair<std::string, Game_Object*>(s_Name, new Point_Light(v3_Ambient, v3_Diffuse, v3_Specular, f_lRadius, i_LightID)));
+			mipo_Prefabs.insert(std::pair<std::string, Game_Object*>(s_Name, new Point_Light(v3_Ambient, v3_Diffuse, v3_Specular, f_lRadius)));
 			
 			auto point_Light = static_cast<Point_Light*>(mipo_Prefabs.find(s_Name)->second);
 			point_Light->set_Name(s_Name);
@@ -145,7 +143,6 @@ PrefabLoader::PrefabLoader(const char * pc_FileName_In, Loader * po_Loader_In)
 			point_Light->set_Tag(s_Tag);
 			point_Light->set_Radius(f_lRadius);
 			point_Light->set_Prefab(s_Name);
-			i_LightID++;
 		}
 	}
 }

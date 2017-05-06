@@ -21,8 +21,7 @@ Game::Game()
 void Game::init()
 {
 	po_Loader->start();
-	o_State.push_State(new Game_Scene());
-	
+	o_State.push_State(new Game_Scene());	
 }
 
 //Process input

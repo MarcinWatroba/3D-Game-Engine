@@ -151,7 +151,7 @@ SceneLoader::SceneLoader(const char* pc_FileName_In, Loader* po_Loader_In, Prefa
 			desired_Object->set_Name(s_ObjectName);
 			desired_Object->set_Position(v3_Position);
 			desired_Object->set_ObjectID(i_Incrementor);
-			//desired_Object->set_ID(i_NumOfPointLight);
+			desired_Object->set_ID(i_NumOfPointLight);
 			i_NumOfPointLight++;
 			i_Incrementor++;
 		}
