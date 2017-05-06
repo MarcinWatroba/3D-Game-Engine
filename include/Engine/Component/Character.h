@@ -2,6 +2,7 @@
 #define CHARACTER_H
 
 #include <Engine\Component\Component.h>
+#include <Engine\Stats\Stats.h>
 
 class Character : public Component
 {
@@ -13,6 +14,7 @@ public:
 	Character(std::string inType = "");
 	~Character() {}
 	Character(const Character &obj);
+	Character(Stats* stat);
 	std::string get_Type();
 	void setHealth(float temp);
 	void setNumberOfBullets(float newAmmo);

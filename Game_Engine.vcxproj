@@ -182,6 +182,7 @@
     <ClCompile Include="src\Engine\Loaders\PrefabLoader.cpp" />
     <ClCompile Include="src\Engine\Loaders\SceneLoader.cpp" />
     <ClCompile Include="src\Engine\Loaders\SceneSaver.cpp" />
+    <ClCompile Include="src\Engine\Loaders\StatsLoader.cpp" />
     <ClCompile Include="src\Engine\Mesh\Mesh.cpp" />
     <ClCompile Include="src\Engine\Mesh\Mesh_2D.cpp" />
     <ClCompile Include="src\Engine\Mesh\Mesh_3D.cpp" />
@@ -190,6 +191,7 @@
     <ClCompile Include="src\Engine\Mesh\Mesh_Instanced.cpp" />
     <ClCompile Include="src\Engine\Scene\Scene.cpp" />
     <ClCompile Include="src\Engine\State\State.cpp" />
+    <ClCompile Include="src\Engine\Stats\Stats.cpp" />
     <ClCompile Include="src\Game\AIController\AIController.cpp" />
     <ClCompile Include="src\Game\AIController\State_Attack.cpp" />
     <ClCompile Include="src\Game\AIController\State_Idle.cpp" />
@@ -248,6 +250,7 @@
     <ClInclude Include="include\Engine\Loaders\PrefabLoader.h" />
     <ClInclude Include="include\Engine\Loaders\SceneLoader.h" />
     <ClInclude Include="include\Engine\Loaders\SceneSaver.h" />
+    <ClInclude Include="include\Engine\Loaders\StatsLoader.h" />
     <ClInclude Include="include\Engine\Mesh\Mesh.h" />
     <ClInclude Include="include\Engine\Mesh\Mesh_2D.h" />
     <ClInclude Include="include\Engine\Mesh\Mesh_3D.h" />
@@ -256,6 +259,7 @@
     <ClInclude Include="include\Engine\Mesh\Mesh_Instanced.h" />
     <ClInclude Include="include\Engine\Scene\Scene.h" />
     <ClInclude Include="include\Engine\State\State.h" />
+    <ClInclude Include="include\Engine\Stats\Stats.h" />
     <ClInclude Include="include\Game\AIController\AIController.h" />
     <ClInclude Include="include\Game\AIController\AIController_Data.h" />
     <ClInclude Include="include\Game\AIController\State_Attack.h" />

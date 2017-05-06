@@ -4,11 +4,13 @@
 #include <map>
 
 class Loader;
+class StatsLoader;
 
 class PrefabLoader
 {
 private:
 	Loader* po_SceneLoader;
+	StatsLoader* po_StatsLoader;
 	std::map <std::string, Game_Object*> mipo_Prefabs;
 
 	glm::vec3 to3DVector(const char * pc_Vector3D_In);
@@ -22,7 +24,7 @@ private:
 	void identify_Component(GameObject_3D* po_GameObject_In, std::string& s_Result_In);
 public:
 	PrefabLoader() {};
-	PrefabLoader(const char* pc_FileName_In, Loader* po_Loader_In);
+	PrefabLoader(const char* pc_FileName_In, Loader* po_Loader_In, StatsLoader* po_StatsLoader_In);
 
 	void add_Children(std::vector<std::string>& vs_Children_In, std::string s_ToProcess_In);
 
