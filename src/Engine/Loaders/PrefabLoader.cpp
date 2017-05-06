@@ -345,6 +345,11 @@ Game_Object * PrefabLoader::get_Prefab(std::string s_Name_In)
 	return mipo_Prefabs.find(s_Name_In)->second;
 }
 
+std::map<std::string, Game_Object*>& PrefabLoader::get_PrefabMap()
+{
+	return mipo_Prefabs;
+}
+
 void PrefabLoader::clean_Up()
 {
 	for (const auto& pair : mipo_Prefabs) delete pair.second;

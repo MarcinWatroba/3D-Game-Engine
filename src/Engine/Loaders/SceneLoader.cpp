@@ -205,7 +205,6 @@ SceneLoader::SceneLoader(const char* pc_FileName_In, Loader* po_Loader_In, Prefa
 		sound->SetVolume(f_Volume);
 		if (parent)
 		{
-			sound->setParent(parent);
 		}
 	}
 }
@@ -620,4 +619,3 @@ void SceneLoader::prepare_DepthCube(Shader* p_Shader_In, glm::vec3 light_Pos, gl
 	glActiveTexture(GL_TEXTURE2 + tex_Num);
 	glBindTexture(GL_TEXTURE_CUBE_MAP, ui_Depth_In.y);
 
-}

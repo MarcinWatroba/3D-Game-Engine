@@ -4,7 +4,6 @@
 #include <glm\gtc\type_ptr.hpp>
 #include <map>
 
-class Model;
 class Loader;
 class PrefabLoader;
 class Game_Object;

@@ -25,6 +25,9 @@ public:
 	void insert_NewLine();
 	void delete_Line();
 	bool is_LineEmpty();
+	std::string get_Text();
+
+
 
 	void update();
 	void render(Shader* p_Shader_In);

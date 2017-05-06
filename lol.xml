@@ -1,6 +1,11 @@
+<lights>
+    <new_Light name="Lamp Light" prefab="Lamp Light" type="Point_Light" position="(0.000000, 38.939999, 0.000000)"/>
+    <new_Light name="Standing Lamp Light" prefab="Standing Lamp Light" type="Point_Light" position="(-37.514999, 25.583000, -32.407001)"/>
+</lights>
+
 <objects>
     <new_Object3D name="Back Wall" prefab="Wall" origin="(0.000000, 0.000000, 0.000000)" position="(0.598248, 26.582001, 39.705002)" orientation="(1.000000, 0.000000, 0.000000, 0.000000)" scale="(90.995003, 54.860001, 1.000000)"/>
-    <new_Object3D name="Carpet" prefab="Carpet" origin="(0.000000, 0.000000, 0.000000)" position="(16.497322, 0.069000, 18.405001)" orientation="(0.999994, -0.003445, 0.000000, 0.000000)" scale="(52.507999, 0.242000, 45.558472)"/>
+    <new_Object3D name="Carpet" prefab="Carpet" origin="(0.000000, 0.000000, 0.000000)" position="(16.499001, 0.069000, 18.405001)" orientation="(1.000000, 0.000000, 0.000000, 0.000000)" scale="(52.507999, 0.242000, 40.320999)"/>
     <new_Object3D name="Door" prefab="Door" origin="(0.000000, 0.000000, 0.000000)" position="(43.079422, 22.070999, -18.319000)" orientation="(1.000000, 0.000000, 0.000000, 0.000000)" scale="(1.000000, 43.959000, 22.507000)"/>
     <new_Object3D name="Floor" prefab="Floor" origin="(0.000000, 0.000000, 0.000000)" position="(-0.000000, 0.000000, 0.000000)" orientation="(1.000000, 0.000000, 0.000000, 0.000000)" scale="(1.000000, 1.000000, 1.000000)"/>
     <new_Object3D name="Front Wall" prefab="Wall" origin="(0.000000, 0.000000, 0.000000)" position="(0.000000, 26.582001, -39.889000)" orientation="(1.000000, 0.000000, 0.000000, 0.000000)" scale="(90.995003, 54.860001, 1.000000)"/>
@@ -22,78 +27,3 @@
     <new_Object3D name="Table" prefab="Table" origin="(0.000000, 0.000000, 0.000000)" position="(15.232000, 0.000000, 24.198000)" orientation="(1.000000, 0.000000, 0.000000, 0.000000)" scale="(1.000000, 1.000000, 1.000000)"/>
     <new_Object3D name="Wooden Wall" prefab="Wooden Wall" origin="(0.000000, 0.000000, 0.000000)" position="(0.921000, 53.500000, -0.365000)" orientation="(0.703704, 0.710493, 0.000000, 0.000000)" scale="(104.514999, 85.177002, 1.000000)"/>
 </objects>
-
-<lights>
-    <new_Light name="Main Light"
-    prefab="Main Light"
-    type="Point_Light"
-	light_ID = "0"
-    position="(0.000000, 40.000000, 0.000000)"/>
-    
-    <new_Light name="Lamp Light"
-    prefab="Lamp Light"
-    type="Point_Light"
-	light_ID = "1"
-    position="(-37.514999, 25.583000, -32.407001)"/>
-
-  <new_Light name="Lamp Light"
-    prefab="Lamp Light"
-    type="Point_Light"
-	light_ID = "2"
-    position="(37.515, 1.583, 32.407)"/>
-
-  <new_Light name="Lamp Light"
-    prefab="Lamp Light"
-    type="Point_Light"
-	light_ID = "3"
-    position="(-33.515, 5.583, -32.407)"/>
-</lights>
-
-<sounds>
-	<new_sound
-	name = "rain"
-	ID = "0"
-	volume = "0.3"
-	object = ""
-	position = "(0,0,0)"
-	loop = "true"
-	threeD = "true"
-	stream = "false"
-	>
-	</new_sound>
-	
-	<new_sound
-	name = "walking"
-	ID = "1"
-	volume = "0.8"
-	object = "Robot"
-	position = "(0,0,0)"
-	loop = "true"
-	threeD = "true"
-	stream = "false"
-	>
-	</new_sound>
-	
-	<new_sound
-	name = "shooting_pistol"
-	ID = "2"
-	volume = "1"
-	object = "Robot Right Arm"
-	position = "(0,0,0)"
-	loop = "false"
-	threeD = "true"
-	stream = "false"
-	>
-	</new_sound>
-	
-	<new_sound
-	name = "reload_pistol"
-	ID = "3"
-	volume = "1"
-	object = "Robot Right Arm"
-	position = "(0,0,0)"
-	loop = "false"
-	threeD = "true"
-	stream = "false"
-	>
-	</new_sound>

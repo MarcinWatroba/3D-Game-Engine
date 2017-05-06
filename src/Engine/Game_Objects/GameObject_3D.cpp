@@ -47,6 +47,30 @@ GameObject_3D::GameObject_3D(const GameObject_3D & p_NewObject_In) : Game_Object
 	s_PrefabName = p_NewObject_In.s_PrefabName;
 }
 
+GameObject_3D::GameObject_3D(const GameObject_3D & p_NewObject_In) : Game_Object(p_NewObject_In)
+{
+	for (auto const& pair : p_NewObject_In.mipo_Components)
+	{
+		if (pair.second->get_Type() == "Mesh_3D")
+		{
+			auto mesh_3D = static_cast<Mesh_3D*>(pair.second);
+			add_Component("Mesh_3D", mesh_3D);
+		}
+		else if (pair.second->get_Type() == "Transform_3D")
+		{
+			auto transform_3D = static_cast<Transform_3D*>(pair.second);
+			add_Component("Transform_3D", new Transform_3D(*transform_3D));
+		}
+		else if (pair.second->get_Type() == "RenderComp_3D")
+		{
+			auto renderComp_3D = static_cast<RenderComp_3D*>(pair.second);
+			add_Component("RenderComp_3D", new RenderComp_3D(*renderComp_3D));
+		}
+	}
+
+	s_PrefabName = p_NewObject_In.s_PrefabName;
+}
+
 void GameObject_3D::add_Component(std::string s_Name_In, Component* p_Component_In)
 {
 	mipo_Components.insert(std::pair<std::string, Component*>(s_Name_In, p_Component_In));
@@ -335,6 +359,11 @@ void GameObject_3D::shootBullet()
 		glm::vec3 temp = bulletList[0]->get_Position();
 		//std::cout << "(" << temp.x << ", " << temp.y << ", " << temp.z << ")" << std::endl << std::endl;
 	}
+}
+
+std::string GameObject_3D::get_Type()
+{
+	return "GameObject_3D";
 }
 
 

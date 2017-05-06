@@ -72,3 +72,8 @@ float RenderComp_3D::get_Shininess()
 {
 	return f_Shininess;
 }
+
+std::string RenderComp_3D::get_Type()
+{
+	return "RenderComp_3D";
+}

@@ -20,6 +20,7 @@ namespace Conditions
 		Selection,
 		ListenToKeyboard,
 		ShiftDetected,
+		Delete,
 		Num
 	};
 }
@@ -31,6 +32,7 @@ class Scene_3D : public Scene
 {
 private:
 	float f_Speed;
+	int i_Counter;
 	std::map<std::string, int> msio_ObjectIDs;
 	int pickedID;
 	int previousPicked;
@@ -44,6 +46,7 @@ private:
 	void render_ColourScene();
 	std::string to3DVectorString(glm::vec3 pc_Vector3D_In);
 	void process_3DClick(float f_Delta_In, glm::vec2 v2_MousePos_In);
+	glm::vec3 to3DVector(const char * pc_Vector3D_In);
 	void process_2DClick(int i_ID_In);
 	SceneSaver* save;
 public:

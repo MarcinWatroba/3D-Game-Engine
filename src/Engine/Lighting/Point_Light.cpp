@@ -32,6 +32,11 @@ float Point_Light::get_Radius()
 	return f_radius;
 }
 
+void Point_Light::set_ID(int i_ID_In)
+{
+	i_ID = i_ID_In;
+}
+
 void Point_Light::update_Shader(Shader* p_Shader_In)
 {
 	std::string point_Light = "point_Light[" + std::to_string(i_ID) + "]";
@@ -55,4 +60,3 @@ void Point_Light::update_Shader(Shader* p_Shader_In)
 	std::string rad = point_Light + ".radius";
 	GLint radiusLoc = glGetUniformLocation(p_Shader_In->get_Program(), rad.c_str());
 	glUniform1f(radiusLoc, f_radius);
-}

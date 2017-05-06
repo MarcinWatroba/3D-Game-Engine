@@ -44,6 +44,8 @@ protected:
 	bool b_toDelete;
 	glm::vec2 v2_Tiling;
 
+	glm::vec2 v2_Tiling;
+
 public:
 	Game_Object();
 	Game_Object(const Game_Object &p_NewObject_In);
@@ -77,17 +79,8 @@ public:
 	void set_Tag(std::string s_Tag_In);
 	std::string get_Tag();
 	bool is_Container();
-
-	//Game_Object();
-	//std::map<std::string, Component*>& get_Components();
-	//std::map<std::string, Game_Object*>& get_Children();
-	//void set_Tag(std::string s_Tag_In);
-	//std::string get_Tag();
 	std::string get_ObjectType();
 
 	void set_ObjectID(int i_ID_In);
 	int get_ObjectID();
-
-	//virtual std::string get_Type() = 0;
-	//std::string get_Type();
 };
