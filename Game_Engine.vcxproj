@@ -281,6 +281,7 @@
     <None Include="assets\shaders\passIn.vert" />
   </ItemGroup>
   <ItemGroup>
+    <Xml Include="assets\Prefabs.xml" />
     <Xml Include="assets\Resources.xml" />
     <Xml Include="assets\scenes\Robot_Scene.xml" />
   </ItemGroup>

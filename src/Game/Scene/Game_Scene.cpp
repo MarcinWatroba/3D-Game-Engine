@@ -62,16 +62,13 @@ void Game_Scene::init()
 	ui_light_Amount = 0;
 	for (auto const& pair : mspo_Objects)
 	{
-
 		pos[posNum] = static_cast<GameObject_3D*>(pair.second)->get_Position();
-		posNum++;
 		if (pair.second->get_Tag() == "Light")
 		{
 			ui_light_Amount++;
 			num++;
 		}
-
-		
+		posNum++;
 	}
 
 	for (unsigned int i = 0; i < ui_light_Amount; i++)
@@ -340,15 +337,10 @@ void Game_Scene::update_Scene(GLfloat f_Delta_In, glm::vec2 v2_MousePos_In)
 //Render all scene objects
 void Game_Scene::render()
 {
-	glClearColor(0.1f, 0.1f, 0.1f, 1.f);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glEnable(GL_DEPTH_TEST);
-
 	if (b_Init)
 	{
 		glEnable(GL_BLEND);
 		glUseProgram(po_Loader->get_Shader("0")->get_Program());
-
 		unsigned int tex_No = 0;
 		unsigned int light_No = 0;
 

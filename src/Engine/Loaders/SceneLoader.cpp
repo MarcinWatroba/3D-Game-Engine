@@ -145,15 +145,18 @@ SceneLoader::SceneLoader(const char* pc_FileName_In, Loader* po_Loader_In, Prefa
 		if (s_Type == "Point_Light")
 		{
 			auto desired_Prefab = dynamic_cast<Point_Light*>(po_PrefLoader_In->get_Prefab(s_Prefab));
-			mspo_GameObjects_In.insert(std::pair<std::string, Game_Object*>(s_ObjectName, new Point_Light(*desired_Prefab)));
-			auto desired_Object = dynamic_cast<Point_Light*>(mspo_GameObjects_In.find(s_ObjectName)->second);
+			auto desired_Object = new Point_Light(*desired_Prefab);
 
-			desired_Object->set_Name(s_ObjectName);
+			desired_Object->set_Name(s_ObjectName + std::to_string(i_NumOfPointLight));
 			desired_Object->set_Position(v3_Position);
 			desired_Object->set_ObjectID(i_Incrementor);
 			desired_Object->set_ID(i_NumOfPointLight);
+			f_pos[i_NumOfPointLight] = v3_Position;
+			f_radii[i_NumOfPointLight] = desired_Object->get_Radius();
 			i_NumOfPointLight++;
 			i_Incrementor++;
+
+			mspo_GameObjects_In.insert(std::pair<std::string, Game_Object*>(desired_Object->get_Name(), desired_Object));
 		}
 	}
 

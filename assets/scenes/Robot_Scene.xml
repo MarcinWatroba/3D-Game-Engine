@@ -35,14 +35,14 @@
     type="Point_Light"
 	light_ID = "1"
     position="(-37.514999, 25.583000, -32.407001)"/>
-    
-    <new_Light name="Lamp Light"
+
+  <new_Light name="Lamp Light"
     prefab="Lamp Light"
     type="Point_Light"
 	light_ID = "2"
     position="(37.515, 1.583, 32.407)"/>
-    
-    <new_Light name="Lamp Light"
+
+  <new_Light name="Lamp Light"
     prefab="Lamp Light"
     type="Point_Light"
 	light_ID = "3"
