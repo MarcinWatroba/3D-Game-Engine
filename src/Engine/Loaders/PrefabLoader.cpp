@@ -47,11 +47,10 @@ PrefabLoader::PrefabLoader(const char * pc_FileName_In, Loader * po_Loader_In, S
 			object->set_Prefab(s_ObjectName);
 			object->add_Component("Transform_3D", new Transform_3D());
 
-			if (s_StatsName != "")
+			if (s_StatsName != "" && po_StatsLoader != nullptr)
 			{
 				object->add_Component("Character", new Character(po_StatsLoader->get_Stat(s_StatsName)));
 				object->add_Component("Rigid", new RigidBody(po_StatsLoader->get_Stat(s_StatsName)));
-				
 			}
 
 			object->set_RenderStatus(false);

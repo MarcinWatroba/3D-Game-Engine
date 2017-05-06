@@ -9,6 +9,7 @@
 #include <Engine\Game_Objects\Camera_3D.h>
 #include <Engine\Loaders\SceneLoader.h>
 #include <Engine\Audio\Sound.h>
+#include <Engine\Loaders\StatsLoader.h>
 
 class Loader;
 
@@ -17,12 +18,13 @@ class Scene
 protected:
 	//Main resource loader
 	Loader* po_Loader;
-	PrefabLoader* po_PrefabLoader;
 
 	//State manager
 	State* po_GameState;
 
 	//Scene loader
+	StatsLoader* po_StatsLoader;
+	PrefabLoader* po_PrefabLoader;
 	SceneLoader* o_SceneLoader;
 
 	//Cameras
