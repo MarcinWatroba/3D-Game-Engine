@@ -21,6 +21,8 @@
     <new_Object3D name="Stairs" prefab="Stairs" origin="(0.000000, 0.000000, 0.000000)" position="(-28.839281, 23.337000, -9.334000)" orientation="(-0.922965, 0.384884, 0.000000, 0.000000)" scale="(34.952999, 85.177002, 1.000000)"/>
     <new_Object3D name="Table" prefab="Table" origin="(0.000000, 0.000000, 0.000000)" position="(15.232000, 0.000000, 24.198000)" orientation="(1.000000, 0.000000, 0.000000, 0.000000)" scale="(1.000000, 1.000000, 1.000000)"/>
     <new_Object3D name="Wooden Wall" prefab="Wooden Wall" origin="(0.000000, 0.000000, 0.000000)" position="(0.921000, 53.500000, -0.365000)" orientation="(0.703704, 0.710493, 0.000000, 0.000000)" scale="(104.514999, 85.177002, 1.000000)"/>
+	<new_Object3D name="Enemy Robot" prefab="AIControlled Robot Body 1" origin="(0.000000, 0.000000, 0.000000)" position="(0.921000, 2.500000, -0.365000)" orientation="(0.703704, 0.710493, 0.000000, 0.000000)" scale="(2, 2, 2)"/>
+	<new_Object3D name="Enemy Robot2" prefab="AIControlled Robot Body 2" origin="(0.000000, 0.000000, 0.000000)" position="(0.921000, 2.500000, -0.365000)" orientation="(0.703704, 0.710493, 0.000000, 0.000000)" scale="(2, 2, 2)"/>
 </objects>
 
 <lights>

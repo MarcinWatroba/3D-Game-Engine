@@ -15,7 +15,7 @@ AIController::AIController(GameObject_3D * character) :
 
 std::string AIController::get_Type()
 {
-	return "AIController";
+	return "AI_Controller";
 }
 
 AIController::~AIController()

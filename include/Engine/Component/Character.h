@@ -9,6 +9,8 @@ class Character : public Component
 private:
 	float health;
 	float numberOfBullets;
+	glm::vec3 path1;
+	glm::vec3 path2;
 	std::string typeOfChar;
 public:
 	Character(std::string inType = "");

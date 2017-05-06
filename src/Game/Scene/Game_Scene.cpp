@@ -12,6 +12,7 @@
 #include <Engine\Lighting\Light.h>
 #include <Game\AIController\AIController.h>
 #include <Game\Misc\Bullet.h>
+#include <Engine\Loaders\StatsLoader.h>
 
 #include <iostream>
 
@@ -35,7 +36,8 @@ void Game_Scene::init()
 	if (firstTime)
 	{	
 		currentLevel = 0;
-		po_PrefabLoader = new PrefabLoader("assets/Prefabs.xml", po_Loader);
+		po_StatsLoader = new StatsLoader("assets/stats.xml");
+		po_PrefabLoader = new PrefabLoader("assets/Prefabs.xml", po_Loader, po_StatsLoader);
 		o_SceneLoader = new SceneLoader(levelList[currentLevel].c_str(), po_Loader, po_PrefabLoader, mspo_Objects, *snd_Audio);
 		
 		firstTime = false;

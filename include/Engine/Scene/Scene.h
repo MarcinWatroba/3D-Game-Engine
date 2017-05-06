@@ -18,6 +18,7 @@ protected:
 	//Main resource loader
 	Loader* po_Loader;
 	PrefabLoader* po_PrefabLoader;
+	StatsLoader* po_StatsLoader;
 
 	//State manager
 	State* po_GameState;

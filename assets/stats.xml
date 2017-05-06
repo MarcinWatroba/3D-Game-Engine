@@ -1,5 +1,6 @@
 <stats>
-		<new_Stat name = "Player Stats" health = "3" ammo = "100" mass = "10" gravity = "true"> </new_Stat>
-		<new_Stat name = "Robot Stats" health = "5" ammo = "50" mass = "10" gravity = "true"> </new_Stat>
-		<new_Stat name = "Robot Stats 2" health = "10" ammo = "200" mass = "10" gravity = "true"> </new_Stat>
+		<new_Stat name = "" health = "" ammo = "" mass = "" gravity = "true" path1 = "" path2 = ""> </new_Stat>
+		<new_Stat name = "Player Stats" health = "3" ammo = "100" mass = "10" gravity = "true" path1 = "" path2 = ""> </new_Stat>
+		<new_Stat name = "Robot Stats" health = "5" ammo = "50" mass = "10" gravity = "true" path1 = "(10,0,10)" path2 = "(-10,0,-10)"> </new_Stat>
+		<new_Stat name = "Robot Stats 2" health = "10" ammo = "200" mass = "10" gravity = "true" path1 = "(10,0,-10)" path2 = "(-10,0,10)"> </new_Stat>
 </stats>

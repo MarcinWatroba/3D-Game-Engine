@@ -9,6 +9,7 @@
 #include <Engine/Mesh/Mesh_3D.h>
 #include <Engine\Audio\Sound.h>
 #include <Game\Misc\Bullet.h>
+#include <Game\AIController\AIController.h>
 #include <glad\glad.h>
 #include <iostream>
 
@@ -25,17 +26,16 @@ GameObject_3D::GameObject_3D()
 
 GameObject_3D::GameObject_3D(const GameObject_3D & p_NewObject_In) : Game_Object(p_NewObject_In)
 {
+	
+	auto transform_3D = static_cast<Transform_3D*>(p_NewObject_In.mipo_Components.at("Transform_3D"));
+	add_Component("Transform_3D", new Transform_3D(*transform_3D));
+
 	for (auto const& pair : p_NewObject_In.mipo_Components)
 	{
 		if (pair.second->get_Type() == "Mesh_3D")
 		{
 			auto mesh_3D = static_cast<Mesh_3D*>(pair.second);
 			add_Component("Mesh_3D", mesh_3D);
-		}
-		else if (pair.second->get_Type() == "Transform_3D")
-		{
-			auto transform_3D = static_cast<Transform_3D*>(pair.second);
-			add_Component("Transform_3D", new Transform_3D(*transform_3D));
 		}
 		else if (pair.second->get_Type() == "RenderComp_3D")
 		{
@@ -44,9 +44,31 @@ GameObject_3D::GameObject_3D(const GameObject_3D & p_NewObject_In) : Game_Object
 		}
 		else if (pair.second->get_Type() == "Character")
 		{
-			auto renderComp_3D = static_cast<Character*>(pair.second);
-			add_Component("RenderComp_3D", new Character(*renderComp_3D));
+			auto character = static_cast<Character*>(pair.second);
+			add_Component("Character", new Character(*character));
 		}
+		else if (pair.second->get_Type() == "BoxCollider_3D")
+		{
+			auto boxCollider_3D = static_cast<BoxCollider_3D*>(pair.second);
+			add_Component("BoxCollider_3D", new BoxCollider_3D(*boxCollider_3D));
+		}
+		else if (pair.second->get_Type() == "RigidBody")
+		{
+			auto rigidBody_3D = static_cast<RigidBody*>(pair.second);
+			add_Component("RigidBody", new RigidBody(*rigidBody_3D));
+		}
+		else if (pair.second->get_Type() == "Respond_Movement")
+		{
+			auto respond_Movement = static_cast<Respond_Movement*>(pair.second);
+			add_Component("Respond_Movement", new Respond_Movement(*respond_Movement));
+		}
+		else if (pair.second->get_Type() == "AI_Controller")
+		{
+			auto AI = static_cast<AIController*>(pair.second);
+			add_Component("AI_Controller", new AIController(*AI));
+		}
+
+
 	}
 
 	s_PrefabName = p_NewObject_In.s_PrefabName;

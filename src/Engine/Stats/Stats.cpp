@@ -18,3 +18,12 @@ Stats::Stats(const Stats &stat)
 	mass = stat.mass;
 	gravity = stat.gravity;
 }
+Stats::Stats(float inhealth, float inammo, float inmass, bool ingravity, glm::vec3 in_Path1, glm::vec3 in_Path2)
+{
+	health = inhealth;
+	ammo = inammo;
+	mass = inmass;
+	gravity = ingravity;
+	path1 = in_Path1;
+	path2 = in_Path2;
+}

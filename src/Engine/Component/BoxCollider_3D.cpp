@@ -8,7 +8,7 @@ BoxCollider_3D::~BoxCollider_3D()
 {}
 std::string BoxCollider_3D::get_Type()
 {
-	return "BoxCollider";
+	return "BoxCollider_3D";
 }
 
 void BoxCollider_3D::setUpBox(glm::vec3* minValues, glm::vec3* maxValues)
