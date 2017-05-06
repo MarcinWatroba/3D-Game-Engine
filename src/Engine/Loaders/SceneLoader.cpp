@@ -335,7 +335,7 @@ glm::quat SceneLoader::toQuat(const char* pc_Quaternion_In)
 	std::string s_Result;
 	int i_DataCounter = 0;
 	int i_Length = std::strlen(pc_Quaternion_In);
-	float f_Angle;
+	//float f_Angle;
 	//glm::vec3 v3_Vector;
 	glm::quat temp;
 	for (int i = 0; i < i_Length; i++)

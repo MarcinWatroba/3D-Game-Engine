@@ -26,12 +26,6 @@ Mesh_Instanced* Loader::get_MeshInstanced(std::string s_Name_In)
 	return mipo_MeshesInstanced.find(s_Name_In)->second;
 }
 
-Mesh_Instanced* Loader::get_MeshInstanced(std::string s_Name_In)
-{
-	std::cout << mipo_MeshesInstanced.find(s_Name_In)->second->get_VAO() << std::endl;
-	return mipo_MeshesInstanced.find(s_Name_In)->second;
-}
-
 Shader* Loader::get_Shader(std::string s_Name_In)
 {
 	return mipo_Shaders.find(s_Name_In)->second;
