@@ -17,15 +17,10 @@ protected:
 	//Position
 	float f_Yaw;
 	float f_Pitch;
-
-	float f_YawDelta;
-
-	float side;
-
-	glm::quat quat_Pitch;
-	glm::quat quat_Yaw;
 	float f_YawOther;
 	float f_PitchOther;
+	float f_YawDelta;
+	float f_PitchDelta;
 
 	//Vectors
 	glm::vec3 vec3_EyePos; // Camera position
@@ -52,14 +47,14 @@ public:
 	glm::vec3 get_CameraPos();
 
 	float get_YawDelta() { return f_YawDelta; }
-	glm::quat get_Yaw() { return quat_Yaw; }
+	float get_PitchDelta() { return f_PitchDelta; }
 
 	glm::quat get_Quat();
 
 	//Move camera using keyboard
 	void move_Keyboard(float f_Delta_In);
 
-	float get_CameraSide();
+	int get_CameraSide();
 
 	//Move camera using mouse
 	void move_Mouse(float f_Delta_In, glm::vec2 v2_MousePos_In, glm::vec2 v2_WindowSize_In);

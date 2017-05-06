@@ -44,12 +44,12 @@ Sound* Loader::get_Sound(std::string s_Name_In)
 void Loader::clean_Up()
 {
 	//Delete every memory
+	for (const auto& pair : mipo_Meshes) delete pair.second;
 	for (const auto& pair : mipo_Meshes3D) delete pair.second;
 	for (const auto& pair : mipo_MeshesInstanced) delete pair.second;
 	for (const auto& pair : mipo_TextureFiles) delete pair.second;
 	for (const auto& pair : mipo_Shaders) delete pair.second;
 	for (const auto& pair : snd_Audio) delete pair.second;
-	for (const auto& pair : mipo_Meshes) delete pair.second;
 }
 
 void Loader::ParseXML_Resources(const char* pc_FileName)
@@ -124,7 +124,6 @@ void Loader::ParseXML_Resources(const char* pc_FileName)
 		//Add shader
 		mipo_Shaders.insert(std::make_pair(i_ID, new Shader(s_NameVertex.c_str(), s_NameFragment.c_str(), s_NameGeometry.c_str())));
 	}
-
 
 	std::string font_FileLoc = po_Body->FirstChildElement("font_File_Location")->GetText();
 	for (tinyxml2::XMLElement* i = po_Body->FirstChildElement("font_Files")->FirstChildElement("new_File"); i != nullptr; i = i->NextSiblingElement("new_File"))

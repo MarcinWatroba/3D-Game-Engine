@@ -4,7 +4,6 @@
 #include <glm\gtc\type_ptr.hpp>
 #include <map>
 
-class Model;
 class Loader;
 class PrefabLoader;
 class Game_Object;
@@ -56,7 +55,7 @@ private:
 
 	void identify_Component_Instanced(GameObject_Instanced * po_GameObject_In, std::string & s_ToProcess_In);
 
-
+	int count;
 
 	//Add children
 	void add_Children(std::vector<std::string>& vs_Children_In, std::string s_ToProcess_In);
@@ -67,6 +66,8 @@ public:
 
 	//Main constructor
 	SceneLoader(const char* pc_FileName_In, Loader* po_Loader_In, PrefabLoader* po_PrefLoader_In, std::map<std::string, Game_Object*>& mspo_GameObjects_In, std::map<std::string, Sound*>& snd_Audio_In);
+
+	int get_Count();
 
 	//Set amount of lights to shader
 	glm::vec3 get_LightPosition(int i);

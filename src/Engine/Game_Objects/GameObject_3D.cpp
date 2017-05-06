@@ -364,7 +364,6 @@ void GameObject_3D::shootBullet()
 	}
 }
 
-
 void GameObject_3D::resetCount()
 {
 	count = fireRate;

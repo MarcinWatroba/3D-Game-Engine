@@ -32,6 +32,8 @@ public:
 	//Get font
 	Game_Object* get_Prefab(std::string s_Name_In);
 
+	std::map <std::string, Game_Object*>& get_PrefabMap();
+
 	//Clean up the memory
 	void clean_Up();
 };

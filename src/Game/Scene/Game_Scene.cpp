@@ -30,7 +30,7 @@ void Game_Scene::init()
 
 	b_Init = false;
 
-	camera_3D = new Camera_3D(45.f, 1080.f / 720.0f, 0.1f, 1000.f);
+	camera_3D = new Camera_3D(45.f, v2_WindowSize.x / v2_WindowSize.y, 0.1f, 1000.f);
 	camera_3D->set_CameraPos(glm::vec3(0.f, -20.f, 0.f));
 	
 	if (firstTime)
@@ -64,16 +64,13 @@ void Game_Scene::init()
 	ui_light_Amount = 0;
 	for (auto const& pair : mspo_Objects)
 	{
-
 		pos[posNum] = static_cast<GameObject_3D*>(pair.second)->get_Position();
-		posNum++;
 		if (pair.second->get_Tag() == "Light")
 		{
 			ui_light_Amount++;
 			num++;
 		}
-
-		
+		posNum++;
 	}
 
 	for (unsigned int i = 0; i < ui_light_Amount; i++)
@@ -205,7 +202,7 @@ void Game_Scene::keyboard_Input(GLfloat f_Delta_In, GLboolean* pab_KeyArray_In, 
 }
 
 void Game_Scene::mouse_Input(GLboolean* pab_MouseArray_In, GLboolean* pab_LockedMouse_In)
-//void Game_Scene::mouse_Input(GLboolean* pab_MouseArray_In, GLfloat f_Delta_In)
+
 {
 	if (!b_Init) { return; }
 
@@ -249,7 +246,7 @@ void Game_Scene::update_Scene(GLfloat f_Delta_In, glm::vec2 v2_MousePos_In)
 
 	if (findPlayer() == false) {
 		//quit to main menu
-		std::cout << "Game Over, Loser!" << std::endl;
+		//std::cout << "Game Over, Loser!" << std::endl;
 	}
 	if (i_numEnemies == 0) {
 		//level win!
@@ -262,7 +259,7 @@ void Game_Scene::update_Scene(GLfloat f_Delta_In, glm::vec2 v2_MousePos_In)
 		{
 			//game win
 		}
-		std::cout << "Winner Winner Chicken Dinner!" << std::endl;
+		//std::cout << "Winner Winner Chicken Dinner!" << std::endl;
 	}
 
 	if (b_Init)
@@ -342,15 +339,10 @@ void Game_Scene::update_Scene(GLfloat f_Delta_In, glm::vec2 v2_MousePos_In)
 //Render all scene objects
 void Game_Scene::render()
 {
-	glClearColor(0.1f, 0.1f, 0.1f, 1.f);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glEnable(GL_DEPTH_TEST);
-
 	if (b_Init)
 	{
 		glEnable(GL_BLEND);
 		glUseProgram(po_Loader->get_Shader("0")->get_Program());
-
 		unsigned int tex_No = 0;
 		unsigned int light_No = 0;
 

@@ -44,6 +44,7 @@ void Textbox::set_Text(std::string s_Text_In)
 void Textbox::erase_Letter()
 {
 	vp_Lines.back()->erase_Letter();
+	s_Text.pop_back();
 }
 
 void Textbox::insert_NewLine()
@@ -70,6 +71,11 @@ bool Textbox::is_LineEmpty()
 	return vp_Lines.back()->is_Empty();
 }
 
+std::string Textbox::get_Text()
+{
+	return s_Text;
+}
+
 void Textbox::update()
 {
 	static_cast<Transform_2D*>(mipo_Components.find("Transform_2D")->second)->update();
@@ -84,5 +90,5 @@ void Textbox::render(Shader * p_Shader_In)
 	{
 		vp_Lines.at(i)->set_RenderStatus(get_RenderStatus());
 		vp_Lines.at(i)->render(p_Shader_In);
-	}
+	}	
 }

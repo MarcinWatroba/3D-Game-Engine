@@ -21,8 +21,9 @@
 
 #include <iostream>
 
-SceneLoader::SceneLoader(const char* pc_FileName_In, Loader* po_Loader_In, PrefabLoader* po_PrefLoader_In, std::map<std::string, Game_Object*>& mspo_GameObjects_In, std::map<std::string, Sound*>& snd_Audio_In)
+int SceneLoader::get_Count() { return count; }
 
+SceneLoader::SceneLoader(const char* pc_FileName_In, Loader* po_Loader_In, PrefabLoader* po_PrefLoader_In, std::map<std::string, Game_Object*>& mspo_GameObjects_In, std::map<std::string, Sound*>& snd_Audio_In)
 {
 	glClearColor(0.1f, 0.1f, 0.1f, 1.f);
 	glEnable(GL_DEPTH_TEST);
@@ -58,7 +59,7 @@ SceneLoader::SceneLoader(const char* pc_FileName_In, Loader* po_Loader_In, Prefa
 
 		if (!desired_Prefab->get_ChildrenNames().empty())
 		{
-			for (int i = 0; i < desired_Prefab->get_ChildrenNames().size(); i++)
+			for (unsigned int i = 0; i < desired_Prefab->get_ChildrenNames().size(); i++)
 			{
 				std::string s_ChildName = s_ObjectName + " Child " + std::to_string(i_Incrementor + i);
 
@@ -145,15 +146,18 @@ SceneLoader::SceneLoader(const char* pc_FileName_In, Loader* po_Loader_In, Prefa
 		if (s_Type == "Point_Light")
 		{
 			auto desired_Prefab = dynamic_cast<Point_Light*>(po_PrefLoader_In->get_Prefab(s_Prefab));
-			mspo_GameObjects_In.insert(std::pair<std::string, Game_Object*>(s_ObjectName, new Point_Light(*desired_Prefab)));
-			auto desired_Object = dynamic_cast<Point_Light*>(mspo_GameObjects_In.find(s_ObjectName)->second);
+			auto desired_Object = new Point_Light(*desired_Prefab);
 
-			desired_Object->set_Name(s_ObjectName);
+			desired_Object->set_Name(s_ObjectName + std::to_string(i_NumOfPointLight));
 			desired_Object->set_Position(v3_Position);
 			desired_Object->set_ObjectID(i_Incrementor);
 			desired_Object->set_ID(i_NumOfPointLight);
+			f_pos[i_NumOfPointLight] = v3_Position;
+			f_radii[i_NumOfPointLight] = desired_Object->get_Radius();
 			i_NumOfPointLight++;
 			i_Incrementor++;
+
+			mspo_GameObjects_In.insert(std::pair<std::string, Game_Object*>(desired_Object->get_Name(), desired_Object));
 		}
 	}
 
@@ -190,9 +194,16 @@ SceneLoader::SceneLoader(const char* pc_FileName_In, Loader* po_Loader_In, Prefa
 			// else read the position vector in as previous
 			v3_Position = to3DVector(it->Attribute("position"));
 		}
-		b_loop = it->Attribute("loop");
-		b_threeD = it->Attribute("threeD");
-		b_stream = it->Attribute("stream");
+
+		std::string s_temp = it->Attribute("loop");
+		b_loop = (s_temp == "true");
+
+		s_temp = it->Attribute("threeD");
+		b_threeD = (s_temp == "true");
+
+		s_temp = it->Attribute("stream");
+		b_stream = (s_temp == "true");
+
 		snd_Audio_In.insert(std::pair<std::string, Sound*>(s_Name, new Sound("assets/audio/" + s_Name + ".wav")));
 
 		// Add the sound with the above data
@@ -202,9 +213,10 @@ SceneLoader::SceneLoader(const char* pc_FileName_In, Loader* po_Loader_In, Prefa
 		sound->SetVolume(f_Volume);
 		if (parent)
 		{
-			sound->setParent(parent);
 		}
 	}
+
+	count = i_Incrementor;//???
 }
 
 void SceneLoader::identify_Component(GameObject_3D* po_GameObject_In, std::string& s_ToProcess_In)
@@ -616,5 +628,4 @@ void SceneLoader::prepare_DepthCube(Shader* p_Shader_In, glm::vec3 light_Pos, gl
 
 	glActiveTexture(GL_TEXTURE2 + tex_Num);
 	glBindTexture(GL_TEXTURE_CUBE_MAP, ui_Depth_In.y);
-
 }

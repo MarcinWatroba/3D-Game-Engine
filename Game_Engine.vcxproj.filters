@@ -609,6 +609,9 @@
     <Xml Include="assets\scenes\Robot_Scene.xml">
       <Filter>Resource Files</Filter>
     </Xml>
+    <Xml Include="assets\Prefabs.xml">
+      <Filter>Resource Files</Filter>
+    </Xml>
   </ItemGroup>
   <ItemGroup>
     <Media Include="assets\audio\shooting_pistol.wav">

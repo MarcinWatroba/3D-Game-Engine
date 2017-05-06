@@ -10,7 +10,7 @@ private:
 	//Attenutation constant
 
 
-	unsigned int i_ID; // ID of the point light
+	int i_ID; // ID of the point light
 
 public:
 	//Constructor
@@ -20,10 +20,17 @@ public:
 
 	//Main constructor
 	Point_Light(glm::vec3 v3_Ambient_In, glm::vec3 v3_Diffuse_In, glm::vec3 v3_Specular_In, float f_Radius_In);
-	void set_ID(unsigned int i_ID_In);
+	void set_ID(int i_ID_In);
+
 	void set_Radius(float f_Radius_In);
 	float get_Radius();
 
 	//Update light
 	void update_Shader(Shader* p_Shader_In);
+
+	int get_ID();
+
+	float get_Constant();
+	float get_Linear();
+	float get_Quadratic();
 };

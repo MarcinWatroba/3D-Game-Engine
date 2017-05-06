@@ -49,7 +49,8 @@ PrefabLoader::PrefabLoader(const char * pc_FileName_In, Loader * po_Loader_In, S
 			object->set_Name(s_ObjectName);
 			object->set_Prefab(s_ObjectName);
 			object->add_Component("Transform_3D", new Transform_3D());
-			if (s_StatsName != "")
+
+			if (s_StatsName != "" && po_StatsLoader != nullptr)
 			{
 				object->add_Component("Character", new Character(po_StatsLoader->get_Stat(s_StatsName)));
 				object->add_Component("RigidBody", new RigidBody(po_StatsLoader->get_Stat(s_StatsName)));
@@ -358,6 +359,11 @@ glm::quat PrefabLoader::toQuat(const char * pc_Quaternion_In)
 Game_Object * PrefabLoader::get_Prefab(std::string s_Name_In)
 {
 	return mipo_Prefabs.find(s_Name_In)->second;
+}
+
+std::map<std::string, Game_Object*>& PrefabLoader::get_PrefabMap()
+{
+	return mipo_Prefabs;
 }
 
 void PrefabLoader::clean_Up()

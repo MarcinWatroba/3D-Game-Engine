@@ -36,7 +36,7 @@
 </objects>
 
 <lights>
-	<new_Light name = "Main Light" type="Point_Light" tag="Light" position="(0.000000, 0.000000, 0.000000)" ambient="(0.150000, 0.150000, 0.150000)" diffuse="(0.800000, 0.800000, 0.800000)" specular="(1.000000, 1.000000, 1.000000)" radius="32.000000"/>
+	<new_Light name = "Main Light" type="Point_Light" tag="Light" position="(0.000000, 0.000000, 0.000000)" ambient="(0.150000, 0.150000, 0.150000)" diffuse="(0.800000, 0.800000, 0.800000)" specular="(1.000000, 1.000000, 1.000000)" radius="20.000000"/>
     <new_Light name = "Lamp Light" type="Point_Light" tag="Light" position="(0.000000, 0.000000, 0.000000)" ambient="(0.050000, 0.050000, 0.050000)" diffuse="(0.800000, 0.800000, 0.800000)" specular="(1.000000, 1.000000, 1.000000)" radius="16.000000"/>
 </lights>
 

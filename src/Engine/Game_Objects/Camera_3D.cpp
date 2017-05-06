@@ -21,8 +21,8 @@ Camera_3D::Camera_3D(float f_FoV_In, float f_Ratio_In, float f_NearPlane_In, flo
 void Camera_3D::update()
 {
 	//Create quaternions
-	//glm::quat quat_Pitch;
-	//glm::quat quat_Yaw;
+	glm::quat quat_Pitch;
+	glm::quat quat_Yaw;
 
 	quat_Pitch = glm::angleAxis(glm::radians(f_Pitch), glm::vec3(1.f, 0.f, 0.f)); //Pitch is a rotation around X axis // Usually called the right vector
 	quat_Yaw = glm::angleAxis(glm::radians(f_Yaw), glm::vec3(0.f, 1.f, 0.f)); // Yaw is a rotation around Y axis // Usually called the upper vector
@@ -68,6 +68,14 @@ void Camera_3D::set_Speed(float f_Speed_In)
 	f_Speed = f_Speed_In;
 }
 
+int Camera_3D::get_CameraSide()
+{
+	glm::vec3 euler = glm::eulerAngles(quat_Orientation);
+
+	if (euler.y >= 0) return 1;
+	if (euler.y < 0) return -1;
+}
+
 void Camera_3D::move_Keyboard(float f_Delta_In)
 {
 	//Extract view matrix to calculate movement
@@ -93,9 +101,10 @@ void Camera_3D::move_Mouse(float f_Delta_In, glm::vec2 v2_MousePos_In, glm::vec2
 	float mouseY_Sensitivity = 1.f * f_Delta_In;
 
 	//Calculate yaw and pitch
-	f_Yaw += mouseX_Sensitivity * deltaMouse_X;
 	f_YawDelta = mouseX_Sensitivity * deltaMouse_X;
-	f_Pitch += mouseY_Sensitivity * deltaMouse_Y;
+	f_Yaw += f_YawDelta;
+	f_PitchDelta = mouseY_Sensitivity * deltaMouse_Y;
+	f_Pitch += f_PitchDelta;
 
 	v2_LastMousePos = v2_LastClickPos;
 }
@@ -200,19 +209,6 @@ void Camera_3D::set_CameraPos(glm::vec3 v3_Pos_In)
 glm::vec3 Camera_3D::get_CameraPos()
 {
 	return -vec3_EyePos;
-}
-
-float Camera_3D::get_CameraSide()
-{
-	glm::vec3 tempEuler = glm::eulerAngles(quat_Orientation);
-	if (tempEuler.y >= 0)
-	{
-		return 1;
-	}
-	else
-	{
-		return -1;
-	}
 }
 
 glm::quat Camera_3D::get_Quat()
