@@ -29,7 +29,7 @@
 		name = "Back Wall"
 		container = "No"
 		tag = "Object"
-		mesh_ID = "7"
+		mesh_ID = "8"
 		component = ""
 		diffuse_ID = "5"
 		specular_ID = "7"
@@ -37,18 +37,18 @@
 		texture_Tiling = "(8, 8)"
 		init_Mode = "0"
 		origin = "(0,0, 0)"
-		position = "(0.000, 26.582, 39.705)"
+		position = "(0.000, 0, 40)"
 		orientationX = "0, (1, 0, 0)"
-		orientationY = "0, (0, 1, 0)"
+		orientationY = "90, (0, 1, 0)"
 		orientationZ = "0, (0, 0, 1)"
-		scale = "(90.995, 54.860, 1)"
+		scale = "(1, 5.5, 10)"
 		>
 	</new_Object3D>
 	<new_Object3D
 		name = "Front Wall"
 		container = "No"
 		tag = "Object"
-		mesh_ID = "7"
+		mesh_ID = "8"
 		component = ""
 		diffuse_ID = "5"
 		specular_ID = "7"
@@ -56,18 +56,18 @@
 		texture_Tiling = "(8, 8)"
 		init_Mode = "0"
 		origin = "(0,0, 0)"
-		position = "(0.000, 26.582, -39.889)"
+		position = "(0.000, 0, -40)"
 		orientationX = "0, (1, 0, 0)"
-		orientationY = "0, (0, 1, 0)"
+		orientationY = "90, (0, 1, 0)"
 		orientationZ = "0, (0, 0, 1)"
-		scale = "(90.995, 54.860, 1)"
+		scale = "(1, 5.5, 10)"
 		>
 	</new_Object3D>
 	<new_Object3D
 		name = "Left Wall"
 		container = "No"
 		tag = "Object"
-		mesh_ID = "7"
+		mesh_ID = "8"
 		component = ""
 		diffuse_ID = "5"
 		specular_ID = "7"
@@ -75,18 +75,18 @@
 		texture_Tiling = "(8, 8)"
 		init_Mode = "0"
 		origin = "(0,0, 0)"
-		position = "(-44.491, 26.582, -0.363)"
+		position = "(-45, 0, -0)"
 		orientationX = "0, (1, 0, 0)"
-		orientationY = "90.000, (0, 1, 0)"
+		orientationY = "0.000, (0, 1, 0)"
 		orientationZ = "0, (0, 0, 1)"
-		scale = "(79.935, 54.860, 1)"
+		scale = "(1, 5.5, 10)"
 		>
 	</new_Object3D>
 	<new_Object3D
 		name = "Right Wall"
 		container = "No"
 		tag = "Object"
-		mesh_ID = "7"
+		mesh_ID = "9"
 		component = ""
 		diffuse_ID = "5"
 		specular_ID = "7"
@@ -94,11 +94,11 @@
 		texture_Tiling = "(8, 8)"
 		init_Mode = "0"
 		origin = "(0,0, 0)"
-		position = "(44.724, 26.582, -0.363)"
+		position = "(45, 0, 0)"
 		orientationX = "0, (1, 0, 0)"
-		orientationY = "90.000, (0, 1, 0)"
+		orientationY = "0.000, (0, 1, 0)"
 		orientationZ = "0, (0, 0, 1)"
-		scale = "(79.935, 54.860, 1)"
+		scale = "(1, 5.5, 10)"
 		>
 	</new_Object3D>
 	<new_Object3D
@@ -251,7 +251,7 @@
 		
 		init_Mode = "0"
 		origin = "(0,0, 0)"
-		position = "(44.052, 33.263, -14.460)"
+		position = "(44.052, 33.263, -2)"
 		orientationX = "0.000, (1, 0, 0)"
 		orientationY = "90.000, (0, 1, 0)"
 		orientationZ = "0, (0, 0, 1)"
@@ -270,7 +270,7 @@
 		texture_Tiling = "(12, 12)"	
 		init_Mode = "0"
 		origin = "(0,0, 0)"
-		position = "(44.052, 33.263, 14.460)"
+		position = "(44.052, 33.263, 21)"
 		orientationX = "0.000, (1, 0, 0)"
 		orientationY = "90.000, (0, 1, 0)"
 		orientationZ = "0, (0, 0, 1)"
@@ -827,7 +827,19 @@
 <sounds>
 	<new_sound
 	name = "rain"
-	ID = "0"
+	ID = "7"
+	volume = "0.3"
+	object = ""
+	position = "(0,0,0)"
+	loop = "true"
+	threeD = "true"
+	stream = "false"
+	>
+	</new_sound>
+
+	<new_sound
+	name = "tv_static"
+	ID = "5"
 	volume = "0.3"
 	object = ""
 	position = "(0,0,0)"
@@ -839,11 +851,23 @@
 	
 	<new_sound
 	name = "walking"
-	ID = "1"
+	ID = "0"
 	volume = "0.8"
 	object = "Robot"
 	position = "(0,0,0)"
 	loop = "true"
+	threeD = "true"
+	stream = "false"
+	>
+	</new_sound>
+	
+	<new_sound
+	name = "jumping"
+	ID = "1"
+	volume = "0.8"
+	object = "Robot"
+	position = "(0, 0, 0)"
+	loop = "false"
 	threeD = "true"
 	stream = "false"
 	>
