@@ -5,6 +5,7 @@
 #include <vector>
 
 class Bullet;
+class Sound;
 
 class GameObject_3D : public Game_Object
 {
@@ -18,10 +19,11 @@ protected:
 	std::vector<GameObject_3D*> bulletList;
 	float count = 0;
 	float fireRate = 10;
-	float bulletNumber = 0;
+	unsigned int bulletNumber = 0;
 public:
 	//Constructor
 	GameObject_3D();
+	GameObject_3D(const GameObject_3D &p_NewObject_In);
 
 	void update();
 	void force_Update();
@@ -54,9 +56,8 @@ public:
 	void jump(glm::vec3 v3_Direction_In);
 	void turn(float f_Angle_In, glm::vec3 v3_TurnAxis_In);
 	void setFiring(bool input);
-	void createBullet(Bullet* bulletTemplate);
+	void createBullet(Bullet* bulletTemplate, Sound*temp_Audio);
 	void shootBullet();
 	void resetCount();
-
-	
+	std::string get_Type();
 };

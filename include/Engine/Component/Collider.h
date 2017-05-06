@@ -9,11 +9,11 @@
 class Collider: public Component
 {
 private:
-
 public:
 	Collider();
 	~Collider();
-
+	Collider(const Collider &p_NewComp_In);
+	std::string get_Type() = 0;
 };
 
 #endif;

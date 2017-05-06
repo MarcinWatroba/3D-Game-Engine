@@ -15,16 +15,22 @@
 #include <Engine\Component\Character.h>
 
 #include <glad\glad.h>
+#include <Engine\Audio\Sound.h>
+#include <Engine\Loaders\PrefabLoader.h>
+#include <Engine\Lighting\Light.h>
 
 #include <iostream>
 
-SceneLoader::SceneLoader(const char* pc_FileName_In, Loader* po_Loader_In, std::map<std::string, Game_Object*>& mspo_GameObjects_In)
+int SceneLoader::get_Count() { return count; }
+
+SceneLoader::SceneLoader(const char* pc_FileName_In, Loader* po_Loader_In, PrefabLoader* po_PrefLoader_In, std::map<std::string, Game_Object*>& mspo_GameObjects_In, std::map<std::string, Sound*>& snd_Audio_In)
 {
 	glClearColor(0.1f, 0.1f, 0.1f, 1.f);
 	glEnable(GL_DEPTH_TEST);
 
 	po_SceneLoader = po_Loader_In;
 	i_NumOfPointLight = 0;
+	int i_Incrementor = 0;
 	shadowMapDimensions = glm::vec2(1024, 1024);
 
 	aspect = shadowMapDimensions.x / shadowMapDimensions.y;
@@ -34,105 +40,47 @@ SceneLoader::SceneLoader(const char* pc_FileName_In, Loader* po_Loader_In, std::
 
 	tinyxml2::XMLDocument object_File;
 	object_File.LoadFile(pc_FileName_In);
+	
 	tinyxml2::XMLElement* body = object_File.FirstChildElement("objects");
-
 	for (tinyxml2::XMLElement* it = body->FirstChildElement("new_Object3D"); it != nullptr; it = it->NextSiblingElement("new_Object3D"))
 	{
 		std::cout << "Adding new object to the scene..." << "\n";
 
-		//Extract data
-		std::vector<std::string> vs_Children;
-		std::string i_MeshID;
-		std::string i_DiffuseID;
-		std::string i_SpecularID;
-		glm::vec2 v2_Tiling;
-		std::string s_Components;
-		int i_InitMode;
-		float f_Shiny;
-		glm::vec3 v3_Origin;
-		glm::vec3 v3_Position;
-		glm::quat quat_OrientationX;
-		glm::quat quat_OrientationY;
-		glm::quat quat_OrientationZ;
-		glm::vec3 v3_Scale;
-		std::string s_Children;
-		std::string s_Tag;
-
 		std::string s_ObjectName = it->Attribute("name");
-		std::string s_Container = it->Attribute("container");
+		std::string s_Prefab = it->Attribute("prefab");
+		glm::vec3 v3_Position = to3DVector(it->Attribute("position"));
+		glm::vec3 v3_Scale = to3DVector(it->Attribute("scale"));
+		glm::vec3 v3_Origin = to3DVector(it->Attribute("origin"));
+		glm::quat v3_Orientation = toQuat(it->Attribute("orientation"));
 
-		if (s_Container == "Yes") // This object has children
+		auto desired_Prefab = static_cast<GameObject_3D*>(po_PrefLoader_In->get_Prefab(s_Prefab));
+		mspo_GameObjects_In.insert(std::pair<std::string, Game_Object*>(s_ObjectName, new GameObject_3D(*desired_Prefab)));
+		auto desired_Object = static_cast<GameObject_3D*>(mspo_GameObjects_In.find(s_ObjectName)->second);
+
+		if (!desired_Prefab->get_ChildrenNames().empty())
 		{
-			//Add variables
-			s_Components = it->Attribute("component");
-			v3_Origin = to3DVector(it->Attribute("origin"));
-			v3_Position = to3DVector(it->Attribute("position"));
-			quat_OrientationX = toQuat(it->Attribute("orientationX"));
-			quat_OrientationY = toQuat(it->Attribute("orientationY"));
-			quat_OrientationZ = toQuat(it->Attribute("orientationZ"));
-			v3_Scale = to3DVector(it->Attribute("scale"));
-			s_Children = it->Attribute("children");
-			s_Tag = it->Attribute("tag");
-				
-			//Typical process of adding new 3D object
-			mspo_GameObjects_In.insert(std::pair<std::string, Game_Object*>(s_ObjectName, new GameObject_3D()));
-			auto object = static_cast<GameObject_3D*>(mspo_GameObjects_In.find(s_ObjectName)->second);
-			object->set_Name(s_ObjectName);
-			object->add_Component("Transform_3D", new Transform_3D());
-			if (s_Components != "") add_Components(object, s_Components);
-			object->set_RenderStatus(false);
-			object->set_Position(v3_Position);
-			object->set_Origin(v3_Origin);
-			object->set_Rotation(quat_OrientationZ * quat_OrientationY * quat_OrientationX);
-			object->set_Scale(v3_Scale);
-			object->set_Tag(s_Tag);
-			if (s_Children != "") // Make sure that children are really there
+			for (unsigned int i = 0; i < desired_Prefab->get_ChildrenNames().size(); i++)
 			{
-				//Add child to the object
-				add_Children(vs_Children, s_Children);
-				for (auto it = vs_Children.begin(); it != vs_Children.end(); ++it)
-				{
-					auto found_Child = static_cast<GameObject_3D*>(mspo_GameObjects_In.find(*it)->second);
-					object->add_Child(found_Child);
-				}
+				std::string s_ChildName = s_ObjectName + " Child " + std::to_string(i_Incrementor + i);
+
+				auto prefab_Child = static_cast<GameObject_3D*>(po_PrefLoader_In->get_Prefab(desired_Prefab->get_ChildrenNames()[i]));
+				mspo_GameObjects_In.insert(std::pair<std::string, GameObject_3D*>(s_ChildName, new GameObject_3D(*prefab_Child)));
+				auto found_Child = mspo_GameObjects_In.find(s_ChildName)->second;
+				found_Child->set_Name(s_ChildName);
+				found_Child->set_ObjectID(i_Incrementor);
+				found_Child->set_Tag("Object_NonSavable");
+				desired_Object->add_Child(found_Child);
+				desired_Object->add_ChildName(desired_Prefab->get_ChildrenNames()[i]);
 			}
 		}
-		else // It doesn't
-		{
-			//Add variables
-			s_Components = it->Attribute("component");
-			i_MeshID = it->Attribute("mesh_ID");
-			i_DiffuseID = it->Attribute("diffuse_ID");
-			i_SpecularID = it->Attribute("specular_ID");
-			v2_Tiling = to2DVector(it->Attribute("texture_Tiling"));
-			s_Tag = it->Attribute("tag");
-			i_InitMode = std::atoi(it->Attribute("init_Mode"));
-			f_Shiny = std::strtof(it->Attribute("shininess"), nullptr);
-			v3_Origin = to3DVector(it->Attribute("origin"));
-			v3_Position = to3DVector(it->Attribute("position"));
-			quat_OrientationX = toQuat(it->Attribute("orientationX"));
-			quat_OrientationY = toQuat(it->Attribute("orientationY"));
-			quat_OrientationZ = toQuat(it->Attribute("orientationZ"));
-			v3_Scale = to3DVector(it->Attribute("scale"));
 
-			//Typical process of adding new 3D object
-			mspo_GameObjects_In.insert(std::pair<std::string, Game_Object*>(s_ObjectName, new GameObject_3D()));
-			auto object = static_cast<GameObject_3D*>(mspo_GameObjects_In.find(s_ObjectName)->second);
-			object->set_Name(s_ObjectName);
-			object->add_Component("Mesh_3D", po_Loader_In->get_Mesh3D(i_MeshID));
-			object->add_Component("Transform_3D", new Transform_3D());
-			object->add_Component("RenderComp_3D", new RenderComp_3D());
-			if (s_Components != "") add_Components(object, s_Components);
-			object->set_Position(v3_Position);
-			object->set_Origin(v3_Origin);
-			object->set_Rotation(quat_OrientationZ * quat_OrientationY * quat_OrientationX);
-			object->set_Scale(v3_Scale);
-			object->add_Texture("Diffuse_Map", po_Loader_In->get_Texture(i_DiffuseID));
-			object->add_Texture("Specular_Map", po_Loader_In->get_Texture(i_SpecularID));
-			object->set_Tiles(v2_Tiling);
-			object->set_Shininess(f_Shiny);
-			object->set_Tag(s_Tag);
-		}
+		desired_Object->set_Name(s_ObjectName);
+		desired_Object->set_Position(v3_Position);
+		desired_Object->set_Scale(v3_Scale);
+		desired_Object->set_Rotation(v3_Orientation);
+		desired_Object->set_Origin(v3_Origin);
+		desired_Object->set_ObjectID(i_Incrementor);
+		i_Incrementor++;
 	}
 	for (tinyxml2::XMLElement* it = body->FirstChildElement("new_ObjectParticle"); it != nullptr; it = it->NextSiblingElement("new_ObjectParticle"))
 	{
@@ -151,7 +99,11 @@ SceneLoader::SceneLoader(const char* pc_FileName_In, Loader* po_Loader_In, std::
 		glm::quat quat_OrientationY = toQuat(it->Attribute("orientationY"));
 		glm::quat quat_OrientationZ = toQuat(it->Attribute("orientationZ"));
 		glm::vec3 v3_Scale = to3DVector(it->Attribute("scale"));
-		int i_maxParticles = std::atoi(it->Attribute("max_Particles"));
+		unsigned int i_maxParticles = std::atoi(it->Attribute("max_Particles"));
+		float life = std::atof(it->Attribute("particle_Life"));
+		glm::vec3 v3_Range = to3DVector(it->Attribute("particle_Range"));
+		glm::vec3 v3_Speed = to3DVector(it->Attribute("particle_Speed"));
+		glm::vec3 v3_Colour = to3DVector(it->Attribute("particle_Colour"));
 
 		mspo_GameObjects_In.insert(std::pair<std::string, Game_Object*>(s_ObjectName, new GameObject_Instanced()));
 		auto object = static_cast<GameObject_Instanced*>(mspo_GameObjects_In.find(s_ObjectName)->second);
@@ -171,69 +123,100 @@ SceneLoader::SceneLoader(const char* pc_FileName_In, Loader* po_Loader_In, std::
 		object->add_Texture("Diffuse_Map", po_Loader_In->get_Texture(i_DiffuseID));
 		object->set_Tiles(v2_Tiling);
 		object->set_Tag(s_Tag);
+		object->setMax(i_maxParticles);
+		object->set_Range(v3_Range);
+		object->set_Particle_Speed(v3_Speed);
+		object->set_Colour(v3_Colour);
+		object->set_Life(life);
 	}
 
 
-	//Find lights
 	body = object_File.FirstChildElement("lights");
-	int num = 0;
+
+	i_NumOfPointLight = 0;
 	for (tinyxml2::XMLElement* it = body->FirstChildElement("new_Light"); it != nullptr; it = it->NextSiblingElement("new_Light"))
 	{
-		std::cout << "Adding lights to the scene..." << "\n";
+		std::cout << "Adding new light to the scene..." << "\n";
 
-		//Add variables
-		std::string s_Type;
-		int i_LightID;
-		glm::vec3 v3_Ambient;
-		glm::vec3 v3_Diffuse;
-		glm::vec3 v3_Specular;
-		glm::vec3 v3_Direction;
-		glm::vec3 v3_Position;
-		float f_lRadius;
-		std::string s_Tag;
+		std::string s_ObjectName = it->Attribute("name");
+		std::string s_Prefab = it->Attribute("prefab");
+		glm::vec3 v3_Position = to3DVector(it->Attribute("position"));
+		std::string s_Type = it->Attribute("type");
 
-		s_Type = it->Attribute("type");
-		i_LightID = std::atoi(it->Attribute("light_ID"));
-		s_Tag = it->Attribute("tag");
-		std::string s_Name = s_Type + "_" + std::to_string(i_LightID);
-
-		if (s_Type == "Directional") // Later
+		if (s_Type == "Point_Light")
 		{
-			//TO-DO
-		}
-		else if (s_Type == "Spotlight") // Later
-		{
-			//TO-DO
-		}
-		else if (s_Type == "Point_Light")
-		{
+			auto desired_Prefab = dynamic_cast<Point_Light*>(po_PrefLoader_In->get_Prefab(s_Prefab));
+			auto desired_Object = new Point_Light(*desired_Prefab);
 
-			//Point light
-			v3_Position = to3DVector(it->Attribute("position"));
-			v3_Ambient = to3DVector(it->Attribute("ambient"));
-			v3_Diffuse = to3DVector(it->Attribute("diffuse"));
-			v3_Specular = to3DVector(it->Attribute("specular"));
-			f_lRadius = std::strtof(it->Attribute("radius"), nullptr);
-			mspo_GameObjects_In.insert(std::pair<std::string, Game_Object*>(s_Name, new Point_Light(v3_Ambient, v3_Diffuse, v3_Specular, f_lRadius, i_LightID)));
+			desired_Object->set_Name(s_ObjectName + std::to_string(i_NumOfPointLight));
+			desired_Object->set_Position(v3_Position);
+			desired_Object->set_ObjectID(i_Incrementor);
+			desired_Object->set_ID(i_NumOfPointLight);
+			f_pos[i_NumOfPointLight] = v3_Position;
+			f_radii[i_NumOfPointLight] = desired_Object->get_Radius();
 			i_NumOfPointLight++;
-			
-			auto point_Light = static_cast<Point_Light*>(mspo_GameObjects_In.find(s_Name)->second);
-			point_Light->add_Component("Mesh_3D", po_Loader_In->get_Mesh3D("7"));
-			point_Light->add_Component("Transform_3D", new Transform_3D());
-			point_Light->add_Component("RenderComp_3D", new RenderComp_3D());
-			point_Light->set_Position(v3_Position);
-			point_Light->set_RenderStatus(false);
-			point_Light->add_Texture("Diffuse_Map", po_Loader_In->get_Texture("7"));
-			point_Light->add_Texture("Specular_Map", po_Loader_In->get_Texture("7"));
-			point_Light->set_Tiles(glm::vec2(1.f, 1.f));
-			point_Light->set_Shininess(1.f);
-			point_Light->set_Tag(s_Tag);
-			point_Light->set_Radius(f_lRadius);
-			f_pos[num] = v3_Position;
-			f_radii[num] = f_lRadius;
-			num++;
+			i_Incrementor++;
+
+			mspo_GameObjects_In.insert(std::pair<std::string, Game_Object*>(desired_Object->get_Name(), desired_Object));
 		}
 	}
+
+	// Find Sounds
+	body = object_File.FirstChildElement("sounds");
+
+	for (tinyxml2::XMLElement* it = body->FirstChildElement("new_sound"); it != nullptr; it = it->NextSiblingElement("new_sound")) {
+		std::cout << "Adding sound to the scene" << "\n";
+
+		// Add Variables
+		std::string s_Name;
+		int i_ID;
+		float f_Volume;
+		std::string s_Object;
+		glm::vec3 v3_Position;
+		bool b_loop;
+		bool b_threeD;
+		bool b_stream;
+		GameObject_3D* parent = nullptr;
+
+		// Extract the Data
+		s_Name = it->Attribute("name");
+		i_ID = atoi(it->Attribute("ID"));
+		f_Volume = atof(it->Attribute("volume"));
+		// If Object is not empty then...
+		if (!s_Object.empty())
+		{
+			// position is same as that objects
+			parent = static_cast<GameObject_3D*>(mspo_GameObjects_In.find(s_Object)->second);
+			v3_Position = parent->get_Position();
+		}
+		else
+		{
+			// else read the position vector in as previous
+			v3_Position = to3DVector(it->Attribute("position"));
+		}
+
+		std::string s_temp = it->Attribute("loop");
+		b_loop = (s_temp == "true");
+
+		s_temp = it->Attribute("threeD");
+		b_threeD = (s_temp == "true");
+
+		s_temp = it->Attribute("stream");
+		b_stream = (s_temp == "true");
+
+		snd_Audio_In.insert(std::pair<std::string, Sound*>(s_Name, new Sound("assets/audio/" + s_Name + ".wav")));
+
+		// Add the sound with the above data
+		auto sound = static_cast<Sound*>(snd_Audio_In.find(s_Name)->second);
+		sound->Load(b_threeD, b_loop, b_stream);
+		sound->SetPosition(v3_Position);
+		sound->SetVolume(f_Volume);
+		if (parent)
+		{
+		}
+	}
+
+	count = i_Incrementor;//???
 }
 
 void SceneLoader::identify_Component(GameObject_3D* po_GameObject_In, std::string& s_ToProcess_In)
@@ -270,7 +253,7 @@ glm::vec3 SceneLoader::to3DVector(const char* pc_Vector3D_In)
 		switch (pc_Vector3D_In[i])
 		{
 		case 32: // Empty space
-				 //Ignore
+			//Ignore
 			break;
 
 		case 44: // Comma
@@ -292,7 +275,7 @@ glm::vec3 SceneLoader::to3DVector(const char* pc_Vector3D_In)
 			break;
 
 		case 40: // This bracker "(" 
-				 //Ignore
+			//Ignore
 			break;
 
 		case 41: // This bracket ")"
@@ -302,7 +285,7 @@ glm::vec3 SceneLoader::to3DVector(const char* pc_Vector3D_In)
 			//Process
 		default:
 			s_Result += pc_Vector3D_In[i];
-			break;
+		break;
 		}
 	}
 
@@ -353,8 +336,8 @@ glm::quat SceneLoader::toQuat(const char* pc_Quaternion_In)
 	int i_DataCounter = 0;
 	int i_Length = std::strlen(pc_Quaternion_In);
 	float f_Angle;
-	glm::vec3 v3_Vector;
-
+	//glm::vec3 v3_Vector;
+	glm::quat temp;
 	for (int i = 0; i < i_Length; i++)
 	{
 		switch (pc_Quaternion_In[i])
@@ -366,21 +349,21 @@ glm::quat SceneLoader::toQuat(const char* pc_Quaternion_In)
 		case 44: // Comma
 			i_DataCounter++;
 
-			switch (i_DataCounter)
-			{
-			case 1:
-				f_Angle = std::strtof(s_Result.c_str(), nullptr);
-				s_Result.clear();
-				break;
+				switch (i_DataCounter)
+				{
+					case 1:
+						temp.w = std::strtof(s_Result.c_str(), nullptr);
+						s_Result.clear();
+					break;
 
-			case 2:
-				v3_Vector.x = std::strtof(s_Result.c_str(), nullptr);
-				s_Result.clear();
-				break;
+					case 2:
+						temp.x = std::strtof(s_Result.c_str(), nullptr);
+						s_Result.clear();
+					break;
 
-			case 3:
-				v3_Vector.y = std::strtof(s_Result.c_str(), nullptr);
-				s_Result.clear();
+					case 3:
+						temp.y = std::strtof(s_Result.c_str(), nullptr);
+						s_Result.clear();
 				break;
 			}
 			break;
@@ -389,19 +372,18 @@ glm::quat SceneLoader::toQuat(const char* pc_Quaternion_In)
 				 //Ignore
 			break;
 
-		case 41: // This bracket ")"
-			v3_Vector.z = std::strtof(s_Result.c_str(), nullptr);
+			case 41: // This bracket ")"
+				temp.z = std::strtof(s_Result.c_str(), nullptr);
 			break;
 
 			//Process
 		default:
 			s_Result = s_Result + pc_Quaternion_In[i];
 			break;
-			break;
 		}
 	}
 
-	glm::quat temp = glm::angleAxis(glm::radians(f_Angle), glm::vec3(v3_Vector.x, v3_Vector.y, v3_Vector.z));
+
 	return temp;
 }
 
@@ -469,7 +451,7 @@ void SceneLoader::add_Components(GameObject_3D* po_GameObject_In, std::string s_
 			break;
 
 		case 44:  // Comma
-				  //Find the right component
+			//Find the right component
 			identify_Component(po_GameObject_In, s_Result);
 			break;
 
@@ -646,5 +628,4 @@ void SceneLoader::prepare_DepthCube(Shader* p_Shader_In, glm::vec3 light_Pos, gl
 
 	glActiveTexture(GL_TEXTURE2 + tex_Num);
 	glBindTexture(GL_TEXTURE_CUBE_MAP, ui_Depth_In.y);
-
 }

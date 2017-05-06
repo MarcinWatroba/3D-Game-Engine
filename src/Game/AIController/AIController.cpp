@@ -13,6 +13,11 @@ AIController::AIController(GameObject_3D * character) :
 	data.character = character;
 }
 
+std::string AIController::get_Type()
+{
+	return "AIController";
+}
+
 AIController::~AIController()
 {
 	for (unsigned int i = 0; i < stateList.size(); i++)

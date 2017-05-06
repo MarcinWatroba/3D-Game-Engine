@@ -9,7 +9,10 @@ private:
 	//Last Direction for Movement
 	//bool lastDir = false;
 public:
-	Respond_Movement() {};
+	Respond_Movement();
+	~Respond_Movement();
+	Respond_Movement(const Respond_Movement &p_NewComp_In);
+	std::string get_Type();
 	//move an object by the given amount along a relative direction vector (e.g vec3(0,0,1) will always be the forward vector of the object)
 	void move(GameObject_3D* po_GameObject_In, glm::vec3 v3_Direction_In, float f_Speed_In);
 	//move an object by the given amount along a absolute direction vector

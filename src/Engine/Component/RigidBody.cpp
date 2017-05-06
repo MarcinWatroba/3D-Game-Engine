@@ -1,13 +1,23 @@
 #include <Engine\Component\RigidBody.h>
 
 RigidBody::RigidBody()
-{
-	
-}
-
+{}
 RigidBody::~RigidBody()
+{}
+RigidBody::RigidBody(const RigidBody &p_NewComp_In)
 {
-
+	//mass = p_NewComp_In.mass;
+	//moveable = p_NewComp_In.moveable;
+	//centreOfMass = p_NewComp_In.centreOfMass;
+}
+RigidBody::RigidBody(Stats * stat)
+{
+	mass = stat->getMass();
+	moveable = stat->getGravity();
+}
+std::string RigidBody::get_Type()
+{
+	return "RigidBody";
 }
 
 void RigidBody::setValues(float baseMass, bool move, glm::vec3 position)

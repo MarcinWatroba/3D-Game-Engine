@@ -30,12 +30,13 @@ private:
 public:
 	BoxCollider_3D();
 	~BoxCollider_3D();
+	BoxCollider_3D(const BoxCollider_3D &obj);
+	std::string get_Type();
 	void setUpBox(glm::vec3* minValues, glm::vec3* maxValues);
 	void renderBox();
 	bool intersects(BoxCollider_3D &other);
 	void updatePos(glm::mat4 parentMatrix);
 	bool getCollisionCheck() { return collidingWithImmovable; }
 	void setCollisionCheck(bool isColliding);
-	
 };
 #endif

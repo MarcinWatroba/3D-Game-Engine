@@ -1,5 +1,6 @@
 #include <Engine/App/Application.h>
 #include <Game/Game/Game.h>
+#include <Editor\Editor\Editor.h>
 #include <iostream>
 
 Application::Application(const char* pc_GameName)
@@ -44,7 +45,8 @@ void Application::create_Window(const unsigned short width, const unsigned short
 	std::cout << "Window created...!" << "\n";
 	std::cout << "Initializing game..." << "\n";
 	//Initialize
-	glfwSetCursorPos(po_Window, 0.f, 0.f);
+	glfwSetCursorPos(po_Window, width / 2.f, height / 2.f);
+	glfwSetInputMode(po_Window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
 	glViewport(0, 0, width, height);
 }
@@ -64,8 +66,14 @@ void Application::create_CallBacks()
 		static_cast<Application*>(glfwGetWindowUserPointer(w))->mouse_button_callback(w, b, a, m);
 	};
 
+	auto scroll_callbackFunc = [](GLFWwindow* w, double b, double a)
+	{
+		static_cast<Application*>(glfwGetWindowUserPointer(w))->scroll_mouse_callback(w, b, a);
+	};
+
 	glfwSetKeyCallback(po_Window, key_callbackFunc);
 	glfwSetMouseButtonCallback(po_Window, mouse_callbackFunc);
+	glfwSetScrollCallback(po_Window, scroll_callbackFunc);
 }
 
 void Application::run(std::string s_AppType)
@@ -73,42 +81,54 @@ void Application::run(std::string s_AppType)
 	if (s_AppType == "Game")
 	{
 		po_Program = new Game();
-		std::cout << "Application runs..." << "\n";
-		//Loop
-		po_Program->init();
-		while (!glfwWindowShouldClose(po_Window))
+		std::cout << "Game runs..." << "\n";
+	}
+	else if (s_AppType == "Editor")
+	{
+		po_Program = new Editor();
+		std::cout << "Editor runs..." << "\n";
+	}
+	//Loop
+	po_Program->init();
+	while (!glfwWindowShouldClose(po_Window))
+	{
+		//Poll events
+		glfwPollEvents();
+
+		if (!po_Program->is_GameOver())
 		{
-			//Poll events
-			glfwPollEvents();
+			glfwGetCursorPos(po_Window, &d_MousePosX, &d_MousePosY);
+			v2_MousePos = glm::vec2(d_MousePosX, d_MousePosY);
+		
+			f_CurrentFrame = glfwGetTime();
+			f_Delta = f_CurrentFrame - f_LastFrame;
+			f_LastFrame = f_CurrentFrame;
 
-			if (!po_Program->is_GameOver())
-			{
-				if (po_Program->is_MouseLocked()) glfwSetInputMode(po_Window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-				else glfwSetInputMode(po_Window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
-				
-				f_CurrentFrame = (float)glfwGetTime();
-				f_Delta = f_CurrentFrame - f_LastFrame;
-				f_LastFrame = f_CurrentFrame;
+			int i_Width, i_Height;
+			glfwGetWindowSize(po_Window, &i_Width, &i_Height);
+			po_Program->set_WindowSize(glm::vec2(i_Width, i_Height));
+			//Process and update the game
+			po_Program->process_Input(f_Delta);
+			po_Program->update(f_Delta, v2_MousePos);
 
-				glfwGetCursorPos(po_Window, &d_MousePosX, &d_MousePosY);
-				v2_MousePos = glm::vec2(d_MousePosX, d_MousePosY);
+			if (po_Program->is_MouseLocked())
+			{		
+				glfwSetCursorPos(po_Window, i_Width / 2.f, i_Height / 2.f);
+				glfwSetInputMode(po_Window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
-				//Process and update the game
-				po_Program->process_Input(f_Delta);
-				po_Program->update(f_Delta, v2_MousePos);
-
-				//Rendering
-				po_Program->draw();
-
-
-				glfwSwapBuffers(po_Window);
 			}
-			else
-			{
-				glfwSetWindowShouldClose(po_Window, GL_TRUE);
-			}
+			else glfwSetInputMode(po_Window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+
+			//Rendering
+			po_Program->draw();
+			glfwSwapBuffers(po_Window);
+		}
+		else
+		{
+			glfwSetWindowShouldClose(po_Window, GL_TRUE);
 		}
 	}
+	
 	std::cout << "Cleaning all resources..." << "\n";
 }
 
@@ -126,4 +146,9 @@ void Application::mouse_button_callback(GLFWwindow* window, int button, int acti
 {
 	if (action == GLFW_PRESS) po_Program->process_Mouse(button, GL_TRUE);
 	if (action == GLFW_RELEASE) po_Program->process_Mouse(button, GL_FALSE);
+}
+
+void Application::scroll_mouse_callback(GLFWwindow * window, double xoffset, double yoffset)
+{
+	po_Program->process_Scroll(glm::vec2(xoffset, yoffset));
 }

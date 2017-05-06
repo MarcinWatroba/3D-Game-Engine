@@ -23,6 +23,22 @@ Character::Character(std::string inType)
 		numberOfBullets = 500;
 	}
 }
+
+Character::Character(const Character &obj)
+{
+	
+}
+Character::Character(Stats * stat)
+{
+	health = stat->getHealth();
+	numberOfBullets = stat->getAmmo();
+}
+
+std::string Character::get_Type()
+{
+	return "Character";
+}
+
 void Character::setHealth(float temp)
 {
 	health = temp;

@@ -25,6 +25,13 @@ private:
 	bool b_SwitchCamMode;
 	bool shooting = false;
 	bool firstTime = true;
+	//Matt's Stuff
+	int walkRate = 35;
+	int walkCount = 0;
+	int triggerHoldCount = 0;	// used in firing
+	int ammoRemaining = 6;
+	int firerate = 100;
+	unsigned int currentLevel;
 
 	//Collision Manager
 	CollisionManager colManage;
@@ -53,9 +60,9 @@ public:
 	void init();
 
 	//Do something with keyboard input
-	void keyboard_Input(GLfloat f_Delta_In, GLboolean* pab_KeyArray_In, GLboolean* pab_LockedKeys_In);
-	void mouse_Input(GLboolean* pab_MouseArray_In, GLfloat f_Delta_In);
-
+	void keyboard_Input(GLfloat f_Delta_In, GLboolean* pab_KeyArray_In, GLboolean* pab_LockedKeys_In, int i_KeyPress);
+	void mouse_Input(GLboolean* pab_MouseArray_In, GLboolean* pab_LockedMouse_In);
+	void scroll_Input(glm::vec2 v2_Scroll_In);
 	//Update the scene
 	void update_Scene(GLfloat f_Delta_In, glm::vec2 v2_MousePos_In);
 
@@ -67,6 +74,4 @@ public:
 	void reload_Scene();
 
 	void load_Scene(int i);
-
-
 };

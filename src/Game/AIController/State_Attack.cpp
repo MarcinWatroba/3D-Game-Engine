@@ -52,7 +52,7 @@ fsm::FSM_Command State_Attack::OnRun()
 		bool facingTarget = movement->facePoint(data->character, data->player->get_Position(), data->dps * data->deltaTime);
 		if (facingTarget)
 		{
-			data->character->createBullet(new Bullet("Bullet", data->loader->get_Mesh3D("7"), data->character, data->loader->get_Texture("24"), data->loader->get_Texture("7")));
+			data->character->createBullet(new Bullet("Bullet", (Mesh_3D*)data->loader->get_Mesh("7"), data->character, data->loader->get_Texture("24"), data->loader->get_Texture("7")), data->loader->get_Sound("2"));
 		}
 	}
 

@@ -6,6 +6,7 @@
 #include <string>
 #include <map>
 #include <Engine/Component/Component.h>
+#include <Engine\Stats\Stats.h>
 
 class RigidBody : public Component
 {
@@ -26,9 +27,16 @@ private:
 public:
 	RigidBody();
 	~RigidBody();
+	RigidBody(const RigidBody &p_NewComp_In);
+	RigidBody(Stats * stat);
+	std::string get_Type();
 	void setValues(float baseMass, bool move, glm::vec3 position);
 	void setPhysics(std::string iD, bool value);
 	void update(glm::vec3 &newPos);
+	float get_Mass()
+	{
+		return mass;
+	}
 	bool get_Moveable()
 	{
 		return moveable;

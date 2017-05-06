@@ -17,7 +17,9 @@ protected:
 public:
 	//Constructor
 	Transform();
-
+	~Transform();
+	Transform(const Transform &p_NewComp_In);
+	std::string get_Type();
 	//Updates
 	virtual void update() = 0;
 	virtual void update(glm::mat4 mat4_ParentMatrix_In) = 0; // Updates for attached child

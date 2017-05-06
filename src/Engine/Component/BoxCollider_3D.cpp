@@ -1,11 +1,14 @@
 #include <Engine/Component/BoxCollider_3D.h>
 
 BoxCollider_3D::BoxCollider_3D()
-{
-}
+{}
+BoxCollider_3D::BoxCollider_3D(const BoxCollider_3D &obj)
+{}
 BoxCollider_3D::~BoxCollider_3D()
+{}
+std::string BoxCollider_3D::get_Type()
 {
-
+	return "BoxCollider";
 }
 
 void BoxCollider_3D::setUpBox(glm::vec3* minValues, glm::vec3* maxValues)

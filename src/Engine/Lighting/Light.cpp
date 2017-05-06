@@ -7,6 +7,13 @@ Light::Light(glm::vec3 v3_Ambient_In, glm::vec3 v3_Diffuse_In, glm::vec3 v3_Spec
 	v3_Specular = v3_Specular_In;
 }
 
+Light::Light(const Light & light) : GameObject_3D(light)
+{
+	v3_Ambient = light.v3_Ambient;
+	v3_Diffuse = light.v3_Diffuse;
+	v3_Specular = light.v3_Specular;
+}
+
 void Light::set_Ambient(glm::vec3 v3_Ambient_In)
 {
 	v3_Ambient = v3_Ambient_In;

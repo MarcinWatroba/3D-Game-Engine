@@ -20,8 +20,10 @@ private:
 	int i_Buffer;
 	int index_Size;
 	unsigned int maxParticles;
-	float particlePositions[3000];
-	Particle ParticlesContainer[1000];
+	float particle_Life;
+	glm::vec3 range, particle_Speed, colour;
+	float particlePositions[300000];
+	Particle ParticlesContainer[100000];
 	int ParticlesCount, iParticle, LastUsedParticle;
 	float random, random2, random3;
 	//std::vector<float> positions;
@@ -31,6 +33,12 @@ public:
 	GameObject_Instanced();
 
 	void update();
+
+	void setMax(unsigned int max_In);
+	void set_Life(float life_In);
+	void set_Range(glm::vec3 range_In);
+	void set_Particle_Speed(glm::vec3 speed_In);
+	void set_Colour(glm::vec3 colour_In);
 	void update_Particles(float t, float y, float z, glm::vec3 delta);
 	int FindUnusedParticle();
 	void force_Update();

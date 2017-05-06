@@ -34,13 +34,29 @@ void Game_Object::set_ToDelete()
 	}
 }
 
+glm::mat4 Game_Object::get_ParentMatrix() { return glm::mat4(1.0f); }
 
 void Game_Object::set_RenderStatus(bool b_RenderStatus_In)
 {
 	b_RenderStatus = b_RenderStatus_In;
 }
 
-void Game_Object::add_Child(Game_Object * po_Child_In)
+bool Game_Object::get_RenderStatus()
+{
+	return b_RenderStatus;
+}
+
+void Game_Object::set_Prefab(std::string s_Name_In)
+{
+	s_PrefabName = s_Name_In;
+}
+
+std::string Game_Object::get_PrefabName()
+{
+	return s_PrefabName;
+}
+
+void Game_Object::add_Child(Game_Object* po_Child_In)
 {
 	b_IsContainer = true;
 	po_Child_In->set_Parent(this);
@@ -62,12 +78,27 @@ std::string Game_Object::get_Name()
 	return s_Name;
 }
 
+void Game_Object::add_ChildName(std::string s_Name_In)
+{
+	vs_ChildrenNames.push_back(s_Name_In);
+}
+
+std::vector<std::string>& Game_Object::get_ChildrenNames()
+{
+	return vs_ChildrenNames;
+}
+
 void Game_Object::set_Name(std::string s_Name_In)
 {
 	s_Name = s_Name_In;
 }
 
-std::map<std::string, Component*> Game_Object::get_Components()
+void Game_Object::set_ObjectType(std::string s_Type_In)
+{
+	s_ObjectType = s_Type_In;
+}
+
+std::map<std::string, Component*>& Game_Object::get_Components()
 {
 	return mipo_Components;
 }
@@ -82,7 +113,7 @@ Component* Game_Object::get_Component(std::string s_Name_In)
 	return nullptr;
 }
 
-std::map<std::string, Game_Object*> Game_Object::get_Children()
+std::map<std::string, Game_Object*>& Game_Object::get_Children()
 {
 	return mspo_Children;
 }
@@ -104,3 +135,27 @@ bool Game_Object::is_Container()
 	return b_IsContainer;
 }
 
+std::string Game_Object::get_ObjectType()
+{
+	return s_ObjectType;
+}
+
+void Game_Object::set_ObjectID(int i_ID_In)
+{
+	i_ObjectID = i_ID_In;
+}
+
+int Game_Object::get_ObjectID()
+{
+	return i_ObjectID;
+}
+
+Game_Object::Game_Object(const Game_Object &p_NewObject_In)
+{
+	s_Tag = p_NewObject_In.s_Tag;
+	po_Parent = p_NewObject_In.po_Parent;
+	b_IsContainer = p_NewObject_In.b_IsContainer;
+	i_ObjectID = p_NewObject_In.i_ObjectID;
+	b_RenderStatus = p_NewObject_In.b_RenderStatus;
+	v2_Tiling = p_NewObject_In.v2_Tiling;
+}

@@ -12,6 +12,7 @@ private:
 	std::vector<FSM_State<AIController_Data>*> stateList;
 public:
 	void Update();
+	std::string get_Type();
 	AIController(GameObject_3D * character);
 	~AIController();
 };

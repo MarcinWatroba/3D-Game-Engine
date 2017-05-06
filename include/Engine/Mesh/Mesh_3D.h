@@ -2,8 +2,6 @@
 
 #include <Engine/Mesh/Mesh.h>
 
-
-
 class Mesh_3D : public Mesh
 {
 private:
@@ -21,4 +19,7 @@ public:
 	{
 		return maxVert;
 	}
+	Mesh_3D(const char* pc_FileName_In, int i_DrawMode_In, std::string s_ID_In);
+	std::string get_Type();
+	unsigned int get_SizeOfIndices();
 };

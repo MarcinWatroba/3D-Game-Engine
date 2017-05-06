@@ -3,6 +3,14 @@
 #include <Engine\Component\Transform_3D.h>
 #include <glm/gtx/norm.hpp>
 
+Respond_Movement::Respond_Movement() {}
+Respond_Movement::~Respond_Movement() {}
+Respond_Movement::Respond_Movement(const Respond_Movement &p_NewComp_In) {}
+std::string Respond_Movement::get_Type()
+{
+	return "Respond_Movement";
+}
+
 void Respond_Movement::move(GameObject_3D* po_GameObject_In, glm::vec3 v3_Direction_In, float f_Speed_In)
 {
 	//Create a rotation point
