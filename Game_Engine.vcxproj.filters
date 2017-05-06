@@ -94,6 +94,36 @@
     <Filter Include="Source Files\Engine\Lighting">
       <UniqueIdentifier>{0be042f8-4c28-420a-b734-6117d9a0097e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Editor">
+      <UniqueIdentifier>{0b004d31-f76d-4bfa-bc0b-8ff9678a3661}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Editor">
+      <UniqueIdentifier>{66fa92d0-d50e-4c86-94ee-71cb2b62bdfa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Editor\Editor">
+      <UniqueIdentifier>{7d2c1176-7727-4f66-82f5-60e8b8ddc3f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Editor\Editor">
+      <UniqueIdentifier>{cc77dba2-4596-4d20-9e2b-a6df4c4be0b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Editor\Scene">
+      <UniqueIdentifier>{2e6ca997-510c-433a-9536-a1226b6637ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Editor\Scene">
+      <UniqueIdentifier>{9e665fa2-a16c-4dcf-b3bf-3136d0581908}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\GUI">
+      <UniqueIdentifier>{1911572a-d98e-46aa-af63-967eb053871b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\GUI">
+      <UniqueIdentifier>{24c8728f-d31a-478b-94b5-2f9474c75ff0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Editor\Objects">
+      <UniqueIdentifier>{83214889-cd14-47e7-92af-4d444c588ac0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Editor\Objects">
+      <UniqueIdentifier>{e2598f21-e27a-4e8b-8fdf-d7c9f1af1cb6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Engine\State\State.cpp">
@@ -116,9 +146,6 @@
     </ClCompile>
     <ClCompile Include="src\Game\Scene\Game_Scene.cpp">
       <Filter>Source Files\Game\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Engine\Component\Component.cpp">
-      <Filter>Source Files\Engine\Component</Filter>
     </ClCompile>
     <ClCompile Include="src\Engine\Mesh\Mesh.cpp">
       <Filter>Source Files\Engine\Mesh</Filter>
@@ -173,6 +200,51 @@
     </ClCompile>
     <ClCompile Include="src\Engine\Lighting\Point_Light.cpp">
       <Filter>Source Files\Engine\Lighting</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Editor\Editor\Editor.cpp">
+      <Filter>Source Files\Editor\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Editor\Scene\Scene_3D.cpp">
+      <Filter>Source Files\Editor\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Loaders\SceneSaver.cpp">
+      <Filter>Source Files\Engine\Loaders</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Mesh\Mesh_2D.cpp">
+      <Filter>Source Files\Engine\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Game_Objects\GameObject_2D.cpp">
+      <Filter>Source Files\Engine\Game_Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Editor\Scene\Scene_2D.cpp">
+      <Filter>Source Files\Editor\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\GUI\Glyph.cpp">
+      <Filter>Source Files\Engine\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\GUI\Font.cpp">
+      <Filter>Source Files\Engine\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\GUI\Letter.cpp">
+      <Filter>Source Files\Engine\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Editor\Objects\Arrow_3D.cpp">
+      <Filter>Source Files\Editor\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\GUI\Text.cpp">
+      <Filter>Source Files\Engine\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\GUI\Button.cpp">
+      <Filter>Source Files\Engine\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\GUI\Tile.cpp">
+      <Filter>Source Files\Engine\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\GUI\Textbox.cpp">
+      <Filter>Source Files\Engine\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Loaders\PrefabLoader.cpp">
+      <Filter>Source Files\Engine\Loaders</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -254,6 +326,51 @@
     <ClInclude Include="include\Engine\Lighting\Point_Light.h">
       <Filter>Header Files\Engine\Lighting</Filter>
     </ClInclude>
+    <ClInclude Include="include\Editor\Editor\Editor.h">
+      <Filter>Header Files\Editor\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Editor\Scene\Scene_3D.h">
+      <Filter>Header Files\Editor\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Engine\Loaders\SceneSaver.h">
+      <Filter>Header Files\Engine\Loaders</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Engine\Mesh\Mesh_2D.h">
+      <Filter>Header Files\Engine\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Engine\Game_Objects\GameObject_2D.h">
+      <Filter>Header Files\Engine\Game_Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Editor\Scene\Scene_2D.h">
+      <Filter>Header Files\Editor\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Engine\GUI\Font.h">
+      <Filter>Header Files\Engine\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Engine\GUI\Glyph.h">
+      <Filter>Header Files\Engine\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Engine\GUI\Text.h">
+      <Filter>Header Files\Engine\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Engine\GUI\Letter.h">
+      <Filter>Header Files\Engine\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Editor\Objects\Arrow_3D.h">
+      <Filter>Header Files\Editor\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Engine\GUI\Button.h">
+      <Filter>Header Files\Engine\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Engine\GUI\Tile.h">
+      <Filter>Header Files\Engine\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Engine\GUI\Textbox.h">
+      <Filter>Header Files\Engine\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Engine\Loaders\PrefabLoader.h">
+      <Filter>Header Files\Engine\Loaders</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\shaders\font_Shader.frag">
@@ -274,13 +391,11 @@
     <None Include="assets\shaders\passIn.vert">
       <Filter>Resource Files\Shaders</Filter>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Xml Include="assets\Resources.xml">
-      <Filter>Resource Files</Filter>
-    </Xml>
-    <Xml Include="assets\scenes\Robot_Scene.xml">
-      <Filter>Resource Files</Filter>
-    </Xml>
+    <None Include="assets\shaders\editor_Shader.frag">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="assets\shaders\editor_Shader.vert">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>

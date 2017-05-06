@@ -16,6 +16,30 @@ GameObject_3D::GameObject_3D()
 	b_RenderStatus = true;
 }
 
+GameObject_3D::GameObject_3D(const GameObject_3D & p_NewObject_In) : Game_Object(p_NewObject_In)
+{
+	for (auto const& pair : p_NewObject_In.mipo_Components)
+	{
+		if (pair.second->get_Type() == "Mesh_3D")
+		{
+			auto mesh_3D = static_cast<Mesh_3D*>(pair.second);
+			add_Component("Mesh_3D", mesh_3D);
+		}
+		else if (pair.second->get_Type() == "Transform_3D")
+		{
+			auto transform_3D = static_cast<Transform_3D*>(pair.second);
+			add_Component("Transform_3D", new Transform_3D(*transform_3D));
+		}
+		else if (pair.second->get_Type() == "RenderComp_3D")
+		{
+			auto renderComp_3D = static_cast<RenderComp_3D*>(pair.second);
+			add_Component("RenderComp_3D", new RenderComp_3D(*renderComp_3D));
+		}
+	}
+
+	s_PrefabName = p_NewObject_In.s_PrefabName;
+}
+
 void GameObject_3D::add_Component(std::string s_Name_In, Component* p_Component_In)
 {
 	mipo_Components.insert(std::pair<std::string, Component*>(s_Name_In, p_Component_In));
@@ -34,9 +58,9 @@ void GameObject_3D::add_Component(std::string s_Name_In, Component* p_Component_
 	}
 }
 
-void GameObject_3D::add_Texture(std::string s_Name_In, Texture* p_Component_In)
+void GameObject_3D::add_Texture(std::string s_Name_In, Texture* p_Texture_In)
 {
-	static_cast<RenderComp_3D*>(mipo_Components.find("RenderComp_3D")->second)->add_Texture(s_Name_In, p_Component_In);
+	static_cast<RenderComp_3D*>(mipo_Components.find("RenderComp_3D")->second)->add_Texture(s_Name_In, p_Texture_In);
 }
 
 void GameObject_3D::update()
@@ -46,7 +70,10 @@ void GameObject_3D::update()
 		static_cast<Transform_3D*>(mipo_Components.find("Transform_3D")->second)->force_Update(); // Update must be forced to update any children
 		static_cast<Transform_3D*>(mipo_Components.find("Transform_3D")->second)->update(static_cast<GameObject_3D*>(po_Parent)->get_ParentMatrix());
 	}
-	else static_cast<Transform_3D*>(mipo_Components.find("Transform_3D")->second)->update();
+	else
+	{
+		static_cast<Transform_3D*>(mipo_Components.find("Transform_3D")->second)->update();
+	}
 }
 
 void GameObject_3D::render(Shader* p_Shader_In)
@@ -57,7 +84,9 @@ void GameObject_3D::render(Shader* p_Shader_In)
 
 void GameObject_3D::clean_Up()
 {
-	if (!mipo_Components.empty()) for (auto map : mipo_Components) delete map.second;
+	//Remove all components
+	for (auto const& components : mipo_Components) if (components.first != "Mesh_3D") delete components.second;
+	mipo_Components.clear();
 }
 
 void GameObject_3D::force_Update()
@@ -118,6 +147,11 @@ void GameObject_3D::set_Shininess(float f_Shiny_In)
 void GameObject_3D::set_Tiles(glm::vec2 v2_Tiles_In)
 {
 	static_cast<RenderComp_3D*>(mipo_Components.find("RenderComp_3D")->second)->set_Tiles(v2_Tiles_In);
+}
+
+std::string GameObject_3D::get_Type()
+{
+	return "GameObject_3D";
 }
 
 

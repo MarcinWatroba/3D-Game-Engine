@@ -2,14 +2,20 @@
 #include <Engine\Mesh\Mesh_3D.h>
 #include <Engine\Creators\Shader.h>
 #include <glad\glad.h>
+#include <Engine\Creators\Texture.h>
+
+RenderComp_3D::RenderComp_3D(const RenderComp_3D & p_NewComp_In) : RenderComp(p_NewComp_In)
+{
+	f_Shininess = p_NewComp_In.f_Shininess;
+}
 
 void RenderComp_3D::render(int draw_Mode_In, int draw_Shape_In, Shader* p_Shader_In)
 {
 	//Bind lightning maps
 	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, get_Texture("Diffuse_Map"));
+	glBindTexture(GL_TEXTURE_2D, get_Texture("Diffuse_Map")->get_Texture());
 	glActiveTexture(GL_TEXTURE1);
-	glBindTexture(GL_TEXTURE_2D, get_Texture("Specular_Map"));
+	glBindTexture(GL_TEXTURE_2D, get_Texture("Specular_Map")->get_Texture());
 
 	//Pass texture to the shader
 	GLint diffuseLoc = glGetUniformLocation(p_Shader_In->get_Program(), "material.diffuse");
@@ -40,4 +46,9 @@ void RenderComp_3D::set_Shininess(float f_Shininess_In)
 float RenderComp_3D::get_Shininess()
 {
 	return f_Shininess;
+}
+
+std::string RenderComp_3D::get_Type()
+{
+	return "RenderComp_3D";
 }

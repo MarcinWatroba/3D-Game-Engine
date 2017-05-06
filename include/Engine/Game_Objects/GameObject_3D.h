@@ -11,6 +11,7 @@ protected:
 public:
 	//Constructor
 	GameObject_3D();
+	GameObject_3D(const GameObject_3D &p_NewObject_In);
 
 	void update();
 	void force_Update();
@@ -35,4 +36,6 @@ public:
 	//Only appropiate for 3D objects
 	void set_Shininess(float f_Shiny_In);
 	void set_Tiles(glm::vec2 v2_Tiles_In);
+
+	std::string get_Type();
 };
