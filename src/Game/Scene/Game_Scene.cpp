@@ -139,7 +139,7 @@ void Game_Scene::keyboard_Input(GLfloat f_Delta_In, GLboolean* pab_KeyArray_In, 
 	if (pab_KeyArray_In[GLFW_KEY_R] && !pab_LockedKeys_In[GLFW_KEY_R])
 	{
 		//reload_Scene();
-		load_Scene(1);
+		load_Scene(0);
 		pab_LockedKeys_In[GLFW_KEY_R] = true;
 
 	}
@@ -247,7 +247,7 @@ void Game_Scene::update_Scene(GLfloat f_Delta_In, glm::vec2 v2_MousePos_In)
 		//quit to main menu
 		std::cout << "Game Over, Loser!" << std::endl;
 	}
-	if (i_numEnemies == 0) {
+	if (i_numEnemies == 0 && static_cast<Character*>(player->get_Component("Character"))->getEndLevel()) {
 		//level win!
 		if (currentLevel < levelList.size()-1)
 		{
@@ -259,6 +259,10 @@ void Game_Scene::update_Scene(GLfloat f_Delta_In, glm::vec2 v2_MousePos_In)
 			//game win
 		}
 		std::cout << "Winner Winner Chicken Dinner!" << std::endl;
+	}
+	else
+	{
+		static_cast<Character*>(player->get_Component("Character"))->setEndLevel(false);
 	}
 
 	if (b_Init)
@@ -433,7 +437,7 @@ void Game_Scene::render()
 			for (auto const& pair : mspo_Objects)
 			{
 
-				if (glm::distance(pos[obj_No], light[no]) < (o_SceneLoader->get_LightRadius(no) * 10) || pair.second->get_Tag() == "Player" || pair.second->get_Tag() == "Enemy")
+				if (glm::distance(pos[obj_No], light[no]) < (o_SceneLoader->get_LightRadius(no) * 10) || pair.second->get_Tag() == "Player" || pair.second->get_Tag() == "Enemy" || pair.second->get_Tag() == "Exit")
 				{
 					if (pair.second->get_Tag() != "Object_Lamp" &&  pair.second->get_Tag() != "Particle")
 					{
