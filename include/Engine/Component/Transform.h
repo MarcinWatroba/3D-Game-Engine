@@ -7,6 +7,7 @@ class Shader;
 class Transform : public Component
 {
 protected:
+	//const int MaxParticles = 10000;
 	glm::mat4 mat4_Model; // Model matrix
 	bool b_Update; // Update
 public:

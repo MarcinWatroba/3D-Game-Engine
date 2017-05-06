@@ -118,7 +118,7 @@ Mesh_Instanced::Mesh_Instanced(const char* pc_FileName_In, int i_DrawMode_In)
 	//UV attributes
 	glVertexAttribPointer(1, 2, GL_FLOAT, FALSE, 0, (GLubyte *)NULL);
 	glEnableVertexAttribArray(1);
-	int max = 1000;
+	int max = 100000;
 	glBindBuffer(GL_ARRAY_BUFFER, handle[2]);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * 3 * max, NULL, GL_STREAM_DRAW);
 

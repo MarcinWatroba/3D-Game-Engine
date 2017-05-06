@@ -1,8 +1,3 @@
-<lights>
-    <new_Light name="Lamp Light" prefab="Lamp Light" type="Point_Light" position="(0.000000, 38.939999, 0.000000)"/>
-    <new_Light name="Standing Lamp Light" prefab="Standing Lamp Light" type="Point_Light" position="(-37.514999, 25.583000, -32.407001)"/>
-</lights>
-
 <objects>
     <new_Object3D name="Back Wall" prefab="Wall" origin="(0.000000, 0.000000, 0.000000)" position="(0.598248, 26.582001, 39.705002)" orientation="(1.000000, 0.000000, 0.000000, 0.000000)" scale="(90.995003, 54.860001, 1.000000)"/>
     <new_Object3D name="Carpet" prefab="Carpet" origin="(0.000000, 0.000000, 0.000000)" position="(16.497322, 0.069000, 18.405001)" orientation="(0.999994, -0.003445, 0.000000, 0.000000)" scale="(52.507999, 0.242000, 45.558472)"/>
@@ -27,6 +22,32 @@
     <new_Object3D name="Table" prefab="Table" origin="(0.000000, 0.000000, 0.000000)" position="(15.232000, 0.000000, 24.198000)" orientation="(1.000000, 0.000000, 0.000000, 0.000000)" scale="(1.000000, 1.000000, 1.000000)"/>
     <new_Object3D name="Wooden Wall" prefab="Wooden Wall" origin="(0.000000, 0.000000, 0.000000)" position="(0.921000, 53.500000, -0.365000)" orientation="(0.703704, 0.710493, 0.000000, 0.000000)" scale="(104.514999, 85.177002, 1.000000)"/>
 </objects>
+
+<lights>
+    <new_Light name="Main Light"
+    prefab="Main Light"
+    type="Point_Light"
+	light_ID = "0"
+    position="(0.000000, 40.000000, 0.000000)"/>
+    
+    <new_Light name="Lamp Light"
+    prefab="Lamp Light"
+    type="Point_Light"
+	light_ID = "1"
+    position="(-37.514999, 25.583000, -32.407001)"/>
+    
+    <new_Light name="Lamp Light"
+    prefab="Lamp Light"
+    type="Point_Light"
+	light_ID = "2"
+    position="(37.515, 1.583, 32.407)"/>
+    
+    <new_Light name="Lamp Light"
+    prefab="Lamp Light"
+    type="Point_Light"
+	light_ID = "3"
+    position="(-33.515, 5.583, -32.407)"/>
+</lights>
 
 <sounds>
 	<new_sound

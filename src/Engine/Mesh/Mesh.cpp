@@ -2,6 +2,7 @@
 
 unsigned int Mesh::get_VAO()
 {
+	//std::cout << "TEST" << std::endl;
 	return ui_VAO;
 }
 

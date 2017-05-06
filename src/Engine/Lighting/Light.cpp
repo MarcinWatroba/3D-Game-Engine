@@ -28,6 +28,7 @@ void Light::set_Specular(glm::vec3 v3_Specular_In)
 {
 	v3_Specular = v3_Specular_In;
 }
+
 void Light::set_Depth_Texture(glm::uvec2 ui_Depth_In)
 {
 	ui_Depth_Texture = ui_Depth_In;
@@ -36,18 +37,4 @@ void Light::set_Depth_Texture(glm::uvec2 ui_Depth_In)
 glm::uvec2 Light::get_Depth_Texture()
 {
 	return ui_Depth_Texture;
-}
-glm::vec3 Light::get_Ambient()
-{
-	return v3_Ambient;
-}
-
-glm::vec3 Light::get_Diffuse()
-{
-	return v3_Diffuse;
-}
-
-glm::vec3 Light::get_Specular()
-{
-	return v3_Specular;
 }

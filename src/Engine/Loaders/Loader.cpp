@@ -26,6 +26,12 @@ Mesh_Instanced* Loader::get_MeshInstanced(std::string s_Name_In)
 	return mipo_MeshesInstanced.find(s_Name_In)->second;
 }
 
+Mesh_Instanced* Loader::get_MeshInstanced(std::string s_Name_In)
+{
+	std::cout << mipo_MeshesInstanced.find(s_Name_In)->second->get_VAO() << std::endl;
+	return mipo_MeshesInstanced.find(s_Name_In)->second;
+}
+
 Shader* Loader::get_Shader(std::string s_Name_In)
 {
 	return mipo_Shaders.find(s_Name_In)->second;
@@ -68,6 +74,16 @@ void Loader::ParseXML_Resources(const char* pc_FileName)
 		int i_DrawMethod = std::atoi(i->Attribute("i_DrawMethod"));
 
 		mipo_Meshes.insert(std::pair<std::string, Mesh_3D*>(i_ID, new Mesh_3D(s_Name.c_str(), i_DrawMethod, i_ID)));
+	}
+
+	for (tinyxml2::XMLElement* i = po_Body->FirstChildElement("particle_Files")->FirstChildElement("new_File"); i != nullptr; i = i->NextSiblingElement("new_File"))
+	{
+		//Create variables
+		std::string i_ID = i->Attribute("ID");
+		std::string s_Name = obj_FileLoc + i->Attribute("name");
+		int i_DrawMethod = std::atoi(i->Attribute("i_DrawMethod"));
+
+		mipo_MeshesInstanced.insert(std::pair<std::string, Mesh_Instanced*>(i_ID, new Mesh_Instanced(s_Name.c_str(), i_DrawMethod)));
 	}
 
 	for (tinyxml2::XMLElement* i = po_Body->FirstChildElement("particle_Files")->FirstChildElement("new_File"); i != nullptr; i = i->NextSiblingElement("new_File"))

@@ -47,30 +47,6 @@ GameObject_3D::GameObject_3D(const GameObject_3D & p_NewObject_In) : Game_Object
 	s_PrefabName = p_NewObject_In.s_PrefabName;
 }
 
-GameObject_3D::GameObject_3D(const GameObject_3D & p_NewObject_In) : Game_Object(p_NewObject_In)
-{
-	for (auto const& pair : p_NewObject_In.mipo_Components)
-	{
-		if (pair.second->get_Type() == "Mesh_3D")
-		{
-			auto mesh_3D = static_cast<Mesh_3D*>(pair.second);
-			add_Component("Mesh_3D", mesh_3D);
-		}
-		else if (pair.second->get_Type() == "Transform_3D")
-		{
-			auto transform_3D = static_cast<Transform_3D*>(pair.second);
-			add_Component("Transform_3D", new Transform_3D(*transform_3D));
-		}
-		else if (pair.second->get_Type() == "RenderComp_3D")
-		{
-			auto renderComp_3D = static_cast<RenderComp_3D*>(pair.second);
-			add_Component("RenderComp_3D", new RenderComp_3D(*renderComp_3D));
-		}
-	}
-
-	s_PrefabName = p_NewObject_In.s_PrefabName;
-}
-
 void GameObject_3D::add_Component(std::string s_Name_In, Component* p_Component_In)
 {
 	mipo_Components.insert(std::pair<std::string, Component*>(s_Name_In, p_Component_In));
@@ -246,6 +222,78 @@ void GameObject_3D::set_Tiles(glm::vec2 v2_Tiles_In)
 {
 	static_cast<RenderComp_3D*>(mipo_Components.find("RenderComp_3D")->second)->set_Tiles(v2_Tiles_In);
 }
+void GameObject_3D::move(glm::vec3 v3_Direction_In, float f_Speed_In)
+{
+	if (mipo_Components.count("Respond_Movement"))
+	{
+		auto found_Movement = mipo_Components.at("Respond_Movement");
+		bool isPositive;
+		if (f_Speed_In > 0)
+		{
+			isPositive = true;
+		}
+		else
+		{
+			isPositive = false;
+		}
+
+		if (mipo_Components.count("RigidBody"))
+		{
+			bool tempCheck = false;
+			for (auto const& map : mspo_Children)
+			{
+				if (map.second->get_Components().count("BoxCollider_3D"))
+				{
+					if (dynamic_cast<BoxCollider_3D*>(map.second->get_Components().at("BoxCollider_3D"))->getCollisionCheck())
+					{
+						tempCheck = dynamic_cast<BoxCollider_3D*>(map.second->get_Components().at("BoxCollider_3D"))->getCollisionCheck();
+					}
+				}
+			}
+			if (tempCheck && lastDir == isPositive)
+			{
+				dynamic_cast<RigidBody*>(mipo_Components.at("RigidBody"))->setForwardForce(0);
+			}
+			else
+			{
+				dynamic_cast<RigidBody*>(mipo_Components.at("RigidBody"))->setForwardForce(f_Speed_In);
+			}
+			dynamic_cast<RigidBody*>(mipo_Components.at("RigidBody"))->update(get_Position());
+			dynamic_cast<Respond_Movement*>(found_Movement)->move(this, v3_Direction_In, dynamic_cast<RigidBody*>(mipo_Components.at("RigidBody"))->getVelocity());
+		}
+		else
+		{
+			dynamic_cast<Respond_Movement*>(found_Movement)->move(this, v3_Direction_In, f_Speed_In);
+		}
+		lastDir = isPositive;
+		//lastRot = get_Rotation();
+	}
+}
+
+void GameObject_3D::jump(glm::vec3 v3_Direction_In)
+{
+	if (mipo_Components.count("Respond_Movement"))
+	{
+		auto found_Movement = mipo_Components.at("Respond_Movement");
+		dynamic_cast<RigidBody*>(mipo_Components.at("RigidBody"))->update(get_Position());
+		dynamic_cast<Respond_Movement*>(found_Movement)->move(this, v3_Direction_In, dynamic_cast<RigidBody*>(mipo_Components.at("RigidBody"))->getJumpVelocity());
+	}
+}
+
+void GameObject_3D::turn(float f_Angle_In, glm::vec3 v3_TurnAxis_In)
+{
+	if (mipo_Components.count("Respond_Movement"))
+	{
+		auto found_Movement = mipo_Components.at("Respond_Movement");
+		dynamic_cast<Respond_Movement*>(found_Movement)->turn(this, f_Angle_In, v3_TurnAxis_In);
+	}
+}
+
+void GameObject_3D::setFiring(bool input)
+{
+	firing = input;
+}
+
 void GameObject_3D::move(glm::vec3 v3_Direction_In, float f_Speed_In)
 {
 	if (mipo_Components.count("Respond_Movement"))

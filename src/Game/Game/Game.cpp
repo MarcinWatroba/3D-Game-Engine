@@ -44,10 +44,14 @@ void Game::update(GLfloat deltaTime, glm::vec2 mouse_Pos_In)
 	}
 	else // else process it
 	{
-		if (o_State.back()->is_LoaderEmpty()) o_State.back()->pass_Loader(po_Loader);
 		o_State.back()->set_WindowSize(v2_WindowSize);
-		o_State.back()->update_Scene(deltaTime, mouse_Pos_In);
+
+		if (o_State.back()->is_LoaderEmpty()) {
+			o_State.back()->pass_Loader(po_Loader);
+			o_State.back()->pass_Audio(&snd_Audio);
+		}
 		mouse_Lock(o_State.back()->is_MouseLocked());
+		o_State.back()->update_Scene(deltaTime, mouse_Pos_In);
 	}
 }
 

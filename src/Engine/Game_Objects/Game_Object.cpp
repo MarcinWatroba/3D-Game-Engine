@@ -40,6 +40,11 @@ void Game_Object::set_RenderStatus(bool b_RenderStatus_In)
 	b_RenderStatus = b_RenderStatus_In;
 }
 
+bool Game_Object::get_RenderStatus()
+{
+	return b_RenderStatus;
+}
+
 void Game_Object::set_Prefab(std::string s_Name_In)
 {
 	s_PrefabName = s_Name_In;
@@ -48,11 +53,6 @@ void Game_Object::set_Prefab(std::string s_Name_In)
 std::string Game_Object::get_PrefabName()
 {
 	return s_PrefabName;
-}
-
-bool Game_Object::get_RenderStatus()
-{
-	return b_RenderStatus;
 }
 
 void Game_Object::add_Child(Game_Object* po_Child_In)
@@ -112,7 +112,6 @@ Component* Game_Object::get_Component(std::string s_Name_In)
 	return nullptr;
 }
 
-//std::map<std::string, Game_Object*> Game_Object::get_Children()
 std::map<std::string, Game_Object*>& Game_Object::get_Children()
 {
 	return mspo_Children;

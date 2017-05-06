@@ -104,14 +104,13 @@ PrefabLoader::PrefabLoader(const char * pc_FileName_In, Loader * po_Loader_In)
 		glm::vec3 v3_Specular;
 		glm::vec3 v3_Direction;
 		glm::vec3 v3_Position;
-		float f_Constant;
-		float f_Linear;
-		float f_Quadratic;
+		float f_lRadius;
 		std::string s_Tag;
 
 		s_Type = it->Attribute("type");
 		s_Tag = it->Attribute("tag");
-		std::string s_Name = it->Attribute("name");
+		//std::string s_Name = it->Attribute("name");
+		std::string s_Name = s_Type + "_" + std::to_string(i_LightID);
 
 		if (s_Type == "Directional") // Later
 		{
@@ -129,14 +128,12 @@ PrefabLoader::PrefabLoader(const char * pc_FileName_In, Loader * po_Loader_In)
 			v3_Ambient = to3DVector(it->Attribute("ambient"));
 			v3_Diffuse = to3DVector(it->Attribute("diffuse"));
 			v3_Specular = to3DVector(it->Attribute("specular"));
-			f_Constant = std::strtof(it->Attribute("constant"), nullptr);
-			f_Linear = std::strtof(it->Attribute("linear"), nullptr);
-			f_Quadratic = std::strtof(it->Attribute("quadratic"), nullptr);
-			mipo_Prefabs.insert(std::pair<std::string, Game_Object*>(s_Name, new Point_Light(v3_Ambient, v3_Diffuse, v3_Specular, f_Constant, f_Linear, f_Quadratic, 0)));
+			f_lRadius = std::strtof(it->Attribute("radius"), nullptr);
+			mipo_Prefabs.insert(std::pair<std::string, Game_Object*>(s_Name, new Point_Light(v3_Ambient, v3_Diffuse, v3_Specular, f_lRadius, i_LightID)));
 			
 			auto point_Light = static_cast<Point_Light*>(mipo_Prefabs.find(s_Name)->second);
 			point_Light->set_Name(s_Name);
-			point_Light->add_Component("Mesh_3D", po_Loader_In->get_Mesh("7"));
+			point_Light->add_Component("Mesh_3D", po_Loader_In->get_Mesh3D("7"));
 			point_Light->add_Component("Transform_3D", new Transform_3D());
 			point_Light->add_Component("RenderComp_3D", new RenderComp_3D());
 			point_Light->set_Position(v3_Position);
@@ -146,6 +143,7 @@ PrefabLoader::PrefabLoader(const char * pc_FileName_In, Loader * po_Loader_In)
 			point_Light->set_Tiles(glm::vec2(1.f, 1.f));
 			point_Light->set_Shininess(1.f);
 			point_Light->set_Tag(s_Tag);
+			point_Light->set_Radius(f_lRadius);
 			point_Light->set_Prefab(s_Name);
 		}
 	}

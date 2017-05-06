@@ -34,8 +34,8 @@
 </objects>
 
 <lights>
-	<new_Light name = "Lamp Light" type="Point_Light" tag="Light" position="(0.000000, 38.939999, 0.000000)" ambient="(0.050000, 0.050000, 0.050000)" diffuse="(0.800000, 0.800000, 0.800000)" specular="(0.500000, 0.500000, 0.500000)" constant="1.000000" linear="0.002200" quadratic="0.001900"/>
-    <new_Light name = "Standing Lamp Light" type="Point_Light" tag="Light" position="(-37.514999, 25.583000, -32.407001)" ambient="(0.050000, 0.050000, 0.050000)" diffuse="(0.800000, 0.800000, 0.800000)" specular="(1.000000, 1.000000, 1.000000)" constant="1.000000" linear="0.140000" quadratic="0.070000"/>
+	<new_Light name = "Main Light" type="Point_Light" tag="Light" position="(0.000000, 0.000000, 0.000000)" ambient="(0.150000, 0.150000, 0.150000)" diffuse="(0.800000, 0.800000, 0.800000)" specular="(1.000000, 1.000000, 1.000000)" radius="32.000000"/>
+    <new_Light name = "Lamp Light" type="Point_Light" tag="Light" position="(0.000000, 0.000000, 0.000000)" ambient="(0.050000, 0.050000, 0.050000)" diffuse="(0.800000, 0.800000, 0.800000)" specular="(1.000000, 1.000000, 1.000000)" radius="16.000000"/>
 </lights>
 
 <sounds>

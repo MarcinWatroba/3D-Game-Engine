@@ -60,9 +60,8 @@ void GameObject_Instanced::renderDepth(Shader * p_Shader_In)
 
 void GameObject_Instanced::render(Shader * p_Shader_In)
 {
-	std::cout << VAO << " " << i_Buffer << " " << index_Size << std::endl;
 	static_cast<Transform_Instanced*>(mipo_Components.find("Transform_Instanced")->second)->update_Shader(p_Shader_In);
-	if (b_RenderStatus) static_cast<RenderComp_Instanced*>(mipo_Components.find("RenderComp_Instanced")->second)->renderInstanceed(GL_TEXTURE_2D, GL_TRIANGLES, p_Shader_In, 1000, ParticlesCount, particlePositions, VAO, i_Buffer, index_Size);
+	if (b_RenderStatus) static_cast<RenderComp_Instanced*>(mipo_Components.find("RenderComp_Instanced")->second)->renderInstanceed(GL_TEXTURE_2D, GL_TRIANGLES, p_Shader_In, maxParticles, ParticlesCount, particlePositions, VAO, i_Buffer, index_Size, colour);
 }
 
 void GameObject_Instanced::clean_Up()
@@ -139,24 +138,24 @@ void GameObject_Instanced::update_Particles(float t, float y, float z, glm::vec3
 {
 
 	ParticlesCount = 0;
-	int newparticles = (int)(t*1000.0);
+	int newparticles = (int)(t*maxParticles);
 	if (newparticles > 16)
 		newparticles = 16;
 	
 	for (int i = 0; i < newparticles; i++)
 	{
 		FindUnusedParticle();
-		random = static_cast <float> (rand()) / static_cast <float> (RAND_MAX / 100) - 50;
-		random2 = static_cast <float> (rand()) / static_cast <float> (RAND_MAX / 100);
-		random3 = static_cast <float> (rand()) / static_cast <float> (RAND_MAX / 100) - 50;
+		random = static_cast <float> (rand()) / static_cast <float> (RAND_MAX / range.x) - range.x/2;
+		random2 = static_cast <float> (rand()) / static_cast <float> (RAND_MAX / range.y);
+		random3 = static_cast <float> (rand()) / static_cast <float> (RAND_MAX / range.z) - range.z/2;
 
 		iParticle = this->FindUnusedParticle();
-		ParticlesContainer[iParticle].life = 1.0f;
+		ParticlesContainer[iParticle].life = particle_Life;
 		ParticlesContainer[iParticle].position = glm::vec3(random, random2, -random3);
 		ParticlesContainer[iParticle].size = 1.0f;
-		ParticlesContainer[iParticle].speed = glm::vec3(0.0, -32.0, 0.0);
+		ParticlesContainer[iParticle].speed = glm::vec3(particle_Speed.x, particle_Speed.y, particle_Speed.z);
 	}
-	for (int i = 0; i<1000; i++) {
+	for (int i = 0; i<maxParticles; i++) {
 
 		Particle& p = ParticlesContainer[i]; // shortcut
 
@@ -168,7 +167,7 @@ void GameObject_Instanced::update_Particles(float t, float y, float z, glm::vec3
 			if (p.life > 0.0f) {
 				// Simulate simple physics : gravity only, no collisions
 
-				p.speed = glm::vec3(0.0, -32.0, 0.0);
+				p.speed = glm::vec3(particle_Speed.x, particle_Speed.y, particle_Speed.z);
 				//p.speed += glm::vec3(0.0f, -3.81f, 0.0f) * (float)t * 0.5f;
 				p.position += (p.speed * (float)t);
 
@@ -189,9 +188,34 @@ void GameObject_Instanced::update_Particles(float t, float y, float z, glm::vec3
 	}
 }
 
+void GameObject_Instanced::setMax(unsigned int max_In)
+{
+	maxParticles = max_In;
+}
+
+void GameObject_Instanced::set_Life(float life_In)
+{
+	particle_Life = life_In;
+}
+
+void GameObject_Instanced::set_Range(glm::vec3 range_In)
+{
+	range = range_In;
+}
+
+void GameObject_Instanced::set_Particle_Speed(glm::vec3 speed_In)
+{
+	particle_Speed = speed_In;
+}
+
+void GameObject_Instanced::set_Colour(glm::vec3 colour_In)
+{
+	colour = colour_In;
+}
+
 int GameObject_Instanced::FindUnusedParticle()
 {
-	for (int i = LastUsedParticle; i < 1000; i++) {
+	for (int i = LastUsedParticle; i < maxParticles; i++) {
 		if (ParticlesContainer[i].life <= 0) {
 			LastUsedParticle = i;
 

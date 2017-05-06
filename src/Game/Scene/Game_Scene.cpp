@@ -24,24 +24,23 @@ Game_Scene::Game_Scene()
 //Initialize everything once
 void Game_Scene::init()
 {
+	rendered = false;
 	//Initialize
 	lock_mouse(true);
-	rendered = false;
+
 	b_Init = false;
 
-	camera_3D = new Camera_3D(45.f, v2_WindowSize.x / v2_WindowSize.y, 0.1f, 1000.f);
+	camera_3D = new Camera_3D(45.f, 1080.f / 720.0f, 0.1f, 1000.f);
 	camera_3D->set_CameraPos(glm::vec3(0.f, -20.f, 0.f));
 	
 	if (firstTime)
 	{	
 		currentLevel = 0;
 		o_SceneLoader = new SceneLoader(levelList[currentLevel].c_str(), po_Loader, mspo_Objects, *snd_Audio);
-
+		
 		firstTime = false;
 	}
 
-	// Play background audio - hard code
-	//snd_Audio->find("rain")->second->Play(glm::vec3(0,0,0), 0.5);
 	// Play background Audio - loaded via XML
 	snd_Audio->find("rain")->second->Play();
 
@@ -65,21 +64,13 @@ void Game_Scene::init()
 	{
 
 		pos[posNum] = static_cast<GameObject_3D*>(pair.second)->get_Position();
-		
+		posNum++;
 		if (pair.second->get_Tag() == "Light")
 		{
-
-			//static_cast<Light*>(pair.second)->set_Depth_Texture(o_SceneLoader->setup_FBO());
-			//light[ui_light_Amount] = static_cast<Light*>(pair.second)->get_Position();
-			//radius[ui_light_Amount] = static_cast<Light*>(pair.second)->get_Radius();
-
-			//depth[ui_light_Amount] = static_cast<Light*>(pair.second)->get_Depth_Texture();
-
 			ui_light_Amount++;
 			num++;
-
 		}
-		posNum++;
+
 		
 	}
 
@@ -251,6 +242,7 @@ void Game_Scene::reload_Scene()
 //Update the scene
 void Game_Scene::update_Scene(GLfloat f_Delta_In, glm::vec2 v2_MousePos_In)
 {
+	
 	////Initialize
 	if (!b_Init) init();
 
@@ -290,6 +282,7 @@ void Game_Scene::update_Scene(GLfloat f_Delta_In, glm::vec2 v2_MousePos_In)
 		
 			//update game components
 			Component * po_Component;
+		
 			//Update AI character controller
 			po_Component = po_GameObject->get_Component("Character_Controller");
 			if (po_Component != nullptr) {
@@ -342,10 +335,6 @@ void Game_Scene::update_Scene(GLfloat f_Delta_In, glm::vec2 v2_MousePos_In)
 			}
 			else { ++itr; }
 		}
-		//camera_3D->move_Keyboard(f_Delta_In);
-		//camera_3D->move_Mouse(f_Delta_In, v2_MousePos_In, v2_WindowSize);
-		//camera_3D->update();
-		//camera_3D->reset();
 	}
 }
 
@@ -445,12 +434,15 @@ void Game_Scene::render()
 
 			o_SceneLoader->prepare_DepthCube(po_Loader->get_Shader("3"), light[no], depth[i], i);
 
+
 			for (auto const& pair : mspo_Objects)
 			{
-				if (glm::distance(pos[obj_No], light[no]) < (o_SceneLoader->get_LightRadius(no) * 10))
+
+				if (glm::distance(pos[obj_No], light[no]) < (o_SceneLoader->get_LightRadius(no) * 10) || pair.second->get_Tag() == "Player" || pair.second->get_Tag() == "Enemy")
 				{
-					if (pair.second->get_Tag() == "Object")
+					if (pair.second->get_Tag() != "Object_Lamp" &&  pair.second->get_Tag() != "Particle")
 					{
+
 						pair.second->renderDepth(po_Loader->get_Shader("3"));
 					}
 					else if (pair.second->get_Tag() == "Light")
