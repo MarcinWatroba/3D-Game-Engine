@@ -9,6 +9,9 @@
 #include <Engine\Stats\Stats.h>
 #include <Engine\Component\Character.h>
 #include <Engine\Component\RigidBody.h>
+#include <Engine\Component\BoxCollider_3D.h>
+#include <Engine\Component\Respond_Movement.h>
+#include <Game\AIController\AIController.h>
 
 PrefabLoader::PrefabLoader(const char * pc_FileName_In, Loader * po_Loader_In, StatsLoader* po_StatsLoader_In)
 {
@@ -49,8 +52,9 @@ PrefabLoader::PrefabLoader(const char * pc_FileName_In, Loader * po_Loader_In, S
 
 			if (s_StatsName != "" && po_StatsLoader != nullptr)
 			{
+				object->add_Component("Respond_Movement", new Respond_Movement());
 				object->add_Component("Character", new Character(po_StatsLoader->get_Stat(s_StatsName)));
-				object->add_Component("Rigid", new RigidBody(po_StatsLoader->get_Stat(s_StatsName)));
+				object->add_Component("RigidBody", new RigidBody(po_StatsLoader->get_Stat(s_StatsName)));
 			}
 
 			object->set_RenderStatus(false);
@@ -81,6 +85,7 @@ PrefabLoader::PrefabLoader(const char * pc_FileName_In, Loader * po_Loader_In, S
 			glm::vec3 position = to3DVector(it->Attribute("position"));
 			glm::quat quat_Orientation = toQuat(it->Attribute("orientation"));
 			glm::vec3 scale = to3DVector(it->Attribute("scale"));
+			std::string s_StatsName = it->Attribute("stats");
 
 			//Typical process of adding new 3D object
 			mipo_Prefabs.insert(std::pair<std::string, Game_Object*>(s_ObjectName, new GameObject_3D()));
@@ -90,7 +95,7 @@ PrefabLoader::PrefabLoader(const char * pc_FileName_In, Loader * po_Loader_In, S
 			object->add_Component("Mesh_3D", po_Loader_In->get_Mesh(i_MeshID));
 			object->add_Component("Transform_3D", new Transform_3D());
 			object->add_Component("RenderComp_3D", new RenderComp_3D());
-			if (s_Components != "") add_Components(object, s_Components);
+			if (s_Components != "") add_Components(object, s_Components, po_StatsLoader->get_Stat(s_StatsName));
 			object->set_Position(position);
 			object->set_Origin(origin);
 			object->set_Rotation(quat_Orientation);
@@ -141,7 +146,6 @@ PrefabLoader::PrefabLoader(const char * pc_FileName_In, Loader * po_Loader_In, S
 			v3_Specular = to3DVector(it->Attribute("specular"));
 			f_lRadius = std::strtof(it->Attribute("radius"), nullptr);
 			mipo_Prefabs.insert(std::pair<std::string, Game_Object*>(s_Name, new Point_Light(v3_Ambient, v3_Diffuse, v3_Specular, f_lRadius)));
-			
 			auto point_Light = static_cast<Point_Light*>(mipo_Prefabs.find(s_Name)->second);
 			point_Light->set_Name(s_Name);
 			point_Light->add_Component("Mesh_3D", po_Loader_In->get_Mesh("7"));
@@ -368,15 +372,22 @@ void PrefabLoader::clean_Up()
 	for (const auto& pair : mipo_Prefabs) delete pair.second;
 }
 
-void PrefabLoader::identify_Component(GameObject_3D* po_GameObject_In, std::string& s_ToProcess_In)
+void PrefabLoader::identify_Component(GameObject_3D* po_GameObject_In, std::string& s_ToProcess_In, Stats * stat_In)
 {
+	std::cout << "Component name: " << s_ToProcess_In << "\n";
 	if (s_ToProcess_In == "Mesh_3D") std::cout << "Nope" << "\n";
-	else std::cout << "Unknown component..." << "\n"; // Else we can't find it
+	else if (s_ToProcess_In == "AI_Controller") { po_GameObject_In->add_Component("AI_Controller", new AIController(po_GameObject_In)); }
+	else if (s_ToProcess_In == "Respond_Movement") po_GameObject_In->add_Component("Respond_Movement", new Respond_Movement());
+	else if (s_ToProcess_In == "BoxCollider_3D") po_GameObject_In->add_Component("BoxCollider_3D", new BoxCollider_3D());
+	else if (s_ToProcess_In == "RigidBody")
+		if (stat_In != nullptr) po_GameObject_In->add_Component("RigidBody", new RigidBody(stat_In));
+		else po_GameObject_In->add_Component("RigidBody", new RigidBody());
+	else if (s_ToProcess_In == "Character") po_GameObject_In->add_Component("Character", new Character(stat_In));
 
 	s_ToProcess_In.clear();
 }
 
-void PrefabLoader::add_Components(GameObject_3D* po_GameObject_In, std::string s_ToProcess_In)
+void PrefabLoader::add_Components(GameObject_3D* po_GameObject_In, std::string s_ToProcess_In, Stats * stats_In)
 {
 	std::string s_Result;
 	int i_Length = s_ToProcess_In.length();
@@ -390,12 +401,12 @@ void PrefabLoader::add_Components(GameObject_3D* po_GameObject_In, std::string s
 			break;
 
 		case 41: // This bracket ")"
-			identify_Component(po_GameObject_In, s_Result);
+			identify_Component(po_GameObject_In, s_Result, stats_In);
 			break;
 
 		case 44:  // Comma
 				  //Find the right component
-			identify_Component(po_GameObject_In, s_Result);
+			identify_Component(po_GameObject_In, s_Result, stats_In);
 			break;
 
 		case '\n':

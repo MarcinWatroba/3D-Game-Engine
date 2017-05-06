@@ -5,6 +5,7 @@
 
 class Loader;
 class StatsLoader;
+class Stats;
 
 class PrefabLoader
 {
@@ -18,10 +19,10 @@ private:
 	glm::quat toQuat(const char* pc_Quaternion_In);
 
 	//Add children
-	void add_Components(GameObject_3D* po_GameObject_In, std::string s_ToProcess_In);
+	void add_Components(GameObject_3D* po_GameObject_In, std::string s_ToProcess_In, Stats * stats_In);
 
 	//Identify the component
-	void identify_Component(GameObject_3D* po_GameObject_In, std::string& s_Result_In);
+	void identify_Component(GameObject_3D* po_GameObject_In, std::string& s_Result_In, Stats * stat_In);
 public:
 	PrefabLoader() {};
 	PrefabLoader(const char* pc_FileName_In, Loader* po_Loader_In, StatsLoader* po_StatsLoader_In);

@@ -12,6 +12,7 @@
 #include <Engine\Lighting\Light.h>
 #include <Game\AIController\AIController.h>
 #include <Game\Misc\Bullet.h>
+#include <Engine\Loaders\StatsLoader.h>
 
 #include <iostream>
 
@@ -151,7 +152,7 @@ void Game_Scene::keyboard_Input(GLfloat f_Delta_In, GLboolean* pab_KeyArray_In, 
 
 	if (pab_KeyArray_In[GLFW_KEY_W])
 	{
-		player->move(glm::vec3(0, 0, 1), moveSpeed * f_Delta_In);
+		player->move(glm::vec3(0, 0, 1), -moveSpeed * f_Delta_In);
 		if (walkCount > walkRate)
 		{
 			snd_Audio->find("walking")->second->Play();
@@ -161,7 +162,7 @@ void Game_Scene::keyboard_Input(GLfloat f_Delta_In, GLboolean* pab_KeyArray_In, 
 	}
 	if (pab_KeyArray_In[GLFW_KEY_S])
 	{
-		player->move(glm::vec3(0, 0, 1), -moveSpeed * f_Delta_In);
+		player->move(glm::vec3(0, 0, 1), moveSpeed * f_Delta_In);
 		if (walkCount > walkRate)
 		{
 			snd_Audio->find("walking")->second->Play();
@@ -179,7 +180,7 @@ void Game_Scene::keyboard_Input(GLfloat f_Delta_In, GLboolean* pab_KeyArray_In, 
 
 	if (pab_KeyArray_In[GLFW_KEY_A])
 	{
-		player->move(glm::vec3(1, 0, 0), moveSpeed * f_Delta_In);
+		player->move(glm::vec3(1, 0, 0), -moveSpeed * f_Delta_In);
 		if (walkCount > walkRate)
 		{
 			snd_Audio->find("walking")->second->Play();
@@ -189,7 +190,7 @@ void Game_Scene::keyboard_Input(GLfloat f_Delta_In, GLboolean* pab_KeyArray_In, 
 	}
 	if (pab_KeyArray_In[GLFW_KEY_D])
 	{
-		player->move(glm::vec3(1, 0, 0), -moveSpeed * f_Delta_In);
+		player->move(glm::vec3(1, 0, 0), moveSpeed * f_Delta_In);
 		if (walkCount > walkRate)
 		{
 			snd_Audio->find("walking")->second->Play();

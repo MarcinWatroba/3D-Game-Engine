@@ -551,6 +551,7 @@ void Scene_3D::init()
 	camera_3D->set_CameraPos(glm::vec3(0.f, -20.f, 0.f));
 	camera_2D = new Camera_2D(0, v2_WindowSize.x, v2_WindowSize.y, 0);
 	//Load the scene
+
 	po_StatsLoader = nullptr;
 	po_PrefabLoader = new PrefabLoader("assets/Prefabs.xml", po_Loader, po_StatsLoader);
 	o_SceneLoader = new SceneLoader("assets/scenes/Robot_Scene.xml", po_Loader, po_PrefabLoader, mspo_Objects, *snd_Audio);
