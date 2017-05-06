@@ -19,6 +19,7 @@
 Game_Scene::Game_Scene()
 {
 	levelList.push_back("assets/scenes/Robot_Scene.xml");
+	levelList.push_back("assets/scenes/Kitchen.xml");
 }
 
 //Initialize everything once
@@ -491,7 +492,7 @@ void Game_Scene::load_Scene(int i)
 	
 	//Load the scene
 	std::string sLevel = levelList.at(i);
-    //o_SceneLoader = new SceneLoader(sLevel.c_str(), po_Loader, po_PrefabLoader, mspo_Objects, *snd_Audio);
+    o_SceneLoader = new SceneLoader(sLevel.c_str(), po_Loader, po_PrefabLoader, mspo_Objects, *snd_Audio);
 
 }
 

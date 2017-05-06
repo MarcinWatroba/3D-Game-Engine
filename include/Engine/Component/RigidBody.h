@@ -20,7 +20,7 @@ private:
 	float velocity;
 	float jumpForce;
 	float jumpVelocity;
-	float jumpHeight = 5.0f;
+	float jumpHeight = 7.5f;
 	float counter = 0;
 	bool reachedPeak = false;
 	bool grounded = true;
