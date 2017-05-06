@@ -5,10 +5,15 @@
 #include <Engine\Component\Transform_3D.h>
 #include <Engine\Component\RenderComp_3D.h>
 #include <Engine\Lighting\Point_Light.h>
+#include <Engine\Loaders\StatsLoader.h>
+#include <Engine\Stats\Stats.h>
+#include <Engine\Component\Character.h>
+#include <Engine\Component\RigidBody.h>
 
-PrefabLoader::PrefabLoader(const char * pc_FileName_In, Loader * po_Loader_In)
+PrefabLoader::PrefabLoader(const char * pc_FileName_In, Loader * po_Loader_In, StatsLoader* po_StatsLoader_In)
 {
 	po_SceneLoader = po_Loader_In;
+	po_StatsLoader = po_StatsLoader_In;
 
 	tinyxml2::XMLDocument object_File;
 	object_File.LoadFile(pc_FileName_In);
@@ -33,6 +38,7 @@ PrefabLoader::PrefabLoader(const char * pc_FileName_In, Loader * po_Loader_In)
 			glm::vec3 v3_Scale = to3DVector(it->Attribute("scale"));
 			std::string s_Children = it->Attribute("children");
 			std::string s_Tag = it->Attribute("tag");
+			std::string s_StatsName = it->Attribute("stats");
 
 			//Typical process of adding new 3D object
 			mipo_Prefabs.insert(std::pair<std::string, Game_Object*>(s_ObjectName, new GameObject_3D()));
@@ -40,6 +46,14 @@ PrefabLoader::PrefabLoader(const char * pc_FileName_In, Loader * po_Loader_In)
 			object->set_Name(s_ObjectName);
 			object->set_Prefab(s_ObjectName);
 			object->add_Component("Transform_3D", new Transform_3D());
+
+			if (s_StatsName != "")
+			{
+				object->add_Component("Character", new Character(po_StatsLoader->get_Stat(s_StatsName)));
+				object->add_Component("Rigid", new RigidBody(po_StatsLoader->get_Stat(s_StatsName)));
+				
+			}
+
 			object->set_RenderStatus(false);
 			object->set_Position(v3_Position);
 			object->set_Origin(v3_Origin);

@@ -26,27 +26,14 @@ Character::Character(std::string inType)
 
 Character::Character(const Character &obj)
 {
-	if (typeOfChar == "")
-	{
-		health = 0;
-		numberOfBullets = 0;
-	}
-	else if (typeOfChar == "Player")
-	{
-		health = 300;
-		numberOfBullets = 100;
-	}
-	else if (typeOfChar == "Enemy")
-	{
-		health = 1;
-		numberOfBullets = 300;
-	}
-	else if (typeOfChar == "Enemy_Big")
-	{
-		health = 5;
-		numberOfBullets = 500;
-	}
+	
 }
+Character::Character(Stats * stat)
+{
+	health = stat->getHealth();
+	numberOfBullets = stat->getAmmo();
+}
+
 std::string Character::get_Type()
 {
 	return "Character";

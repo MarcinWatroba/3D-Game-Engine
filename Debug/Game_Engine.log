@@ -1,0 +1,36 @@
+﻿  Game_Scene.cpp
+h:\desktop\games programming group project\tempmergedengine\src\game\scene\game_scene.cpp(38): error C2661: 'PrefabLoader::PrefabLoader': no overloaded function takes 2 arguments
+  Bullet.cpp
+  Game.cpp
+  State_Patrol.cpp
+  State_Idle.cpp
+  State_Attack.cpp
+  AIController.cpp
+  Stats.cpp
+  State.cpp
+  Scene.cpp
+  Mesh_Instanced.cpp
+  Physics.cpp
+  CollisionManager.cpp
+  Mesh_3D.cpp
+  Mesh_2D.cpp
+  Mesh.cpp
+  StatsLoader.cpp
+  SceneSaver.cpp
+  SceneLoader.cpp
+h:\desktop\games programming group project\tempmergedengine\src\engine\loaders\sceneloader.cpp(61): warning C4018: '<': signed/unsigned mismatch
+h:\desktop\games programming group project\tempmergedengine\src\engine\loaders\sceneloader.cpp(102): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+h:\desktop\games programming group project\tempmergedengine\src\engine\loaders\sceneloader.cpp(180): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+h:\desktop\games programming group project\tempmergedengine\src\engine\loaders\sceneloader.cpp(193): warning C4800: 'const char *': forcing value to bool 'true' or 'false' (performance warning)
+h:\desktop\games programming group project\tempmergedengine\src\engine\loaders\sceneloader.cpp(194): warning C4800: 'const char *': forcing value to bool 'true' or 'false' (performance warning)
+h:\desktop\games programming group project\tempmergedengine\src\engine\loaders\sceneloader.cpp(195): warning C4800: 'const char *': forcing value to bool 'true' or 'false' (performance warning)
+h:\desktop\games programming group project\tempmergedengine\src\engine\loaders\sceneloader.cpp(326): warning C4101: 'f_Angle': unreferenced local variable
+h:\desktop\games programming group project\tempmergedengine\src\engine\loaders\sceneloader.cpp(536): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
+h:\desktop\games programming group project\tempmergedengine\src\engine\loaders\sceneloader.cpp(579): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
+  PrefabLoader.cpp
+  Generating Code...
+  Compiling...
+  Loader.cpp
+  Point_Light.cpp
+  Light.cpp
+  Tile.cpp

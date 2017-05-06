@@ -42,6 +42,11 @@ GameObject_3D::GameObject_3D(const GameObject_3D & p_NewObject_In) : Game_Object
 			auto renderComp_3D = static_cast<RenderComp_3D*>(pair.second);
 			add_Component("RenderComp_3D", new RenderComp_3D(*renderComp_3D));
 		}
+		else if (pair.second->get_Type() == "Character")
+		{
+			auto character = static_cast<Character*>(pair.second);
+			add_Component("Character", new Character(*character));
+		}
 	}
 
 	s_PrefabName = p_NewObject_In.s_PrefabName;
