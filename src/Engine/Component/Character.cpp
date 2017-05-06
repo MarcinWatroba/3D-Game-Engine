@@ -6,7 +6,8 @@ Character::Character(std::string inType)
 
 Character::Character(const Character &obj)
 {
-	
+	health = obj.health;
+	numberOfBullets = obj.numberOfBullets;
 }
 Character::Character(Stats * stat)
 {
@@ -16,8 +17,7 @@ Character::Character(Stats * stat)
 	{
 		path1 = stat->getPath1();
 		path2 = stat->getPath2();
-	}
-	
+	}	
 }
 
 std::string Character::get_Type()

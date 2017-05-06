@@ -52,6 +52,7 @@ PrefabLoader::PrefabLoader(const char * pc_FileName_In, Loader * po_Loader_In, S
 
 			if (s_StatsName != "" && po_StatsLoader != nullptr)
 			{
+				object->add_Component("Respond_Movement", new Respond_Movement());
 				object->add_Component("Character", new Character(po_StatsLoader->get_Stat(s_StatsName)));
 				object->add_Component("RigidBody", new RigidBody(po_StatsLoader->get_Stat(s_StatsName)));
 			}

@@ -30,14 +30,15 @@ GameObject_3D::GameObject_3D(const GameObject_3D & p_NewObject_In) : Game_Object
 	auto transform_3D = static_cast<Transform_3D*>(p_NewObject_In.mipo_Components.at("Transform_3D"));
 	add_Component("Transform_3D", new Transform_3D(*transform_3D));
 
+	if (p_NewObject_In.vs_ChildrenNames.empty())
+	{
+		auto mesh_3D = static_cast<Mesh_3D*>(p_NewObject_In.mipo_Components.at("Mesh_3D"));
+		add_Component("Mesh_3D", mesh_3D);
+	}
+
 	for (auto const& pair : p_NewObject_In.mipo_Components)
 	{
-		if (pair.second->get_Type() == "Mesh_3D")
-		{
-			auto mesh_3D = static_cast<Mesh_3D*>(pair.second);
-			add_Component("Mesh_3D", mesh_3D);
-		}
-		else if (pair.second->get_Type() == "RenderComp_3D")
+		if (pair.second->get_Type() == "RenderComp_3D")
 		{
 			auto renderComp_3D = static_cast<RenderComp_3D*>(pair.second);
 			add_Component("RenderComp_3D", new RenderComp_3D(*renderComp_3D));
@@ -109,8 +110,6 @@ void GameObject_3D::add_Component(std::string s_Name_In, Component* p_Component_
 	else if (s_Name_In == "Character")
 	{
 		auto found_Character = mipo_Components.find("Character")->second;
-		dynamic_cast<Character*>(found_Character)->setHealth(3);
-		dynamic_cast<Character*>(found_Character)->setNumberOfBullets(100);
 	}
 }
 
@@ -355,7 +354,7 @@ void GameObject_3D::shootBullet()
 {
 	for (unsigned int i = 0; i < bulletList.size(); i++)
 	{
-		bulletList[i]->move(glm::vec3(0, 0, 1), 0.1f);
+		bulletList[i]->move(glm::vec3(0, 0, 1), -0.1f);
 	}
 	if (!bulletList.empty())
 	{

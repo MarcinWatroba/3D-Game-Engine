@@ -1,11 +1,17 @@
 #include <Engine/Component/BoxCollider_3D.h>
 
 BoxCollider_3D::BoxCollider_3D()
-{}
+{
+
+}
 BoxCollider_3D::BoxCollider_3D(const BoxCollider_3D &obj)
-{}
+{
+
+}
 BoxCollider_3D::~BoxCollider_3D()
-{}
+{
+
+}
 std::string BoxCollider_3D::get_Type()
 {
 	return "BoxCollider_3D";
@@ -257,9 +263,9 @@ void BoxCollider_3D::updatePos(glm::mat4 parentMatrix)
 
 
 	oneTime = false;
-	//std::cout << "Plant Pot collider extents:" << std::endl;
-	//std::cout << "Min (" << newMinExtents.x << ", " << newMinExtents.y << ", " << newMinExtents.z << ")" << std::endl;
-	//std::cout << "Max (" << newMaxExtents.x << ", " << newMaxExtents.y << ", " << newMaxExtents.z << ")" << std::endl << std::endl;
+	std::cout << "Plant Pot collider extents:" << std::endl;
+	std::cout << "Min (" << newMinExtents.x << ", " << newMinExtents.y << ", " << newMinExtents.z << ")" << std::endl;
+	std::cout << "Max (" << newMaxExtents.x << ", " << newMaxExtents.y << ", " << newMaxExtents.z << ")" << std::endl << std::endl;
 	oldPos = translation;
 	oldRot = rotation;
 
