@@ -244,7 +244,7 @@ void Game_Scene::update_Scene(GLfloat f_Delta_In, glm::vec2 v2_MousePos_In)
 
 	if (findPlayer() == false) {
 		//quit to main menu
-		std::cout << "Game Over, Loser!" << std::endl;
+		//std::cout << "Game Over, Loser!" << std::endl;
 	}
 	if (i_numEnemies == 0) {
 		//level win!
@@ -257,7 +257,7 @@ void Game_Scene::update_Scene(GLfloat f_Delta_In, glm::vec2 v2_MousePos_In)
 		{
 			//game win
 		}
-		std::cout << "Winner Winner Chicken Dinner!" << std::endl;
+		//std::cout << "Winner Winner Chicken Dinner!" << std::endl;
 	}
 
 	if (b_Init)
