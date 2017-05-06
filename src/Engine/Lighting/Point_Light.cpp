@@ -10,9 +10,7 @@ Point_Light::Point_Light(glm::vec3 v3_Ambient_In, glm::vec3 v3_Diffuse_In, glm::
 }
 Point_Light::Point_Light(const Point_Light & point_Light) : Light(point_Light)
 {
-	f_Constant = point_Light.f_Constant;
-	f_Linear = point_Light.f_Linear;
-	f_Quadratic = point_Light.f_Quadratic;
+	f_radius = point_Light.f_radius;
 	i_ID = point_Light.i_ID;
 }
 

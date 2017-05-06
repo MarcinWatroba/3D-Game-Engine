@@ -398,7 +398,7 @@ void Scene_3D::init()
 	camera_2D = new Camera_2D(0, v2_WindowSize.x, v2_WindowSize.y, 0);
 	//Load the scene
 	po_PrefabLoader = new PrefabLoader("assets/Prefabs.xml", po_Loader);
-	o_SceneLoader = new SceneLoader("assets/scenes/Robot_Scene.xml", po_Loader, po_PrefabLoader, mspo_Objects);
+	o_SceneLoader = new SceneLoader("assets/scenes/Robot_Scene.xml", po_Loader, po_PrefabLoader, mspo_Objects, );
 	save = new SceneSaver();
 	f_Speed = 0.f;
 	add_Arrows();

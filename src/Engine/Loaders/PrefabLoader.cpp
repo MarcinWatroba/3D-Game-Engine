@@ -133,7 +133,7 @@ PrefabLoader::PrefabLoader(const char * pc_FileName_In, Loader * po_Loader_In)
 			
 			auto point_Light = static_cast<Point_Light*>(mipo_Prefabs.find(s_Name)->second);
 			point_Light->set_Name(s_Name);
-			point_Light->add_Component("Mesh_3D", po_Loader_In->get_Mesh3D("7"));
+			point_Light->add_Component("Mesh_3D", po_Loader_In->get_Mesh("7"));
 			point_Light->add_Component("Transform_3D", new Transform_3D());
 			point_Light->add_Component("RenderComp_3D", new RenderComp_3D());
 			point_Light->set_Position(v3_Position);

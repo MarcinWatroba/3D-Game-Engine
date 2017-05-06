@@ -49,7 +49,7 @@ void SceneSaver::save(std::map<std::string, Game_Object*>& mspo_GameObjects_In, 
 		{
 			pElement = xmlDoc.NewElement("new_Light");
 
-			if (pair.second->get_Type() == "Point_Light")
+			if (((Light*)pair.second)->get_Type() == "Point_Light")
 			{
 				auto point_Light = static_cast<Point_Light*>(pair.second);
 				pElement->SetAttribute("name", point_Light->get_Name().c_str());

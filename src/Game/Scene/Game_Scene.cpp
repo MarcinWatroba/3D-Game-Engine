@@ -212,7 +212,7 @@ void Game_Scene::mouse_Input(GLboolean* pab_MouseArray_In, GLboolean* pab_Locked
 
 	if (pab_MouseArray_In[GLFW_MOUSE_BUTTON_1])
 	{
-		player->createBullet(new Bullet("Bullet", po_Loader->get_Mesh3D("7"), static_cast<GameObject_3D*>(mspo_Objects.find("Robot")->second), po_Loader->get_Texture("24"), po_Loader->get_Texture("7")),snd_Audio->find("shooting_pistol")->second);
+		player->createBullet(new Bullet("Bullet", (Mesh_3D*)po_Loader->get_Mesh("7"), static_cast<GameObject_3D*>(mspo_Objects.find("Robot")->second), po_Loader->get_Texture("24"), po_Loader->get_Texture("7")),snd_Audio->find("shooting_pistol")->second);
 		player->setFiring(true);
 		shooting = true;
 	}
