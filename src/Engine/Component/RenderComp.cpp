@@ -35,14 +35,6 @@ glm::vec3 RenderComp::get_Colour()
 	return v3_Colour;
 }
 
-RenderComp::RenderComp(const RenderComp & p_NewComp_In)
-{
-	v3_Colour = p_NewComp_In.v3_Colour;
-	v2_Tiling = p_NewComp_In.v2_Tiling;
-	p_Mesh = p_NewComp_In.p_Mesh;
-	mso_Textures = p_NewComp_In.mso_Textures;
-}
-
 void RenderComp::set_Mesh(Mesh* p_Mesh_In)
 {
 	p_Mesh = p_Mesh_In;

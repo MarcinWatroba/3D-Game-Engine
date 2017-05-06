@@ -102,7 +102,7 @@ void Camera_3D::move_Mouse(float f_Delta_In, glm::vec2 v2_MousePos_In, glm::vec2
 
 	//Calculate yaw and pitch
 	f_YawDelta = mouseX_Sensitivity * deltaMouse_X;
-	f_Yaw += YawDelta;
+	f_Yaw += f_YawDelta;
 	f_PitchDelta = mouseY_Sensitivity * deltaMouse_Y;
 	f_Pitch += f_PitchDelta;
 
@@ -209,19 +209,6 @@ void Camera_3D::set_CameraPos(glm::vec3 v3_Pos_In)
 glm::vec3 Camera_3D::get_CameraPos()
 {
 	return -vec3_EyePos;
-}
-
-float Camera_3D::get_CameraSide()
-{
-	glm::vec3 tempEuler = glm::eulerAngles(quat_Orientation);
-	if (tempEuler.y >= 0)
-	{
-		return 1;
-	}
-	else
-	{
-		return -1;
-	}
 }
 
 glm::quat Camera_3D::get_Quat()

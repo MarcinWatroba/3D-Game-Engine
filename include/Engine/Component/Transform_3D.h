@@ -45,6 +45,4 @@ public:
 	void update_Shader(Shader* p_Shader_In);
 
 	glm::mat4 get_ModelMatrix();
-
-	std::string get_Type();
 };

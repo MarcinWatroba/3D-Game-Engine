@@ -54,7 +54,7 @@ public:
 	//Move camera using keyboard
 	void move_Keyboard(float f_Delta_In);
 
-	float get_CameraSide();
+	int get_CameraSide();
 
 	//Move camera using mouse
 	void move_Mouse(float f_Delta_In, glm::vec2 v2_MousePos_In, glm::vec2 v2_WindowSize_In);
@@ -71,6 +71,4 @@ public:
 	glm::vec2 get_PitchYaw(float f_Delta_In, glm::vec2 v2_MousePos_In, glm::vec2 v2_WindowSize_In);
 
 	void set_Speed(float f_Speed_In);
-
-	int get_CameraSide();
 };

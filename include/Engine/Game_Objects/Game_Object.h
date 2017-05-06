@@ -44,8 +44,6 @@ protected:
 	bool b_toDelete;
 	glm::vec2 v2_Tiling;
 
-	glm::vec2 v2_Tiling;
-
 public:
 	Game_Object();
 	Game_Object(const Game_Object &p_NewObject_In);

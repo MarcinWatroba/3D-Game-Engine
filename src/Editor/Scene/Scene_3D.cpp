@@ -508,7 +508,7 @@ void Scene_3D::process_2DClick(int i_ID_In)
 				mspo_Objects.insert(std::pair<std::string, Game_Object*>(s_Name, new GameObject_3D(*desired_Prefab)));
 				auto desired_Object = static_cast<GameObject_3D*>(mspo_Objects.find(s_Name)->second);
 
-				for (int i = 0; i < desired_Prefab->get_ChildrenNames().size(); i++)
+				for (unsigned int i = 0; i < desired_Prefab->get_ChildrenNames().size(); i++)
 				{
 					std::string s_ChildName = s_Name + " Child " + std::to_string(i_Counter + i);
 
@@ -552,7 +552,7 @@ void Scene_3D::init()
 	camera_2D = new Camera_2D(0, v2_WindowSize.x, v2_WindowSize.y, 0);
 	//Load the scene
 	po_PrefabLoader = new PrefabLoader("assets/Prefabs.xml", po_Loader);
-	o_SceneLoader = new SceneLoader("assets/scenes/Robot_Scene.xml", po_Loader, po_PrefabLoader, mspo_Objects);
+	o_SceneLoader = new SceneLoader("assets/scenes/Robot_Scene.xml", po_Loader, po_PrefabLoader, mspo_Objects, *snd_Audio);
 	save = new SceneSaver();
 	f_Speed = 0.f;
 	i_Counter = o_SceneLoader->get_Count();
@@ -961,7 +961,7 @@ void Scene_3D::render()
 		if (!s_Deletion.empty())
 		{
 			//Perform deletion here
-			for (int i = 0; i < s_Deletion.size(); i++)
+			for (unsigned int i = 0; i < s_Deletion.size(); i++)
 			{
 				auto found = mspo_Objects.find(s_Deletion.at(i))->second;
 				found->clean_Up();

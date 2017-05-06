@@ -17,11 +17,6 @@ std::string Point_Light::get_Type()
 	return "Point_Light";
 }
 
-void Point_Light::set_ID(unsigned int i_ID_In)
-{
-	i_ID = i_ID_In;
-}
-
 void Point_Light::set_Radius(float f_Radius_In)
 {
 	f_radius = f_Radius_In;
@@ -60,3 +55,4 @@ void Point_Light::update_Shader(Shader* p_Shader_In)
 	std::string rad = point_Light + ".radius";
 	GLint radiusLoc = glGetUniformLocation(p_Shader_In->get_Program(), rad.c_str());
 	glUniform1f(radiusLoc, f_radius);
+}

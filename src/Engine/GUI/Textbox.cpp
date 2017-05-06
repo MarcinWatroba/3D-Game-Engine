@@ -79,14 +79,14 @@ std::string Textbox::get_Text()
 void Textbox::update()
 {
 	static_cast<Transform_2D*>(mipo_Components.find("Transform_2D")->second)->update();
-	for (int i = 0; i < vp_Lines.size(); i++) vp_Lines.at(i)->update();
+	for (unsigned int i = 0; i < vp_Lines.size(); i++) vp_Lines.at(i)->update();
 }
 
 void Textbox::render(Shader * p_Shader_In)
 {
 	static_cast<Transform_2D*>(mipo_Components.find("Transform_2D")->second)->update_Shader(p_Shader_In);
 	if (b_RenderStatus) static_cast<RenderComp_2D*>(mipo_Components.find("RenderComp_2D")->second)->render(GL_TEXTURE_2D, GL_TRIANGLES, p_Shader_In);
-	for (int i = 0; i < vp_Lines.size(); i++)
+	for (unsigned int i = 0; i < vp_Lines.size(); i++)
 	{
 		vp_Lines.at(i)->set_RenderStatus(get_RenderStatus());
 		vp_Lines.at(i)->render(p_Shader_In);

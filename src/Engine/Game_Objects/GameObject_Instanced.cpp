@@ -155,7 +155,7 @@ void GameObject_Instanced::update_Particles(float t, float y, float z, glm::vec3
 		ParticlesContainer[iParticle].size = 1.0f;
 		ParticlesContainer[iParticle].speed = glm::vec3(particle_Speed.x, particle_Speed.y, particle_Speed.z);
 	}
-	for (int i = 0; i<maxParticles; i++) {
+	for (unsigned int i = 0; i<maxParticles; i++) {
 
 		Particle& p = ParticlesContainer[i]; // shortcut
 
@@ -215,7 +215,7 @@ void GameObject_Instanced::set_Colour(glm::vec3 colour_In)
 
 int GameObject_Instanced::FindUnusedParticle()
 {
-	for (int i = LastUsedParticle; i < maxParticles; i++) {
+	for (unsigned int i = LastUsedParticle; i < maxParticles; i++) {
 		if (ParticlesContainer[i].life <= 0) {
 			LastUsedParticle = i;
 
@@ -223,7 +223,7 @@ int GameObject_Instanced::FindUnusedParticle()
 		}
 	}
 
-	for (int i = 0; i<LastUsedParticle; i++) {
+	for (unsigned int i = 0; i<LastUsedParticle; i++) {
 		if (ParticlesContainer[i].life <= 0) {
 			LastUsedParticle = i;
 
