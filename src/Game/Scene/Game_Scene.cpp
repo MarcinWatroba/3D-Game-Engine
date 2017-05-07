@@ -251,7 +251,9 @@ void Game_Scene::update_Scene(GLfloat f_Delta_In, glm::vec2 v2_MousePos_In)
 		//quit to main menu
 		//std::cout << "Game Over, Loser!" << std::endl;
 	}
-	if (i_numEnemies == 0 && static_cast<Character*>(player->get_Component("Character"))->getEndLevel()) {
+	else
+	{
+		if (i_numEnemies == 0 && static_cast<Character*>(player->get_Component("Character"))->getEndLevel()) {
 		if (levelList.size() == 0 || currentLevel < levelList.size()-1)
 		{
 			currentLevel++;
@@ -262,19 +264,17 @@ void Game_Scene::update_Scene(GLfloat f_Delta_In, glm::vec2 v2_MousePos_In)
 			//game win
 		}
 		//std::cout << "Winner Winner Chicken Dinner!" << std::endl;
+		}
+		else
+		{
+			static_cast<Character*>(player->get_Component("Character"))->setEndLevel(false);
+		}
 	}
-	else
-	{
-		static_cast<Character*>(player->get_Component("Character"))->setEndLevel(false);
-	}
+	
 
 	if (b_Init)
 	{
-		//update camera
-		camera_3D->set_CameraPos(-player->get_Position() - glm::vec3(0, 5, 0));
-		camera_3D->move_Mouse(f_Delta_In, v2_MousePos_In, v2_WindowSize);
-		camera_3D->update();
-		camera_3D->reset();
+		
 
 		//update all game objects
 		for (auto const& pair : mspo_Objects)
@@ -333,8 +333,12 @@ void Game_Scene::update_Scene(GLfloat f_Delta_In, glm::vec2 v2_MousePos_In)
 			{
 				player->resetCount();
 			}
+			camera_3D->set_CameraPos(-player->get_Position() - glm::vec3(0, 5, 0));
+			camera_3D->move_Mouse(f_Delta_In, v2_MousePos_In, v2_WindowSize);
 			player->turn(-camera_3D->get_YawDelta(), glm::vec3(0, 1, 0));
 			player->jump(glm::vec3(0, 1, 0));
+			camera_3D->update();
+			camera_3D->reset();
 		}
 
 		//Check for Collisions between Game Objects

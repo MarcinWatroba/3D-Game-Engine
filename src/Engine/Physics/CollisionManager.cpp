@@ -14,40 +14,36 @@ CollisionManager::~CollisionManager()
 void CollisionManager::collision(Game_Object* objectA, Game_Object* objectB, std::map<Game_Object*, Game_Object*>& collisions)
 {
 	//Collision with immov
-	if (objectA->get_Parent())
+	if (objectA->get_Name() == "Robot")
 	{
- 		if (!objectB->get_Components().count("RigidBody") || !objectA->get_Parent()->get_Components().count("RigidBody"))
+ 		if (!objectB->get_Components().count("RigidBody") || !objectA->get_Components().count("RigidBody"))
 		{
 			//no rigid body attached to one of the input game objects
 			return;
 		}
-
-		//std::cout << "Toppus Kekkus" << std::endl;
-		if (objectB->get_Components().count("RigidBody") && objectA->get_Parent()->get_Components().count("RigidBody"))
+		//character collectables
+		Character* character = dynamic_cast<Character*>(objectA->get_Component("Character"));
+		if (character != nullptr)
 		{
-			//character collectables
-			Character* character = dynamic_cast<Character*>(objectA->get_Parent()->get_Component("Character"));
-			if (character != nullptr)
+			if (objectB->get_Tag() == "AmmoPack")
 			{
-				if (objectB->get_Tag() == "Ammo")
-				{
-					character->gainBullets(30);
-					objectB->set_ToDelete();
-				}
-				else if (objectB->get_Tag() == "HealthPack")
-				{
-					character->gainLife(1);
-					objectB->set_ToDelete();
-				}
-				else if (objectB->get_Tag() == "Exit")
-				{
-					character->setEndLevel(true);
-				}
-				else if (objectB->get_Tag() == "Floor")
-				{
-					static_cast<RigidBody*>(objectA->get_Component("RigidBody"))->setGrounded(true);
-				}
+				character->gainBullets(30);
+				objectB->set_ToDelete();
 			}
+			else if (objectB->get_Tag() == "HealthPack")
+			{
+				character->gainLife(1);
+				objectB->set_ToDelete();
+			}
+			else if (objectB->get_Tag() == "Exit")
+			{
+				character->setEndLevel(true);
+			}
+			else if (objectB->get_Tag() == "Floor")
+			{
+				static_cast<RigidBody*>(objectA->get_Component("RigidBody"))->setGrounded(true);
+			}
+		}
 
 			//other interactions
 			RigidBody* tempBody = dynamic_cast<RigidBody*>(objectB->get_Components().at("RigidBody"));
@@ -67,7 +63,6 @@ void CollisionManager::collision(Game_Object* objectA, Game_Object* objectB, std
 				collisions.insert(std::make_pair(objectA, objectB));
 			}
 		}
-	}
 }
 
 void CollisionManager::collisionChecks(std::map<std::string, Game_Object*> &gameObjects)
@@ -209,13 +204,7 @@ void CollisionManager::collisionChecks(std::map<std::string, Game_Object*> &game
 	{
 		if (gameObjects.count("Robot"))
 		{
-			for (auto const& pair : gameObjects.at("Robot")->get_Children())
-			{
-				if (pair.second->get_Components().count("BoxCollider_3D"))
-				{
-					dynamic_cast<BoxCollider_3D*>(pair.second->get_Components().at("BoxCollider_3D"))->setCollisionCheck(false);
-				}
-			}
+			dynamic_cast<BoxCollider_3D*>(gameObjects.at("Robot")->get_Components().at("BoxCollider_3D"))->setCollisionCheck(false);
 		}
 		
 		for (auto const& pair : gameObjects)

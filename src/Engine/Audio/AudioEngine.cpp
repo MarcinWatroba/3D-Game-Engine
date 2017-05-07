@@ -59,8 +59,8 @@ void AudioEngine::LoadSound(const string& strSoundName, bool b3d, bool bLooping,
 	}
 
 	FMOD_MODE eMode = FMOD_DEFAULT;
+	eMode |= bLooping ? FMOD_LOOP_NORMAL : FMOD_LOOP_OFF;
 	eMode |= b3d ? FMOD_3D : FMOD_2D;
-	eMode |= bLooping ? FMOD_LOOP_NORMAL : FMOD_LOOP_OFF ;
 	eMode |= bStream ? FMOD_CREATESTREAM : FMOD_CREATECOMPRESSEDSAMPLE;
 
 	FMOD::Sound* pSound = nullptr;

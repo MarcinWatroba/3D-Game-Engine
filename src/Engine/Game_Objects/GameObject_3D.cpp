@@ -262,16 +262,7 @@ void GameObject_3D::move(glm::vec3 v3_Direction_In, float f_Speed_In)
 		if (mipo_Components.count("RigidBody"))
 		{
 			bool tempCheck = false;
-			for (auto const& map : mspo_Children)
-			{
-				if (map.second->get_Components().count("BoxCollider_3D"))
-				{
-					if (dynamic_cast<BoxCollider_3D*>(map.second->get_Components().at("BoxCollider_3D"))->getCollisionCheck())
-					{
-						tempCheck = dynamic_cast<BoxCollider_3D*>(map.second->get_Components().at("BoxCollider_3D"))->getCollisionCheck();
-					}
-				}
-			}
+			tempCheck = dynamic_cast<BoxCollider_3D*>(mipo_Components.at("BoxCollider_3D"))->getCollisionCheck();
 			if (tempCheck && lastDir == isPositive)
 			{
 				dynamic_cast<RigidBody*>(mipo_Components.at("RigidBody"))->setForwardForce(0);
