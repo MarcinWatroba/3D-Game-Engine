@@ -19,7 +19,7 @@ void State_Patrol::OnEnter()
 
 fsm::FSM_Command State_Patrol::OnRun()
 {
-	if (data->path == nullptr) { return fsm::Continue; }
+	if (data->path->size() == 0) { return fsm::Continue; }
 	//
 	Respond_Movement* movement = static_cast<Respond_Movement*>(data->character->get_Component("Respond_Movement"));
 

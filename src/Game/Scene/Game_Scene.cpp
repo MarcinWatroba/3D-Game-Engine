@@ -79,7 +79,7 @@ void Game_Scene::init()
 			ui_light_Amount++;
 			num++;
 		}
-		posNum++;
+posNum++;
 	}
 
 	for (unsigned int i = 0; i < ui_light_Amount; i++)
@@ -178,8 +178,13 @@ void Game_Scene::keyboard_Input(GLfloat f_Delta_In, GLboolean* pab_KeyArray_In, 
 
 	if (pab_KeyArray_In[GLFW_KEY_SPACE])
 	{
+		if(static_cast<RigidBody*>(player->get_Components().at("RigidBody"))->getGrounded())
+		{
+			po_Loader->getAudioMap().at("7")->Play();
+		}
 		static_cast<RigidBody*>(player->get_Components().at("RigidBody"))->setJumpForce(1);
 		static_cast<RigidBody*>(player->get_Components().at("RigidBody"))->setGrounded(false);
+		
 	}
 
 

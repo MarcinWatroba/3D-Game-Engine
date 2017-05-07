@@ -94,5 +94,6 @@
 		<new_File ID = "4" name = "Wilhelm.wav" volume = "1" position = "(0,0,0)" loop = "false" threeD = "true" stream = "false"></new_File>
 		<new_File ID = "5" name = "celebrate.wav" volume = "1" position = "(0,0,0)" loop = "false" threeD = "true" stream = "false"></new_File>
 		<new_File ID = "6" name = "start.wav" volume = "1" position = "(0,0,0)" loop = "false" threeD = "true" stream = "false"></new_File>
+		<new_File ID = "7" name = "jump.wav" volume = "1" position = "(0,0,0)" loop = "false" threeD = "true" stream = "false"></new_File>
  	</audio_Files>
 </resources>

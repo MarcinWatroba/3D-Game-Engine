@@ -41,7 +41,7 @@ void Respond_Movement::turn(GameObject_3D* po_GameObject_In, float f_Angle_In, g
 	//Force update children if it's a container
 	if (po_GameObject_In->is_Container()) for (auto const& pair : po_GameObject_In->get_Children()) pair.second->force_Update();
 }
-
+#include <iostream>
 bool Respond_Movement::facePoint(GameObject_3D* po_GameObject_In, glm::vec3 v3_Target_In, float f_rotation)
 {
 	glm::vec3 pos = po_GameObject_In->get_Position();
@@ -63,6 +63,11 @@ bool Respond_Movement::facePoint(GameObject_3D* po_GameObject_In, glm::vec3 v3_T
 
 	//get the desired rotation angle using the dot product
 	float angle = glm::degrees(glm::acos(glm::dot(forward, aim)));
+
+	//angle is NaN
+	if (angle != angle) {
+		return true;
+	}
 
 	//rotate toward point by the given rotation amount
 	if (angle > f_rotation)
