@@ -53,7 +53,7 @@ void CollisionManager::collision(Game_Object* objectA, Game_Object* objectB, std
 			}
 			else if (objectB->get_Tag() == "Floor")
 			{
-				std::cout << "Dab" << std::endl;
+				//std::cout << "Dab" << std::endl;
 				dynamic_cast<RigidBody*>(objectA->get_Components().at("RigidBody"))->setGrounded(true);
 			}
 

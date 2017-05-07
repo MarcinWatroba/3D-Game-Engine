@@ -10,7 +10,7 @@ State_Patrol::State_Patrol(const int setStateID) :
 
 void State_Patrol::OnEnter()
 {
-	std::cout << "Patrol_enter\n";
+	//std::cout << "Patrol_enter\n";
 	pathStep = 0;
 	timer = 0.0f;
 	//
@@ -53,5 +53,5 @@ fsm::FSM_Command State_Patrol::OnRun()
 
 void State_Patrol::OnExit()
 {
-	std::cout << "Patrol_exit\n";
+	//std::cout << "Patrol_exit\n";
 }

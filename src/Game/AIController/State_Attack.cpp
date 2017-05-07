@@ -13,7 +13,7 @@ State_Attack::State_Attack(const int setStateID) :
 
 void State_Attack::OnEnter()
 {
-	std::cout << "Attack_enter\n";
+	//std::cout << "Attack_enter\n";
 }
 
 fsm::FSM_Command State_Attack::OnRun()
@@ -62,5 +62,5 @@ fsm::FSM_Command State_Attack::OnRun()
 
 void State_Attack::OnExit()
 {
-	std::cout << "Attack_exit\n";
+	//std::cout << "Attack_exit\n";
 }

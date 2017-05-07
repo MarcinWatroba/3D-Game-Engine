@@ -752,7 +752,7 @@ void Scene_3D::keyboard_Input(GLfloat f_Delta_In, GLboolean* pab_KeyArray_In, GL
 		if (pab_KeyArray_In[i_KeyPress_In] && !pab_LockedKeys_In[i_KeyPress_In] && i_KeyPress_In != GLFW_KEY_LEFT_SHIFT)
 		{
 			pab_LockedKeys_In[i_KeyPress_In] = true;
-			std::cout << i_KeyPress_In << "\n";
+			//std::cout << i_KeyPress_In << "\n";
 
 			for (auto const& pair : mspo_Objects)
 			{
