@@ -135,7 +135,7 @@ int AudioEngine::PlaySound(const string& strSoundName, const glm::vec3& vPos, fl
 		AudioEngine::ErrorCheck(pChannel->setPaused(false));
 		sgpImplementation->mChannels[nChannelId] = pChannel;
 	}
-	cout << "Currently Playing: " << strSoundName << endl;
+	//cout << "Currently Playing: " << strSoundName << endl;
 	return nChannelId;
 }
 void AudioEngine::PlayEvent(const string& strEventName) {

@@ -93,7 +93,7 @@ void RigidBody::update(glm::vec3 &pos)
 			
 			
 		}
-		std::cout << jumpVelocity << std::endl;
+		//std::cout << jumpVelocity << std::endl;
 	}
 		
 	//}

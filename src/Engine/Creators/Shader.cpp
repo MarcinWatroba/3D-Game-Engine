@@ -71,7 +71,7 @@ Shader::Shader(const char* pc_VertexShader_In, const char* pc_FragmentShader_In,
 		{
 			char* log = new char[logLength];
 			glGetShaderInfoLog(vertShader, logLength, nullptr, log);
-			std::cout << "Vertex shader compilation failure..." << "\n" << log << "\n";
+			//std::cout << "Vertex shader compilation failure..." << "\n" << log << "\n";
 
 			delete[] log;
 		}
