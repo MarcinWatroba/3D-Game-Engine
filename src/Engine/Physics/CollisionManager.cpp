@@ -170,12 +170,12 @@ void CollisionManager::collisionChecks(std::map<std::string, Game_Object*> &game
 										{
 											if (currentObject->get_Tag() == "Enemy")
 											{
-												colChecks.insert(std::make_pair(bullet, pair2.second));
-												dynamic_cast<Character*>(pair2.second->get_Parent()->get_Components().at("Character"))->loseLife();
-												if (dynamic_cast<Character*>(pair2.second->get_Parent()->get_Components().at("Character"))->getHealth() == 0)
-												{
-													pair2.second->get_Parent()->set_ToDelete();
-												}
+												//colChecks.insert(std::make_pair(bullet, pair2.second));
+												//dynamic_cast<Character*>(pair2.second->get_Parent()->get_Components().at("Character"))->loseLife();
+												//if (dynamic_cast<Character*>(pair2.second->get_Parent()->get_Components().at("Character"))->getHealth() == 0)
+												//{
+												//	pair2.second->get_Parent()->set_ToDelete();
+												//}
 											}
 										}
 										else

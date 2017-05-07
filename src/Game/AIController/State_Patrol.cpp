@@ -17,7 +17,6 @@ void State_Patrol::OnEnter()
 	wait = 1.0f;
 }
 
-#include <iostream>
 fsm::FSM_Command State_Patrol::OnRun()
 {
 	if (data->path == nullptr) { return fsm::Continue; }

@@ -8,6 +8,7 @@ Character::Character(const Character &obj)
 {
 	health = obj.health;
 	numberOfBullets = obj.numberOfBullets;
+	path = std::vector<glm::vec3>(obj.path);
 }
 Character::Character(Stats * stat)
 {
