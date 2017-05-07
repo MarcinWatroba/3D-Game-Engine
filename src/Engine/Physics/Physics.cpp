@@ -24,10 +24,9 @@ float Physics::eulerIntegration(float force, float mass, float position, bool gr
 	}
 	else
 	{
-		gravConst = -0.982f;
+		gravConst = -0.5f;
 	}
 
-	;
 	float velocity = 0;
 
 	while (time <= 100)
@@ -45,6 +44,7 @@ float Physics::eulerIntegration(float force, float mass, float position, bool gr
 		//velocity += timestep * (newAcceleration - acceleration) / 2;
 	}
 	velocity += gravConst;
+
 	return velocity;
 }
 
