@@ -437,9 +437,9 @@ void PrefabLoader::clean_Up()
 
 void PrefabLoader::identify_Component(GameObject_3D* po_GameObject_In, std::string& s_ToProcess_In, Stats * stat_In)
 {
-	std::cout << "Prefab Component name: " << s_ToProcess_In << "\n";
+	std::cout << "Component name: " << s_ToProcess_In << "\n";
 	if (s_ToProcess_In == "Mesh_3D") std::cout << "Nope" << "\n";
-	else if (s_ToProcess_In == "AI_Controller") { po_GameObject_In->add_Component("AI_Controller", new AIController()); }
+	else if (s_ToProcess_In == "AI_Controller") { po_GameObject_In->add_Component("AI_Controller", new AIController(po_GameObject_In)); }
 	else if (s_ToProcess_In == "Respond_Movement") po_GameObject_In->add_Component("Respond_Movement", new Respond_Movement());
 	else if (s_ToProcess_In == "BoxCollider_3D") po_GameObject_In->add_Component("BoxCollider_3D", new BoxCollider_3D());
 	else if (s_ToProcess_In == "RigidBody")

@@ -13,6 +13,6 @@ private:
 public:
 	void Update();
 	std::string get_Type();
-	AIController();
+	AIController(GameObject_3D * character);
 	~AIController();
 };

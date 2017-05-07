@@ -4,7 +4,7 @@
 #include "Game/AIController/State_Attack.h"
 #include <Engine/Component/Character.h>
 
-AIController::AIController() :
+AIController::AIController(GameObject_3D * character) :
 	FSM(&stateList)
 {
 	stateList.push_back(new State_Idle(ccs::Idle));
@@ -13,6 +13,11 @@ AIController::AIController() :
 	InitializeToState(ccs::Idle);
 	data.character = nullptr;
 	data.path = nullptr;
+}
+
+std::string AIController::get_Type()
+{
+	return "AI_Controller";
 }
 
 AIController::~AIController()
