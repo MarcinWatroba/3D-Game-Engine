@@ -217,6 +217,31 @@ void GameObject_Instanced::set_Colour(glm::vec3 colour_In)
 	colour = colour_In;
 }
 
+unsigned int GameObject_Instanced::getMax()
+{
+	return maxParticles;
+}
+
+float GameObject_Instanced::get_Life()
+{
+	return particle_Life;
+}
+
+glm::vec3 GameObject_Instanced::get_Range()
+{
+	return range;
+}
+
+glm::vec3 GameObject_Instanced::get_Particle_Speed()
+{
+	return particle_Speed;
+}
+
+glm::vec3 GameObject_Instanced::get_Colour()
+{
+	return colour;
+}
+
 int GameObject_Instanced::FindUnusedParticle()
 {
 	for (int i = LastUsedParticle; i < maxParticles; i++) {
