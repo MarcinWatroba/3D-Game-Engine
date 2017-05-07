@@ -51,8 +51,8 @@ PrefabLoader::PrefabLoader(const char * pc_FileName_In, Loader * po_Loader_In, S
 			std::string s_StatsName = it->Attribute("stats");
 
 			//Typical process of adding new 3D object
-			auto object = new GameObject_3D();
-			mipo_Prefabs.insert(std::pair<std::string, Game_Object*>(s_ObjectName, object));
+			mipo_Prefabs.insert(std::pair<std::string, Game_Object*>(s_ObjectName, new GameObject_3D()));
+			auto object = static_cast<GameObject_3D*>(mipo_Prefabs.find(s_ObjectName)->second);
 			object->set_Name(s_ObjectName);
 			object->set_Prefab(s_ObjectName);
 			object->add_Component("Transform_3D", new Transform_3D());
@@ -95,8 +95,8 @@ PrefabLoader::PrefabLoader(const char * pc_FileName_In, Loader * po_Loader_In, S
 			std::string s_StatsName = it->Attribute("stats");
 
 			//Typical process of adding new 3D object
-			auto object = new GameObject_3D();
-			mipo_Prefabs.insert(std::pair<std::string, Game_Object*>(s_ObjectName, object));
+			mipo_Prefabs.insert(std::pair<std::string, Game_Object*>(s_ObjectName, new GameObject_3D()));
+			auto object = static_cast<GameObject_3D*>(mipo_Prefabs.find(s_ObjectName)->second);
 			object->set_Name(s_ObjectName);
 			object->set_Prefab(s_ObjectName);
 			object->add_Component("Mesh_3D", po_Loader_In->get_Mesh(i_MeshID));

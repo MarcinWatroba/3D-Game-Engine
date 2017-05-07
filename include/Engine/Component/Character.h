@@ -12,7 +12,6 @@ private:
 	float numberOfBullets;
 	std::vector<glm::vec3> path;
 	std::string typeOfChar;
-	bool endLevel = false;
 public:
 	Character(std::string inType = "");
 	~Character() {}
@@ -21,7 +20,6 @@ public:
 	std::string get_Type();
 	void setHealth(float temp);
 	void setNumberOfBullets(float newAmmo);
-	void setEndLevel(bool temp);
 
 	void loseLife();
 	void gainLife(float temp);
@@ -30,7 +28,6 @@ public:
 
 	float getHealth() { return health; }
 	float getNumberOfBullets() { return numberOfBullets; }
-	bool getEndLevel() { return endLevel; }
 
 	std::vector<glm::vec3>* getPath();
 };

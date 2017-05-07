@@ -9,6 +9,7 @@
 #include <iostream>
 #include <Editor\Objects\Arrow_3D.h>
 #include <Engine\Game_Objects\Camera_2D.h>
+#include <Engine\Lighting\Point_Light.h>
 #include <Engine\GUI\Button.h>
 #include <Engine\GUI\Textbox.h>
 #include <Engine\GUI\Text.h>
@@ -800,16 +801,6 @@ void Scene_3D::keyboard_Input(GLfloat f_Delta_In, GLboolean* pab_KeyArray_In, GL
 			pab_LockedKeys_In[GLFW_KEY_DELETE] = false;
 			b_Conditions[Conditions::Delete] = false;
 		}
-
-		if (pab_KeyArray_In[GLFW_KEY_N] && !pab_LockedKeys_In[GLFW_KEY_N])
-		{
-			auto health_Bar = static_cast<Tile*>(mspo_Objects.find("Health_Bar")->second);
-			health_Bar->set_Size(glm::vec2(health_Bar->get_Size().x - 100, health_Bar->get_Size().y));
-
-
-			pab_LockedKeys_In[GLFW_KEY_N] = true;
-		}
-		if (!pab_KeyArray_In[GLFW_KEY_N]) pab_LockedKeys_In[GLFW_KEY_N] = false;
 	}
 }
 
@@ -861,12 +852,12 @@ void Scene_3D::scroll_Input(glm::vec2 v2_Scroll_In)
 {
 	if (v2_Scroll_In.y > 0)
 	{
-		camera_3D->set_Speed(f_Speed);
+		camera_3D->set_Speed(f_Speed/10);
 		camera_3D->move_Forward();
 	}
 	else
 	{
-		camera_3D->set_Speed(f_Speed);
+		camera_3D->set_Speed(f_Speed/10);
 		camera_3D->move_Backward();
 	}
 }
@@ -1058,6 +1049,18 @@ void Scene_3D::render()
 		GLint b_Shadow_Loc;
 		std::string ui_Shadow;
 		GLint ui_Shadow_Loc;
+		int l_iter = 0;
+		ui_light_Amount = 0;
+		for (auto const& pair : mspo_Objects)
+		{	
+			if (pair.second->get_Tag() == "Light")
+			{
+				light[static_cast<Point_Light*>(pair.second)->get_ID()] = static_cast<Point_Light*>(pair.second)->get_Position();
+				ui_light_Amount++;
+				l_iter++;
+			}
+
+		}
 
 		for (unsigned int i = 0; i < ui_light_Amount; i++)
 		{
@@ -1131,27 +1134,20 @@ void Scene_3D::render()
 		{
 			unsigned no = light_Nom[i];
 
-			unsigned int obj_No = 0;
-
 			o_SceneLoader->prepare_DepthCube(po_Loader->get_Shader("6"), light[no], depth[i], i);
 
 
 			for (auto const& pair : mspo_Objects)
 			{
 
-				if (glm::distance(pos[obj_No], light[no]) < (o_SceneLoader->get_LightRadius(no) * 10) || pair.second->get_Tag() == "Player" || pair.second->get_Tag() == "Enemy")
-				{
-					if (pair.second->get_Tag() != "Object_Lamp" &&  pair.second->get_Tag() != "Particle")
+
+					if (pair.second->get_Tag() != "Object_Lamp" &&  pair.second->get_Tag() != "Particle" && pair.second->get_Tag() != "Light")
 					{
 
 						pair.second->renderDepth(po_Loader->get_Shader("6"));
 					}
-					else if (pair.second->get_Tag() == "Light")
-					{
-						pair.second->renderDepth(po_Loader->get_Shader("6"));
-					}
-				}
-				obj_No++;
+
+
 			}
 			glBindFramebuffer(GL_FRAMEBUFFER, 0);
 		}

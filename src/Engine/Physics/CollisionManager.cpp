@@ -56,7 +56,6 @@ void CollisionManager::collision(Game_Object* objectA, Game_Object* objectB, std
 				std::cout << "Dab" << std::endl;
 				dynamic_cast<RigidBody*>(objectA->get_Components().at("RigidBody"))->setGrounded(true);
 			}
-
 			else if (!tempBody->get_Moveable())
 			{
 				//Stop the object moving in the current direction
@@ -149,14 +148,6 @@ void CollisionManager::collisionChecks(std::map<std::string, Game_Object*> &game
 											{
 												pair2.second->set_ToDelete();
 											}
-										}			
-										else if (pair2.second->get_Tag() == "Light")
-										{
-
-										}
-										else if (pair2.second->get_Tag() == "Player")
-										{
-
 										}
 										else if (!tempBody->get_Moveable())
 										{

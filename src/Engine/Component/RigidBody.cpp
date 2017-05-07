@@ -51,10 +51,6 @@ void RigidBody::setGrounded(bool isGrounded)
 {
 	grounded = isGrounded;
 }
-void RigidBody::setVelocity(float temp)
-{
-	velocity = temp;
-}
 
 void RigidBody::update(glm::vec3 &pos)
 {
@@ -62,21 +58,20 @@ void RigidBody::update(glm::vec3 &pos)
 	if (grounded)
 	{
 		velocity = phys.eulerIntegration(forward_Force, mass, pos.z, grounded);
-		jumpVelocity = 0;
 	}
 	else
 	{
 		if (!reachedPeak)
 		{
-			if (pos.y >= jumpHeight )
+			if (pos.y >= jumpHeight)
 			{
 				reachedPeak = true;
 			}
 			else
 			{
-			jumpVelocity = phys.eulerIntegration(jumpForce, mass, pos.y, grounded);
+				jumpVelocity = phys.eulerIntegration(jumpForce, mass, pos.y, grounded);
 			}
-		
+
 		}
 		else
 		{

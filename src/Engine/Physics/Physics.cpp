@@ -4,7 +4,6 @@ Physics::Physics()
 {
 	// For jumping and normal movement, use eulerIntegration
 	// For sprinting and/or driving, use RK4
-	float velocity = 0;
 }
 
 Physics::~Physics()
@@ -27,12 +26,23 @@ float Physics::eulerIntegration(float force, float mass, float position, bool gr
 	{
 		gravConst = -0.982f;
 	}
-	velocity = 0;
+
+	;
+	float velocity = 0;
+
 	while (time <= 100)
 	{
+		////position = position + velocity * dt;
+		//acceleration = force * (timestep, position) / mass;
+		//velocity = velocity + (force / mass) * dt;
+		//timestep = timestep + dt;
+
 		acceleration = force / mass;
 		time += timestep;
+		//position += timestep * (velocity + timestep * acceleration / 2);
 		velocity += timestep * acceleration;
+		//newAcceleration = force(time, position, velocity) / mass;
+		//velocity += timestep * (newAcceleration - acceleration) / 2;
 	}
 	velocity += gravConst;
 	return velocity;
