@@ -279,522 +279,87 @@
 	</new_Object3D>
 
 	<new_Object3D
-		name = "Sofa Front Left Leg"
-		container = "No"
-		tag = "Object"
-		mesh_ID = "7"
-		component = ""
-		diffuse_ID = "6"
-		specular_ID = "7"
-		shininess = "1"
-		texture_Tiling = "(8, 8)"
-		init_Mode= "0"
-		origin = "(0, 0, 0)"
-		position = " (-2, 2.5, -4.5)"
-		orientationX = "0, (1, 0, 0)"
-		orientationY = "0, (0, 1, 0)"
-		orientationZ = "0, (0, 0, 1)"
-		scale = "(1, 5, 1)"
-	>
-	</new_Object3D>
-	<new_Object3D
-		name = "Sofa Front Right Leg"
-		container = "No"
-		tag = "Object"
-		mesh_ID = "7"
-		component = ""
-		diffuse_ID = "6"
-		specular_ID = "7"
-		shininess = "1"
-		texture_Tiling = "(8, 8)"
-		init_Mode= "0"
-		origin = "(0, 0, 0)"
-		position = " (-2, 2.5, 4.5)"
-		orientationX = "0, (1, 0, 0)"
-		orientationY = "0, (0, 1, 0)"
-		orientationZ = "0, (0, 0, 1)"
-		scale = "(1, 5, 1)"
-	>
-	</new_Object3D>
-	<new_Object3D
-		name = "Sofa Back Right Leg"
-		container = "No"
-		tag = "Object"
-		mesh_ID = "7"
-		component = ""
-		diffuse_ID = "6"
-		specular_ID = "7"
-		shininess = "1"
-		texture_Tiling = "(8, 8)"
-		init_Mode= "0"
-		origin = "(0, 0, 0)"
-		position = " (2, 2.5, 4.5)"
-		orientationX = "0, (1, 0, 0)"
-		orientationY = "0, (0, 1, 0)"
-		orientationZ = "0, (0, 0, 1)"
-		scale = "(1, 5, 1)"
-	>
-	</new_Object3D>
-	<new_Object3D
-		name = "Sofa Back Left Leg"
-		container = "No"
-		tag = "Object"
-		mesh_ID = "7"
-		component = ""
-		diffuse_ID = "6"
-		specular_ID = "7"
-		shininess = "1"
-		texture_Tiling = "(8, 8)"
-		init_Mode= "0"
-		origin = "(0, 0, 0)"
-		position = " (2, 2.5, -4.5)"
-		orientationX = "0, (1, 0, 0)"
-		orientationY = "0, (0, 1, 0)"
-		orientationZ = "0, (0, 0, 1)"
-		scale = "(1, 5, 1)"
-	>
-	</new_Object3D>
-	<new_Object3D
-		name = "Sofa Seat"
-		container = "No"
-		tag = "Object"
-		mesh_ID = "7"
-		component = ""
-		diffuse_ID = "6"
-		specular_ID = "7"
-		shininess = "1"
-		texture_Tiling = "(8, 8)"
-		init_Mode= "0"
-		origin = "(0, 0, 0)"
-		position = " (0, 5, 0)"
-		orientationX = "0, (1, 0, 0)"
-		orientationY = "0, (0, 1, 0)"
-		orientationZ = "0, (0, 0, 1)"
-		scale = "(5, 1, 10)"
-	>
-	</new_Object3D>
-	<new_Object3D
-		name = "Sofa Back"
-		container = "No"
-		tag = "Object"
-		mesh_ID = "7"
-		component = ""
-		diffuse_ID = "6"
-		specular_ID = "7"
-		shininess = "1"
-		texture_Tiling = "(8, 8)"
-		init_Mode= "0"
-		origin = "(0, 0, 0)"
-		position = " (2, 8, 0)"
-		orientationX = "0, (1, 0, 0)"
-		orientationY = "0, (0, 1, 0)"
-		orientationZ = "0, (0, 0, 1)"
-		scale = "(1, 6, 10)"
-	>
-	</new_Object3D>
-	<new_Object3D
 		name = "Sofa"
-		container = "Yes"
+		container = "No"
 		tag = "Object"
+		mesh_ID = "14"
 		component = ""
+		diffuse_ID = "6"
+		specular_ID = "7"
+		shininess = "1"
+		texture_Tiling = "(8, 8)"
+		init_Mode= "0"
 		origin = "(0, 0, 0)"
-		position = "(39, 0, 0)"
+		position = " (40, 0, 0)"
 		orientationX = "0, (1, 0, 0)"
-		orientationY = "0, (0, 1, 0)"
+		orientationY = "180, (0, 1, 0)"
 		orientationZ = "0, (0, 0, 1)"
-		scale = "(2.5, 2, 2.5)"
-		children = "(Sofa Seat,
-					Sofa Back,
-					Sofa Front Left Leg,
-					Sofa Front Right Leg,
-					Sofa Back Right Leg,
-					Sofa Back Left Leg)"
+		scale = "(4, 5, 5)"
 	>
 	</new_Object3D>
 
 	<new_Object3D
-		name = "Table Front Left Leg"
-		container = "No"
-		tag = "Object"
-		mesh_ID = "7"
-		component = ""
-		diffuse_ID = "6"
-		specular_ID = "7"
-		shininess = "1"
-		texture_Tiling = "(8, 8)"
-		init_Mode= "0"
-		origin = "(0, 0, 0)"
-		position = "(-2.5, 2.5, -5)"
-		orientationX = "0, (1, 0, 0)"
-		orientationY = "0, (0, 1, 0)"
-		orientationZ = "0, (0, 0, 1)"
-		scale = "(1, 5, 1)"
-	>
-	</new_Object3D>
-	<new_Object3D
-		name = "Table Front Right Leg"
-		container = "No"
-		tag = "Object"
-		mesh_ID = "7"
-		component = ""
-		diffuse_ID = "6"
-		specular_ID = "7"
-		shininess = "1"
-		texture_Tiling = "(8, 8)"
-		init_Mode= "0"
-		origin = "(0, 0, 0)"
-		position = "(-2.5, 2.5, 5)"
-		orientationX = "0, (1, 0, 0)"
-		orientationY = "0, (0, 1, 0)"
-		orientationZ = "0, (0, 0, 1)"
-		scale = "(1, 5, 1)"
-	>
-	</new_Object3D>
-	<new_Object3D
-		name = "Table Back Right Leg"
-		container = "No"
-		tag = "Object"
-		mesh_ID = "7"
-		component = ""
-		diffuse_ID = "6"
-		specular_ID = "7"
-		shininess = "1"
-		texture_Tiling = "(8, 8)"
-		init_Mode= "0"
-		origin = "(0, 0, 0)"
-		position = "(2.5, 2.5, 5)"
-		orientationX = "0, (1, 0, 0)"
-		orientationY = "0, (0, 1, 0)"
-		orientationZ = "0, (0, 0, 1)"
-		scale = "(1, 5, 1)"
-	>
-	</new_Object3D>
-	<new_Object3D
-		name = "Table Back Left Leg"
-		container = "No"
-		tag = "Object"
-		mesh_ID = "7"
-		component = ""
-		diffuse_ID = "6"
-		specular_ID = "7"
-		shininess = "1"
-		texture_Tiling = "(8, 8)"
-		init_Mode= "0"
-		origin = "(0, 0, 0)"
-		position = "(2.5, 2.5, -5)"
-		orientationX = "0, (1, 0, 0)"
-		orientationY = "0, (0, 1, 0)"
-		orientationZ = "0, (0, 0, 1)"
-		scale = "(1, 5, 1)"
-	>
-	</new_Object3D>
-	<new_Object3D
-		name = "Table Top"
-		container = "No"
-		tag = "Object"
-		mesh_ID = "7"
-		component = ""
-		diffuse_ID = "6"
-		specular_ID = "7"
-		shininess = "1"
-		texture_Tiling = "(8, 8)"
-		init_Mode= "0"
-		origin = "(0, 0, 0)"
-		position = "(0, 5, 0)"
-		orientationX = "0, (1, 0, 0)"
-		orientationY = "0, (0, 1, 0)"
-		orientationZ = "0, (0, 0, 1)"
-		scale = "(7, 1, 12)"
-	>
-	</new_Object3D>
-	<new_Object3D
 		name = "Dining Table"
-		container = "Yes"
+		container = "No"
 		tag = "Object"
+		mesh_ID = "15"
 		component = ""
+		diffuse_ID = "6"
+		specular_ID = "7"
+		shininess = "1"
+		texture_Tiling = "(8, 8)"
+		init_Mode= "0"
 		origin = "(0, 0, 0)"
-		position = "(1, 0, 0)"
+		position = "(0, 0, 0)"
 		orientationX = "0, (1, 0, 0)"
 		orientationY = "0, (0, 1, 0)"
 		orientationZ = "0, (0, 0, 1)"
-		scale = "(2, 3, 2)"
-		children = "(Table Top,
-					Table Front Left Leg,
-					Table Front Right Leg,
-					Table Back Right Leg,
-					Table Back Left Leg)"
+		scale = "(5, 5, 5)"
 	>
 	</new_Object3D>
 	
-	<new_Object3D
-		name = "Chair Front Left Leg 1"
-		container = "No"
-		tag = "Object"
-		mesh_ID = "7"
-		component = ""
-		diffuse_ID = "6"
-		specular_ID = "7"
-		shininess = "1"
-		texture_Tiling = "(8, 8)"
-		init_Mode= "0"
-		origin = "(0, 0, 0)"
-		position = "(-2.5, 2.5, -2.5)"
-		orientationX = "0, (1, 0, 0)"
-		orientationY = "0, (0, 1, 0)"
-		orientationZ = "0, (0, 0, 1)"
-		scale = "(1, 5, 1)"
-	>
-	</new_Object3D>
-	<new_Object3D
-		name = "Chair Front Right Leg 1"
-		container = "No"
-		tag = "Object"
-		mesh_ID = "7"
-		component = ""
-		diffuse_ID = "6"
-		specular_ID = "7"
-		shininess = "1"
-		texture_Tiling = "(8, 8)"
-		init_Mode= "0"
-		origin = "(0, 0, 0)"
-		position = "(-2.5, 2.5, 2.5)"
-		orientationX = "0, (1, 0, 0)"
-		orientationY = "0, (0, 1, 0)"
-		orientationZ = "0, (0, 0, 1)"
-		scale = "(1, 5, 1)"
-	>
-	</new_Object3D>
-	<new_Object3D
-		name = "Chair Back Right Leg 1"
-		container = "No"
-		tag = "Object"
-		mesh_ID = "7"
-		component = ""
-		diffuse_ID = "6"
-		specular_ID = "7"
-		shininess = "1"
-		texture_Tiling = "(8, 8)"
-		init_Mode= "0"
-		origin = "(0, 0, 0)"
-		position = "(2.5, 2.5, 2.5)"
-		orientationX = "0, (1, 0, 0)"
-		orientationY = "0, (0, 1, 0)"
-		orientationZ = "0, (0, 0, 1)"
-		scale = "(1, 5, 1)"
-	>
-	</new_Object3D>
-	<new_Object3D
-		name = "Chair Back Left Leg 1"
-		container = "No"
-		tag = "Object"
-		mesh_ID = "7"
-		component = ""
-		diffuse_ID = "6"
-		specular_ID = "7"
-		shininess = "1"
-		texture_Tiling = "(8, 8)"
-		init_Mode= "0"
-		origin = "(0, 0, 0)"
-		position = "(2.5, 2.5, -2.5)"
-		orientationX = "0, (1, 0, 0)"
-		orientationY = "0, (0, 1, 0)"
-		orientationZ = "0, (0, 0, 1)"
-		scale = "(1, 5, 1)"
-	>
-	</new_Object3D>
-	<new_Object3D
-		name = "Chair Seat 1"
-		container = "No"
-		tag = "Object"
-		mesh_ID = "7"
-		component = ""
-		diffuse_ID = "6"
-		specular_ID = "7"
-		shininess = "1"
-		texture_Tiling = "(8, 8)"
-		init_Mode= "0"
-		origin = "(0, 0, 0)"
-		position = "(0, 5, 0)"
-		orientationX = "0, (1, 0, 0)"
-		orientationY = "0, (0, 1, 0)"
-		orientationZ = "0, (0, 0, 1)"
-		scale = "(6, 1, 6)"
-	>
-	</new_Object3D>
-	<new_Object3D
-		name = "Chair Back 1"
-		container = "No"
-		tag = "Object"
-		mesh_ID = "7"
-		component = ""
-		diffuse_ID = "6"
-		specular_ID = "7"
-		shininess = "1"
-		texture_Tiling = "(8, 8)"
-		init_Mode= "0"
-		origin = "(0, 0, 0)"
-		position = "(2.5, 7.5, 0)"
-		orientationX = "0, (1, 0, 0)"
-		orientationY = "0, (0, 1, 0)"
-		orientationZ = "0, (0, 0, 1)"
-		scale = "(1, 5, 6)"
-	>
-	</new_Object3D>
+	
 	<new_Object3D
 		name = "Chair 1"
-		container = "Yes"
+		container = "No"
 		tag = "Object"
+		mesh_ID = "13"
 		component = ""
+		diffuse_ID = "6"
+		specular_ID = "7"
+		shininess = "1"
+		texture_Tiling = "(8, 8)"
+		init_Mode= "0"
 		origin = "(0, 0, 0)"
 		position = "(7.5, 0, 3.8)"
 		orientationX = "0, (1, 0, 0)"
-		orientationY = "0, (0, 1, 0)"
+		orientationY = "180, (0, 1, 0)"
 		orientationZ = "0, (0, 0, 1)"
-		scale = "(1, 2, 1)"
-		children = "(Chair Seat 1,
-					Chair Back 1,
-					Chair Front Left Leg 1,
-					Chair Front Right Leg 1,
-					Chair Back Right Leg 1,
-					Chair Back Left Leg 1)"
-	>
-	</new_Object3D>
-	<new_Object3D
-		name = "Chair Front Left Leg 2"
-		container = "No"
-		tag = "Object"
-		mesh_ID = "7"
-		component = ""
-		diffuse_ID = "6"
-		specular_ID = "7"
-		shininess = "1"
-		texture_Tiling = "(8, 8)"
-		init_Mode= "0"
-		origin = "(0, 0, 0)"
-		position = "(-2.5, 2.5, -2.5)"
-		orientationX = "0, (1, 0, 0)"
-		orientationY = "0, (0, 1, 0)"
-		orientationZ = "0, (0, 0, 1)"
-		scale = "(1, 5, 1)"
-	>
-	</new_Object3D>
-	<new_Object3D
-		name = "Chair Front Right Leg 2"
-		container = "No"
-		tag = "Object"
-		mesh_ID = "7"
-		component = ""
-		diffuse_ID = "6"
-		specular_ID = "7"
-		shininess = "1"
-		texture_Tiling = "(8, 8)"
-		init_Mode= "0"
-		origin = "(0, 0, 0)"
-		position = "(-2.5, 2.5, 2.5)"
-		orientationX = "0, (1, 0, 0)"
-		orientationY = "0, (0, 1, 0)"
-		orientationZ = "0, (0, 0, 1)"
-		scale = "(1, 5, 1)"
-	>
-	</new_Object3D>
-	<new_Object3D
-		name = "Chair Back Right Leg 2"
-		container = "No"
-		tag = "Object"
-		mesh_ID = "7"
-		component = ""
-		diffuse_ID = "6"
-		specular_ID = "7"
-		shininess = "1"
-		texture_Tiling = "(8, 8)"
-		init_Mode= "0"
-		origin = "(0, 0, 0)"
-		position = "(2.5, 2.5, 2.5)"
-		orientationX = "0, (1, 0, 0)"
-		orientationY = "0, (0, 1, 0)"
-		orientationZ = "0, (0, 0, 1)"
-		scale = "(1, 5, 1)"
-	>
-	</new_Object3D>
-	<new_Object3D
-		name = "Chair Back Left Leg 2"
-		container = "No"
-		tag = "Object"
-		mesh_ID = "7"
-		component = ""
-		diffuse_ID = "6"
-		specular_ID = "7"
-		shininess = "1"
-		texture_Tiling = "(8, 8)"
-		init_Mode= "0"
-		origin = "(0, 0, 0)"
-		position = "(2.5, 2.5, -2.5)"
-		orientationX = "0, (1, 0, 0)"
-		orientationY = "0, (0, 1, 0)"
-		orientationZ = "0, (0, 0, 1)"
-		scale = "(1, 5, 1)"
-	>
-	</new_Object3D>
-	<new_Object3D
-		name = "Chair Seat 2"
-		container = "No"
-		tag = "Object"
-		mesh_ID = "7"
-		component = ""
-		diffuse_ID = "6"
-		specular_ID = "7"
-		shininess = "1"
-		texture_Tiling = "(8, 8)"
-		init_Mode= "0"
-		origin = "(0, 0, 0)"
-		position = "(0, 5, 0)"
-		orientationX = "0, (1, 0, 0)"
-		orientationY = "0, (0, 1, 0)"
-		orientationZ = "0, (0, 0, 1)"
-		scale = "(6, 1, 6)"
-	>
-	</new_Object3D>
-	<new_Object3D
-		name = "Chair Back 2"
-		container = "No"
-		tag = "Object"
-		mesh_ID = "7"
-		component = ""
-		diffuse_ID = "6"
-		specular_ID = "7"
-		shininess = "1"
-		texture_Tiling = "(8, 8)"
-		init_Mode= "0"
-		origin = "(0, 0, 0)"
-		position = "(2.5, 7.5, 0)"
-		orientationX = "0, (1, 0, 0)"
-		orientationY = "0, (0, 1, 0)"
-		orientationZ = "0, (0, 0, 1)"
-		scale = "(1, 5, 6)"
+		scale = "(2.5, 5, 3)	"
 	>
 	</new_Object3D>
 	<new_Object3D
 		name = "Chair 2"
-		container = "Yes"
+		container = "No"
 		tag = "Object"
+		mesh_ID = "13"
 		component = ""
+		diffuse_ID = "6"
+		specular_ID = "7"
+		shininess = "1"
+		texture_Tiling = "(8, 8)"
+		init_Mode= "0"
 		origin = "(0, 0, 0)"
 		position = "(7.5, 0, -3.8)"
 		orientationX = "0, (1, 0, 0)"
-		orientationY = "0, (0, 1, 0)"
+		orientationY = "180, (0, 1, 0)"
 		orientationZ = "0, (0, 0, 1)"
-		scale = "(1, 2, 1)"
-		children = "(Chair Seat 2,
-					Chair Back 2,
-					Chair Front Left Leg 2,
-					Chair Front Right Leg 2,
-					Chair Back Right Leg 2,
-					Chair Back Left Leg 2)"
+		scale = "(2.5, 5, 2.5)"
 	>
 	</new_Object3D>
 	
 	<new_Object3D
-	name = "Drawers"
+		name = "Drawers"
 		container = "No"
 		tag = "Object"
 		mesh_ID = "7"
@@ -865,18 +430,6 @@
 
 <sounds>
 	<new_sound
-	name = "rain"
-	ID = "7"
-	volume = "0.3"
-	object = ""
-	position = "(0,0,0)"
-	loop = "true"
-	threeD = "true"
-	stream = "false"
-	>
-	</new_sound>
-
-	<new_sound
 	name = "tv_static"
 	ID = "5"
 	volume = "0.3"
@@ -895,18 +448,6 @@
 	object = "Robot"
 	position = "(0,0,0)"
 	loop = "true"
-	threeD = "true"
-	stream = "false"
-	>
-	</new_sound>
-	
-	<new_sound
-	name = "jumping"
-	ID = "1"
-	volume = "0.8"
-	object = "Robot"
-	position = "(0, 0, 0)"
-	loop = "false"
 	threeD = "true"
 	stream = "false"
 	>
