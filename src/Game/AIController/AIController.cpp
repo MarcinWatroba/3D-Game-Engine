@@ -2,6 +2,7 @@
 #include "Game/AIController/State_Idle.h"
 #include "Game/AIController/State_Patrol.h"
 #include "Game/AIController/State_Attack.h"
+#include <Engine/Component/Character.h>
 
 AIController::AIController(GameObject_3D * character) :
 	FSM(&stateList)
@@ -11,6 +12,7 @@ AIController::AIController(GameObject_3D * character) :
 	stateList.push_back(new State_Attack(ccs::Attack));
 	InitializeToState(ccs::Idle);
 	data.character = character;
+	data.path = nullptr;
 }
 
 std::string AIController::get_Type()
@@ -28,5 +30,10 @@ AIController::~AIController()
 
 void AIController::Update()
 {
+	if (data.path == nullptr)
+	{
+		Character* characterComp = static_cast<Character*>(data.character->get_Component("Character"));
+		if (characterComp != nullptr) { data.path = characterComp->getPath(); }
+	}
 	Run();
 }

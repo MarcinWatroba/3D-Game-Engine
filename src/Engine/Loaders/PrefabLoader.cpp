@@ -95,7 +95,7 @@ PrefabLoader::PrefabLoader(const char * pc_FileName_In, Loader * po_Loader_In, S
 			object->add_Component("Mesh_3D", po_Loader_In->get_Mesh(i_MeshID));
 			object->add_Component("Transform_3D", new Transform_3D());
 			object->add_Component("RenderComp_3D", new RenderComp_3D());
-			if (s_Components != "") add_Components(object, s_Components, po_StatsLoader->get_Stat(s_StatsName));
+			if (po_StatsLoader_In != nullptr && s_Components != "") add_Components(object, s_Components, po_StatsLoader->get_Stat(s_StatsName));
 			object->set_Position(position);
 			object->set_Origin(origin);
 			object->set_Rotation(quat_Orientation);

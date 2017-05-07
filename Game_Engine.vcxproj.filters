@@ -612,6 +612,9 @@
     <Xml Include="assets\Prefabs.xml">
       <Filter>Resource Files</Filter>
     </Xml>
+    <Xml Include="assets\stats.xml">
+      <Filter>Resource Files</Filter>
+    </Xml>
   </ItemGroup>
   <ItemGroup>
     <Media Include="assets\audio\shooting_pistol.wav">

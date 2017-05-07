@@ -5,6 +5,8 @@ StatsLoader::StatsLoader(const char * pc_FileName_In)
 	tinyxml2::XMLDocument stats_File;
 	stats_File.LoadFile(pc_FileName_In);
 	tinyxml2::XMLElement* body = stats_File.FirstChildElement("stats");
+
+
 	for (tinyxml2::XMLElement* it = body->FirstChildElement("new_Stat"); it != nullptr; it = it->NextSiblingElement("new_Stat"))
 	{
 		std::cout << "Adding new object to the scene..." << "\n";
@@ -21,37 +23,63 @@ StatsLoader::StatsLoader(const char * pc_FileName_In)
 		float i_Mass = std::strtof(s_Mass.c_str(), nullptr);
 
 		std::string s_Gravity = it->Attribute("gravity");
-		bool b_Gravity;
-		if (s_Gravity == "false")
+		bool b_Gravity = (s_Gravity == "true");
+
+		std::string s_Path = it->Attribute("path");
+		std::vector<glm::vec3> path;
+		if (s_Path != "") { path = loadPath(&stats_File, s_Path.c_str()); }
+
+		//set up stats class
+		Stats * stats = new Stats(i_Health, i_Ammo, i_Mass, b_Gravity);
+		for (unsigned int i = 0; i < path.size(); i++)
 		{
-			b_Gravity = false;
-		}
-		else
-		{
-			b_Gravity = true;
+			stats->addPathPoint(path[i]);
 		}
 
-		std::string s_Path1 = it->Attribute("path1");
-		if (s_Path1 != "")
-		{
-			glm::vec3 v_Path1; // = path1;
-			std::string s_Path2 = it->Attribute("path2");
-			glm::vec3 v_Path2;
-			if (s_Path2 != "")
-			{
-				// v_Path2 = path2;
-			}
-			statsList.insert(std::make_pair(s_ObjectName, new Stats(i_Health, i_Ammo, i_Mass, b_Gravity, v_Path1, v_Path2)));
-		}
-		else
-		{
-			statsList.insert(std::make_pair(s_ObjectName, new Stats(i_Health, i_Ammo, i_Mass, b_Gravity)));
-		}
-
-		
-
-		
+		//add to list
+		statsList.insert(std::make_pair(s_ObjectName, stats));
 	}
+}
+
+std::vector<glm::vec3> StatsLoader::loadPath(tinyxml2::XMLDocument* po_doc, std::string s_PathName_In)
+{
+	std::string s_point;
+	std::string s_val;
+	unsigned int pos, pos2;
+	std::vector<glm::vec3> path;
+	tinyxml2::XMLElement* body = po_doc->FirstChildElement("patrols");
+
+	//
+	for (tinyxml2::XMLElement* it = body->FirstChildElement("patrolPath"); it != nullptr; it = it->NextSiblingElement("patrolPath"))
+	{
+		//find a patrol path with the input name
+		std::string s_PathName = it->Attribute("name");
+		if (s_PathName == s_PathName_In)
+		{
+			//get points
+			for (tinyxml2::XMLElement* it2 = it->FirstChildElement("point"); it2 != nullptr; it2 = it2->NextSiblingElement("point"))
+			{
+				glm::vec3 point;
+				s_point = it2->Attribute("pos");
+				//
+				pos = s_point.find(',');
+				s_val = s_point.substr(0, pos++);
+				point.x = std::strtof(s_val.c_str(), nullptr);
+				//
+				pos2 = s_point.find(',', ++pos);
+				s_val = s_point.substr(pos, pos2++ - pos);
+				point.y = std::strtof(s_val.c_str(), nullptr);
+				//
+				s_val = s_point.substr(++pos2);
+				point.z = std::strtof(s_val.c_str(), nullptr);
+				//
+				path.push_back(point);
+			}
+		}
+	}
+
+	//
+	return path;
 }
 
 StatsLoader::~StatsLoader()

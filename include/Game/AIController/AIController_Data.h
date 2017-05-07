@@ -27,6 +27,8 @@ struct AIController_Data
 	const float dps = 360.0f;
 	//time step
 	float deltaTime;
+	//patrol path pointer
+	std::vector<glm::vec3>* path;
 	//scene resources
 	Loader * loader;
 	//AI map

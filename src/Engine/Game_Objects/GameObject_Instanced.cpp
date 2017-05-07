@@ -223,7 +223,7 @@ int GameObject_Instanced::FindUnusedParticle()
 		}
 	}
 
-	for (unsigned int i = 0; i<LastUsedParticle; i++) {
+	for (int i = 0; i<LastUsedParticle; i++) {
 		if (ParticlesContainer[i].life <= 0) {
 			LastUsedParticle = i;
 

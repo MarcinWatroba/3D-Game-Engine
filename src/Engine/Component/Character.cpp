@@ -13,11 +13,12 @@ Character::Character(Stats * stat)
 {
 	health = stat->getHealth();
 	numberOfBullets = stat->getAmmo();
-	if (stat->getPath1() != glm::vec3(0, 0, 0))
-	{
-		path1 = stat->getPath1();
-		path2 = stat->getPath2();
-	}	
+	path = std::vector<glm::vec3>(stat->getPath());
+}
+
+std::vector<glm::vec3>* Character::getPath()
+{
+	return &path;
 }
 
 std::string Character::get_Type()

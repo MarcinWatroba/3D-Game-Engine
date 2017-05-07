@@ -290,9 +290,16 @@
     <None Include="assets\shaders\passIn.vert" />
   </ItemGroup>
   <ItemGroup>
-    <Xml Include="assets\Prefabs.xml" />
+    <Xml Include="assets\Prefabs.xml">
+      <SubType>Designer</SubType>
+    </Xml>
     <Xml Include="assets\Resources.xml" />
-    <Xml Include="assets\scenes\Robot_Scene.xml" />
+    <Xml Include="assets\scenes\Robot_Scene.xml">
+      <SubType>Designer</SubType>
+    </Xml>
+    <Xml Include="assets\stats.xml">
+      <SubType>Designer</SubType>
+    </Xml>
   </ItemGroup>
   <ItemGroup>
     <Media Include="assets\audio\rain.wav" />

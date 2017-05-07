@@ -3,14 +3,14 @@
 
 #include <Engine\Component\Component.h>
 #include <Engine\Stats\Stats.h>
+#include <vector>
 
 class Character : public Component
 {
 private:
 	float health;
 	float numberOfBullets;
-	glm::vec3 path1;
-	glm::vec3 path2;
+	std::vector<glm::vec3> path;
 	std::string typeOfChar;
 public:
 	Character(std::string inType = "");
@@ -29,6 +29,6 @@ public:
 	float getHealth() { return health; }
 	float getNumberOfBullets() { return numberOfBullets; }
 
-
+	std::vector<glm::vec3>* getPath();
 };
 #endif

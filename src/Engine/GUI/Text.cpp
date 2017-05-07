@@ -107,7 +107,7 @@ void Text::change_Origin(glm::vec2 v2_Origin_In)
 	if (get_Origin() != v2_Origin_In)
 	{
 		set_Origin(v2_Origin_In);
-		for (int i = 0; i < vp_Letters.size(); i++) vp_Letters[i]->set_Position(vp_Letters[i]->get_Position() - get_Origin());
+		for (unsigned int i = 0; i < vp_Letters.size(); i++) vp_Letters[i]->set_Position(vp_Letters[i]->get_Position() - get_Origin());
 	}
 }
 
