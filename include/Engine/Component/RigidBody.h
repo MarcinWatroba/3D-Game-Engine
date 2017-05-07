@@ -57,6 +57,7 @@ public:
 	{
 		return grounded;
 	}
+	void setVelocity(float temp);
 	void setJumpForce(float force);
 	void setForwardForce(float force);
 	void setJumpHeight(float force);

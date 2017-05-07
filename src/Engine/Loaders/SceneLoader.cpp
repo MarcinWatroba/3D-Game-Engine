@@ -23,7 +23,7 @@
 
 int SceneLoader::get_Count() { return count; }
 
-SceneLoader::SceneLoader(const char* pc_FileName_In, Loader* po_Loader_In, PrefabLoader* po_PrefLoader_In, std::map<std::string, Game_Object*>& mspo_GameObjects_In, std::map<std::string, Sound*>& snd_Audio_In)
+SceneLoader::SceneLoader(const char* pc_FileName_In, Loader* po_Loader_In, PrefabLoader* po_PrefLoader_In, std::map<std::string, Game_Object*>& mspo_GameObjects_In)
 {
 	glClearColor(0.1f, 0.1f, 0.1f, 1.f);
 	glEnable(GL_DEPTH_TEST);
@@ -150,60 +150,6 @@ SceneLoader::SceneLoader(const char* pc_FileName_In, Loader* po_Loader_In, Prefa
 		}
 	}
 
-	// Find Sounds
-	body = object_File.FirstChildElement("sounds");
-
-	for (tinyxml2::XMLElement* it = body->FirstChildElement("new_sound"); it != nullptr; it = it->NextSiblingElement("new_sound")) {
-		std::cout << "Adding sound to the scene" << "\n";
-
-		// Add Variables
-		std::string s_Name;
-		int i_ID;
-		float f_Volume;
-		std::string s_Object;
-		glm::vec3 v3_Position;
-		bool b_loop;
-		bool b_threeD;
-		bool b_stream;
-		GameObject_3D* parent = nullptr;
-
-		// Extract the Data
-		s_Name = it->Attribute("name");
-		i_ID = atoi(it->Attribute("ID"));
-		f_Volume = atof(it->Attribute("volume"));
-		// If Object is not empty then...
-		if (!s_Object.empty())
-		{
-			// position is same as that objects
-			parent = static_cast<GameObject_3D*>(mspo_GameObjects_In.find(s_Object)->second);
-			v3_Position = parent->get_Position();
-		}
-		else
-		{
-			// else read the position vector in as previous
-			v3_Position = to3DVector(it->Attribute("position"));
-		}
-
-		std::string s_temp = it->Attribute("loop");
-		b_loop = (s_temp == "true");
-
-		s_temp = it->Attribute("threeD");
-		b_threeD = (s_temp == "true");
-
-		s_temp = it->Attribute("stream");
-		b_stream = (s_temp == "true");
-
-		snd_Audio_In.insert(std::pair<std::string, Sound*>(s_Name, new Sound("assets/audio/" + s_Name + ".wav")));
-
-		// Add the sound with the above data
-		auto sound = static_cast<Sound*>(snd_Audio_In.find(s_Name)->second);
-		sound->Load(b_threeD, b_loop, b_stream);
-		sound->SetPosition(v3_Position);
-		sound->SetVolume(f_Volume);
-		if (parent)
-		{
-		}
-	}
 
 	count = i_Incrementor;//???
 }

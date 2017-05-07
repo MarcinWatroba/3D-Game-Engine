@@ -12,7 +12,7 @@
     <new_Object3D name="Lamp 2" prefab="Lamp" origin="(0.000000, 0.000000, 0.000000)" position="(-37.514999, 25.583000, -32.407001)" orientation="(1.000000, 0.000000, 0.000000, 0.000000)" scale="(7.645000, 7.645000, 7.645000)"/>
     <new_Object3D name="Lamp Metal" prefab="Lamp Metal" origin="(0.000000, 0.000000, 0.000000)" position="(0.000000, 49.589001, 0.000000)" orientation="(1.000000, 0.000000, 0.000000, 0.000000)" scale="(1.000000, 10.080000, 1.000000)"/>
     <new_Object3D name="Lamp Metal 2" prefab="Lamp Metal" origin="(0.000000, 0.000000, 0.000000)" position="(-37.744999, 12.691000, -32.474998)" orientation="(1.000000, 0.000000, 0.000000, 0.000000)" scale="(1.000000, 25.775000, 1.000000)"/>
-    <new_Object3D name="Left Wall" prefab="KitchenWall" origin="(0.000000, 0.000000, 0.000000)" position="(-44.491001, 26.582001, -0.363000)" orientation="(0.708348, 0.000000, -0.705863, 0.000000)" scale="(79.934998, 54.860001, 1.000000)"/>
+    <new_Object3D name="Left Wall" prefab="KitchenWall" origin="(0.000000, 0.000000, 0.000000)" position="(-81, 26.582001, -0.363000)" orientation="(0.708348, 0.000000, -0.705863, 0.000000)" scale="(79.934998, 54.860001, 1.000000)"/>
     <new_Object3D name="PickUp_01" prefab="PickUp_01" origin="(0.000000, 0.000000, 0.000000)" position="(15.469000, 2.510000, 23.445999)" orientation="(1.000000, 0.000000, 0.000000, 0.000000)" scale="(2.643761, 2.713537, -1.980238)"/>
     <new_Object3D name="Plant_01" prefab="Plant" origin="(0.000000, 0.000000, 0.000000)" position="(-38.686001, 5.992000, 36.338001)" orientation="(1.000000, 0.000000, 0.000000, 0.000000)" scale="(1.000000, 6.598000, 1.000000)"/>
     <new_Object3D name="Plant_02" prefab="Plant" origin="(0.000000, 0.000000, 0.000000)" position="(-36.754002, 8.448000, 36.527000)" orientation="(1.000000, 0.000000, 0.000000, 0.000000)" scale="(0.636000, 4.196000, 0.636000)"/>
@@ -34,6 +34,7 @@
 	<new_Object3D name = "KitchenCupboards2" prefab = "KitchenCupboards" origin = "(0,0, 0)" position = "(15, 48, 35)" orientation = "(1,0,180,0)" scale = "(30, 20, 20)"/>
 	<new_Object3D name = "KitchenCupboards3" prefab = "KitchenCupboards" origin = "(0,0, 0)" position = "(45, 48, 35)" orientation = "(1,0,-90,0)" scale = "(30, 20, 20)"/>
 	<new_Object3D name = "Fridge" prefab = "Fridge" origin = "(0,0, 0)" position = "(44.416, 22.071, -18.319)" orientation = "(1,0,180,0)" scale = "(20, 45, 20)"/>
+	<new_Object3D name = "LevelExitTrigger" prefab = "LevelExit" origin = "(0,0, 0)" position = "(15.01, 2.2, -39.4)" orientation = "(1,0,1,0)" scale = "(0.1, 4.5, 4.5)"/>
 </objects>
 
 <lights>
