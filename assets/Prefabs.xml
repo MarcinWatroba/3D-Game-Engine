@@ -44,6 +44,7 @@
 	<new_Object3D name = "KitchenTop" stats = "" container = "No" tag = "Object" mesh_ID = "7" component = "(BoxCollider_3D, RigidBody)" diffuse_ID = "6" specular_ID = "7" shininess = "1" texture_Tiling = "(1, 1)" origin = "(0,0, 0)" position = "(40, 20, 30)" orientation = "(1,0,0,0)" scale = "(65, 2, 25)"/>
 	<new_Object3D name = "KitchenCupboards" stats = "" container = "No" tag = "Object" mesh_ID = "7" component = "(BoxCollider_3D, RigidBody)" diffuse_ID = "31" specular_ID = "7" shininess = "1" texture_Tiling = "(1, 1)" origin = "(0,0, 0)" position = "(-15, 48, 35)" orientation = "(1,0,0,0)" scale = "(30, 20, 20)"/>
 	<new_Object3D name = "Fridge" stats = "" container = "No" tag = "Object" mesh_ID = "7" component = "(BoxCollider_3D, RigidBody)" diffuse_ID = "32" specular_ID = "7" shininess = "1" texture_Tiling = "(1, 1)" origin = "(0,0, 0)" position = "(44.416, 22.071, -18.319)" orientation = "(1,0,0,0)" scale = "(20, 45, 20)"/>
+	<new_Object3D name = "LevelExit" stats = "" container = "No" tag = "Exit" mesh_ID = "7" component = "(BoxCollider_3D, RigidBody)" diffuse_ID = "34" specular_ID = "7" shininess = "1" texture_Tiling = "(1, 1)" origin = "(0,0, 0)" position = "(-44.01, 2.2, -20)" orientation = "(1,0,0,0)" scale = "(0.1, 4.5, 4.5)"/>
 </objects>
 <lights>
 	<new_Light name = "Main Light" type="Point_Light" tag="Light" position="(0.000000, 0.000000, 0.000000)" ambient="(0.150000, 0.150000, 0.150000)" diffuse="(0.800000, 0.800000, 0.800000)" specular="(1.000000, 1.000000, 1.000000)" radius="20.000000"/>

@@ -39,6 +39,10 @@ void CollisionManager::collision(Game_Object* objectA, Game_Object* objectB, std
 					character->gainLife(1);
 					objectB->set_ToDelete();
 				}
+				else if (objectB->get_Tag() == "Exit")
+				{
+					character->setEndLevel(true);
+				}
 			}
 
 			//other interactions

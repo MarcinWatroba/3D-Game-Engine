@@ -18,7 +18,7 @@
 
 Game_Scene::Game_Scene()
 {
-	levelList.push_back("assets/scenes/Robot_Scene.xml");
+	//levelList.push_back("assets/scenes/Robot_Scene.xml");
 	levelList.push_back("assets/scenes/Kitchen.xml");
 }
 
@@ -135,8 +135,8 @@ void Game_Scene::keyboard_Input(GLfloat f_Delta_In, GLboolean* pab_KeyArray_In, 
 
 	if (pab_KeyArray_In[GLFW_KEY_R] && !pab_LockedKeys_In[GLFW_KEY_R])
 	{
-		//reload_Scene();
-		load_Scene(1);
+		reload_Scene();
+		//load_Scene(1);
 		pab_LockedKeys_In[GLFW_KEY_R] = true;
 
 	}
@@ -249,8 +249,7 @@ void Game_Scene::update_Scene(GLfloat f_Delta_In, glm::vec2 v2_MousePos_In)
 		//quit to main menu
 		//std::cout << "Game Over, Loser!" << std::endl;
 	}
-	if (i_numEnemies == 0) {
-		//level win!
+	if (i_numEnemies == 0 && static_cast<Character*>(player->get_Component("Character"))->getEndLevel()) {
 		if (levelList.size() == 0 || currentLevel < levelList.size()-1)
 		{
 			currentLevel++;
@@ -261,6 +260,10 @@ void Game_Scene::update_Scene(GLfloat f_Delta_In, glm::vec2 v2_MousePos_In)
 			//game win
 		}
 		//std::cout << "Winner Winner Chicken Dinner!" << std::endl;
+	}
+	else
+	{
+		static_cast<Character*>(player->get_Component("Character"))->setEndLevel(false);
 	}
 
 	if (b_Init)

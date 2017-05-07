@@ -23,6 +23,7 @@
 	<new_Object3D name = "Bed1" prefab = "Bed" origin = "(0,0, 0)" position = "(20, 0, 29)" orientation = "(1,0,180,0)" scale = "(1, 1, 1)"/>
 	<new_Object3D name = "BedPillow1" prefab = "BedPillow" origin = "(0,0, 0)" position = "(18, -0.9, 29)" orientation = "(1,0,180,0)" scale = "(1.1, 1.1, 1.1)"/>
 	<new_Object3D name = "WindowWall1" prefab = "WindowWall" origin = "(0,0, 0)" position = "(0, -0.05, -40)" orientation = "(1,0,1,0)" scale = "(1, 5.5,5.5)"/>
+	<new_Object3D name = "LevelExitTrigger" prefab = "LevelExit" origin = "(0,0, 0)" position = "(-44.01, 2.2, -20)" orientation = "(1,0,0,0)" scale = "(0.1, 4.5, 4.5)"/>
 </objects>
 
 <lights>

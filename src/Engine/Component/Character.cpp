@@ -35,6 +35,11 @@ void Character::setNumberOfBullets(float temp)
 	numberOfBullets = temp;
 }
 
+void Character::setEndLevel(bool temp)
+{
+	endLevel = temp;
+}
+
 void Character::loseLife()
 {
 	health--;
