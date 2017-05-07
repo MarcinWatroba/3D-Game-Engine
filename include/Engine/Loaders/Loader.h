@@ -56,8 +56,6 @@ public:
 	// Get the Audio
 	Sound* get_Sound(std::string s_Name_In);
 
-	std::map<std::string, Sound*> getAudioMap() { return snd_Audio; }
-
 	//Clean up the memory
 	void clean_Up();
 

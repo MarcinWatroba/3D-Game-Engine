@@ -32,7 +32,6 @@ private:
 	float a;
 	float t;
 	float dT = 60;
-	float velocity;
 	float gravConst = -9.82f;
 	Active stat;
 public:
@@ -43,7 +42,6 @@ public:
 	float eulerIntegration(float force, float mass, float position, bool grounded);
 	float SUVAT(float accel, float time);
 	float acceleration(const Active &state, float t);
-	
 	glm::vec3 applyGravity(glm::vec3 position, float mass, float force);
 };
 

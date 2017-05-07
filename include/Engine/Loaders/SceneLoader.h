@@ -43,14 +43,29 @@ private:
 
 
 
+	//Add children
+	void add_Components(GameObject_3D* po_GameObject_In, std::string s_ToProcess_In);
+
+	void add_Components_Instanced(GameObject_Instanced * po_GameObject_In, std::string s_ToProcess_In);
+
+
+
+	//Identify the component
+	void identify_Component(GameObject_3D* po_GameObject_In, std::string& s_Result_In);
+
+	void identify_Component_Instanced(GameObject_Instanced * po_GameObject_In, std::string & s_ToProcess_In);
+
 	int count;
+
+	//Add children
+	void add_Children(std::vector<std::string>& vs_Children_In, std::string s_ToProcess_In);
 
 public:
 	//Constructor
 	SceneLoader() {};
 
 	//Main constructor
-	SceneLoader(const char* pc_FileName_In, Loader* po_Loader_In, PrefabLoader* po_PrefLoader_In, std::map<std::string, Game_Object*>& mspo_GameObjects_In);
+	SceneLoader(const char* pc_FileName_In, Loader* po_Loader_In, PrefabLoader* po_PrefLoader_In, std::map<std::string, Game_Object*>& mspo_GameObjects_In, std::map<std::string, Sound*>& snd_Audio_In);
 
 	int get_Count();
 

@@ -299,7 +299,6 @@ void GameObject_3D::jump(glm::vec3 v3_Direction_In)
 		auto found_Movement = mipo_Components.at("Respond_Movement");
 		dynamic_cast<RigidBody*>(mipo_Components.at("RigidBody"))->update(get_Position());
 		dynamic_cast<Respond_Movement*>(found_Movement)->move(this, v3_Direction_In, dynamic_cast<RigidBody*>(mipo_Components.at("RigidBody"))->getJumpVelocity());
-		//dynamic_cast<RigidBody*>(mipo_Components.at("RigidBody"))->setJumpForce(0);
 	}
 }
 

@@ -6,9 +6,9 @@ RigidBody::~RigidBody()
 {}
 RigidBody::RigidBody(const RigidBody &p_NewComp_In)
 {
-	mass = p_NewComp_In.mass;
-	moveable = p_NewComp_In.moveable;
-	centreOfMass = p_NewComp_In.centreOfMass;
+	//mass = p_NewComp_In.mass;
+	//moveable = p_NewComp_In.moveable;
+	//centreOfMass = p_NewComp_In.centreOfMass;
 }
 RigidBody::RigidBody(Stats * stat)
 {
@@ -51,10 +51,6 @@ void RigidBody::setGrounded(bool isGrounded)
 {
 	grounded = isGrounded;
 }
-void RigidBody::setVelocity(float temp)
-{
-	velocity = temp;
-}
 
 void RigidBody::update(glm::vec3 &pos)
 {
@@ -62,25 +58,24 @@ void RigidBody::update(glm::vec3 &pos)
 	if (grounded)
 	{
 		velocity = phys.eulerIntegration(forward_Force, mass, pos.z, grounded);
-		jumpVelocity = 0;
 	}
 	else
 	{
 		if (!reachedPeak)
 		{
-			if (pos.y >= jumpHeight )
+			if (pos.y >= jumpHeight)
 			{
 				reachedPeak = true;
 			}
 			else
 			{
-			jumpVelocity = phys.eulerIntegration(jumpForce, mass, pos.y, grounded);
+				jumpVelocity = phys.eulerIntegration(jumpForce, mass, pos.y, grounded);
 			}
-		
+
 		}
 		else
 		{
-			if (pos.y <= 1.5)
+			if (pos.y <= 0)
 			{
 				jumpVelocity = 0;
 				grounded = true;

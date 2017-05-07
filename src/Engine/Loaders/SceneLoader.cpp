@@ -23,7 +23,7 @@
 
 int SceneLoader::get_Count() { return count; }
 
-SceneLoader::SceneLoader(const char* pc_FileName_In, Loader* po_Loader_In, PrefabLoader* po_PrefLoader_In, std::map<std::string, Game_Object*>& mspo_GameObjects_In)
+SceneLoader::SceneLoader(const char* pc_FileName_In, Loader* po_Loader_In, PrefabLoader* po_PrefLoader_In, std::map<std::string, Game_Object*>& mspo_GameObjects_In, std::map<std::string, Sound*>& snd_Audio_In)
 {
 	glClearColor(0.1f, 0.1f, 0.1f, 1.f);
 	glEnable(GL_DEPTH_TEST);
@@ -54,8 +54,8 @@ SceneLoader::SceneLoader(const char* pc_FileName_In, Loader* po_Loader_In, Prefa
 		glm::quat v3_Orientation = toQuat(it->Attribute("orientation"));
 
 		auto desired_Prefab = static_cast<GameObject_3D*>(po_PrefLoader_In->get_Prefab(s_Prefab));
-		auto desired_Object = new GameObject_3D(*desired_Prefab);
-		mspo_GameObjects_In.insert(std::pair<std::string, Game_Object*>(s_ObjectName, desired_Object));
+		mspo_GameObjects_In.insert(std::pair<std::string, Game_Object*>(s_ObjectName, new GameObject_3D(*desired_Prefab)));
+		auto desired_Object = static_cast<GameObject_3D*>(mspo_GameObjects_In.find(s_ObjectName)->second);
 
 		if (!desired_Prefab->get_ChildrenNames().empty())
 		{
@@ -131,6 +131,7 @@ SceneLoader::SceneLoader(const char* pc_FileName_In, Loader* po_Loader_In, Prefa
 		std::string s_Prefab = it->Attribute("prefab");
 		glm::vec3 v3_Position = to3DVector(it->Attribute("position"));
 		std::string s_Type = it->Attribute("type");
+		unsigned int ui_ID = std::atoi(it->Attribute("light_ID"));
 
 		if (s_Type == "Point_Light")
 		{
@@ -150,8 +151,84 @@ SceneLoader::SceneLoader(const char* pc_FileName_In, Loader* po_Loader_In, Prefa
 		}
 	}
 
+	// Find Sounds
+	body = object_File.FirstChildElement("sounds");
+
+	for (tinyxml2::XMLElement* it = body->FirstChildElement("new_sound"); it != nullptr; it = it->NextSiblingElement("new_sound")) {
+		std::cout << "Adding sound to the scene" << "\n";
+
+		// Add Variables
+		std::string s_Name;
+		int i_ID;
+		float f_Volume;
+		std::string s_Object;
+		glm::vec3 v3_Position;
+		bool b_loop;
+		bool b_threeD;
+		bool b_stream;
+		GameObject_3D* parent = nullptr;
+
+		// Extract the Data
+		s_Name = it->Attribute("name");
+		i_ID = atoi(it->Attribute("ID"));
+		f_Volume = atof(it->Attribute("volume"));
+		// If Object is not empty then...
+		if (!s_Object.empty())
+		{
+			// position is same as that objects
+			parent = static_cast<GameObject_3D*>(mspo_GameObjects_In.find(s_Object)->second);
+			v3_Position = parent->get_Position();
+		}
+		else
+		{
+			// else read the position vector in as previous
+			v3_Position = to3DVector(it->Attribute("position"));
+		}
+
+		std::string s_temp = it->Attribute("loop");
+		b_loop = (s_temp == "true");
+
+		s_temp = it->Attribute("threeD");
+		b_threeD = (s_temp == "true");
+
+		s_temp = it->Attribute("stream");
+		b_stream = (s_temp == "true");
+
+		snd_Audio_In.insert(std::pair<std::string, Sound*>(s_Name, new Sound("assets/audio/" + s_Name + ".wav")));
+
+		// Add the sound with the above data
+		auto sound = static_cast<Sound*>(snd_Audio_In.find(s_Name)->second);
+		sound->Load(b_threeD, b_loop, b_stream);
+		sound->SetPosition(v3_Position);
+		sound->SetVolume(f_Volume);
+		if (parent)
+		{
+		}
+	}
 
 	count = i_Incrementor;//???
+}
+
+void SceneLoader::identify_Component(GameObject_3D* po_GameObject_In, std::string& s_ToProcess_In)
+{
+	std::cout << "Component name: " << s_ToProcess_In << "\n";
+	if (s_ToProcess_In == "Character_Controller") { po_GameObject_In->add_Component("Character_Controller", new AIController(po_GameObject_In)); }
+	//else if (s_ToProcess_In == "Patrol_Path") po_GameObject_In->add_Component("Patrol_Path", );
+	else if (s_ToProcess_In == "Respond_Movement") po_GameObject_In->add_Component("Respond_Movement", new Respond_Movement());
+	else if (s_ToProcess_In == "BoxCollider_3D") po_GameObject_In->add_Component("BoxCollider_3D", new BoxCollider_3D());
+	else if (s_ToProcess_In == "RigidBody") po_GameObject_In->add_Component("RigidBody", new RigidBody());
+	else if (s_ToProcess_In == "Character") po_GameObject_In->add_Component("Character", new Character(po_GameObject_In->get_Tag()));
+	else std::cout << "Unknown component..." << "\n"; // Else we can't find it
+
+	s_ToProcess_In.clear();
+}
+
+void SceneLoader::identify_Component_Instanced(GameObject_Instanced* po_GameObject_In, std::string& s_ToProcess_In)
+{
+	if (s_ToProcess_In == "YourCompnentHere") std::cout << "Nope" << "\n";
+	else std::cout << "Unknown component..." << "\n"; // Else we can't find it
+
+	s_ToProcess_In.clear();
 }
 
 glm::vec3 SceneLoader::to3DVector(const char* pc_Vector3D_In)
@@ -300,6 +377,129 @@ glm::quat SceneLoader::toQuat(const char* pc_Quaternion_In)
 	return temp;
 }
 
+void SceneLoader::add_Children(std::vector<std::string>& vs_Children_In, std::string s_ToProcess_In)
+{
+	std::string s_Result;
+	int i_Length = s_ToProcess_In.length();
+	bool b_IgnoreSpaces = false;
+
+	for (int i = 0; i < i_Length; i++)
+	{
+		switch (s_ToProcess_In[i])
+		{
+		case 40: // This bracket "("
+				 //Ignore
+			break;
+
+		case 41: // This bracket ")"
+			vs_Children_In.push_back(s_Result);
+			s_Result.clear();
+			b_IgnoreSpaces = true;
+			break;
+
+		case 44:  // Comma
+			vs_Children_In.push_back(s_Result);
+			s_Result.clear();
+			b_IgnoreSpaces = true;
+			break;
+
+		case '\n':
+			break;
+
+		case '\t':
+			break;
+
+		case 32:
+			if (!b_IgnoreSpaces) s_Result = s_Result + s_ToProcess_In[i];
+			break;
+
+			//Process
+		default:
+			s_Result = s_Result + s_ToProcess_In[i];
+			if (s_Result.length() > 1) b_IgnoreSpaces = false;
+
+			break;
+		}
+	}
+}
+
+void SceneLoader::add_Components(GameObject_3D* po_GameObject_In, std::string s_ToProcess_In)
+{
+	std::string s_Result;
+	int i_Length = s_ToProcess_In.length();
+
+	for (int i = 0; i < i_Length; i++)
+	{
+		switch (s_ToProcess_In[i])
+		{
+		case 40: // This bracket "("
+				 //Ignore
+			break;
+
+		case 41: // This bracket ")"
+			identify_Component(po_GameObject_In, s_Result);
+			break;
+
+		case 44:  // Comma
+			//Find the right component
+			identify_Component(po_GameObject_In, s_Result);
+			break;
+
+		case '\n':
+			break;
+
+		case '\t':
+			break;
+
+		case 32:
+			break;
+
+			//Process
+		default:
+			s_Result = s_Result + s_ToProcess_In[i];
+			break;
+		}
+	}
+}
+
+void SceneLoader::add_Components_Instanced(GameObject_Instanced* po_GameObject_In, std::string s_ToProcess_In)
+{
+	std::string s_Result;
+	int i_Length = s_ToProcess_In.length();
+
+	for (int i = 0; i < i_Length; i++)
+	{
+		switch (s_ToProcess_In[i])
+		{
+		case 40: // This bracket "("
+				 //Ignore
+			break;
+
+		case 41: // This bracket ")"
+			identify_Component_Instanced(po_GameObject_In, s_Result);
+			break;
+
+		case 44:  // Comma
+				  //Find the right component
+			identify_Component_Instanced(po_GameObject_In, s_Result);
+			break;
+
+		case '\n':
+			break;
+
+		case '\t':
+			break;
+
+		case 32:
+			break;
+
+			//Process
+		default:
+			s_Result = s_Result + s_ToProcess_In[i];
+			break;
+		}
+	}
+}
 glm::vec3 SceneLoader::get_LightPosition(int i)
 {
 	return f_pos[i];

@@ -81,9 +81,9 @@
 	
 	<audio_File_Location>assets/audio/</audio_File_Location>
 	<audio_Files>
-		<new_File ID = "0" name = "rain.wav" volume = "0.3" position = "(0,0,0)" loop = "true" threeD = "true" stream = "false"></new_File>
-		<new_File ID = "1" name = "walking.wav" volume = "0.8" position = "(0,0,0)" loop = "true" threeD = "true" stream = "false"></new_File>
-		<new_File ID = "2" name = "robot_blip.wav" volume = "1" position = "(0,0,0)" loop = "false" threeD = "true" stream = "false"></new_File>
-		<new_File ID = "3" name = "reload_pistol.wav" volume = "1" position = "(0,0,0)" loop = "false" threeD = "true" stream = "false"></new_File>
+		<new_File ID = "0" name = "rain.wav"></new_File>
+		<new_File ID = "1" name = "walking.wav"></new_File>
+		<new_File ID = "2" name = "shooting_pistol.wav"></new_File>
+		<new_File ID = "3" name = "reload_pistol.wav"></new_File>
  	</audio_Files>
 </resources>

@@ -16,7 +16,7 @@ void CollisionManager::collision(Game_Object* objectA, Game_Object* objectB, std
 	//Collision with immov
 	if (objectA->get_Parent())
 	{
- 		if (!objectB->get_Components().count("RigidBody") || !objectA->get_Parent()->get_Components().count("RigidBody"))
+		if (!objectB->get_Components().count("RigidBody") || !objectA->get_Parent()->get_Components().count("RigidBody"))
 		{
 			//no rigid body attached to one of the input game objects
 			return;
@@ -39,14 +39,6 @@ void CollisionManager::collision(Game_Object* objectA, Game_Object* objectB, std
 					character->gainLife(1);
 					objectB->set_ToDelete();
 				}
-				else if (objectB->get_Tag() == "Exit")
-				{
-					character->setEndLevel(true);
-				}
-				else if (objectB->get_Tag() == "Floor")
-				{
-					static_cast<RigidBody*>(objectA->get_Component("RigidBody"))->setGrounded(true);
-				}
 			}
 
 			//other interactions
@@ -60,7 +52,6 @@ void CollisionManager::collision(Game_Object* objectA, Game_Object* objectB, std
 				std::cout << "Dab" << std::endl;
 				dynamic_cast<RigidBody*>(objectA->get_Components().at("RigidBody"))->setGrounded(true);
 			}
-
 			else if (!tempBody->get_Moveable())
 			{
 				//Stop the object moving in the current direction
@@ -154,14 +145,6 @@ void CollisionManager::collisionChecks(std::map<std::string, Game_Object*> &game
 											{
 												pair2.second->set_ToDelete();
 											}
-										}			
-										else if (pair2.second->get_Tag() == "Light")
-										{
-
-										}
-										else if (pair2.second->get_Tag() == "Player")
-										{
-
 										}
 										else if (!tempBody->get_Moveable())
 										{

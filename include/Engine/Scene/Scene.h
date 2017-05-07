@@ -36,7 +36,7 @@ protected:
 
 	unsigned int ui_light_Amount;
 	// Audio
-	std::map<std::string, Sound*> snd_Audio;
+	std::map<std::string, Sound*>* snd_Audio;
 
 	// Is mouse locked?
 	bool b_LockMouse;
