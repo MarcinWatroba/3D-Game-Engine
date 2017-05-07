@@ -28,11 +28,6 @@ AIController::~AIController()
 	}
 }
 
-std::string AIController::get_Type()
-{
-	return "AI_Controller";
-}
-
 void AIController::Update()
 {
 	if (data.character == nullptr)
