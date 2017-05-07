@@ -13,7 +13,7 @@
     <new_Object3D name="Plant_03" prefab="Plant" origin="(0.000000, 0.000000, 0.000000)" position="(-39.841999, 8.179000, 36.182999)" orientation="(1.000000, 0.000000, 0.000000, 0.000000)" scale="(0.636000, 4.196000, 0.636000)"/>
     <new_Object3D name="Pot" prefab="Pot" origin="(0.000000, 0.000000, 0.000000)" position="(-38.918999, 2.547000, 36.721001)" orientation="(1.000000, 0.000000, 0.000000, 0.000000)" scale="(4.680000, 4.680000, 4.680000)"/>
     <new_Object3D name="Right Wall" prefab="Wall" origin="(0.000000, 0.000000, 0.000000)" position="(43.880051, 26.582001, -0.363000)" orientation="(0.701661, -0.000001, 0.712511, -0.000080)" scale="(79.934998, 54.860001, 1.000000)"/>
-	<new_Object3D name="Robot" prefab="Robot" origin="(0.000000, 0.000000, 0.000000)" position="(0.921000, 0, 3.917150)" orientation="(1, 0, 0, -0)" scale="(1,1,1)"/>
+	<new_Object3D name="Robot" prefab="Robot" origin="(0.000000, 0.000000, 0.000000)" position="(20.921000, 0, 3.917150)" orientation="(1, 0, 0, -0)" scale="(1,1,1)"/>
     <new_Object3D name="Wooden Wall" prefab="Wooden Wall" origin="(0.000000, 0.000000, 0.000000)" position="(0.921000, 53.500000, -0.365000)" orientation="(0.703704, 0.710493, 0.000000, 0.000000)" scale="(104.514999, 85.177002, 1.000000)"/>
 	<new_Object3D name="Enemy Robot" prefab="AIControlled Robot Body 1" origin="(0.000000, 0.000000, 0.000000)" position="(0.921000, 0, -0.365000)" orientation="(1,0, 0.000000, 0.000000)" scale="(1,1,1)"/>
 	<new_Object3D name="Enemy Robot2" prefab="AIControlled Robot Body 2" origin="(0.000000, 0.000000, 0.000000)" position="(10.921000, 0, -10.365000)" orientation="(1,0, 0.000000, 0.000000)" scale="(1,1,1)"/>

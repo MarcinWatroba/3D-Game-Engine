@@ -52,6 +52,7 @@ void Game_Scene::init()
 
 	//get player pointer
 	findPlayer();
+	player->turn(180, glm::vec3(0, 1, 0));
 
 	//count enemies
 	i_numEnemies = 0;
@@ -155,7 +156,7 @@ void Game_Scene::keyboard_Input(GLfloat f_Delta_In, GLboolean* pab_KeyArray_In, 
 
 	if (pab_KeyArray_In[GLFW_KEY_W])
 	{
-		player->move(glm::vec3(0, 0, 1), -moveSpeed * f_Delta_In);
+		player->move(glm::vec3(0, 0, 1), moveSpeed * f_Delta_In);
 		if (walkCount > walkRate)
 		{
 			po_Loader->getAudioMap().find("1")->second->Play();
@@ -165,7 +166,7 @@ void Game_Scene::keyboard_Input(GLfloat f_Delta_In, GLboolean* pab_KeyArray_In, 
 	}
 	if (pab_KeyArray_In[GLFW_KEY_S])
 	{
-		player->move(glm::vec3(0, 0, 1), moveSpeed * f_Delta_In);
+		player->move(glm::vec3(0, 0, 1), -moveSpeed * f_Delta_In);
 		if (walkCount > walkRate)
 		{
 			po_Loader->getAudioMap().find("1")->second->Play();
@@ -183,7 +184,7 @@ void Game_Scene::keyboard_Input(GLfloat f_Delta_In, GLboolean* pab_KeyArray_In, 
 
 	if (pab_KeyArray_In[GLFW_KEY_A])
 	{
-		player->move(glm::vec3(1, 0, 0), -moveSpeed * f_Delta_In);
+		player->move(glm::vec3(1, 0, 0), moveSpeed * f_Delta_In);
 		if (walkCount > walkRate)
 		{
 			po_Loader->getAudioMap().find("1")->second->Play();
@@ -193,7 +194,7 @@ void Game_Scene::keyboard_Input(GLfloat f_Delta_In, GLboolean* pab_KeyArray_In, 
 	}
 	if (pab_KeyArray_In[GLFW_KEY_D])
 	{
-		player->move(glm::vec3(1, 0, 0), moveSpeed * f_Delta_In);
+		player->move(glm::vec3(1, 0, 0), -moveSpeed * f_Delta_In);
 		if (walkCount > walkRate)
 		{
 			po_Loader->getAudioMap().find("1")->second->Play();
@@ -333,7 +334,7 @@ void Game_Scene::update_Scene(GLfloat f_Delta_In, glm::vec2 v2_MousePos_In)
 			{
 				player->resetCount();
 			}
-			camera_3D->set_CameraPos(-player->get_Position() - glm::vec3(0, 5, 0));
+			camera_3D->set_CameraPos(-player->get_Position() - glm::vec3(0, 15, 0));
 			camera_3D->move_Mouse(f_Delta_In, v2_MousePos_In, v2_WindowSize);
 			player->turn(-camera_3D->get_YawDelta(), glm::vec3(0, 1, 0));
 			player->jump(glm::vec3(0, 1, 0));

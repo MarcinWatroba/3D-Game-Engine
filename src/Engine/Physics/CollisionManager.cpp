@@ -122,23 +122,11 @@ void CollisionManager::collisionChecks(std::map<std::string, Game_Object*> &game
 							bool check = tempCol->intersects(*secondCol);
 							if (check)
 							{
-								if (pair2.second->get_Tag() == "Player")
-								{
-									bool a = 1;
-								}
 								//std::cout << "Toppus Kekkus" << std::endl;
-								if ((pair2.second->get_Components().count("RigidBody") && bullet->get_Components().count("RigidBody")) || (pair2.second->get_Parent()->get_Components().count("RigidBody") && bullet->get_Components().count("RigidBody")))
+								if ((pair2.second->get_Components().count("RigidBody") && bullet->get_Components().count("RigidBody")))
 								{
 									RigidBody* tempBody;
-									if (pair2.second->get_Parent())
-									{
-										tempBody = dynamic_cast<RigidBody*>(pair2.second->get_Parent()->get_Components().at("RigidBody"));
-									}
-									else
-									{
-										tempBody = dynamic_cast<RigidBody*>(pair2.second->get_Components().at("RigidBody"));
-									}
-									
+									tempBody = dynamic_cast<RigidBody*>(pair2.second->get_Components().at("RigidBody"));
 									if (currentObject->get_Name() == "Robot") // Player Shooting Enemy
 									{
 										if (pair2.second->get_Tag() == "Enemy")
@@ -168,15 +156,16 @@ void CollisionManager::collisionChecks(std::map<std::string, Game_Object*> &game
 									{
 										if (pair2.second->get_Tag() == "Player")
 										{
-											if (currentObject->get_Tag() == "Enemy")
+											colChecks.insert(std::make_pair(bullet, pair2.second));
+											dynamic_cast<Character*>(pair2.second->get_Components().at("Character"))->loseLife();
+											if (dynamic_cast<Character*>(pair2.second->get_Components().at("Character"))->getHealth() == 0)
 											{
-												//colChecks.insert(std::make_pair(bullet, pair2.second));
-												//dynamic_cast<Character*>(pair2.second->get_Parent()->get_Components().at("Character"))->loseLife();
-												//if (dynamic_cast<Character*>(pair2.second->get_Parent()->get_Components().at("Character"))->getHealth() == 0)
-												//{
-												//	pair2.second->get_Parent()->set_ToDelete();
-												//}
+												pair2.second->set_ToDelete();
 											}
+										}
+										else if (pair2.second->get_Tag() == "Enemy")
+										{
+
 										}
 										else
 										{

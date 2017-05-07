@@ -342,7 +342,8 @@ void GameObject_3D::shootBullet()
 {
 	for (unsigned int i = 0; i < bulletList.size(); i++)
 	{
-		bulletList[i]->move(glm::vec3(0, 0, 1), -0.1f);
+		glm::vec3 temp = static_cast<Transform_3D*>(bulletList[i]->get_Component("Transform_3D"))->get_Forward();
+		static_cast<Respond_Movement*>(bulletList[i]->get_Component("Respond_Movement"))->moveAbsolute(bulletList[i], temp, 1);
 	}
 	if (!bulletList.empty())
 	{
