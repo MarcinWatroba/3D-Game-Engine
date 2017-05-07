@@ -442,6 +442,9 @@ void Scene_3D::process_2DClick(int i_ID_In)
 	case 1033: // Textbox add name!
 		b_Conditions[Conditions::ListenToKeyboard] = true;
 		break;
+	case 1038: // Textbox add name!
+		b_Conditions[Conditions::ListenToKeyboard] = true;
+		break;
 	}
 
 	if (i_ID_In == 1025)
@@ -453,9 +456,7 @@ void Scene_3D::process_2DClick(int i_ID_In)
 		std::string s_Name;
 		std::string s_PrefabName;
 		b_IsEmpty[0] = true;
-		for (auto const& pair : mspo_Objects)
-		{
-			if (pair.second->get_Tag() == "GUI" && pair.second->get_ObjectType() == "Hidden_Add")
+		for (auto const& pair : mspo_Objects) if (pair.second->get_Tag() == "GUI" && pair.second->get_ObjectType() == "Hidden_Add")
 			{
 				if (pair.first == "Add_ObjectTextbox")
 				{
@@ -488,8 +489,7 @@ void Scene_3D::process_2DClick(int i_ID_In)
 					b_IsEmpty[4] = false;
 				}
 			}
-		}
-
+		
 		auto does_ObjectExist = mspo_Objects.find(s_Name);
 		auto does_PrefabExist = po_PrefabLoader->get_PrefabMap().find(s_PrefabName);
 
@@ -623,6 +623,43 @@ void Scene_3D::process_2DClick(int i_ID_In)
 			}
 		}
 	}
+	if (i_ID_In == 1036)
+	{
+		for (auto const& pair : mspo_Objects)
+		{
+			if (pair.second->get_Tag() == "GUI" && pair.second->get_ObjectType() == "Universal")
+			{
+				if (pair.first == "SaveLoad_Textbox")
+				{
+					auto textBox = static_cast<Textbox*>(pair.second);
+					if (textBox->get_Text() != "")
+					{
+						b_Conditions[Conditions::ReloadScene] = true;
+						s_Directory = "assets/scenes/" + textBox->get_Text();
+						pickedID = -1;
+						break;
+					}
+				}
+			}
+		}
+	}
+
+	if (i_ID_In == 1037)
+	{
+		for (auto const& pair : mspo_Objects)
+		{
+			if (pair.second->get_Tag() == "GUI" && pair.second->get_ObjectType() == "Universal")
+			{
+				if (pair.first == "SaveLoad_Textbox")
+				{
+					auto textBox = static_cast<Textbox*>(pair.second);
+					if (textBox->get_Text() != "") save->save(mspo_Objects, textBox->get_Text());
+					pickedID = -1;
+				}
+			}
+		}
+	}
+
 }
 
 //Initialize everything once
@@ -631,16 +668,18 @@ void Scene_3D::init()
 	//Initialize
 	lock_mouse(true);
 	b_Conditions[0] = false;
+	b_Conditions[Conditions::Selection] = true;
+	b_Conditions[Conditions::ListenToKeyboard] = false;
 
 	camera_3D = new Camera_3D(45.f, v2_WindowSize.x / v2_WindowSize.y, 0.1f, 1000.f);
 	camera_3D->set_CameraPos(glm::vec3(0.f, -20.f, 0.f));
 	camera_2D = new Camera_2D(0, v2_WindowSize.x, v2_WindowSize.y, 0);
-
+	if (s_Directory == "") s_Directory = "assets/scenes/Robot_Scene.xml";
 	//Load the scene
 	po_StatsLoader = nullptr;
 	po_PrefabLoader = new PrefabLoader("assets/Prefabs.xml", po_Loader, po_StatsLoader);
 	po_GUILoader = new GUILoader("assets/gui/GUI_Editor.xml", po_PrefabLoader, mspo_Objects, v2_WindowSize);
-	o_SceneLoader = new SceneLoader("assets/scenes/Robot_Scene.xml", po_Loader, po_PrefabLoader, mspo_Objects);
+	o_SceneLoader = new SceneLoader(s_Directory.c_str(), po_Loader, po_PrefabLoader, mspo_Objects);
 
 	save = new SceneSaver();
 	f_Speed = 0.f;
@@ -741,6 +780,10 @@ void Scene_3D::keyboard_Input(GLfloat f_Delta_In, GLboolean* pab_KeyArray_In, GL
 					else if (b_Conditions[Conditions::ShiftDetected] && i_KeyPress_In == GLFW_KEY_0)
 					{
 						text_Box->add_Letter(")");
+					}
+					else if (b_Conditions[Conditions::ShiftDetected] && i_KeyPress_In == 45)
+					{
+						text_Box->add_Letter("_");
 					}
 					else if (i_KeyPress_In == GLFW_KEY_TAB || i_KeyPress_In == GLFW_KEY_CAPS_LOCK || i_KeyPress_In == 348 ||
 						i_KeyPress_In == GLFW_KEY_UP || i_KeyPress_In == GLFW_KEY_DOWN || i_KeyPress_In == GLFW_KEY_LEFT ||
@@ -1059,7 +1102,6 @@ void Scene_3D::render()
 				ui_light_Amount++;
 				l_iter++;
 			}
-
 		}
 
 		for (unsigned int i = 0; i < ui_light_Amount; i++)
@@ -1160,11 +1202,6 @@ void Scene_3D::render()
 		glUseProgram(po_Loader->get_Shader("7")->get_Program());
 		camera_3D->update_Shader(po_Loader->get_Shader("7"));
 
-		//for (auto const& pair : mspo_Objects)
-		//{
-		//	if (pair.second->get_Tag() == "Object" || pair.second->get_Tag() == "Object_NonSavable") pair.second->render(po_Loader->get_Shader("0"));
-		//}
-
 		for (auto const& pair : mspo_Objects)
 		{
 			if (pair.second->get_Tag() == "Light")
@@ -1207,9 +1244,6 @@ void Scene_3D::render()
 
 	}
 
-
-
-
 	lock_mouse(false);
 	b_Conditions[Conditions::Move_Mouse] = false;
 	b_Conditions[Conditions::LeftMouse_Button] = false;
@@ -1245,6 +1279,14 @@ void Scene_3D::render()
 				mspo_Objects.erase(s_Deletion.at(i));
 			}
 		}
+	}
+
+	if (b_Conditions[Conditions::ReloadScene])
+	{
+		clean_Up();
+		b_Init = false;
+		b_Conditions[Conditions::ReloadScene] = false;
+		pickedID = -1;
 	}
 }
 

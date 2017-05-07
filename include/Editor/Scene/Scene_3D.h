@@ -21,6 +21,7 @@ namespace Conditions
 		ListenToKeyboard,
 		ShiftDetected,
 		Delete,
+		ReloadScene,
 		Num
 	};
 }
@@ -41,6 +42,9 @@ private:
 	GameObject_3D* picked_Object;
 	bool b_Conditions[Conditions::Num];
 	glm::vec2 v2_MousePos;
+
+	std::string s_Directory;
+
 
 	void add_Arrows();
 	void render_ColourScene();
