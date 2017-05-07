@@ -6,8 +6,10 @@
 <resources>
 	<object_File_Location>assets/models/</object_File_Location>
 	<object_Files>
+		<new_File  ID = "11" i_DrawMethod = "35048" name = "Bed_Pillow.obj"> </new_File>
+		<new_File  ID = "13" i_DrawMethod = "35048" name = "Bed.obj"> </new_File>
+		<new_File  ID = "12" i_DrawMethod = "35048" name = "Window_Wall.obj"> </new_File>
 	    <new_File  ID = "8" i_DrawMethod = "35048" name = "Arrow.obj"> </new_File>
-		<new_File  ID = "9" i_DrawMethod = "35048" name = "Bookcase.obj"> </new_File>
 		<new_File  ID = "7" i_DrawMethod = "35048" name = "Cube.obj"> </new_File>	
 		<new_File  ID = "4" i_DrawMethod = "35048" name = "floor.obj"> </new_File>
 		<new_File  ID = "5" i_DrawMethod = "35048" name = "table.obj"> </new_File>	
@@ -53,7 +55,10 @@
 		<new_File  ID = "31" name = "Cupboard.jpg"	 texture_Mode = "3553" wrapping_S = "10497"  wrapping_T = "10497"filter_Min = "9729" filter_Mag = "9729"soil_Colour_Load = "4"  openGL_Colour = "6408" gen_Mipmaps = "1"></new_File>
 		<new_File  ID = "32" name = "Fridge.jpg"	 texture_Mode = "3553" wrapping_S = "10497"  wrapping_T = "10497"filter_Min = "9729" filter_Mag = "9729"soil_Colour_Load = "4"  openGL_Colour = "6408" gen_Mipmaps = "1"></new_File>
 		<new_File  ID = "33" name = "Kitchen_Tiles1.jpg"	 texture_Mode = "3553" wrapping_S = "10497"  wrapping_T = "10497"filter_Min = "9729" filter_Mag = "9729"soil_Colour_Load = "4"  openGL_Colour = "6408" gen_Mipmaps = "1"></new_File>
-    <new_File  ID = "34" name = "White.png"	 texture_Mode = "3553" wrapping_S = "10497"  wrapping_T = "10497"filter_Min = "9729" filter_Mag = "9729"soil_Colour_Load = "4"  openGL_Colour = "6408" gen_Mipmaps = "1"></new_File>
+		<new_File  ID = "34" name = "White.png"	 texture_Mode = "3553" wrapping_S = "10497"  wrapping_T = "10497"filter_Min = "9729" filter_Mag = "9729"soil_Colour_Load = "4"  openGL_Colour = "6408" gen_Mipmaps = "1"></new_File>
+		<new_File  ID = "37" name = "Fence_PNG_Clipart.png"	 texture_Mode = "3553" wrapping_S = "10497"  wrapping_T = "10497"filter_Min = "9729" filter_Mag = "9729" soil_Colour_Load = "4"  openGL_Colour = "6408" gen_Mipmaps = "1"></new_File>
+		<new_File  ID = "35" name = "firstaid.jpeg"	 texture_Mode = "3553" wrapping_S = "10497"  wrapping_T = "10497"filter_Min = "9729" filter_Mag = "9729" soil_Colour_Load = "4"  openGL_Colour = "6408" gen_Mipmaps = "1"></new_File>
+		<new_File  ID = "36" name = "ammo.jpg"	 texture_Mode = "3553" wrapping_S = "10497"  wrapping_T = "10497"filter_Min = "9729" filter_Mag = "9729" soil_Colour_Load = "4"  openGL_Colour = "6408" gen_Mipmaps = "1"></new_File>
 	</texture_Files>
 	
 	<shader_File_Location>assets/shaders/</shader_File_Location>

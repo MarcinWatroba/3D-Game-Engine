@@ -639,7 +639,7 @@ void Scene_3D::init()
 	po_StatsLoader = nullptr;
 	po_PrefabLoader = new PrefabLoader("assets/Prefabs.xml", po_Loader, po_StatsLoader);
 	po_GUILoader = new GUILoader("assets/gui/GUI_Editor.xml", po_PrefabLoader, mspo_Objects, v2_WindowSize);
-	o_SceneLoader = new SceneLoader("assets/scenes/Robot_Scene.xml", po_Loader, po_PrefabLoader, mspo_Objects, *snd_Audio);
+	o_SceneLoader = new SceneLoader("assets/scenes/Robot_Scene.xml", po_Loader, po_PrefabLoader, mspo_Objects);
 
 	save = new SceneSaver();
 	f_Speed = 0.f;
