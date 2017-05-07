@@ -3,7 +3,7 @@
 
 class Transform_3D : public Transform
 {
-private:
+protected:
 	glm::vec3 v3_Position; // Position
 	glm::vec3 v3_Scale; // Scale
 	glm::quat quat_Orientation; // Orientation

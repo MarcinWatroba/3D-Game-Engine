@@ -20,7 +20,7 @@ private:
 	float velocity;
 	float jumpForce;
 	float jumpVelocity;
-	float jumpHeight = 5.0f;
+	float jumpHeight = 7.5f;
 	float counter = 0;
 	bool reachedPeak = false;
 	bool grounded = true;
@@ -57,6 +57,7 @@ public:
 	{
 		return grounded;
 	}
+	void setVelocity(float temp);
 	void setJumpForce(float force);
 	void setForwardForce(float force);
 	void setJumpHeight(float force);

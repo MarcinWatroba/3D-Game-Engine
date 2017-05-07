@@ -39,6 +39,7 @@
 	
 	<new_GUIElement name = "Add_OK" pick_ID = "1025" object_Type = "Hidden_Add" gui_Type = "Button" prefab = "Blue Button" text = "OK" render = "false" angle = "0" layer = "0" position = "(, -300)" window_PosMode = "UseY_Add" size = "(200, 50)" window_SizeMode = ""/>
 	<new_GUIElement name = "Add_Cancel" pick_ID = "1026" object_Type = "Hidden_Add" gui_Type = "Button" prefab = "Blue Button" text = "Cancel" render = "false" angle = "0" layer = "0" position = "(400, -300)" window_PosMode = "UseY_Add" size = "(200, 50)" window_SizeMode = ""/>
+	<new_GUIElement name = "Health_Bar" pick_ID = "1027" object_Type = "Universal" gui_Type = "Tile" prefab = "Tile" text = "" render = "true" angle = "0" layer = "0" position = "(0, 0)" window_PosMode = "UseY_Half" size = "(1000, 50)" window_SizeMode = ""/>
 	
 	<new_GUIElement name = "Set" pick_ID = "1028" object_Type = "Universal" gui_Type = "Button" prefab = "Blue Button" text = "Set" render = "true" angle = "0" layer = "0" position = "(600, 50)" window_PosMode = "" size = "(200, 50)" window_SizeMode = ""/>
 	<new_GUIElement name = "Set_ScaleText" pick_ID = "1028" object_Type = "Hidden_Set" gui_Type = "Text" prefab = "Text" text = "Scale:" render = "false" angle = "0" layer = "0" position = "(0, 720.f)" window_PosMode = "" size = "(300.f, 20.f)" window_SizeMode = ""/>

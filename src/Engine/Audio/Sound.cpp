@@ -3,7 +3,7 @@
 Sound::Sound(string strAudioName) {
 	Audio = new AudioEngine();
 	Audio->Init();
-	AudioName = strAudioName;
+	AudioName = "assets/audio/" + strAudioName;
 }
 
 //Sound::Sound(string strAudioName, bool b3d, bool bloop, bool bstream, AudioEngine* engine_used)

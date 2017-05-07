@@ -41,12 +41,7 @@ public:
 	void set_Range(glm::vec3 range_In);
 	void set_Particle_Speed(glm::vec3 speed_In);
 	void set_Colour(glm::vec3 colour_In);
-	unsigned int getMax();
-	float get_Life();
 	void update_Particles(float t, float y, float z, glm::vec3 delta);
-	glm::vec3 get_Range();
-	glm::vec3 get_Particle_Speed();
-	glm::vec3 get_Colour();
 	int FindUnusedParticle();
 	void force_Update();
 	void add_Component(std::string s_Name_In, Component* p_Component_In);

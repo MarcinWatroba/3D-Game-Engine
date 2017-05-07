@@ -27,9 +27,9 @@ Bullet::Bullet(std::string s_Name_In, Mesh_3D * p_Mesh_In, GameObject_3D * paren
 	//{
 		set_Position(glm::vec3(parentObj->get_Position().x, parentObj->get_Position().y + 2, parentObj->get_Position().z));
 		set_Rotation(parentObj->get_Rotation());
-	}
+	//}
 	set_Origin(glm::vec3(0.f, 0.f, 0.f));
-	set_Scale(glm::vec3(1.f, 1.f, 1.f));
+	set_Scale(glm::vec3(0.5f, 0.5f, 1.f));
 	add_Texture("Diffuse_Map", diffuse);
 	add_Texture("Specular_Map", specular);
 	set_Tiles(glm::vec2(1.f, 1.f));
