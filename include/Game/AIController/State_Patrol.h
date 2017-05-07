@@ -8,8 +8,8 @@
 class State_Patrol : public FSM_State<AIController_Data>
 {
 private:
-	std::vector<glm::vec3> path;//patrol path points
-	std::vector<float> wait;//time to wait at each point
+	//std::vector<float> wait;//time to wait at each point
+	float wait;
 	unsigned int pathStep;//current step along patrol path
 	float timer;//
 protected:

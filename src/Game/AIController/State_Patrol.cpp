@@ -13,19 +13,14 @@ void State_Patrol::OnEnter()
 	std::cout << "Patrol_enter\n";
 	pathStep = 0;
 	timer = 0.0f;
-	//set patrol path and wait times
-	path.push_back(glm::vec3(10.0f, 0.0f, 10.0f));
-	path.push_back(glm::vec3(0.0f, 0.0f, 0.0f));
-	path.push_back(glm::vec3(5.0f, 0.0f, 5.0f));
-	path.push_back(glm::vec3(-15.0f, 0.0f, 5.0f));
-	wait.push_back(1.0f);
-	wait.push_back(1.0f);
-	wait.push_back(2.0f);
-	wait.push_back(1.0f);
+	//
+	wait = 1.0f;
 }
 
+#include <iostream>
 fsm::FSM_Command State_Patrol::OnRun()
 {
+	if (data->path == nullptr) { return fsm::Continue; }
 	//
 	Respond_Movement* movement = static_cast<Respond_Movement*>(data->character->get_Component("Respond_Movement"));
 
@@ -37,18 +32,19 @@ fsm::FSM_Command State_Patrol::OnRun()
 	}
 
 	//move to point
-	bool atPoint = movement->moveToPoint(data->character, path[pathStep], 10.0f * data->deltaTime, data->dps * data->deltaTime);
+	bool atPoint = movement->moveToPoint(data->character, (*data->path)[pathStep], 10.0f * data->deltaTime, data->dps * data->deltaTime);
 
 	//wait for the given time
 	if (atPoint)
 	{
+
 		timer += data->deltaTime;
-		if (timer > wait[pathStep])
+		if (timer > wait)//wait[pathStep])
 		{
 			//reset timer and increment path step
 			timer = 0.0f;
 			pathStep++;
-			if (pathStep == path.size()) { pathStep = 0; }
+			if (pathStep == data->path->size()) { pathStep = 0; }
 		}
 	}
 

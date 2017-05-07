@@ -7,6 +7,11 @@
 #include <glad\glad.h>
 #include <Engine\GUI\Font.h>
 
+Textbox::Textbox(const Textbox & textbox) : GameObject_2D(textbox)
+{
+	p_Font = textbox.p_Font;
+}
+
 Textbox::Textbox(int i_ObjectID_In, Font * p_Font_In, Mesh * p_Mesh_In, Texture * p_Texture_In, glm::vec2 v2_Position_In, glm::vec2 v2_Size_In, float f_Angle_In, float f_Layer_In, bool b_Render, std::string s_ObjectType_In)
 {
 	s_Text = "";
@@ -26,17 +31,19 @@ Textbox::Textbox(int i_ObjectID_In, Font * p_Font_In, Mesh * p_Mesh_In, Texture 
 	set_ObjectType(s_ObjectType_In);
 	set_ObjectID(i_ObjectID_In);
 	
-	vp_Lines.push_back(new Text(get_ObjectID(), "", get_Position(), get_Angle(), p_Font, get_Layer() + 0.001f, get_RenderStatus(), get_ObjectType()));
+	
 }
 
 void Textbox::add_Letter(std::string s_Text_In)
 {
+	if (vp_Lines.empty()) vp_Lines.push_back(new Text(get_ObjectID(), "", get_Position(), get_Angle(), p_Font, get_Layer() + 0.001f, get_RenderStatus(), get_ObjectType()));
 	s_Text += s_Text_In;
 	vp_Lines.back()->add_Letter(s_Text_In);
 }
 
 void Textbox::set_Text(std::string s_Text_In)
 {
+	if (vp_Lines.empty()) vp_Lines.push_back(new Text(get_ObjectID(), "", get_Position(), get_Angle(), p_Font, get_Layer() + 0.001f, get_RenderStatus(), get_ObjectType()));
 	s_Text = s_Text_In;
 	vp_Lines.back()->set_Text(s_Text);
 }
@@ -79,16 +86,17 @@ std::string Textbox::get_Text()
 void Textbox::update()
 {
 	static_cast<Transform_2D*>(mipo_Components.find("Transform_2D")->second)->update();
-	for (unsigned int i = 0; i < vp_Lines.size(); i++) vp_Lines.at(i)->update();
+	for (int i = 0; i < vp_Lines.size(); i++) vp_Lines.at(i)->update();
 }
 
 void Textbox::render(Shader * p_Shader_In)
 {
 	static_cast<Transform_2D*>(mipo_Components.find("Transform_2D")->second)->update_Shader(p_Shader_In);
 	if (b_RenderStatus) static_cast<RenderComp_2D*>(mipo_Components.find("RenderComp_2D")->second)->render(GL_TEXTURE_2D, GL_TRIANGLES, p_Shader_In);
-	for (unsigned int i = 0; i < vp_Lines.size(); i++)
+	for (int i = 0; i < vp_Lines.size(); i++)
 	{
 		vp_Lines.at(i)->set_RenderStatus(get_RenderStatus());
 		vp_Lines.at(i)->render(p_Shader_In);
 	}	
 }
+

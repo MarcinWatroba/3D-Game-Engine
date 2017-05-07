@@ -21,16 +21,7 @@ void RenderComp_3D::renderDepth(int draw_Mode_In, int draw_Shape_In, Shader* p_S
 	glDrawElements(GL_TRIANGLES, p_Mesh->get_SizeOfIndices(), GL_UNSIGNED_INT, 0);
 }
 
-void RenderComp_3D::renderInstanced(int draw_Mode_In, int draw_Shape_In, Shader* p_Shader_In, int max, int count, float positions[])
-{
-
-}
-
-void RenderComp_3D::renderInstanced(int draw_Mode_In, int draw_Shape_In, Shader * p_Shader_In, int max, int count, float positions[], int VAO_In, int buff_In, int size_In, glm::vec3 colour_In)
-{
-}
-
-void RenderComp_3D::renderInstanced(int draw_Mode_In, int draw_Shape_In, Shader * p_Shader_In, int max, int count, float positions[], int VAO_In, int buff_In, int size_In)
+void RenderComp_3D::renderInstanced(int draw_Mode_In, int draw_Shape_In, Shader * p_Shader_In, int max, int count, float positions[], glm::vec3 colour_In)
 {
 }
 
@@ -56,7 +47,6 @@ void RenderComp_3D::render(int draw_Mode_In, int draw_Shape_In, Shader* p_Shader
 	//Pass them to shaders
 	glUniform2f(tileLoc, get_Tiles().x, get_Tiles().y);
 	glUniform1f(matShiniessLoc, get_Shininess());
-
 	//Draw
 	glBindVertexArray(p_Mesh->get_VAO());
 	glDrawElements(GL_TRIANGLES, p_Mesh->get_SizeOfIndices(), GL_UNSIGNED_INT, 0);

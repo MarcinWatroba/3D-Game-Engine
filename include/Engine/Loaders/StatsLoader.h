@@ -9,6 +9,7 @@ class StatsLoader
 {
 private:
 	std::map<std::string, Stats*> statsList;
+	std::vector<glm::vec3> loadPath(tinyxml2::XMLDocument* po_doc, std::string pc_PathName_In);
 public:
 	StatsLoader(const char * pc_FileName_In);
 	~StatsLoader();

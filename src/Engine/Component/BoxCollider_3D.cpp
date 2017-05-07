@@ -31,95 +31,95 @@ void BoxCollider_3D::setUpBox(glm::vec3* minValues, glm::vec3* maxValues)
 
 	oneTime = true;
 
-	float v[24 * 3] = {
-		// Front
-		minValues->x, minValues->y, maxValues->z,
-		maxValues->x, minValues->y, maxValues->z,
-		maxValues->x, maxValues->y, maxValues->z,
-		minValues->x, maxValues->y, maxValues->z,
-		// Right 			   			 
-		maxValues->x, minValues->y, minValues->z,
-		maxValues->x, maxValues->y, minValues->z,
-		maxValues->x, maxValues->y, maxValues->z,
-		maxValues->x, minValues->y, maxValues->z,
-		// Back	 			   			 
-		maxValues->x, minValues->y, minValues->z,
-		maxValues->x, maxValues->y, minValues->z,
-		minValues->x, maxValues->y, minValues->z,
-		minValues->x, minValues->y, minValues->z,
-		// Left	 		   		
-		minValues->x, minValues->y, maxValues->z,
-		minValues->x, maxValues->y, maxValues->z,
-		minValues->x, maxValues->y, minValues->z,
-		minValues->x, minValues->y, minValues->z,
-		// Bottom	   		 
-		minValues->x, minValues->y, maxValues->z,
-		maxValues->x, minValues->y, maxValues->z,
-		maxValues->x, minValues->y, minValues->z,
-		minValues->x, minValues->y, minValues->z,
-		// Top	 		   		 
-		minValues->x, maxValues->y, maxValues->z,
-		maxValues->x, maxValues->y, maxValues->z,
-		maxValues->x, maxValues->y, minValues->z,
-		minValues->x, maxValues->y, minValues->z,
-	};
-
-	for (int i = 0; i < 72; i++)
-	{
-		V[i] = v[i];
-	}
-
-	float n[24 * 3] = {
-		// Front
-		0.0f, 0.0f, 1.0f,
-		0.0f, 0.0f, 1.0f,
-		0.0f, 0.0f, 1.0f,
-		0.0f, 0.0f, 1.0f,
-		// Right
-		1.0f, 0.0f, 0.0f,
-		1.0f, 0.0f, 0.0f,
-		1.0f, 0.0f, 0.0f,
-		1.0f, 0.0f, 0.0f,
-		// Back
-		0.0f, 0.0f, -1.0f,
-		0.0f, 0.0f, -1.0f,
-		0.0f, 0.0f, -1.0f,
-		0.0f, 0.0f, -1.0f,
-		// Left
-		-1.0f, 0.0f, 0.0f,
-		-1.0f, 0.0f, 0.0f,
-		-1.0f, 0.0f, 0.0f,
-		-1.0f, 0.0f, 0.0f,
-		// Bottom
-		0.0f, -1.0f, 0.0f,
-		0.0f, -1.0f, 0.0f,
-		0.0f, -1.0f, 0.0f,
-		0.0f, -1.0f, 0.0f,
-		// Top
-		0.0f, 1.0f, 0.0f,
-		0.0f, 1.0f, 0.0f,
-		0.0f, 1.0f, 0.0f,
-		0.0f, 1.0f, 0.0f
-	};
-
-	for (int i = 0; i < 72; i++)
-	{
-		N[i] = n[i];
-	}
-
-	GLuint el[] = {
-		0,1,2,0,2,3,
-		4,5,6,4,6,7,
-		8,9,10,8,10,11,
-		12,13,14,12,14,15,
-		16,17,18,16,18,19,
-		20,21,22,20,22,23
-	};
-
-	for (int i = 0; i < 36; i++)
-	{
-		EL[i] = el[i];
-	}
+	//float v[24 * 3] = {
+	//	// Front
+	//	minValues->x, minValues->y, maxValues->z,
+	//	maxValues->x, minValues->y, maxValues->z,
+	//	maxValues->x, maxValues->y, maxValues->z,
+	//	minValues->x, maxValues->y, maxValues->z,
+	//	// Right 			   			 
+	//	maxValues->x, minValues->y, minValues->z,
+	//	maxValues->x, maxValues->y, minValues->z,
+	//	maxValues->x, maxValues->y, maxValues->z,
+	//	maxValues->x, minValues->y, maxValues->z,
+	//	// Back	 			   			 
+	//	maxValues->x, minValues->y, minValues->z,
+	//	maxValues->x, maxValues->y, minValues->z,
+	//	minValues->x, maxValues->y, minValues->z,
+	//	minValues->x, minValues->y, minValues->z,
+	//	// Left	 		   		
+	//	minValues->x, minValues->y, maxValues->z,
+	//	minValues->x, maxValues->y, maxValues->z,
+	//	minValues->x, maxValues->y, minValues->z,
+	//	minValues->x, minValues->y, minValues->z,
+	//	// Bottom	   		 
+	//	minValues->x, minValues->y, maxValues->z,
+	//	maxValues->x, minValues->y, maxValues->z,
+	//	maxValues->x, minValues->y, minValues->z,
+	//	minValues->x, minValues->y, minValues->z,
+	//	// Top	 		   		 
+	//	minValues->x, maxValues->y, maxValues->z,
+	//	maxValues->x, maxValues->y, maxValues->z,
+	//	maxValues->x, maxValues->y, minValues->z,
+	//	minValues->x, maxValues->y, minValues->z,
+	//};
+	//
+	//for (int i = 0; i < 72; i++)
+	//{
+	//	V[i] = v[i];
+	//}
+	//
+	//float n[24 * 3] = {
+	//	// Front
+	//	0.0f, 0.0f, 1.0f,
+	//	0.0f, 0.0f, 1.0f,
+	//	0.0f, 0.0f, 1.0f,
+	//	0.0f, 0.0f, 1.0f,
+	//	// Right
+	//	1.0f, 0.0f, 0.0f,
+	//	1.0f, 0.0f, 0.0f,
+	//	1.0f, 0.0f, 0.0f,
+	//	1.0f, 0.0f, 0.0f,
+	//	// Back
+	//	0.0f, 0.0f, -1.0f,
+	//	0.0f, 0.0f, -1.0f,
+	//	0.0f, 0.0f, -1.0f,
+	//	0.0f, 0.0f, -1.0f,
+	//	// Left
+	//	-1.0f, 0.0f, 0.0f,
+	//	-1.0f, 0.0f, 0.0f,
+	//	-1.0f, 0.0f, 0.0f,
+	//	-1.0f, 0.0f, 0.0f,
+	//	// Bottom
+	//	0.0f, -1.0f, 0.0f,
+	//	0.0f, -1.0f, 0.0f,
+	//	0.0f, -1.0f, 0.0f,
+	//	0.0f, -1.0f, 0.0f,
+	//	// Top
+	//	0.0f, 1.0f, 0.0f,
+	//	0.0f, 1.0f, 0.0f,
+	//	0.0f, 1.0f, 0.0f,
+	//	0.0f, 1.0f, 0.0f
+	//};
+	//
+	//for (int i = 0; i < 72; i++)
+	//{
+	//	N[i] = n[i];
+	//}
+	//
+	//GLuint el[] = {
+	//	0,1,2,0,2,3,
+	//	4,5,6,4,6,7,
+	//	8,9,10,8,10,11,
+	//	12,13,14,12,14,15,
+	//	16,17,18,16,18,19,
+	//	20,21,22,20,22,23
+	//};
+	//
+	//for (int i = 0; i < 36; i++)
+	//{
+	//	EL[i] = el[i];
+	//}
 }
 
 void BoxCollider_3D::renderBox()

@@ -32,6 +32,8 @@ public:
 	//Constructor
 	GameObject_Instanced();
 
+	GameObject_Instanced(const GameObject_Instanced & p_NewObject_In);
+
 	void update();
 
 	void setMax(unsigned int max_In);
@@ -48,11 +50,6 @@ public:
 	void render(Shader* p_Shader_In);
 	void clean_Up();
 
-	void set_VAO(unsigned int ui_VAO_In);
-
-	void set_InstanceBuffer(unsigned int ui_IB_In);
-
-	void set_IndexSize(unsigned int ui_Size_In);
 
 	//-----Set Transformations---------------------------
 	void set_Position(glm::vec3 v3_Position_In);

@@ -53,8 +53,6 @@ public:
 	//Get font
 	Font* get_Font(std::string s_Name_In);
 
-	Mesh_Instanced* get_MeshInstanced(std::string s_Name_In);
-
 	// Get the Audio
 	Sound* get_Sound(std::string s_Name_In);
 

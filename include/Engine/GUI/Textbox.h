@@ -17,6 +17,7 @@ private:
 	std::vector<Text*> vp_Lines;
 public:
 	Textbox() {};
+	Textbox(const Textbox &textbox);
 	Textbox(int i_ObjectID_In, Font* p_Font_In, Mesh* p_Mesh_In, Texture* p_Texture_In, glm::vec2 v2_Position_In, glm::vec2 v2_Size_In, float f_Angle_In, float f_Layer_In, bool b_Render, std::string s_ObjectType_In);
 
 	void add_Letter(std::string s_Text_In);

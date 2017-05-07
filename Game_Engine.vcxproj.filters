@@ -357,6 +357,9 @@
     <ClCompile Include="src\Engine\Loaders\StatsLoader.cpp">
       <Filter>Source Files\Engine\Loaders</Filter>
     </ClCompile>
+    <ClCompile Include="src\Engine\Loaders\GUILoader.cpp">
+      <Filter>Source Files\Engine\Loaders</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Engine\App\Application.h">
@@ -560,6 +563,9 @@
     <ClInclude Include="include\Engine\Loaders\StatsLoader.h">
       <Filter>Header Files\Engine\Loaders</Filter>
     </ClInclude>
+    <ClInclude Include="include\Engine\Loaders\GUILoader.h">
+      <Filter>Header Files\Engine\Loaders</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\shaders\font_Shader.frag">
@@ -610,6 +616,9 @@
       <Filter>Resource Files</Filter>
     </Xml>
     <Xml Include="assets\Prefabs.xml">
+      <Filter>Resource Files</Filter>
+    </Xml>
+    <Xml Include="assets\stats.xml">
       <Filter>Resource Files</Filter>
     </Xml>
   </ItemGroup>

@@ -69,11 +69,11 @@ bool Respond_Movement::facePoint(GameObject_3D* po_GameObject_In, glm::vec3 v3_T
 	{
 		if (direction < 0)
 		{
-			po_GameObject_In->turn(f_rotation, transform->get_Up());
+			turn(po_GameObject_In, f_rotation, transform->get_Up());
 		}
 		else
 		{
-			po_GameObject_In->turn(-f_rotation, transform->get_Up());
+			turn(po_GameObject_In , -f_rotation, transform->get_Up());
 		}
 		
 	}
@@ -81,7 +81,7 @@ bool Respond_Movement::facePoint(GameObject_3D* po_GameObject_In, glm::vec3 v3_T
 	else
 	{
 		if (direction < 0) { angle = -angle; }
-		po_GameObject_In->turn(-angle, transform->get_Up());
+		turn(po_GameObject_In, -angle, transform->get_Up());
 		return true;
 	}
 

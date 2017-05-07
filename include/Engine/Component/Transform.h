@@ -9,10 +9,6 @@ class Transform : public Component
 protected:
 	//const int MaxParticles = 10000;
 	glm::mat4 mat4_Model; // Model matrix
-	glm::vec3 v3_Position; // Position
-	glm::vec3 v3_Scale; // Scale
-	glm::quat quat_Orientation; // Orientation
-	glm::vec3 v3_Origin;  // Origin
 	bool b_Update; // Update
 public:
 	//Constructor

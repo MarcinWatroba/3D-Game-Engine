@@ -12,6 +12,7 @@
 #include <Engine\GUI\Button.h>
 #include <Engine\GUI\Textbox.h>
 #include <Engine\GUI\Text.h>
+#include <Engine\GUI\Tile.h>
 #include <algorithm>
 
 void Scene_3D::add_Arrows()
@@ -23,40 +24,6 @@ void Scene_3D::add_Arrows()
 	mspo_Objects.insert(std::pair<std::string, Game_Object*>("Red Arrow", new Arrow_3D(1000000, "Red Arrow", static_cast<Mesh_3D*>(po_Loader->get_Mesh("8")), quat_RedArrow, po_Loader->get_Texture("27"), po_Loader->get_Texture("7"))));
 	mspo_Objects.insert(std::pair<std::string, Game_Object*>("Green Arrow", new Arrow_3D(1000001, "Green Arrow", static_cast<Mesh_3D*>(po_Loader->get_Mesh("8")) , quat_GreenArrow, po_Loader->get_Texture("28"), po_Loader->get_Texture("7"))));
 	mspo_Objects.insert(std::pair<std::string, Game_Object*>("Blue Arrow", new Arrow_3D(1000002, "Blue Arrow", static_cast<Mesh_3D*>(po_Loader->get_Mesh("8")), quat_BlueArrow, po_Loader->get_Texture("29"), po_Loader->get_Texture("7"))));
-}
-
-void Scene_3D::add_GUI()
-{
-	mspo_Objects.insert(std::make_pair("Add_Object", (new Button(1000, "Add object", po_Loader->get_Font("0"), po_Loader->get_Mesh("0"), po_Loader->get_Texture("8"), glm::vec2(0, v2_WindowSize.y - 50.f), glm::vec2(200.f, 50.f), 0.f, 0.f, true, "Universal"))));
-	mspo_Objects.insert(std::make_pair("Move", (new Button(1001, "Move", po_Loader->get_Font("0"), po_Loader->get_Mesh("0"), po_Loader->get_Texture("8"), glm::vec2(0, 0), glm::vec2(200.f, 50.f), 0.f, 0.f, true, "Universal"))));
-	mspo_Objects.insert(std::make_pair("Rotate", (new Button(1002, "Rotate", po_Loader->get_Font("0"), po_Loader->get_Mesh("0"), po_Loader->get_Texture("8"), glm::vec2(200, 0.f), glm::vec2(200.f, 50.f), 0.f, 0.f, true, "Universal"))));
-	mspo_Objects.insert(std::make_pair("Scale", (new Button(1003, "Scale", po_Loader->get_Font("0"), po_Loader->get_Mesh("0"), po_Loader->get_Texture("8"), glm::vec2(400, 0.f), glm::vec2(200.f, 50.f), 0.f, 0.f, true, "Universal"))));
-	mspo_Objects.insert(std::make_pair("Select", (new Button(1004, "Select", po_Loader->get_Font("0"), po_Loader->get_Mesh("0"), po_Loader->get_Texture("8"), glm::vec2(600, 0.f), glm::vec2(200.f, 50.f), 0.f, 0.f, true, "Universal"))));
-
-	mspo_Objects.insert(std::make_pair("Add_ObjectText", (new Text(1005, "Object Name:", glm::vec2(0.f, 600.f), 0.f, po_Loader->get_Font("0"), 0.f, false, "Hidden_Add"))));
-	mspo_Objects.insert(std::make_pair("Add_ObjectTextbox", (new Textbox(1006, po_Loader->get_Font("0"), po_Loader->get_Mesh("0"), po_Loader->get_Texture("8"), glm::vec2(130, 600.f), glm::vec2(300.f, 20.f), 0.f, 0.f, false, "Hidden_Add"))));
-	mspo_Objects.insert(std::make_pair("Add_PrefabText", (new Text(1007, "Prefab Name:", glm::vec2(0.f, 630.f), 0.f, po_Loader->get_Font("0"), 0.f, false, "Hidden_Add"))));
-	mspo_Objects.insert(std::make_pair("Add_PrefabTextbox", (new Textbox(1008, po_Loader->get_Font("0"), po_Loader->get_Mesh("0"), po_Loader->get_Texture("8"), glm::vec2(130, 630.f), glm::vec2(300.f, 20.f), 0.f, 0.f, false, "Hidden_Add"))));
-	mspo_Objects.insert(std::make_pair("Add_OriginText", (new Text(1009, "Origin:", glm::vec2(0.f, 660.f), 0.f, po_Loader->get_Font("0"), 0.f, false, "Hidden_Add"))));
-	mspo_Objects.insert(std::make_pair("Add_OriginTextbox", (new Textbox(1010, po_Loader->get_Font("0"), po_Loader->get_Mesh("0"), po_Loader->get_Texture("8"), glm::vec2(130, 660.f), glm::vec2(300.f, 20.f), 0.f, 0.f, false, "Hidden_Add"))));
-	mspo_Objects.insert(std::make_pair("Add_PositionText", (new Text(1011, "Position:", glm::vec2(0.f, 690.f), 0.f, po_Loader->get_Font("0"), 0.f, false, "Hidden_Add"))));
-	mspo_Objects.insert(std::make_pair("Add_PositionTextbox", (new Textbox(1012, po_Loader->get_Font("0"), po_Loader->get_Mesh("0"), po_Loader->get_Texture("8"), glm::vec2(130, 690.f), glm::vec2(300.f, 20.f), 0.f, 0.f, false, "Hidden_Add"))));
-	mspo_Objects.insert(std::make_pair("Add_ScaleText", (new Text(1013, "Scale:", glm::vec2(0.f, 720.f), 0.f, po_Loader->get_Font("0"), 0.f, false, "Hidden_Add"))));
-	mspo_Objects.insert(std::make_pair("Add_ScaleTextbox", (new Textbox(1014, po_Loader->get_Font("0"), po_Loader->get_Mesh("0"), po_Loader->get_Texture("8"), glm::vec2(130, 720.f), glm::vec2(300.f, 20.f), 0.f, 0.f, false, "Hidden_Add"))));
-
-	mspo_Objects.insert(std::make_pair("Show_ObjectText", (new Text(1015, "Object Name:", glm::vec2(0.f, 600.f), 0.f, po_Loader->get_Font("0"), 0.f, false, "Hidden_Show"))));
-	mspo_Objects.insert(std::make_pair("Show_ObjectTextbox", (new Textbox(1016, po_Loader->get_Font("0"), po_Loader->get_Mesh("0"), po_Loader->get_Texture("8"), glm::vec2(130, 600.f), glm::vec2(300.f, 20.f), 0.f, 0.f, false, "Hidden_Show"))));
-	mspo_Objects.insert(std::make_pair("Show_PrefabText", (new Text(1017, "Prefab Name:", glm::vec2(0.f, 630.f), 0.f, po_Loader->get_Font("0"), 0.f, false, "Hidden_Show"))));
-	mspo_Objects.insert(std::make_pair("Show_PrefabTextbox", (new Textbox(1018, po_Loader->get_Font("0"), po_Loader->get_Mesh("0"), po_Loader->get_Texture("8"), glm::vec2(130, 630.f), glm::vec2(300.f, 20.f), 0.f, 0.f, false, "Hidden_Show"))));
-	mspo_Objects.insert(std::make_pair("Show_OriginText", (new Text(1019, "Origin:", glm::vec2(0.f, 660.f), 0.f, po_Loader->get_Font("0"), 0.f, false, "Hidden_Show"))));
-	mspo_Objects.insert(std::make_pair("Show_OriginTextbox", (new Textbox(1020, po_Loader->get_Font("0"), po_Loader->get_Mesh("0"), po_Loader->get_Texture("8"), glm::vec2(130, 660.f), glm::vec2(300.f, 20.f), 0.f, 0.f, false, "Hidden_Show"))));
-	mspo_Objects.insert(std::make_pair("Show_PositionText", (new Text(1021, "Position:", glm::vec2(0.f, 690.f), 0.f, po_Loader->get_Font("0"), 0.f, false, "Hidden_Show"))));
-	mspo_Objects.insert(std::make_pair("Show_PositionTextbox", (new Textbox(1022, po_Loader->get_Font("0"), po_Loader->get_Mesh("0"), po_Loader->get_Texture("8"), glm::vec2(130, 690.f), glm::vec2(300.f, 20.f), 0.f, 0.f, false, "Hidden_Show"))));
-	mspo_Objects.insert(std::make_pair("Show_ScaleText", (new Text(1023, "Scale:", glm::vec2(0.f, 720.f), 0.f, po_Loader->get_Font("0"), 0.f, false, "Hidden_Show"))));
-	mspo_Objects.insert(std::make_pair("Show_ScaleTextbox", (new Textbox(1024, po_Loader->get_Font("0"), po_Loader->get_Mesh("0"), po_Loader->get_Texture("8"), glm::vec2(130, 720.f), glm::vec2(300.f, 20.f), 0.f, 0.f, false, "Hidden_Show"))));
-
-	mspo_Objects.insert(std::make_pair("Add_OK", (new Button(1024, "OK", po_Loader->get_Font("0"), po_Loader->get_Mesh("0"), po_Loader->get_Texture("8"), glm::vec2(0, v2_WindowSize.y - 300.f), glm::vec2(200.f, 50.f), 0.f, 0.f, false, "Hidden_Add"))));
-	mspo_Objects.insert(std::make_pair("Add_Cancel", (new Button(1025, "Cancel", po_Loader->get_Font("0"), po_Loader->get_Mesh("0"), po_Loader->get_Texture("8"), glm::vec2(400, v2_WindowSize.y - 300.f), glm::vec2(200.f, 50.f), 0.f, 0.f, false, "Hidden_Add"))));
 }
 
 void Scene_3D::render_ColourScene()
@@ -373,6 +340,7 @@ void Scene_3D::process_2DClick(int i_ID_In)
 		{
 			if (pair.second->get_Tag() == "GUI" && pair.second->get_ObjectType() == "Hidden_Add") pair.second->set_RenderStatus(true);
 			if (pair.second->get_Tag() == "GUI" && pair.second->get_ObjectType() == "Hidden_Show") pair.second->set_RenderStatus(false);
+			if (pair.second->get_Tag() == "GUI" && pair.second->get_ObjectType() == "Hidden_Set") pair.second->set_RenderStatus(false);
 		}
 
 		break;
@@ -387,6 +355,7 @@ void Scene_3D::process_2DClick(int i_ID_In)
 		{
 			if (pair.second->get_Tag() == "GUI" && pair.second->get_ObjectType() == "Hidden_Add") pair.second->set_RenderStatus(false);
 			if (pair.second->get_Tag() == "GUI" && pair.second->get_ObjectType() == "Hidden_Show") pair.second->set_RenderStatus(false);
+			if (pair.second->get_Tag() == "GUI" && pair.second->get_ObjectType() == "Hidden_Set") pair.second->set_RenderStatus(false);
 		}
 
 		break;
@@ -402,6 +371,7 @@ void Scene_3D::process_2DClick(int i_ID_In)
 		{
 			if (pair.second->get_Tag() == "GUI" && pair.second->get_ObjectType() == "Hidden_Add") pair.second->set_RenderStatus(false);
 			if (pair.second->get_Tag() == "GUI" && pair.second->get_ObjectType() == "Hidden_Show") pair.second->set_RenderStatus(false);
+			if (pair.second->get_Tag() == "GUI" && pair.second->get_ObjectType() == "Hidden_Set") pair.second->set_RenderStatus(false);
 		}
 
 		break;
@@ -417,6 +387,7 @@ void Scene_3D::process_2DClick(int i_ID_In)
 		{
 			if (pair.second->get_Tag() == "GUI" && pair.second->get_ObjectType() == "Hidden_Add") pair.second->set_RenderStatus(false);
 			if (pair.second->get_Tag() == "GUI" && pair.second->get_ObjectType() == "Hidden_Show") pair.second->set_RenderStatus(false);
+			if (pair.second->get_Tag() == "GUI" && pair.second->get_ObjectType() == "Hidden_Set") pair.second->set_RenderStatus(false);
 		}
 		break;
 
@@ -431,6 +402,17 @@ void Scene_3D::process_2DClick(int i_ID_In)
 		{
 			if (pair.second->get_Tag() == "GUI" && pair.second->get_ObjectType() == "Hidden_Add") pair.second->set_RenderStatus(false);
 			if (pair.second->get_Tag() == "GUI" && pair.second->get_ObjectType() == "Hidden_Show") pair.second->set_RenderStatus(true);
+			if (pair.second->get_Tag() == "GUI" && pair.second->get_ObjectType() == "Hidden_Set") pair.second->set_RenderStatus(false);
+		}
+		break;
+
+
+	case 1028: // Set button
+		for (auto const& pair : mspo_Objects)
+		{
+			if (pair.second->get_Tag() == "GUI" && pair.second->get_ObjectType() == "Hidden_Add") pair.second->set_RenderStatus(false);
+			else if (pair.second->get_Tag() == "GUI" && pair.second->get_ObjectType() == "Hidden_Show") pair.second->set_RenderStatus(false);
+			else if (pair.second->get_Tag() == "GUI" && pair.second->get_ObjectType() == "Hidden_Set") pair.second->set_RenderStatus(true);
 		}
 		break;
 
@@ -449,9 +431,19 @@ void Scene_3D::process_2DClick(int i_ID_In)
 	case 1014: // Textbox add name!
 		b_Conditions[Conditions::ListenToKeyboard] = true;
 		break;
+
+	case 1029: // Textbox add name!
+		b_Conditions[Conditions::ListenToKeyboard] = true;
+		break;
+	case 1031: // Textbox add name!
+		b_Conditions[Conditions::ListenToKeyboard] = true;
+		break;
+	case 1033: // Textbox add name!
+		b_Conditions[Conditions::ListenToKeyboard] = true;
+		break;
 	}
 
-	if (i_ID_In == 1024)
+	if (i_ID_In == 1025)
 	{
 		bool b_IsEmpty[5];
 		glm::vec3 v3_Origin;
@@ -508,7 +500,7 @@ void Scene_3D::process_2DClick(int i_ID_In)
 				mspo_Objects.insert(std::pair<std::string, Game_Object*>(s_Name, new GameObject_3D(*desired_Prefab)));
 				auto desired_Object = static_cast<GameObject_3D*>(mspo_Objects.find(s_Name)->second);
 
-				for (unsigned int i = 0; i < desired_Prefab->get_ChildrenNames().size(); i++)
+				for (int i = 0; i < desired_Prefab->get_ChildrenNames().size(); i++)
 				{
 					std::string s_ChildName = s_Name + " Child " + std::to_string(i_Counter + i);
 
@@ -535,8 +527,100 @@ void Scene_3D::process_2DClick(int i_ID_In)
 		else pickedID = -1;
 
 	}
-	if (i_ID_In == 1025)
+	if (i_ID_In == 1026)
 	{
+		for (auto const& pair : mspo_Objects)
+		{
+			if (pair.second->get_Tag() == "GUI" && pair.second->get_ObjectType() == "Hidden_Add")
+			{
+				if (pair.first == "Add_ObjectTextbox")
+				{
+					auto textBox = static_cast<Textbox*>(pair.second);
+					textBox->set_Text("");
+				}
+				else if (pair.first == "Add_PrefabTextbox")
+				{
+					auto textBox = static_cast<Textbox*>(pair.second);
+					textBox->set_Text("");
+				}
+				else if (pair.first == "Add_OriginTextbox")
+				{
+					auto textBox = static_cast<Textbox*>(pair.second);
+					textBox->set_Text("");
+				}
+				else if (pair.first == "Add_PositionTextbox")
+				{
+					auto textBox = static_cast<Textbox*>(pair.second);
+					textBox->set_Text("");
+				}
+				else if (pair.first == "Add_ScaleTextbox")
+				{
+					auto textBox = static_cast<Textbox*>(pair.second);
+					textBox->set_Text("");
+				}
+
+				pair.second->set_RenderStatus(false);
+			}
+		}
+	}
+	if (i_ID_In == 1034)
+	{
+		bool b_IsEmpty[3];
+		glm::vec3 v3_Origin;
+		glm::vec3 v3_Position;
+		glm::vec3 v3_Scale;
+		for (auto const& pair : mspo_Objects)
+		{
+			if (pair.second->get_Tag() == "GUI" && pair.second->get_ObjectType() == "Hidden_Set")
+			{
+				if (pair.first == "Set_OriginTextbox")
+				{
+					auto textBox = static_cast<Textbox*>(pair.second);
+					v3_Origin = to3DVector(textBox->get_Text().c_str());
+					if (textBox->get_Text() != "") picked_Object->set_Origin(v3_Origin);		
+				}
+				else if (pair.first == "Set_PositionTextbox")
+				{
+					auto textBox = static_cast<Textbox*>(pair.second);
+					v3_Position = to3DVector(textBox->get_Text().c_str());
+					if (textBox->get_Text() != "") picked_Object->set_Position(v3_Position);
+				}
+				else if (pair.first == "Set_ScaleTextbox")
+				{
+					auto textBox = static_cast<Textbox*>(pair.second);
+					v3_Scale = to3DVector(textBox->get_Text().c_str());
+					if (textBox->get_Text() != "") picked_Object->set_Scale(v3_Scale);
+				}
+			}
+		}
+
+		pickedID = -1;
+	}
+	if (i_ID_In == 1035)
+	{
+		for (auto const& pair : mspo_Objects)
+		{
+			if (pair.second->get_Tag() == "GUI" && pair.second->get_ObjectType() == "Hidden_Set")
+			{
+				if (pair.first == "Set_OriginTextbox")
+				{
+					auto textBox = static_cast<Textbox*>(pair.second);
+					textBox->set_Text("");
+				}
+				else if (pair.first == "Set_PositionTextbox")
+				{
+					auto textBox = static_cast<Textbox*>(pair.second);
+					textBox->set_Text("");
+				}
+				else if (pair.first == "Set_ScaleTextbox")
+				{
+					auto textBox = static_cast<Textbox*>(pair.second);
+					textBox->set_Text("");
+				}
+
+				pair.second->set_RenderStatus(false);
+			}
+		}
 	}
 }
 
@@ -550,16 +634,70 @@ void Scene_3D::init()
 	camera_3D = new Camera_3D(45.f, v2_WindowSize.x / v2_WindowSize.y, 0.1f, 1000.f);
 	camera_3D->set_CameraPos(glm::vec3(0.f, -20.f, 0.f));
 	camera_2D = new Camera_2D(0, v2_WindowSize.x, v2_WindowSize.y, 0);
-	//Load the scene
 
+	//Load the scene
 	po_StatsLoader = nullptr;
 	po_PrefabLoader = new PrefabLoader("assets/Prefabs.xml", po_Loader, po_StatsLoader);
-	o_SceneLoader = new SceneLoader("assets/scenes/Robot_Scene.xml", po_Loader, po_PrefabLoader, mspo_Objects);
+	po_GUILoader = new GUILoader("assets/gui/GUI_Editor.xml", po_PrefabLoader, mspo_Objects, v2_WindowSize);
+	o_SceneLoader = new SceneLoader("assets/scenes/Robot_Scene.xml", po_Loader, po_PrefabLoader, mspo_Objects, *snd_Audio);
+
 	save = new SceneSaver();
 	f_Speed = 0.f;
 	i_Counter = o_SceneLoader->get_Count();
 	add_Arrows();
-	add_GUI();
+
+	//add lighting
+	glUseProgram(po_Loader->get_Shader("6")->get_Program());
+	int num = 0;
+	int posNum = 0;
+	ui_light_Amount = 0;
+	for (auto const& pair : mspo_Objects)
+	{
+		if (pair.second->get_Tag() != "GUI" && pair.second->get_Tag() != "Arrow")
+		{
+			pos[posNum] = static_cast<GameObject_3D*>(pair.second)->get_Position();
+
+			if (pair.second->get_Tag() == "Light")
+			{
+				ui_light_Amount++;
+				num++;
+			}
+			posNum++;
+		}
+	}
+
+	for (unsigned int i = 0; i < ui_light_Amount; i++)
+	{
+		light[i] = o_SceneLoader->get_LightPosition(i);
+		radius[i] = o_SceneLoader->get_LightRadius(1);
+	}
+	for (unsigned int i = 0; i < 3; i++)
+	{
+		depth[i] = o_SceneLoader->setup_FBO();
+	}
+
+	glUseProgram(po_Loader->get_Shader("0")->get_Program());
+	o_SceneLoader->set_LightAmount(po_Loader->get_Shader("0"));
+
+	GLint depth_Cube_Loc = glGetUniformLocation(po_Loader->get_Shader("0")->get_Program(), "depthMap[0]");
+	glUniform1i(depth_Cube_Loc, 2);
+
+	depth_Cube_Loc = glGetUniformLocation(po_Loader->get_Shader("0")->get_Program(), "depthMap[1]");
+	glUniform1i(depth_Cube_Loc, 3);
+
+	depth_Cube_Loc = glGetUniformLocation(po_Loader->get_Shader("0")->get_Program(), "depthMap[2]");
+	glUniform1i(depth_Cube_Loc, 4);
+
+	GLint diff_Tex_Loc = glGetUniformLocation(po_Loader->get_Shader("0")->get_Program(), "diffuse");
+	glUniform1i(diff_Tex_Loc, 0);
+	GLint spec_Tex_Loc = glGetUniformLocation(po_Loader->get_Shader("0")->get_Program(), "specular");
+	glUniform1i(spec_Tex_Loc, 1);
+
+	GLint far_Loc = glGetUniformLocation(po_Loader->get_Shader("0")->get_Program(), "farPlane");
+	glUniform1f(far_Loc, 1000.0f);
+
+
+
 	b_Init = true;
 }
 
@@ -662,6 +800,16 @@ void Scene_3D::keyboard_Input(GLfloat f_Delta_In, GLboolean* pab_KeyArray_In, GL
 			pab_LockedKeys_In[GLFW_KEY_DELETE] = false;
 			b_Conditions[Conditions::Delete] = false;
 		}
+
+		if (pab_KeyArray_In[GLFW_KEY_N] && !pab_LockedKeys_In[GLFW_KEY_N])
+		{
+			auto health_Bar = static_cast<Tile*>(mspo_Objects.find("Health_Bar")->second);
+			health_Bar->set_Size(glm::vec2(health_Bar->get_Size().x - 100, health_Bar->get_Size().y));
+
+
+			pab_LockedKeys_In[GLFW_KEY_N] = true;
+		}
+		if (!pab_KeyArray_In[GLFW_KEY_N]) pab_LockedKeys_In[GLFW_KEY_N] = false;
 	}
 }
 
@@ -782,6 +930,10 @@ void Scene_3D::update_Scene(GLfloat f_Delta_In, glm::vec2 v2_MousePos_In)
 			}
 
 			pair.second->update();
+			if (pair.second->get_Tag() == "Particle")
+			{
+				static_cast<GameObject_Instanced*>(pair.second)->update_Particles(f_Delta_In, 1.0f, 1.0f, glm::vec3(1.0f));
+			}
 
 		}
 		if (b_Conditions[Conditions::RightMouse_Button]) camera_3D->move_MouseEditor(f_Delta_In, v2_MousePos_In, v2_WindowSize);
@@ -896,13 +1048,126 @@ void Scene_3D::render()
 			}
 		}
 
-		glClearColor(0.1f, 0.1f, 0.1f, 0.1f);
+		glEnable(GL_BLEND);
+		glUseProgram(po_Loader->get_Shader("0")->get_Program());
+		unsigned int tex_No = 0;
+		unsigned int light_No = 0;
+
+		float d[100];
+		std::string b_Shadow;
+		GLint b_Shadow_Loc;
+		std::string ui_Shadow;
+		GLint ui_Shadow_Loc;
+
+		for (unsigned int i = 0; i < ui_light_Amount; i++)
+		{
+			d[i] = glm::distance(camera_3D->get_CameraPos(), light[i]);
+			b_Shadow = "point_Light[" + std::to_string(i) + "].casts_Shadow";
+			b_Shadow_Loc = glGetUniformLocation(po_Loader->get_Shader("0")->get_Program(), b_Shadow.c_str());
+			glUniform1i(b_Shadow_Loc, false);
+
+			ui_Shadow = "point_Light[" + std::to_string(i) + "].ui_depth_Map";
+			ui_Shadow_Loc = glGetUniformLocation(po_Loader->get_Shader("0")->get_Program(), ui_Shadow.c_str());
+			glUniform1i(ui_Shadow_Loc, 9);
+		}
+
+		unsigned int light_Nom[3];
+		light_Nom[0] = 0;
+		float closest_Distance = 9999.0f;
+		for (unsigned int i = 0; i < ui_light_Amount; i++)
+		{
+			if (d[i] < closest_Distance)
+			{
+				closest_Distance = d[i];
+				light_Nom[0] = i;
+			}
+		}
+
+		b_Shadow = "point_Light[" + std::to_string(light_Nom[0]) + "].casts_Shadow";
+		b_Shadow_Loc = glGetUniformLocation(po_Loader->get_Shader("0")->get_Program(), b_Shadow.c_str());
+		glUniform1i(b_Shadow_Loc, true);
+		ui_Shadow = "point_Light[" + std::to_string(light_Nom[0]) + "].ui_depth_Map";
+		ui_Shadow_Loc = glGetUniformLocation(po_Loader->get_Shader("0")->get_Program(), ui_Shadow.c_str());
+		glUniform1i(ui_Shadow_Loc, 0);
+		float closest_Distance2 = 9999.0f;
+		for (unsigned int i = 0; i < ui_light_Amount; i++)
+		{
+			if (d[i] < closest_Distance2 && d[i] > closest_Distance)
+			{
+				closest_Distance2 = d[i];
+				light_Nom[1] = i;
+			}
+		}
+
+		b_Shadow = "point_Light[" + std::to_string(light_Nom[1]) + "].casts_Shadow";
+		b_Shadow_Loc = glGetUniformLocation(po_Loader->get_Shader("0")->get_Program(), b_Shadow.c_str());
+		glUniform1i(b_Shadow_Loc, true);
+
+		ui_Shadow = "point_Light[" + std::to_string(light_Nom[1]) + "].ui_depth_Map";
+		ui_Shadow_Loc = glGetUniformLocation(po_Loader->get_Shader("0")->get_Program(), ui_Shadow.c_str());
+		glUniform1i(ui_Shadow_Loc, 1);
+		float closest_Distance3 = 9999.0f;
+		for (unsigned int i = 0; i < ui_light_Amount; i++)
+		{
+			if (d[i] < closest_Distance3 && d[i] > closest_Distance2)
+			{
+				closest_Distance3 = d[i];
+				light_Nom[2] = i;
+			}
+		}
+
+		b_Shadow = "point_Light[" + std::to_string(light_Nom[2]) + "].casts_Shadow";
+		b_Shadow_Loc = glGetUniformLocation(po_Loader->get_Shader("0")->get_Program(), b_Shadow.c_str());
+		glUniform1i(b_Shadow_Loc, true);
+
+
+		ui_Shadow = "point_Light[" + std::to_string(light_Nom[2]) + "].ui_depth_Map";
+		ui_Shadow_Loc = glGetUniformLocation(po_Loader->get_Shader("0")->get_Program(), ui_Shadow.c_str());
+		glUniform1i(ui_Shadow_Loc, 2);
+
+		glUseProgram(po_Loader->get_Shader("6")->get_Program());
+
+		for (int i = 0; i < 3; i++)
+		{
+			unsigned no = light_Nom[i];
+
+			unsigned int obj_No = 0;
+
+			o_SceneLoader->prepare_DepthCube(po_Loader->get_Shader("6"), light[no], depth[i], i);
+
+
+			for (auto const& pair : mspo_Objects)
+			{
+
+				if (glm::distance(pos[obj_No], light[no]) < (o_SceneLoader->get_LightRadius(no) * 10) || pair.second->get_Tag() == "Player" || pair.second->get_Tag() == "Enemy")
+				{
+					if (pair.second->get_Tag() != "Object_Lamp" &&  pair.second->get_Tag() != "Particle")
+					{
+
+						pair.second->renderDepth(po_Loader->get_Shader("6"));
+					}
+					else if (pair.second->get_Tag() == "Light")
+					{
+						pair.second->renderDepth(po_Loader->get_Shader("6"));
+					}
+				}
+				obj_No++;
+			}
+			glBindFramebuffer(GL_FRAMEBUFFER, 0);
+		}
+
+		glViewport(0, 0, v2_WindowSize.x, v2_WindowSize.y);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		glEnable(GL_DEPTH_TEST);
 
 		glUseProgram(po_Loader->get_Shader("0")->get_Program());
 		camera_3D->update_Shader(po_Loader->get_Shader("0"));
-		o_SceneLoader->set_LightAmount(po_Loader->get_Shader("0"));
+		glUseProgram(po_Loader->get_Shader("7")->get_Program());
+		camera_3D->update_Shader(po_Loader->get_Shader("7"));
+
+		//for (auto const& pair : mspo_Objects)
+		//{
+		//	if (pair.second->get_Tag() == "Object" || pair.second->get_Tag() == "Object_NonSavable") pair.second->render(po_Loader->get_Shader("0"));
+		//}
 
 		for (auto const& pair : mspo_Objects)
 		{
@@ -911,30 +1176,43 @@ void Scene_3D::render()
 				static_cast<Light*>(pair.second)->update_Shader(po_Loader->get_Shader("0"));
 				pair.second->render(po_Loader->get_Shader("0"));
 			}
-		}
-
-		for (auto const& pair : mspo_Objects)
-		{
-			if (pair.second->get_Tag() == "Object" || pair.second->get_Tag() == "Object_NonSavable") pair.second->render(po_Loader->get_Shader("0"));
-		}
-
-		glClear(GL_DEPTH_BUFFER_BIT);
-		glUseProgram(po_Loader->get_Shader("5")->get_Program());
-		camera_3D->update_Shader(po_Loader->get_Shader("5"));
-		for (auto const& pair : mspo_Objects) if (pair.second->get_Tag() == "Arrow") pair.second->render(po_Loader->get_Shader("5"));
-
-		glClear(GL_DEPTH_BUFFER_BIT);
-		glUseProgram(po_Loader->get_Shader("1")->get_Program());
-		camera_2D->update_Shader(po_Loader->get_Shader("1"));
-
-		for (auto const& pair : mspo_Objects)
-		{
-			if (pair.second->get_Tag() == "GUI")
+			else if (pair.second->get_Tag() == "Particle")
 			{
-				pair.second->render(po_Loader->get_Shader("1"));	
+				glUseProgram(po_Loader->get_Shader("7")->get_Program());
+				pair.second->render(po_Loader->get_Shader("7"));
 			}
-		}
+			else if (pair.second->get_Tag() == "GUI")
+			{
+			}
+			else
+			{
+				glUseProgram(po_Loader->get_Shader("0")->get_Program());
+				pair.second->render(po_Loader->get_Shader("0"));
+			}
+		}		
 	}
+
+	glDisable(GL_BLEND);
+
+	glClear(GL_DEPTH_BUFFER_BIT);
+	glUseProgram(po_Loader->get_Shader("5")->get_Program());
+	camera_3D->update_Shader(po_Loader->get_Shader("5"));
+	for (auto const& pair : mspo_Objects) if (pair.second->get_Tag() == "Arrow") pair.second->render(po_Loader->get_Shader("5"));
+
+	glClear(GL_DEPTH_BUFFER_BIT);
+	glUseProgram(po_Loader->get_Shader("1")->get_Program());
+	camera_2D->update_Shader(po_Loader->get_Shader("1"));
+	for (auto const& pair : mspo_Objects)
+	{
+		if (pair.second->get_Tag() == "GUI")
+		{
+			pair.second->render(po_Loader->get_Shader("1"));
+		}
+
+	}
+		
+		
+		
 
 	lock_mouse(false);
 	b_Conditions[Conditions::Move_Mouse] = false;
@@ -970,13 +1248,6 @@ void Scene_3D::render()
 				delete found;
 				mspo_Objects.erase(s_Deletion.at(i));
 			}
-
-
-			b_Conditions[Conditions::Delete] = false;
-			pickedID = -1;
-			static_cast<GameObject_3D*>(mspo_Objects.find("Red Arrow")->second)->set_RenderStatus(false);
-			static_cast<GameObject_3D*>(mspo_Objects.find("Green Arrow")->second)->set_RenderStatus(false);
-			static_cast<GameObject_3D*>(mspo_Objects.find("Blue Arrow")->second)->set_RenderStatus(false);
 		}
 	}
 }

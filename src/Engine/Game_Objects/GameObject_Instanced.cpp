@@ -16,15 +16,34 @@ GameObject_Instanced::GameObject_Instanced()
 	b_RenderStatus = true;
 }
 
+GameObject_Instanced::GameObject_Instanced(const GameObject_Instanced & p_NewObject_In) : Game_Object(p_NewObject_In)
+{
+	for (auto const& pair : p_NewObject_In.mipo_Components)
+	{
+		if (pair.second->get_Type() == "Mesh_Instanced")
+		{
+			auto mesh_Instanced = static_cast<Mesh_Instanced*>(pair.second);
+			add_Component("Mesh_Instanced", mesh_Instanced);
+		}
+		else if (pair.second->get_Type() == "Transform_Instanced")
+		{
+			auto transform_Instanced = static_cast<Transform_Instanced*>(pair.second);
+			add_Component("Transform_Instanced", new Transform_Instanced(*transform_Instanced));
+		}
+		else if (pair.second->get_Type() == "RenderComp_Instanced")
+		{
+			auto renderComp_Instanced = static_cast<RenderComp_Instanced*>(pair.second);
+			add_Component("RenderComp_Instanced", new RenderComp_Instanced(*renderComp_Instanced));
+		}
+	}
+
+	s_PrefabName = p_NewObject_In.s_PrefabName;
+}
+
 void GameObject_Instanced::update()
 {
 	static_cast<Transform_Instanced*>(mipo_Components.find("Transform_Instanced")->second)->update();
 }
-
-//void GameObject_Instanced::update_Particles(float t, float y, float z, glm::vec3 delta)
-//{
-//	update_Particles(t, y, z, delta);
-//}
 
 void GameObject_Instanced::force_Update()
 {
@@ -37,7 +56,7 @@ void GameObject_Instanced::add_Component(std::string s_Name_In, Component * p_Co
 
 	if (s_Name_In == "RenderComp_Instanced")
 	{
-		auto found_Mesh = mipo_Components.find("RenderComp_Instanced");
+		auto found_Mesh = mipo_Components.find("Mesh_Instanced");
 
 		if (found_Mesh == mipo_Components.end()) std::cout << "Mesh not found" << "\n";
 		else
@@ -61,27 +80,12 @@ void GameObject_Instanced::renderDepth(Shader * p_Shader_In)
 void GameObject_Instanced::render(Shader * p_Shader_In)
 {
 	static_cast<Transform_Instanced*>(mipo_Components.find("Transform_Instanced")->second)->update_Shader(p_Shader_In);
-	if (b_RenderStatus) static_cast<RenderComp_Instanced*>(mipo_Components.find("RenderComp_Instanced")->second)->renderInstanced(GL_TEXTURE_2D, GL_TRIANGLES, p_Shader_In, maxParticles, ParticlesCount, particlePositions, VAO, i_Buffer, index_Size, colour);
+	if (b_RenderStatus) static_cast<RenderComp_Instanced*>(mipo_Components.find("RenderComp_Instanced")->second)->renderInstanced(GL_TEXTURE_2D, GL_TRIANGLES, p_Shader_In, maxParticles, ParticlesCount, particlePositions, colour);
 }
 
 void GameObject_Instanced::clean_Up()
 {
 
-}
-
-void GameObject_Instanced::set_VAO(unsigned int ui_VAO_In)
-{
-	VAO = static_cast<Mesh_Instanced*>(mipo_Components.find("Mesh_Instanced")->second)->get_VAO();
-}
-
-void GameObject_Instanced::set_InstanceBuffer(unsigned int ui_IB_In)
-{
-	i_Buffer = static_cast<Mesh_Instanced*>(mipo_Components.find("Mesh_Instanced")->second)->get_InstanceBufferHandle();
-}
-
-void GameObject_Instanced::set_IndexSize(unsigned int ui_Size_In)
-{
-	index_Size = static_cast<Mesh_Instanced*>(mipo_Components.find("Mesh_Instanced")->second)->get_SizeOfIndices();
 }
 
 void GameObject_Instanced::set_Position(glm::vec3 v3_Position_In)
@@ -141,13 +145,13 @@ void GameObject_Instanced::update_Particles(float t, float y, float z, glm::vec3
 	int newparticles = (int)(t*maxParticles);
 	if (newparticles > 16)
 		newparticles = 16;
-	
+
 	for (int i = 0; i < newparticles; i++)
 	{
 		FindUnusedParticle();
-		random = static_cast <float> (rand()) / static_cast <float> (RAND_MAX / range.x) - range.x/2;
+		random = static_cast <float> (rand()) / static_cast <float> (RAND_MAX / range.x) - range.x / 2;
 		random2 = static_cast <float> (rand()) / static_cast <float> (RAND_MAX / range.y);
-		random3 = static_cast <float> (rand()) / static_cast <float> (RAND_MAX / range.z) - range.z/2;
+		random3 = static_cast <float> (rand()) / static_cast <float> (RAND_MAX / range.z) - range.z / 2;
 
 		iParticle = this->FindUnusedParticle();
 		ParticlesContainer[iParticle].life = particle_Life;
@@ -155,7 +159,7 @@ void GameObject_Instanced::update_Particles(float t, float y, float z, glm::vec3
 		ParticlesContainer[iParticle].size = 1.0f;
 		ParticlesContainer[iParticle].speed = glm::vec3(particle_Speed.x, particle_Speed.y, particle_Speed.z);
 	}
-	for (unsigned int i = 0; i<maxParticles; i++) {
+	for (int i = 0; i<maxParticles; i++) {
 
 		Particle& p = ParticlesContainer[i]; // shortcut
 
@@ -215,7 +219,7 @@ void GameObject_Instanced::set_Colour(glm::vec3 colour_In)
 
 int GameObject_Instanced::FindUnusedParticle()
 {
-	for (unsigned int i = LastUsedParticle; i < maxParticles; i++) {
+	for (int i = LastUsedParticle; i < maxParticles; i++) {
 		if (ParticlesContainer[i].life <= 0) {
 			LastUsedParticle = i;
 
@@ -223,7 +227,7 @@ int GameObject_Instanced::FindUnusedParticle()
 		}
 	}
 
-	for (unsigned int i = 0; i<LastUsedParticle; i++) {
+	for (int i = 0; i<LastUsedParticle; i++) {
 		if (ParticlesContainer[i].life <= 0) {
 			LastUsedParticle = i;
 

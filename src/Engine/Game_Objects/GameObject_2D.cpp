@@ -5,6 +5,36 @@
 #include <iostream>
 #include <glad\glad.h>
 
+GameObject_2D::GameObject_2D(const GameObject_2D & p_NewObject_In) : Game_Object(p_NewObject_In)
+{
+	for (auto const& pair : p_NewObject_In.mipo_Components)
+	{
+		if (pair.second->get_Type() == "Mesh_2D")
+		{
+			auto mesh_2D = static_cast<Mesh_2D*>(pair.second);
+			add_Component("Mesh_2D", mesh_2D);
+		}
+		else if (pair.second->get_Type() == "Transform_2D")
+		{
+			auto transform_2D = static_cast<Transform_2D*>(pair.second);
+			add_Component("Transform_2D", new Transform_2D(*transform_2D));
+		}
+		else if (pair.second->get_Type() == "RenderComp_2D")
+		{
+			auto renderComp_2D = static_cast<RenderComp_2D*>(pair.second);
+			add_Component("RenderComp_2D", new RenderComp_2D(*renderComp_2D));
+		}
+	}
+
+	s_PrefabName = p_NewObject_In.s_PrefabName;
+	s_Tag = p_NewObject_In.s_Tag;
+}
+
+void GameObject_2D::renderDepth(Shader* p_Shader_In)
+{
+
+}
+
 glm::mat4 GameObject_2D::get_ParentMatrix()
 {
 	return static_cast<Transform_2D*>(mipo_Components.find("Transform_2D")->second)->get_ModelMatrix();

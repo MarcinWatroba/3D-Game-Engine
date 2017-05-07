@@ -26,16 +26,15 @@ GameObject_3D::GameObject_3D()
 
 GameObject_3D::GameObject_3D(const GameObject_3D & p_NewObject_In) : Game_Object(p_NewObject_In)
 {
-	
 	auto transform_3D = static_cast<Transform_3D*>(p_NewObject_In.mipo_Components.at("Transform_3D"));
 	add_Component("Transform_3D", new Transform_3D(*transform_3D));
-
+	
 	if (p_NewObject_In.vs_ChildrenNames.empty())
 	{
 		auto mesh_3D = static_cast<Mesh_3D*>(p_NewObject_In.mipo_Components.at("Mesh_3D"));
 		add_Component("Mesh_3D", mesh_3D);
 	}
-
+	
 	for (auto const& pair : p_NewObject_In.mipo_Components)
 	{
 		if (pair.second->get_Type() == "RenderComp_3D")
@@ -68,10 +67,7 @@ GameObject_3D::GameObject_3D(const GameObject_3D & p_NewObject_In) : Game_Object
 			auto AI = static_cast<AIController*>(pair.second);
 			add_Component("AI_Controller", new AIController(*AI));
 		}
-
-
 	}
-
 	s_PrefabName = p_NewObject_In.s_PrefabName;
 }
 

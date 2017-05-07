@@ -6,9 +6,9 @@ RigidBody::~RigidBody()
 {}
 RigidBody::RigidBody(const RigidBody &p_NewComp_In)
 {
-	//mass = p_NewComp_In.mass;
-	//moveable = p_NewComp_In.moveable;
-	//centreOfMass = p_NewComp_In.centreOfMass;
+	mass = p_NewComp_In.mass;
+	moveable = p_NewComp_In.moveable;
+	centreOfMass = p_NewComp_In.centreOfMass;
 }
 RigidBody::RigidBody(Stats * stat)
 {

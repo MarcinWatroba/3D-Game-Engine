@@ -40,7 +40,10 @@ void Game_Scene::init()
 		po_StatsLoader = new StatsLoader("assets/stats.xml");
 		po_PrefabLoader = new PrefabLoader("assets/Prefabs.xml", po_Loader, po_StatsLoader);
 		o_SceneLoader = new SceneLoader(levelList[currentLevel].c_str(), po_Loader, po_PrefabLoader, mspo_Objects);
-		
+		for (unsigned int i = 0; i < 3; i++)
+		{
+			depth[i] = o_SceneLoader->setup_FBO();
+		}
 		firstTime = false;
 	}
 	//snd_Audio = ;
@@ -79,10 +82,7 @@ void Game_Scene::init()
 		light[i] = o_SceneLoader->get_LightPosition(i);
 		radius[i] = o_SceneLoader->get_LightRadius(1);
 	}
-	for (unsigned int i = 0; i < 3; i++)
-	{
-		depth[i] = o_SceneLoader->setup_FBO();
-	}
+
 
 	glUseProgram(po_Loader->get_Shader("0")->get_Program());
 	o_SceneLoader->set_LightAmount(po_Loader->get_Shader("0"));
@@ -135,10 +135,9 @@ void Game_Scene::keyboard_Input(GLfloat f_Delta_In, GLboolean* pab_KeyArray_In, 
 
 	if (pab_KeyArray_In[GLFW_KEY_R] && !pab_LockedKeys_In[GLFW_KEY_R])
 	{
-		reload_Scene();
-		//load_Scene(1);
+		//reload_Scene();
+		load_Scene(currentLevel);
 		pab_LockedKeys_In[GLFW_KEY_R] = true;
-
 	}
 	if (!pab_KeyArray_In[GLFW_KEY_R]) pab_LockedKeys_In[GLFW_KEY_R] = false;
 
@@ -211,7 +210,7 @@ void Game_Scene::mouse_Input(GLboolean* pab_MouseArray_In, GLboolean* pab_Locked
 
 	if (pab_MouseArray_In[GLFW_MOUSE_BUTTON_1])
 	{
-		player->createBullet(new Bullet("Bullet", (Mesh_3D*)po_Loader->get_Mesh("7"), static_cast<GameObject_3D*>(mspo_Objects.find("Robot")->second), po_Loader->get_Texture("24"), po_Loader->get_Texture("7")), po_Loader->getAudioMap().find("2")->second);
+		player->createBullet(new Bullet("Bullet", (Mesh_3D*)po_Loader->get_Mesh("7"), player, po_Loader->get_Texture("24"), po_Loader->get_Texture("7")), po_Loader->getAudioMap().find("2")->second);
 		player->setFiring(true);
 		shooting = true;
 	}
@@ -268,6 +267,13 @@ void Game_Scene::update_Scene(GLfloat f_Delta_In, glm::vec2 v2_MousePos_In)
 
 	if (b_Init)
 	{
+		//update camera
+		camera_3D->set_CameraPos(-player->get_Position() - glm::vec3(0, 5, 0));
+		camera_3D->move_Mouse(f_Delta_In, v2_MousePos_In, v2_WindowSize);
+		camera_3D->update();
+		camera_3D->reset();
+
+		//update all game objects
 		for (auto const& pair : mspo_Objects)
 		{
 			if (pair.second->get_Tag() == "Particle")
@@ -276,17 +282,23 @@ void Game_Scene::update_Scene(GLfloat f_Delta_In, glm::vec2 v2_MousePos_In)
 				pair.second->update();
 				continue;
 			}
-
 			GameObject_3D* po_GameObject = dynamic_cast<GameObject_3D*>(pair.second);
+
 		
 			//update game object
 			po_GameObject->update();
+
+			//robot arm aiming
+			if (po_GameObject->get_PrefabName() == "Robot Right Arm")
+			{
+				po_GameObject->turn(-camera_3D->get_PitchDelta(), glm::vec3(1, 0, 0));
+			}
 		
 			//update game components
 			Component * po_Component;
 		
 			//Update AI character controller
-			po_Component = po_GameObject->get_Component("Character_Controller");
+			po_Component = po_GameObject->get_Component("AI_Controller");
 			if (po_Component != nullptr) {
 				//cast
 				AIController* po_AIController = static_cast<AIController*>(po_Component);
@@ -315,14 +327,10 @@ void Game_Scene::update_Scene(GLfloat f_Delta_In, glm::vec2 v2_MousePos_In)
 			//shootBullet();
 			if (!shooting)
 			{
-				static_cast<GameObject_3D*>(mspo_Objects.find("Robot")->second)->resetCount();
+				player->resetCount();
 			}
-			camera_3D->set_CameraPos(-player->get_Position() - glm::vec3(0, 5, 0));
-			camera_3D->move_Mouse(f_Delta_In, v2_MousePos_In, v2_WindowSize);
 			player->turn(-camera_3D->get_YawDelta(), glm::vec3(0, 1, 0));
-			camera_3D->update();
-			camera_3D->reset();
-			dynamic_cast<GameObject_3D*>(mspo_Objects.find("Robot")->second)->jump(glm::vec3(0, 1, 0));
+			player->jump(glm::vec3(0, 1, 0));
 		}
 
 		//Check for Collisions between Game Objects

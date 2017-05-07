@@ -18,6 +18,7 @@ private:
 
 public:
 	Text() {};
+	Text(const Text &text);
 	Text(int i_ObjectID, std::string s_Text_In, glm::vec2 v2_Position_In, float f_Angle_In, Font* p_Font_In, float f_Layer_In, bool b_Render, std::string s_ObjectType_In);
 
 	void set_Text(std::string s_Text_In);

@@ -73,7 +73,7 @@ int Camera_3D::get_CameraSide()
 	glm::vec3 euler = glm::eulerAngles(quat_Orientation);
 
 	if (euler.y >= 0) return 1;
-	if (euler.y < 0) return -1;
+	else return -1;
 }
 
 void Camera_3D::move_Keyboard(float f_Delta_In)

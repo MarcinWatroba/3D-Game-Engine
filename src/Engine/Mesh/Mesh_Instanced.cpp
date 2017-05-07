@@ -139,3 +139,8 @@ Mesh_Instanced::Mesh_Instanced(const char* pc_FileName_In, int i_DrawMode_In)
 	glBindVertexArray(0);
 
 }
+
+std::string Mesh_Instanced::get_Type()
+{
+	return "Mesh_Instanced";
+}

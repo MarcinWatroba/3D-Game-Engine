@@ -5,6 +5,10 @@
 #include <Engine\Component\RenderComp_2D.h>
 #include <glad\glad.h>
 
+Tile::Tile(const Tile & tile) : GameObject_2D(tile)
+{
+}
+
 Tile::Tile(int i_ObjectID_In, std::string s_Text_In, Mesh* p_Mesh_In, Texture* p_Texture_In, glm::vec2 v2_Position_In, glm::vec2 v2_Size_In, float f_Angle_In, float f_Layer_In)
 {
 	set_Name("Tile");
