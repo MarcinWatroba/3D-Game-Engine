@@ -44,7 +44,7 @@ void RigidBody::setJumpForce(float force)
 
 void RigidBody::setJumpHeight(float force)
 {
-	//jumpHeight = force;
+
 }
 
 void RigidBody::setGrounded(bool isGrounded)

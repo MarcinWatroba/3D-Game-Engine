@@ -228,13 +228,6 @@ void Game_Scene::mouse_Input(GLboolean* pab_MouseArray_In, GLboolean* pab_Locked
 	{
 		shooting = false;
 	}
-
-	//if (pab_MouseArray_In[GLFW_MOUSE_BUTTON_RIGHT] && ammoRemaining == 0)
-	//{
-	//	snd_Audio->find("reload_pistol")->second->Play();
-	//	//snd_Audio->find("reload_pistol")->second->Play(glm::vec3(0,0,0), 1.0);
-	//	ammoRemaining = 6;
-	//}
 }
 
 void Game_Scene::scroll_Input(glm::vec2 v2_Scroll_In)

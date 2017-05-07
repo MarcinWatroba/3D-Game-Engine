@@ -18,7 +18,6 @@ float Physics::eulerIntegration(float force, float mass, float position, bool gr
 	float acceleration = 0;
 	float newAcceleration = 0;
 	float time = 0;
-	//force += gravConst * mass;
 	if (grounded)
 	{
 		gravConst = 0;

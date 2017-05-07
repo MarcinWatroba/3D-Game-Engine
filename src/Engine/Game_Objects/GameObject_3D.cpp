@@ -279,7 +279,6 @@ void GameObject_3D::move(glm::vec3 v3_Direction_In, float f_Speed_In)
 			dynamic_cast<Respond_Movement*>(found_Movement)->move(this, v3_Direction_In, f_Speed_In);
 		}
 		lastDir = isPositive;
-		//lastRot = get_Rotation();
 	}
 }
 
@@ -290,7 +289,6 @@ void GameObject_3D::jump(glm::vec3 v3_Direction_In)
 		auto found_Movement = mipo_Components.at("Respond_Movement");
 		dynamic_cast<RigidBody*>(mipo_Components.at("RigidBody"))->update(get_Position());
 		dynamic_cast<Respond_Movement*>(found_Movement)->move(this, v3_Direction_In, dynamic_cast<RigidBody*>(mipo_Components.at("RigidBody"))->getJumpVelocity());
-		//dynamic_cast<RigidBody*>(mipo_Components.at("RigidBody"))->setJumpForce(0);
 	}
 }
 
@@ -315,15 +313,12 @@ void GameObject_3D::createBullet(Bullet* bulletTemplate, Sound* temp_Audio)
 		if (static_cast<Character*>(mipo_Components.at("Character"))->getNumberOfBullets() != 0)
 		{
 			bulletList.push_back(bulletTemplate);
-			//bulletList[bulletNumber]->set_Position(get_Position());
-			//bulletList[bulletNumber]->set_Rotation(get_Rotation());
 			bulletList[bulletNumber]->set_RenderStatus(true);
 			static_cast<Character*>(mipo_Components.at("Character"))->loseBullets();
 			bulletNumber++;
 			count = 0;
 			float e = static_cast<Character*>(mipo_Components.at("Character"))->getNumberOfBullets();
 			temp_Audio->Play();
-			std::cout << e << std::endl;
 		}
 		
 	}
@@ -348,7 +343,6 @@ void GameObject_3D::shootBullet()
 	if (!bulletList.empty())
 	{
 		glm::vec3 temp = bulletList[0]->get_Position();
-		//std::cout << "(" << temp.x << ", " << temp.y << ", " << temp.z << ")" << std::endl << std::endl;
 	}
 }
 
