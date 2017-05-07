@@ -48,7 +48,8 @@ void Game_Scene::init()
 	}
 	//snd_Audio = ;
 	// Play background Audio - loaded via XML
-	po_Loader->getAudioMap().find("0")->second->Play();
+	po_Loader->getAudioMap().at("0")->Play();
+	po_Loader->getAudioMap().at("6")->Play();
 
 	//get player pointer
 	findPlayer();
@@ -334,7 +335,7 @@ void Game_Scene::update_Scene(GLfloat f_Delta_In, glm::vec2 v2_MousePos_In)
 			{
 				player->resetCount();
 			}
-			camera_3D->set_CameraPos(-player->get_Position() - glm::vec3(0, 15, 0));
+			camera_3D->set_CameraPos(-player->get_Position() - glm::vec3(0, 7.5, 0));
 			camera_3D->move_Mouse(f_Delta_In, v2_MousePos_In, v2_WindowSize);
 			player->turn(-camera_3D->get_YawDelta(), glm::vec3(0, 1, 0));
 			player->jump(glm::vec3(0, 1, 0));
@@ -519,7 +520,17 @@ void Game_Scene::load_Scene(int i)
 void Game_Scene::destroyGameObject(Game_Object* po_object)
 {
 	//decrement enemy count
-	if (po_object->get_Tag() == "Enemy") { i_numEnemies--; }
+	if (po_object->get_Tag() == "Enemy")
+	{
+		i_numEnemies--; 
+		po_Loader->getAudioMap().at("4")->Play();
+		if (i_numEnemies == 0)
+		{
+			po_Loader->getAudioMap().at("5")->Play();
+		}
+	}
+
+	if (po_object->get_Tag() == "Player") { po_Loader->getAudioMap().at("4")->Play(); }
 
 	//Remove all components
 	for (auto const& components : po_object->get_Components())
