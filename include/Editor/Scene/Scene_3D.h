@@ -2,7 +2,7 @@
 
 #include <Engine\Scene\Scene.h>
 #include <Engine\Loaders\SceneSaver.h>
-
+#include <Engine\Loaders\GUILoader.h>
 
 namespace Conditions
 {
@@ -49,14 +49,20 @@ private:
 	glm::vec3 to3DVector(const char * pc_Vector3D_In);
 	void process_2DClick(int i_ID_In);
 	SceneSaver* save;
+
+	//lighting
+	glm::vec3 light[30];
+	glm::vec3 pos[100];
+	glm::uvec2 depth[30];
+	float radius[30];
+
+	GUILoader* po_GUILoader;
 public:
 	//Constructor
 	Scene_3D() {};
 
 	//Initialize
 	void init();
-
-	void add_GUI();
 
 	//Do something with keyboard input
 	void keyboard_Input(GLfloat f_Delta_In, GLboolean* pab_KeyArray_In, GLboolean* pab_LockedKeys_In, int i_KeyPress);

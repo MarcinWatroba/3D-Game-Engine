@@ -6,6 +6,12 @@
 #include <Engine\Creators\Shader.h>
 #include <glad\glad.h>
 
+Text::Text(const Text & text) : GameObject_2D(text)
+{
+	f_Size = text.f_Size;
+	p_Font = text.p_Font;
+}
+
 Text::Text(int i_ObjectID, std::string s_Text_In, glm::vec2 v2_Position_In, float f_Angle_In, Font* p_Font_In, float f_Layer_In, bool b_Render, std::string s_ObjectType_In)
 {
 	add_Component("Transform_2D", new Transform_2D());
@@ -22,7 +28,7 @@ Text::Text(int i_ObjectID, std::string s_Text_In, glm::vec2 v2_Position_In, floa
 
 	if (s_Text_In != "")
 	{
-		for (unsigned int i = 0; i < s_Text_In.size(); i++)
+		for (int i = 0; i < s_Text_In.size(); i++)
 		{
 			if (i == 0) vp_Letters.push_back(new Letter(get_ObjectID(), s_Text[i], p_Font, get_Position(), get_Angle(), get_Layer() + 0.00001f, get_RenderStatus(), get_ObjectType()));
 			else
@@ -36,7 +42,7 @@ Text::Text(int i_ObjectID, std::string s_Text_In, glm::vec2 v2_Position_In, floa
 		}
 
 		glm::vec2 v2_TempSize;
-		for (unsigned int i = 0; i < vp_Letters.size(); i++) v2_TempSize += vp_Letters.at(i)->get_Size();
+		for (int i = 0; i < vp_Letters.size(); i++) v2_TempSize += vp_Letters.at(i)->get_Size();
 
 		//Set the size of the overall text
 		//Count x of all letters, but only count the Y of the first letter
@@ -52,7 +58,7 @@ void Text::set_Text(std::string s_Text_In)
 {
 	if (std::strncmp(s_Text_In.c_str(), s_Text.c_str(), 100) != 0)
 	{
-		for (unsigned int i = 0; i < vp_Letters.size(); i++)
+		for (int i = 0; i < vp_Letters.size(); i++)
 		{
 			vp_Letters.at(i)->clean_Up();
 			delete vp_Letters.at(i);
@@ -61,7 +67,7 @@ void Text::set_Text(std::string s_Text_In)
 
 		s_Text = s_Text_In;
 
-		for (unsigned int i = 0; i < s_Text.size(); i++)
+		for (int i = 0; i < s_Text.size(); i++)
 		{
 			if (i == 0) vp_Letters.push_back(new Letter(get_ObjectID(), s_Text[i], p_Font, get_Position(), get_Angle(), get_Layer() - 0.00001f, get_RenderStatus(), get_ObjectType()));
 			else
@@ -75,7 +81,7 @@ void Text::set_Text(std::string s_Text_In)
 		}
 
 		glm::vec2 v2_TempSize;
-		for (unsigned int i = 0; i < vp_Letters.size(); i++) v2_TempSize += vp_Letters.at(i)->get_Size();
+		for (int i = 0; i < vp_Letters.size(); i++) v2_TempSize += vp_Letters.at(i)->get_Size();
 
 		//Set the size of the overall text
 		//Count x of all letters, but only count the Y of the first letter
@@ -86,13 +92,13 @@ void Text::set_Text(std::string s_Text_In)
 void Text::update()
 {
 	static_cast<Transform_2D*>(mipo_Components.find("Transform_2D")->second)->update();
-	for (unsigned int i = 0; i < vp_Letters.size(); i++) vp_Letters.at(i)->update();
+	for (int i = 0; i < vp_Letters.size(); i++) vp_Letters.at(i)->update();
 }
 
 void Text::render(Shader* p_Shader_In)
 {
 	static_cast<Transform_2D*>(mipo_Components.find("Transform_2D")->second)->update_Shader(p_Shader_In);
-	for (unsigned int i = 0; i < vp_Letters.size(); i++)
+	for (int i = 0; i < vp_Letters.size(); i++)
 	{
 		vp_Letters.at(i)->set_RenderStatus(get_RenderStatus());
 		vp_Letters.at(i)->render(p_Shader_In);
@@ -107,7 +113,7 @@ void Text::change_Origin(glm::vec2 v2_Origin_In)
 	if (get_Origin() != v2_Origin_In)
 	{
 		set_Origin(v2_Origin_In);
-		for (unsigned int i = 0; i < vp_Letters.size(); i++) vp_Letters[i]->set_Position(vp_Letters[i]->get_Position() - get_Origin());
+		for (int i = 0; i < vp_Letters.size(); i++) vp_Letters[i]->set_Position(vp_Letters[i]->get_Position() - get_Origin());
 	}
 }
 

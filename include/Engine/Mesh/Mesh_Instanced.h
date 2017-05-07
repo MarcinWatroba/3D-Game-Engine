@@ -12,4 +12,6 @@ public:
 	Mesh_Instanced() {};
 	Mesh_Instanced(const char * pc_FileName_In, int i_DrawMode_In);
 
+	std::string get_Type();
+
 };

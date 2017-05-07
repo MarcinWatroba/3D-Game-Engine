@@ -35,66 +35,13 @@ void Transform_Instanced::update(glm::mat4 parent_Matrix_In)
 	}
 }
 
-//void Transform_Instanced::update_Particles(float t, float y, float z, glm::vec3 delta)
-//{
-//	random = static_cast <float> (rand()) / static_cast <float> (RAND_MAX / 20) - 10;
-//	random2 = static_cast <float> (rand()) / static_cast <float> (RAND_MAX / 10);
-//	random3 = static_cast <float> (rand()) / static_cast <float> (RAND_MAX / 20) - 10;
-//	ParticlesCount = 0;
-//	FindUnusedParticle();
-//
-//	iParticle = this->FindUnusedParticle();
-//	ParticlesContainer[iParticle].life = 1.0f;
-//	ParticlesContainer[iParticle].position = glm::vec3(random, random2, -random3);
-//	ParticlesContainer[iParticle].size = 1.0f;
-//	ParticlesContainer[iParticle].speed = glm::vec3(0.0, -9.0 * y, 0.0);
-//	ParticlesContainer[iParticle].r = 1.0f;
-//	ParticlesContainer[iParticle].g = 1.0f;
-//	ParticlesContainer[iParticle].b = 1.0f;
-//
-//	for (int i = 0; i<10000; i++) {
-//
-//		Particle& p = ParticlesContainer[i]; // shortcut
-//
-//		if (p.life > 0.0f) {
-//
-//			// Decrease life
-//			p.life -= t;
-//
-//			if (p.life > 0.0f) {
-//				// Simulate simple physics : gravity only, no collisions
-//
-//				p.speed = glm::vec3(0.0, -9.0 * y, 0.0);
-//				p.speed += glm::vec3(0.0f, -9.81f, 0.0f) * (float)t * 0.5f;
-//				p.position += (p.speed * (float)t);
-//
-//				// Fill the GPU buffer
-//				particlePositions[3 * ParticlesCount + 0] = p.position.x;
-//				particlePositions[3 * ParticlesCount + 1] = p.position.y;
-//				particlePositions[3 * ParticlesCount + 2] = p.position.z;
-//
-//			}
-//			else {
-//
-//
-//			}
-//
-//			ParticlesCount++;
-//
-//		}
-//	}
-//
-//	toVector(particlePositions);
-//	//updateParticles(MaxParticles, ParticlesCount, particlePositions);
-//}
-//
-//void Transform_Instanced::toVector(float i_Array_In[])
-//{
-//	for (int i = 0; i < 30000; i++)
-//	{
-//		positions.push_back(i_Array_In[i]);
-//	}
-//}
+Transform_Instanced::Transform_Instanced(const Transform_Instanced & p_NewComp_In)
+{
+	v3_Position = p_NewComp_In.v3_Position;
+	v3_Scale = p_NewComp_In.v3_Scale;
+	quat_Orientation = p_NewComp_In.quat_Orientation;
+	v3_Origin = p_NewComp_In.v3_Origin;
+}
 
 glm::mat4 Transform_Instanced::get_ModelMatrix()
 {
@@ -155,26 +102,6 @@ glm::quat Transform_Instanced::get_Rotation()
 	return quat_Orientation;
 }
 
-//int Transform_Instanced::FindUnusedParticle()
-//{
-//	for (int i = LastUsedParticle; i<10000; i++) {
-//		if (ParticlesContainer[i].life <= 0) {
-//			LastUsedParticle = i;
-//
-//			return i;
-//		}
-//	}
-//
-//	for (int i = 0; i<LastUsedParticle; i++) {
-//		if (ParticlesContainer[i].life <= 0) {
-//			LastUsedParticle = i;
-//
-//			return i;
-//		}
-//	}
-//	return 0;
-//}
-
 glm::vec3 Transform_Instanced::get_Origin()
 {
 	return v3_Origin;
@@ -187,17 +114,7 @@ void Transform_Instanced::set_Rotation(float f_Angle_In, glm::vec3 v3_RotAxis_In
 	quat_Orientation = quat_Temp * quat_Orientation;
 }
 
-//int Transform_Instanced::get_ParticleCount()
-//{
-//	return ParticlesCount;
-//}
-//
-//std::vector<float> Transform_Instanced::get_ParticlePositions()
-//{
-//	return positions;
-//}
-//
-//float Transform_Instanced::get_ParticlePositionss()
-//{
-//	return 0.0f;
-//}
+std::string Transform_Instanced::get_Type()
+{
+	return "Transform_Instanced";
+}

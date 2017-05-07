@@ -85,49 +85,38 @@ SceneLoader::SceneLoader(const char* pc_FileName_In, Loader* po_Loader_In, Prefa
 	for (tinyxml2::XMLElement* it = body->FirstChildElement("new_ObjectParticle"); it != nullptr; it = it->NextSiblingElement("new_ObjectParticle"))
 	{
 
-		std::string s_ObjectName = it->Attribute("name");
-		std::string s_Components = it->Attribute("component");
-		std::string i_MeshID = it->Attribute("mesh_ID");
-		std::string s_Tag = it->Attribute("tag");
-		std::string i_DiffuseID = it->Attribute("diffuse_ID");
-		glm::vec2 v2_Tiling = to2DVector(it->Attribute("texture_Tiling"));
+		std::cout << "Adding new particle object to the scene..." << "\n";
 
-		int i_InitMode = std::atoi(it->Attribute("init_Mode"));
-		glm::vec3 v3_Origin = to3DVector(it->Attribute("origin"));
+		std::string s_ObjectName = it->Attribute("name");
+		std::string s_Prefab = it->Attribute("prefab");
 		glm::vec3 v3_Position = to3DVector(it->Attribute("position"));
-		glm::quat quat_OrientationX = toQuat(it->Attribute("orientationX"));
-		glm::quat quat_OrientationY = toQuat(it->Attribute("orientationY"));
-		glm::quat quat_OrientationZ = toQuat(it->Attribute("orientationZ"));
 		glm::vec3 v3_Scale = to3DVector(it->Attribute("scale"));
+		glm::vec3 v3_Origin = to3DVector(it->Attribute("origin"));
+		glm::quat v3_Orientation = toQuat(it->Attribute("orientation"));
 		unsigned int i_maxParticles = std::atoi(it->Attribute("max_Particles"));
 		float life = std::atof(it->Attribute("particle_Life"));
 		glm::vec3 v3_Range = to3DVector(it->Attribute("particle_Range"));
 		glm::vec3 v3_Speed = to3DVector(it->Attribute("particle_Speed"));
+
 		glm::vec3 v3_Colour = to3DVector(it->Attribute("particle_Colour"));
 
-		mspo_GameObjects_In.insert(std::pair<std::string, Game_Object*>(s_ObjectName, new GameObject_Instanced()));
-		auto object = static_cast<GameObject_Instanced*>(mspo_GameObjects_In.find(s_ObjectName)->second);
-		object->set_Name(s_ObjectName);
-		unsigned int i_B = po_Loader_In->get_MeshInstanced(i_MeshID)->get_InstanceBufferHandle();
-		object->add_Component("Mesh_Instanced", po_Loader_In->get_MeshInstanced(i_MeshID));
-		object->add_Component("Transform_Instanced", new Transform_Instanced());
-		object->add_Component("RenderComp_Instanced", new RenderComp_Instanced());
-		if (s_Components != "") add_Components_Instanced(object, s_Components);
-		object->set_Position(v3_Position);
-		object->set_VAO(po_Loader_In->get_MeshInstanced(i_MeshID)->get_VAO());
-		object->set_IndexSize(po_Loader_In->get_MeshInstanced(i_MeshID)->get_SizeOfIndices());
-		object->set_InstanceBuffer(po_Loader_In->get_MeshInstanced(i_MeshID)->get_InstanceBufferHandle());
-		object->set_Origin(v3_Origin);
-		object->set_Rotation(quat_OrientationZ * quat_OrientationY * quat_OrientationX);
-		object->set_Scale(v3_Scale);
-		object->add_Texture("Diffuse_Map", po_Loader_In->get_Texture(i_DiffuseID));
-		object->set_Tiles(v2_Tiling);
-		object->set_Tag(s_Tag);
-		object->setMax(i_maxParticles);
-		object->set_Range(v3_Range);
-		object->set_Particle_Speed(v3_Speed);
-		object->set_Colour(v3_Colour);
-		object->set_Life(life);
+		auto desired_Prefab = static_cast<GameObject_Instanced*>(po_PrefLoader_In->get_Prefab(s_Prefab));
+		mspo_GameObjects_In.insert(std::pair<std::string, Game_Object*>(s_ObjectName, new GameObject_Instanced(*desired_Prefab)));
+		auto desired_Object = static_cast<GameObject_Instanced*>(mspo_GameObjects_In.find(s_ObjectName)->second);
+
+		desired_Object->set_Name(s_ObjectName);
+		desired_Object->set_Position(v3_Position);
+		desired_Object->set_Scale(v3_Scale);
+		desired_Object->set_Rotation(v3_Orientation);
+		desired_Object->set_Origin(v3_Origin);
+		desired_Object->set_ObjectID(i_Incrementor);
+		desired_Object->setMax(i_maxParticles);
+		desired_Object->set_Range(v3_Range);
+		desired_Object->set_Particle_Speed(v3_Speed);
+		desired_Object->set_Colour(v3_Colour);
+		desired_Object->set_Life(life);
+
+		i_Incrementor++;
 	}
 
 

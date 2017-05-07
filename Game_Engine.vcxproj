@@ -183,6 +183,7 @@
     <ClCompile Include="src\Engine\GUI\Tile.cpp" />
     <ClCompile Include="src\Engine\Lighting\Light.cpp" />
     <ClCompile Include="src\Engine\Lighting\Point_Light.cpp" />
+    <ClCompile Include="src\Engine\Loaders\GUILoader.cpp" />
     <ClCompile Include="src\Engine\Loaders\Loader.cpp" />
     <ClCompile Include="src\Engine\Loaders\PrefabLoader.cpp" />
     <ClCompile Include="src\Engine\Loaders\SceneLoader.cpp" />
@@ -251,6 +252,7 @@
     <ClInclude Include="include\Engine\GUI\Tile.h" />
     <ClInclude Include="include\Engine\Lighting\Light.h" />
     <ClInclude Include="include\Engine\Lighting\Point_Light.h" />
+    <ClInclude Include="include\Engine\Loaders\GUILoader.h" />
     <ClInclude Include="include\Engine\Loaders\Loader.h" />
     <ClInclude Include="include\Engine\Loaders\PrefabLoader.h" />
     <ClInclude Include="include\Engine\Loaders\SceneLoader.h" />

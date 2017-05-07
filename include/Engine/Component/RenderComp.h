@@ -21,7 +21,7 @@ public:
 	RenderComp(const RenderComp &p_NewComp_In);
 	std::string get_Type();
 	virtual void render(int i_DrawMode_In, int i_DrawShape_In, Shader* p_Shader_In) = 0; //Render
-	virtual void renderInstanced(int draw_Mode_In, int draw_Shape_In, Shader* p_Shader_In, int max, int count, float positions[], int VAO_In, int buff_In, int size_In) = 0;
+	virtual void renderInstanced(int draw_Mode_In, int draw_Shape_In, Shader * p_Shader_In, int max, int count, float positions[], glm::vec3 colour_In) = 0;
 
 	void set_Mesh(Mesh* p_Mesh_In);
 	void set_Colour(glm::vec3 rgb_Colour_In);

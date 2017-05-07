@@ -357,6 +357,9 @@
     <ClCompile Include="src\Engine\Loaders\StatsLoader.cpp">
       <Filter>Source Files\Engine\Loaders</Filter>
     </ClCompile>
+    <ClCompile Include="src\Engine\Loaders\GUILoader.cpp">
+      <Filter>Source Files\Engine\Loaders</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Engine\App\Application.h">
@@ -558,6 +561,9 @@
       <Filter>Header Files\Engine\Stats</Filter>
     </ClInclude>
     <ClInclude Include="include\Engine\Loaders\StatsLoader.h">
+      <Filter>Header Files\Engine\Loaders</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Engine\Loaders\GUILoader.h">
       <Filter>Header Files\Engine\Loaders</Filter>
     </ClInclude>
   </ItemGroup>

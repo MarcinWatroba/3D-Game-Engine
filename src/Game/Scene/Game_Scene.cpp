@@ -40,7 +40,10 @@ void Game_Scene::init()
 		po_StatsLoader = new StatsLoader("assets/stats.xml");
 		po_PrefabLoader = new PrefabLoader("assets/Prefabs.xml", po_Loader, po_StatsLoader);
 		o_SceneLoader = new SceneLoader(levelList[currentLevel].c_str(), po_Loader, po_PrefabLoader, mspo_Objects, *snd_Audio);
-		
+		for (unsigned int i = 0; i < 3; i++)
+		{
+			depth[i] = o_SceneLoader->setup_FBO();
+		}
 		firstTime = false;
 	}
 
@@ -79,10 +82,7 @@ void Game_Scene::init()
 		light[i] = o_SceneLoader->get_LightPosition(i);
 		radius[i] = o_SceneLoader->get_LightRadius(1);
 	}
-	for (unsigned int i = 0; i < 3; i++)
-	{
-		depth[i] = o_SceneLoader->setup_FBO();
-	}
+
 
 	glUseProgram(po_Loader->get_Shader("0")->get_Program());
 	o_SceneLoader->set_LightAmount(po_Loader->get_Shader("0"));

@@ -4,6 +4,9 @@
 #include <Engine\Game_Objects\GameObject_3D.h>
 #include <Engine\Component\Transform_3D.h>
 #include <Engine\Component\RenderComp_3D.h>
+#include <Engine\Game_Objects\GameObject_Instanced.h>
+#include <Engine\Component\Transform_Instanced.h>
+#include <Engine\Component\RenderComp_Instanced.h>
 #include <Engine\Lighting\Point_Light.h>
 #include <Engine\Loaders\StatsLoader.h>
 #include <Engine\Stats\Stats.h>
@@ -12,6 +15,10 @@
 #include <Engine\Component\BoxCollider_3D.h>
 #include <Engine\Component\Respond_Movement.h>
 #include <Game\AIController\AIController.h>
+#include <Engine\GUI\Button.h>
+#include <Engine\GUI\Text.h>
+#include <Engine\GUI\Textbox.h>
+#include <Engine\GUI\Tile.h>
 
 PrefabLoader::PrefabLoader(const char * pc_FileName_In, Loader * po_Loader_In, StatsLoader* po_StatsLoader_In)
 {
@@ -107,6 +114,59 @@ PrefabLoader::PrefabLoader(const char * pc_FileName_In, Loader * po_Loader_In, S
 			object->set_Tag(s_Tag);
 		}
 	}
+	for (tinyxml2::XMLElement* it = body->FirstChildElement("new_ObjectParticle"); it != nullptr; it = it->NextSiblingElement("new_ObjectParticle"))
+	{
+		std::cout << "Adding new particles to the scene..." << "\n";
+		std::string s_ObjectName = it->Attribute("name");
+		//Add variables
+		std::string s_Components = it->Attribute("component");
+		std::string i_MeshID = it->Attribute("mesh_ID");
+		std::string i_DiffuseID = it->Attribute("diffuse_ID");
+		glm::vec2 v2_Tiling = to2DVector(it->Attribute("texture_Tiling"));
+		std::string s_Tag = it->Attribute("tag");
+		glm::vec3 origin = to3DVector(it->Attribute("origin"));
+		glm::vec3 position = to3DVector(it->Attribute("position"));
+		glm::quat quat_Orientation = toQuat(it->Attribute("orientation"));
+		glm::vec3 scale = to3DVector(it->Attribute("scale"));
+
+		//Typical process of adding new 3D object
+		mipo_Prefabs.insert(std::pair<std::string, Game_Object*>(s_ObjectName, new GameObject_Instanced()));
+		auto object = static_cast<GameObject_Instanced*>(mipo_Prefabs.find(s_ObjectName)->second);
+		object->set_Name(s_ObjectName);
+		object->set_Prefab(s_ObjectName);
+		object->add_Component("Mesh_Instanced", po_Loader_In->get_Mesh(i_MeshID));
+		object->add_Component("Transform_Instanced", new Transform_Instanced());
+		object->add_Component("RenderComp_Instanced", new RenderComp_Instanced());
+
+		object->set_Position(position);
+		object->set_Origin(origin);
+		object->set_Rotation(quat_Orientation);
+		object->set_Scale(scale);
+		object->add_Texture("Diffuse_Map", po_Loader_In->get_Texture(i_DiffuseID));
+		object->set_Tiles(v2_Tiling);
+
+		object->set_Tag(s_Tag);
+
+
+	}
+
+	for (tinyxml2::XMLElement* it = body->FirstChildElement("new_Object2D"); it != nullptr; it = it->NextSiblingElement("new_Object2D"))
+	{
+		std::cout << "Adding new GUI element to the scene..." << "\n";
+
+		//Extract data
+		std::string s_GUIName = it->Attribute("name");
+		std::string s_GUIType = it->Attribute("type");
+		std::string s_FontID = it->Attribute("font_ID");
+		std::string s_MeshID = it->Attribute("mesh_ID");
+		std::string s_TextureID = it->Attribute("texture_ID");
+
+		if (s_GUIType == "Button") mipo_Prefabs.insert(std::make_pair(s_GUIName, new Button(0, "", po_Loader_In->get_Font(s_FontID), po_Loader_In->get_Mesh(s_MeshID), po_Loader_In->get_Texture(s_TextureID), glm::vec2(0.f), glm::vec2(0.f), 0.f, 0.f, false, "")));
+		else if (s_GUIType == "Text") mipo_Prefabs.insert(std::make_pair(s_GUIName, new Text(0, "", glm::vec2(0.f), 0.f, po_Loader_In->get_Font(s_FontID), 0.f, false, "")));
+		else if (s_GUIType == "Textbox") mipo_Prefabs.insert(std::make_pair(s_GUIName, new Textbox(0, po_Loader_In->get_Font(s_FontID), po_Loader_In->get_Mesh(s_MeshID), po_Loader_In->get_Texture(s_TextureID), glm::vec2(0.f), glm::vec2(0.f), 0.f, 0.f, false, "")));
+		else if (s_GUIType == "Tile") mipo_Prefabs.insert(std::make_pair(s_GUIName, new Tile(0, "", po_Loader_In->get_Mesh(s_MeshID), po_Loader_In->get_Texture(s_TextureID), glm::vec2(0.f), glm::vec2(0.f), 0, 0.f)));
+	}
+
 
 	body = object_File.FirstChildElement("lights");
 
@@ -141,6 +201,7 @@ PrefabLoader::PrefabLoader(const char * pc_FileName_In, Loader * po_Loader_In, S
 			//Point light
 			std::string s_Name = it->Attribute("name");
 			v3_Position = to3DVector(it->Attribute("position"));
+			glm::vec3 v3_Position = to3DVector(it->Attribute("position"));
 			v3_Ambient = to3DVector(it->Attribute("ambient"));
 			v3_Diffuse = to3DVector(it->Attribute("diffuse"));
 			v3_Specular = to3DVector(it->Attribute("specular"));
@@ -152,9 +213,11 @@ PrefabLoader::PrefabLoader(const char * pc_FileName_In, Loader * po_Loader_In, S
 			point_Light->add_Component("Transform_3D", new Transform_3D());
 			point_Light->add_Component("RenderComp_3D", new RenderComp_3D());
 			point_Light->set_Position(v3_Position);
-			point_Light->set_RenderStatus(false);
-			point_Light->add_Texture("Diffuse_Map", po_Loader_In->get_Texture("7"));
-			point_Light->add_Texture("Specular_Map", po_Loader_In->get_Texture("7"));
+			point_Light->set_Scale(glm::vec3(0.5f, 0.5f, 0.5f));
+			point_Light->set_Rotation(glm::quat(1.0f, 0.0f, 0.0f, 0.0f));
+			point_Light->set_RenderStatus(true);
+			point_Light->add_Texture("Diffuse_Map", po_Loader_In->get_Texture("34"));
+			point_Light->add_Texture("Specular_Map", po_Loader_In->get_Texture("34"));
 			point_Light->set_Tiles(glm::vec2(1.f, 1.f));
 			point_Light->set_Shininess(1.f);
 			point_Light->set_Tag(s_Tag);

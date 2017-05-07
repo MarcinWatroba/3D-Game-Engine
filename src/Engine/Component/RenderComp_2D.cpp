@@ -17,8 +17,9 @@ std::string RenderComp_2D::get_Type()
 	return "RenderComp_2D";
 }
 
-void RenderComp_2D::renderInstanced(int draw_Mode_In, int draw_Shape_In, Shader * p_Shader_In, int max, int count, float positions[], int VAO_In, int buff_In, int size_In)
-{}
+void RenderComp_2D::renderInstanced(int draw_Mode_In, int draw_Shape_In, Shader * p_Shader_In, int max, int count, float positions[], glm::vec3 colour_In)
+{
+}
 
 void RenderComp_2D::render(int i_DrawMode_In, int i_DrawShape_In, Shader * p_Shader_In)
 {
@@ -38,7 +39,7 @@ void RenderComp_2D::render(int i_DrawMode_In, int i_DrawShape_In, Shader * p_Sha
 
 	//Draw
 	glBindVertexArray(p_Mesh->get_VAO());
-	glDrawElements(GL_TRIANGLES, p_Mesh->get_SizeOfIndices(), GL_UNSIGNED_INT, 0);
+	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 	glBindVertexArray(0);
 }
 
