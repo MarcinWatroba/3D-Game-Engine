@@ -99,5 +99,5 @@ void SceneSaver::save(std::map<std::string, Game_Object*>& mspo_GameObjects_In, 
 		}
 	}
 
-	xmlDoc.SaveFile("lol.xml");
+	xmlDoc.SaveFile(s_SceneName_In.c_str());
 }
