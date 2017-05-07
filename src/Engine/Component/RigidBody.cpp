@@ -80,7 +80,7 @@ void RigidBody::update(glm::vec3 &pos)
 		}
 		else
 		{
-			if (pos.y <= 1.5)
+			if (pos.y <= 0.5)
 			{
 				jumpVelocity = 0;
 				grounded = true;
