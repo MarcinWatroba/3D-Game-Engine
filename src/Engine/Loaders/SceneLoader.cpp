@@ -54,8 +54,8 @@ SceneLoader::SceneLoader(const char* pc_FileName_In, Loader* po_Loader_In, Prefa
 		glm::quat v3_Orientation = toQuat(it->Attribute("orientation"));
 
 		auto desired_Prefab = static_cast<GameObject_3D*>(po_PrefLoader_In->get_Prefab(s_Prefab));
-		mspo_GameObjects_In.insert(std::pair<std::string, Game_Object*>(s_ObjectName, new GameObject_3D(*desired_Prefab)));
-		auto desired_Object = static_cast<GameObject_3D*>(mspo_GameObjects_In.find(s_ObjectName)->second);
+		auto desired_Object = new GameObject_3D(*desired_Prefab);
+		mspo_GameObjects_In.insert(std::pair<std::string, Game_Object*>(s_ObjectName, desired_Object));
 
 		if (!desired_Prefab->get_ChildrenNames().empty())
 		{
