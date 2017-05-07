@@ -169,7 +169,7 @@ void GameObject_Instanced::update_Particles(float t, float y, float z, glm::vec3
 			p.life -= t;
 
 			if (p.life > 0.0f) {
-				// Simulate simple physics : gravity only, no collisions
+				// updating particle position and speed
 
 				p.speed = glm::vec3(particle_Speed.x, particle_Speed.y, particle_Speed.z);
 				//p.speed += glm::vec3(0.0f, -3.81f, 0.0f) * (float)t * 0.5f;

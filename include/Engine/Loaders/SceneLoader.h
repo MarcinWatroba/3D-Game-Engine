@@ -71,8 +71,11 @@ public:
 
 	//Set amount of lights to shader
 	glm::vec3 get_LightPosition(int i);
+	//get light radius
 	float get_LightRadius(int i);
 	void set_LightAmount(Shader* p_Shader_In);
+	//setup FBO for depth buffer, shadow cube maps.
 	glm::uvec2 setup_FBO();
+	//preapare depth cube for light that position is set to this method.
 	void prepare_DepthCube(Shader * p_Shader_In, glm::vec3 light_Pos, glm::uvec2 ui_Depth_In, unsigned int tex_Num);
 };
