@@ -28,11 +28,6 @@ std::string AIController::get_Type()
 	return "AI_Controller";
 }
 
-void AIController::attachToGameObject(GameObject_3D * character)
-{
-	data.character = character;
-}
-
 void AIController::Update()
 {
 	if (data.character == nullptr)

@@ -57,7 +57,10 @@ void Game_Scene::init()
 	i_numEnemies = 0;
 	for (auto const& pair : mspo_Objects)
 	{
-		if (pair.second->get_Tag() == "Enemy") { i_numEnemies++; }
+		if (pair.second->get_Tag() == "Enemy")
+		{
+			i_numEnemies++;
+		}
 	}
 
 	
@@ -307,6 +310,7 @@ void Game_Scene::update_Scene(GLfloat f_Delta_In, glm::vec2 v2_MousePos_In)
 				po_ccd->deltaTime = f_Delta_In;
 				po_ccd->player = player;
 				po_ccd->loader = po_Loader;
+				po_ccd->character = po_GameObject;
 				//update
 				po_AIController->Update();
 			}
