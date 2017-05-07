@@ -11,8 +11,9 @@ class AIController : public FSM<AIController_Data>, public Component
 private:
 	std::vector<FSM_State<AIController_Data>*> stateList;
 public:
+	void attachToGameObject(GameObject_3D * character);
 	void Update();
 	std::string get_Type();
-	AIController(GameObject_3D * character);
+	AIController();
 	~AIController();
 };

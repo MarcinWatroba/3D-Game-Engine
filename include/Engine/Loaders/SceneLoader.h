@@ -43,22 +43,7 @@ private:
 
 
 
-	//Add children
-	void add_Components(GameObject_3D* po_GameObject_In, std::string s_ToProcess_In);
-
-	void add_Components_Instanced(GameObject_Instanced * po_GameObject_In, std::string s_ToProcess_In);
-
-
-
-	//Identify the component
-	void identify_Component(GameObject_3D* po_GameObject_In, std::string& s_Result_In);
-
-	void identify_Component_Instanced(GameObject_Instanced * po_GameObject_In, std::string & s_ToProcess_In);
-
 	int count;
-
-	//Add children
-	void add_Children(std::vector<std::string>& vs_Children_In, std::string s_ToProcess_In);
 
 public:
 	//Constructor
