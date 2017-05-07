@@ -6,6 +6,12 @@ void Scene::pass_Loader(Loader* po_Loader_In)
 	po_Loader = po_Loader_In;
 }
 
+// Pass Audio
+void Scene::pass_Audio(std::map<std::string, Sound*>* po_Sound_In)
+{
+	//snd_Audio = po_Sound_In;
+}
+
 //Is loader empty?
 bool Scene::is_LoaderEmpty()
 {
@@ -23,6 +29,11 @@ void Scene::lock_mouse(bool b_Cond_In)
 bool Scene::is_MouseLocked()
 {
 	return b_LockMouse;
+}
+
+void Scene::set_WindowSize(glm::vec2 v2_WindowSize_In)
+{
+	v2_WindowSize = v2_WindowSize_In;
 }
 
 //Extract state

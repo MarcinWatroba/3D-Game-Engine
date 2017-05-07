@@ -1,6 +1,20 @@
 #include <Engine/Component/RenderComp.h>
 #include <Engine/Creators/Texture.h>
 
+RenderComp::RenderComp() {};
+RenderComp::~RenderComp() {};
+RenderComp::RenderComp(const RenderComp & p_NewComp_In)
+{
+	v3_Colour = p_NewComp_In.v3_Colour;
+	v2_Tiling = p_NewComp_In.v2_Tiling;
+	p_Mesh = p_NewComp_In.p_Mesh;
+	mso_Textures = p_NewComp_In.mso_Textures;
+}
+std::string RenderComp::get_Type()
+{
+	return "RenderComp";
+}
+
 glm::vec2 RenderComp::get_Tiles()
 {
 	return v2_Tiling;
@@ -31,9 +45,9 @@ void RenderComp::add_Texture(std::string s_Name_In, Texture* p_Texture_In)
 	mso_Textures.insert(std::pair<std::string, Texture*>(s_Name_In, p_Texture_In));
 }
 
-unsigned int RenderComp::get_Texture(std::string s_Name_In)
+Texture* RenderComp::get_Texture(std::string s_Name_In)
 {
-	auto found = mso_Textures.find(s_Name_In)->second->get_Texture();
+	auto found = mso_Textures.find(s_Name_In)->second;
 	return found;
 }
 

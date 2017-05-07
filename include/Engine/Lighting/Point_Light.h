@@ -5,33 +5,32 @@
 class Point_Light : public Light
 {
 private:
+
+	float f_radius;
 	//Attenutation constant
-	float f_Constant;
 
-	//Attenuation linear
-	float f_Linear;
 
-	//Attenuation quadratic
-	float f_Quadratic;
-
-	unsigned int i_ID; // ID of the point light
+	int i_ID; // ID of the point light
 
 public:
 	//Constructor
 	Point_Light() {};
+	Point_Light(const Point_Light &point_Light);
+	std::string get_Type();
 
 	//Main constructor
-	Point_Light(glm::vec3 v3_Ambient_In, glm::vec3 v3_Diffuse_In, glm::vec3 v3_Specular_In, float f_Constant_In, float f_Linear_In, float f_Quadratic_In, unsigned int i_ID_In);
+	Point_Light(glm::vec3 v3_Ambient_In, glm::vec3 v3_Diffuse_In, glm::vec3 v3_Specular_In, float f_Radius_In);
+	void set_ID(int i_ID_In);
 
-	//Set attenutation constant
-	void set_Constant(float f_Constant_In);
-
-	//Set attenutation linear
-	void set_Linear(float f_Linear_In);
-
-	//Set attenuation quadratic
-	void set_Quadratic(float f_Quadratic_In);
+	void set_Radius(float f_Radius_In);
+	float get_Radius();
 
 	//Update light
 	void update_Shader(Shader* p_Shader_In);
+
+	int get_ID();
+
+	float get_Constant();
+	float get_Linear();
+	float get_Quadratic();
 };

@@ -17,3 +17,8 @@ bool Program_Template::is_MouseLocked()
 {
 	return b_LockMouse;
 }
+
+void Program_Template::set_WindowSize(glm::vec2 v2_WindowSize_In)
+{
+	v2_WindowSize = v2_WindowSize_In;
+}

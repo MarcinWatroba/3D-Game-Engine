@@ -2,14 +2,36 @@
 #include <Engine\Mesh\Mesh_3D.h>
 #include <Engine\Creators\Shader.h>
 #include <glad\glad.h>
+#include <Engine\Creators\Texture.h>
+
+RenderComp_3D::RenderComp_3D() {};
+RenderComp_3D::~RenderComp_3D() {};
+RenderComp_3D::RenderComp_3D(const RenderComp_3D & p_NewComp_In) : RenderComp(p_NewComp_In)
+{
+	f_Shininess = p_NewComp_In.f_Shininess;
+}
+std::string RenderComp_3D::get_Type()
+{
+	return "RenderComp_3D";
+}
+
+void RenderComp_3D::renderDepth(int draw_Mode_In, int draw_Shape_In, Shader* p_Shader_In)
+{
+	glBindVertexArray(p_Mesh->get_VAO());
+	glDrawElements(GL_TRIANGLES, p_Mesh->get_SizeOfIndices(), GL_UNSIGNED_INT, 0);
+}
+
+void RenderComp_3D::renderInstanced(int draw_Mode_In, int draw_Shape_In, Shader * p_Shader_In, int max, int count, float positions[], glm::vec3 colour_In)
+{
+}
 
 void RenderComp_3D::render(int draw_Mode_In, int draw_Shape_In, Shader* p_Shader_In)
 {
 	//Bind lightning maps
 	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, get_Texture("Diffuse_Map"));
+	glBindTexture(GL_TEXTURE_2D, get_Texture("Diffuse_Map")->get_Texture());
 	glActiveTexture(GL_TEXTURE1);
-	glBindTexture(GL_TEXTURE_2D, get_Texture("Specular_Map"));
+	glBindTexture(GL_TEXTURE_2D, get_Texture("Specular_Map")->get_Texture());
 
 	//Pass texture to the shader
 	GLint diffuseLoc = glGetUniformLocation(p_Shader_In->get_Program(), "material.diffuse");
@@ -25,7 +47,6 @@ void RenderComp_3D::render(int draw_Mode_In, int draw_Shape_In, Shader* p_Shader
 	//Pass them to shaders
 	glUniform2f(tileLoc, get_Tiles().x, get_Tiles().y);
 	glUniform1f(matShiniessLoc, get_Shininess());
-
 	//Draw
 	glBindVertexArray(p_Mesh->get_VAO());
 	glDrawElements(GL_TRIANGLES, p_Mesh->get_SizeOfIndices(), GL_UNSIGNED_INT, 0);
