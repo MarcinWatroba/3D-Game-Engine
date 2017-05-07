@@ -653,7 +653,8 @@ void Scene_3D::process_2DClick(int i_ID_In)
 				if (pair.first == "SaveLoad_Textbox")
 				{
 					auto textBox = static_cast<Textbox*>(pair.second);
-					if (textBox->get_Text() != "") save->save(mspo_Objects, textBox->get_Text());
+					std::string s_Directory = "assets/scenes/" + textBox->get_Text();
+					if (textBox->get_Text() != "") save->save(mspo_Objects, s_Directory);
 					pickedID = -1;
 				}
 			}
