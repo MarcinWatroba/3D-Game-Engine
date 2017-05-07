@@ -18,7 +18,7 @@
 
 Game_Scene::Game_Scene()
 {
-	//levelList.push_back("assets/scenes/Robot_Scene.xml");
+	levelList.push_back("assets/scenes/Robot_Scene.xml");
 	levelList.push_back("assets/scenes/Kitchen.xml");
 }
 
@@ -39,13 +39,13 @@ void Game_Scene::init()
 		currentLevel = 0;
 		po_StatsLoader = new StatsLoader("assets/stats.xml");
 		po_PrefabLoader = new PrefabLoader("assets/Prefabs.xml", po_Loader, po_StatsLoader);
-		o_SceneLoader = new SceneLoader(levelList[currentLevel].c_str(), po_Loader, po_PrefabLoader, mspo_Objects, *snd_Audio);
+		o_SceneLoader = new SceneLoader(levelList[currentLevel].c_str(), po_Loader, po_PrefabLoader, mspo_Objects);
 		
 		firstTime = false;
 	}
-
+	//snd_Audio = ;
 	// Play background Audio - loaded via XML
-	snd_Audio->find("rain")->second->Play();
+	po_Loader->getAudioMap().find("0")->second->Play();
 
 	//get player pointer
 	findPlayer();
@@ -156,7 +156,7 @@ void Game_Scene::keyboard_Input(GLfloat f_Delta_In, GLboolean* pab_KeyArray_In, 
 		player->move(glm::vec3(0, 0, 1), -moveSpeed * f_Delta_In);
 		if (walkCount > walkRate)
 		{
-			snd_Audio->find("walking")->second->Play();
+			po_Loader->getAudioMap().find("1")->second->Play();
 			walkCount = 0;
 		}
 		walkCount++;
@@ -166,7 +166,7 @@ void Game_Scene::keyboard_Input(GLfloat f_Delta_In, GLboolean* pab_KeyArray_In, 
 		player->move(glm::vec3(0, 0, 1), moveSpeed * f_Delta_In);
 		if (walkCount > walkRate)
 		{
-			snd_Audio->find("walking")->second->Play();
+			po_Loader->getAudioMap().find("1")->second->Play();
 			walkCount = 0;
 		}
 		walkCount++;
@@ -174,7 +174,7 @@ void Game_Scene::keyboard_Input(GLfloat f_Delta_In, GLboolean* pab_KeyArray_In, 
 
 	if (pab_KeyArray_In[GLFW_KEY_SPACE])
 	{
-		static_cast<RigidBody*>(player->get_Components().at("RigidBody"))->setJumpForce(0.13f);
+		static_cast<RigidBody*>(player->get_Components().at("RigidBody"))->setJumpForce(1);
 		static_cast<RigidBody*>(player->get_Components().at("RigidBody"))->setGrounded(false);
 	}
 
@@ -184,7 +184,7 @@ void Game_Scene::keyboard_Input(GLfloat f_Delta_In, GLboolean* pab_KeyArray_In, 
 		player->move(glm::vec3(1, 0, 0), -moveSpeed * f_Delta_In);
 		if (walkCount > walkRate)
 		{
-			snd_Audio->find("walking")->second->Play();
+			po_Loader->getAudioMap().find("1")->second->Play();
 			walkCount = 0;
 		}
 		walkCount++;
@@ -194,7 +194,7 @@ void Game_Scene::keyboard_Input(GLfloat f_Delta_In, GLboolean* pab_KeyArray_In, 
 		player->move(glm::vec3(1, 0, 0), moveSpeed * f_Delta_In);
 		if (walkCount > walkRate)
 		{
-			snd_Audio->find("walking")->second->Play();
+			po_Loader->getAudioMap().find("1")->second->Play();
 			walkCount = 0;
 		}
 		walkCount++;
@@ -211,7 +211,7 @@ void Game_Scene::mouse_Input(GLboolean* pab_MouseArray_In, GLboolean* pab_Locked
 
 	if (pab_MouseArray_In[GLFW_MOUSE_BUTTON_1])
 	{
-		player->createBullet(new Bullet("Bullet", (Mesh_3D*)po_Loader->get_Mesh("7"), static_cast<GameObject_3D*>(mspo_Objects.find("Robot")->second), po_Loader->get_Texture("24"), po_Loader->get_Texture("7")),snd_Audio->find("shooting_pistol")->second);
+		player->createBullet(new Bullet("Bullet", (Mesh_3D*)po_Loader->get_Mesh("7"), static_cast<GameObject_3D*>(mspo_Objects.find("Robot")->second), po_Loader->get_Texture("24"), po_Loader->get_Texture("7")), po_Loader->getAudioMap().find("2")->second);
 		player->setFiring(true);
 		shooting = true;
 	}
@@ -495,7 +495,7 @@ void Game_Scene::load_Scene(int i)
 	
 	//Load the scene
 	std::string sLevel = levelList.at(i);
-    o_SceneLoader = new SceneLoader(sLevel.c_str(), po_Loader, po_PrefabLoader, mspo_Objects, *snd_Audio);
+    o_SceneLoader = new SceneLoader(sLevel.c_str(), po_Loader, po_PrefabLoader, mspo_Objects);
 
 }
 

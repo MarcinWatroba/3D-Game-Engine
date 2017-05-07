@@ -157,9 +157,32 @@ void Loader::ParseXML_Resources(const char* pc_FileName)
 		// Create variables
 		std::string i_ID = i->Attribute("ID");
 		std::string s_Name = i->Attribute("name");
+		float f_Volume;
+		std::string s_Object;
+		glm::vec3 v3_Position;
+		bool b_loop;
+		bool b_threeD;
+		bool b_stream;
+		f_Volume = atof(i->Attribute("volume"));
+		// If Object is not empty then...
+		v3_Position = to3DVector(i->Attribute("position"));
 
+		std::string s_temp = i->Attribute("loop");
+		b_loop = (s_temp == "true");
+
+		s_temp = i->Attribute("threeD");
+		b_threeD = (s_temp == "true");
+
+		s_temp = i->Attribute("stream");
+		b_stream = (s_temp == "true");
 		// Add Audio
 		snd_Audio.insert(std::make_pair(i_ID, new Sound(s_Name.c_str())));
+
+		// Add the sound with the above data
+		auto sound = static_cast<Sound*>(snd_Audio.find(i_ID)->second);
+		sound->Load(b_threeD, b_loop, b_stream);
+		sound->SetPosition(v3_Position);
+		sound->SetVolume(f_Volume);
 	}
 }
 
