@@ -515,9 +515,6 @@
     <ClInclude Include="include\Editor\Editor\Editor.h">
       <Filter>Header Files\Editor\Editor</Filter>
     </ClInclude>
-    <ClInclude Include="include\Editor\Scene\Scene_3D.h">
-      <Filter>Header Files\Editor\Scene</Filter>
-    </ClInclude>
     <ClInclude Include="include\Engine\Loaders\SceneSaver.h">
       <Filter>Header Files\Engine\Loaders</Filter>
     </ClInclude>
@@ -565,6 +562,9 @@
     </ClInclude>
     <ClInclude Include="include\Engine\Loaders\GUILoader.h">
       <Filter>Header Files\Engine\Loaders</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Editor\Scene\Scene_3D.h">
+      <Filter>Header Files\Editor\Scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

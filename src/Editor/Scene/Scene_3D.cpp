@@ -9,6 +9,7 @@
 #include <iostream>
 #include <Editor\Objects\Arrow_3D.h>
 #include <Engine\Game_Objects\Camera_2D.h>
+#include <Engine\Lighting\Point_Light.h>
 #include <Engine\GUI\Button.h>
 #include <Engine\GUI\Textbox.h>
 #include <Engine\GUI\Text.h>
@@ -22,7 +23,7 @@ void Scene_3D::add_Arrows()
 	glm::quat quat_BlueArrow = glm::angleAxis(glm::radians(-90.f), glm::vec3(1.f, 0.f, 0.f));
 
 	mspo_Objects.insert(std::pair<std::string, Game_Object*>("Red Arrow", new Arrow_3D(1000000, "Red Arrow", static_cast<Mesh_3D*>(po_Loader->get_Mesh("8")), quat_RedArrow, po_Loader->get_Texture("27"), po_Loader->get_Texture("7"))));
-	mspo_Objects.insert(std::pair<std::string, Game_Object*>("Green Arrow", new Arrow_3D(1000001, "Green Arrow", static_cast<Mesh_3D*>(po_Loader->get_Mesh("8")) , quat_GreenArrow, po_Loader->get_Texture("28"), po_Loader->get_Texture("7"))));
+	mspo_Objects.insert(std::pair<std::string, Game_Object*>("Green Arrow", new Arrow_3D(1000001, "Green Arrow", static_cast<Mesh_3D*>(po_Loader->get_Mesh("8")), quat_GreenArrow, po_Loader->get_Texture("28"), po_Loader->get_Texture("7"))));
 	mspo_Objects.insert(std::pair<std::string, Game_Object*>("Blue Arrow", new Arrow_3D(1000002, "Blue Arrow", static_cast<Mesh_3D*>(po_Loader->get_Mesh("8")), quat_BlueArrow, po_Loader->get_Texture("29"), po_Loader->get_Texture("7"))));
 }
 
@@ -115,7 +116,7 @@ std::string Scene_3D::to3DVectorString(glm::vec3 pc_Vector3D_In)
 
 void Scene_3D::process_3DClick(float f_Delta_In, glm::vec2 v2_MousePos_In)
 {
-	if (b_Conditions[Conditions::Arrow_Moving]&& !b_Conditions[Conditions::Stop_Arrow])
+	if (b_Conditions[Conditions::Arrow_Moving] && !b_Conditions[Conditions::Stop_Arrow])
 	{
 		switch (pickedID)
 		{
@@ -441,6 +442,9 @@ void Scene_3D::process_2DClick(int i_ID_In)
 	case 1033: // Textbox add name!
 		b_Conditions[Conditions::ListenToKeyboard] = true;
 		break;
+	case 1038: // Textbox add name!
+		b_Conditions[Conditions::ListenToKeyboard] = true;
+		break;
 	}
 
 	if (i_ID_In == 1025)
@@ -452,9 +456,7 @@ void Scene_3D::process_2DClick(int i_ID_In)
 		std::string s_Name;
 		std::string s_PrefabName;
 		b_IsEmpty[0] = true;
-		for (auto const& pair : mspo_Objects)
-		{
-			if (pair.second->get_Tag() == "GUI" && pair.second->get_ObjectType() == "Hidden_Add")
+		for (auto const& pair : mspo_Objects) if (pair.second->get_Tag() == "GUI" && pair.second->get_ObjectType() == "Hidden_Add")
 			{
 				if (pair.first == "Add_ObjectTextbox")
 				{
@@ -487,8 +489,7 @@ void Scene_3D::process_2DClick(int i_ID_In)
 					b_IsEmpty[4] = false;
 				}
 			}
-		}
-
+		
 		auto does_ObjectExist = mspo_Objects.find(s_Name);
 		auto does_PrefabExist = po_PrefabLoader->get_PrefabMap().find(s_PrefabName);
 
@@ -577,7 +578,7 @@ void Scene_3D::process_2DClick(int i_ID_In)
 				{
 					auto textBox = static_cast<Textbox*>(pair.second);
 					v3_Origin = to3DVector(textBox->get_Text().c_str());
-					if (textBox->get_Text() != "") picked_Object->set_Origin(v3_Origin);		
+					if (textBox->get_Text() != "") picked_Object->set_Origin(v3_Origin);
 				}
 				else if (pair.first == "Set_PositionTextbox")
 				{
@@ -622,6 +623,43 @@ void Scene_3D::process_2DClick(int i_ID_In)
 			}
 		}
 	}
+	if (i_ID_In == 1036)
+	{
+		for (auto const& pair : mspo_Objects)
+		{
+			if (pair.second->get_Tag() == "GUI" && pair.second->get_ObjectType() == "Universal")
+			{
+				if (pair.first == "SaveLoad_Textbox")
+				{
+					auto textBox = static_cast<Textbox*>(pair.second);
+					if (textBox->get_Text() != "")
+					{
+						b_Conditions[Conditions::ReloadScene] = true;
+						s_Directory = "assets/scenes/" + textBox->get_Text();
+						pickedID = -1;
+						break;
+					}
+				}
+			}
+		}
+	}
+
+	if (i_ID_In == 1037)
+	{
+		for (auto const& pair : mspo_Objects)
+		{
+			if (pair.second->get_Tag() == "GUI" && pair.second->get_ObjectType() == "Universal")
+			{
+				if (pair.first == "SaveLoad_Textbox")
+				{
+					auto textBox = static_cast<Textbox*>(pair.second);
+					if (textBox->get_Text() != "") save->save(mspo_Objects, textBox->get_Text());
+					pickedID = -1;
+				}
+			}
+		}
+	}
+
 }
 
 //Initialize everything once
@@ -630,16 +668,18 @@ void Scene_3D::init()
 	//Initialize
 	lock_mouse(true);
 	b_Conditions[0] = false;
+	b_Conditions[Conditions::Selection] = true;
+	b_Conditions[Conditions::ListenToKeyboard] = false;
 
 	camera_3D = new Camera_3D(45.f, v2_WindowSize.x / v2_WindowSize.y, 0.1f, 1000.f);
 	camera_3D->set_CameraPos(glm::vec3(0.f, -20.f, 0.f));
 	camera_2D = new Camera_2D(0, v2_WindowSize.x, v2_WindowSize.y, 0);
-
+	if (s_Directory == "") s_Directory = "assets/scenes/Robot_Scene.xml";
 	//Load the scene
 	po_StatsLoader = nullptr;
 	po_PrefabLoader = new PrefabLoader("assets/Prefabs.xml", po_Loader, po_StatsLoader);
 	po_GUILoader = new GUILoader("assets/gui/GUI_Editor.xml", po_PrefabLoader, mspo_Objects, v2_WindowSize);
-	o_SceneLoader = new SceneLoader("assets/scenes/Robot_Scene.xml", po_Loader, po_PrefabLoader, mspo_Objects);
+	o_SceneLoader = new SceneLoader(s_Directory.c_str(), po_Loader, po_PrefabLoader, mspo_Objects);
 
 	save = new SceneSaver();
 	f_Speed = 0.f;
@@ -702,12 +742,12 @@ void Scene_3D::init()
 }
 
 //Do something with keyboard input
-void Scene_3D::keyboard_Input(GLfloat f_Delta_In, GLboolean* pab_KeyArray_In, GLboolean* pab_LockedKeys_In, int i_KeyPress_In) 
+void Scene_3D::keyboard_Input(GLfloat f_Delta_In, GLboolean* pab_KeyArray_In, GLboolean* pab_LockedKeys_In, int i_KeyPress_In)
 {
 	if (b_Conditions[Conditions::ListenToKeyboard])
 	{
 		if (pab_KeyArray_In[GLFW_KEY_LEFT_SHIFT] && !pab_LockedKeys_In[GLFW_KEY_LEFT_SHIFT]) b_Conditions[Conditions::ShiftDetected] = true;
-		
+
 		if (pab_KeyArray_In[i_KeyPress_In] && !pab_LockedKeys_In[i_KeyPress_In] && i_KeyPress_In != GLFW_KEY_LEFT_SHIFT)
 		{
 			pab_LockedKeys_In[i_KeyPress_In] = true;
@@ -741,9 +781,13 @@ void Scene_3D::keyboard_Input(GLfloat f_Delta_In, GLboolean* pab_KeyArray_In, GL
 					{
 						text_Box->add_Letter(")");
 					}
-					else if (i_KeyPress_In == GLFW_KEY_TAB || i_KeyPress_In == GLFW_KEY_CAPS_LOCK || i_KeyPress_In == 348 || 
-						     i_KeyPress_In == GLFW_KEY_UP || i_KeyPress_In == GLFW_KEY_DOWN || i_KeyPress_In == GLFW_KEY_LEFT ||
-							 i_KeyPress_In == GLFW_KEY_RIGHT || i_KeyPress_In == 92 || i_KeyPress_In == 96 || i_KeyPress_In == 267)
+					else if (b_Conditions[Conditions::ShiftDetected] && i_KeyPress_In == 45)
+					{
+						text_Box->add_Letter("_");
+					}
+					else if (i_KeyPress_In == GLFW_KEY_TAB || i_KeyPress_In == GLFW_KEY_CAPS_LOCK || i_KeyPress_In == 348 ||
+						i_KeyPress_In == GLFW_KEY_UP || i_KeyPress_In == GLFW_KEY_DOWN || i_KeyPress_In == GLFW_KEY_LEFT ||
+						i_KeyPress_In == GLFW_KEY_RIGHT || i_KeyPress_In == 92 || i_KeyPress_In == 96 || i_KeyPress_In == 267)
 					{
 						//Ignore
 					}
@@ -759,7 +803,7 @@ void Scene_3D::keyboard_Input(GLfloat f_Delta_In, GLboolean* pab_KeyArray_In, GL
 			}
 
 		}
-		if (!pab_KeyArray_In[i_KeyPress_In]) pab_LockedKeys_In[i_KeyPress_In] = false;		
+		if (!pab_KeyArray_In[i_KeyPress_In]) pab_LockedKeys_In[i_KeyPress_In] = false;
 	}
 	else
 	{
@@ -800,16 +844,6 @@ void Scene_3D::keyboard_Input(GLfloat f_Delta_In, GLboolean* pab_KeyArray_In, GL
 			pab_LockedKeys_In[GLFW_KEY_DELETE] = false;
 			b_Conditions[Conditions::Delete] = false;
 		}
-
-		if (pab_KeyArray_In[GLFW_KEY_N] && !pab_LockedKeys_In[GLFW_KEY_N])
-		{
-			auto health_Bar = static_cast<Tile*>(mspo_Objects.find("Health_Bar")->second);
-			health_Bar->set_Size(glm::vec2(health_Bar->get_Size().x - 100, health_Bar->get_Size().y));
-
-
-			pab_LockedKeys_In[GLFW_KEY_N] = true;
-		}
-		if (!pab_KeyArray_In[GLFW_KEY_N]) pab_LockedKeys_In[GLFW_KEY_N] = false;
 	}
 }
 
@@ -822,7 +856,7 @@ void Scene_3D::mouse_Input(GLboolean* pab_MouseArray_In, GLboolean* pab_LockedMo
 		pab_LockedMouse_In[GLFW_MOUSE_BUTTON_LEFT] = true;
 	}
 	if (!pab_MouseArray_In[GLFW_MOUSE_BUTTON_LEFT]) pab_LockedMouse_In[GLFW_MOUSE_BUTTON_LEFT] = false;
-	
+
 	if (pab_MouseArray_In[GLFW_MOUSE_BUTTON_LEFT] && b_Conditions[Conditions::Alt_Press])
 	{
 		lock_mouse(true);
@@ -861,12 +895,12 @@ void Scene_3D::scroll_Input(glm::vec2 v2_Scroll_In)
 {
 	if (v2_Scroll_In.y > 0)
 	{
-		camera_3D->set_Speed(f_Speed);
+		camera_3D->set_Speed(f_Speed / 10);
 		camera_3D->move_Forward();
 	}
 	else
 	{
-		camera_3D->set_Speed(f_Speed);
+		camera_3D->set_Speed(f_Speed / 10);
 		camera_3D->move_Backward();
 	}
 }
@@ -887,7 +921,7 @@ void Scene_3D::update_Scene(GLfloat f_Delta_In, glm::vec2 v2_MousePos_In)
 	if (b_Init)
 	{
 		f_Speed = 2000 * f_Delta_In;
-		
+
 		for (auto const& pair : mspo_Objects)
 		{
 			if (pair.second->get_ObjectID() == pickedID)
@@ -899,7 +933,7 @@ void Scene_3D::update_Scene(GLfloat f_Delta_In, glm::vec2 v2_MousePos_In)
 					if (picked_Object->get_Parent() != nullptr)
 					{
 						auto parent = static_cast<GameObject_3D*>(picked_Object->get_Parent());
-						static_cast<GameObject_3D*>(mspo_Objects.find("Red Arrow")->second)->set_Position(glm::vec3(parent->get_Position()));				
+						static_cast<GameObject_3D*>(mspo_Objects.find("Red Arrow")->second)->set_Position(glm::vec3(parent->get_Position()));
 						static_cast<GameObject_3D*>(mspo_Objects.find("Green Arrow")->second)->set_Position(glm::vec3(parent->get_Position()));
 						static_cast<GameObject_3D*>(mspo_Objects.find("Blue Arrow")->second)->set_Position(glm::vec3(parent->get_Position()));
 
@@ -909,10 +943,10 @@ void Scene_3D::update_Scene(GLfloat f_Delta_In, glm::vec2 v2_MousePos_In)
 					}
 					else if (picked_Object->get_Children().empty())
 					{
-						static_cast<GameObject_3D*>(mspo_Objects.find("Red Arrow")->second)->set_Position(glm::vec3(picked_Object->get_Position()));			
-						static_cast<GameObject_3D*>(mspo_Objects.find("Green Arrow")->second)->set_Position(glm::vec3(picked_Object->get_Position()));			
+						static_cast<GameObject_3D*>(mspo_Objects.find("Red Arrow")->second)->set_Position(glm::vec3(picked_Object->get_Position()));
+						static_cast<GameObject_3D*>(mspo_Objects.find("Green Arrow")->second)->set_Position(glm::vec3(picked_Object->get_Position()));
 						static_cast<GameObject_3D*>(mspo_Objects.find("Blue Arrow")->second)->set_Position(glm::vec3(picked_Object->get_Position()));
-					
+
 						static_cast<GameObject_3D*>(mspo_Objects.find("Red Arrow")->second)->set_RenderStatus(true);
 						static_cast<GameObject_3D*>(mspo_Objects.find("Green Arrow")->second)->set_RenderStatus(true);
 						static_cast<GameObject_3D*>(mspo_Objects.find("Blue Arrow")->second)->set_RenderStatus(true);
@@ -1058,6 +1092,17 @@ void Scene_3D::render()
 		GLint b_Shadow_Loc;
 		std::string ui_Shadow;
 		GLint ui_Shadow_Loc;
+		int l_iter = 0;
+		ui_light_Amount = 0;
+		for (auto const& pair : mspo_Objects)
+		{
+			if (pair.second->get_Tag() == "Light")
+			{
+				light[static_cast<Point_Light*>(pair.second)->get_ID()] = static_cast<Point_Light*>(pair.second)->get_Position();
+				ui_light_Amount++;
+				l_iter++;
+			}
+		}
 
 		for (unsigned int i = 0; i < ui_light_Amount; i++)
 		{
@@ -1131,27 +1176,20 @@ void Scene_3D::render()
 		{
 			unsigned no = light_Nom[i];
 
-			unsigned int obj_No = 0;
-
 			o_SceneLoader->prepare_DepthCube(po_Loader->get_Shader("6"), light[no], depth[i], i);
 
 
 			for (auto const& pair : mspo_Objects)
 			{
 
-				if (glm::distance(pos[obj_No], light[no]) < (o_SceneLoader->get_LightRadius(no) * 10) || pair.second->get_Tag() == "Player" || pair.second->get_Tag() == "Enemy")
-				{
-					if (pair.second->get_Tag() != "Object_Lamp" &&  pair.second->get_Tag() != "Particle")
-					{
 
-						pair.second->renderDepth(po_Loader->get_Shader("6"));
-					}
-					else if (pair.second->get_Tag() == "Light")
-					{
-						pair.second->renderDepth(po_Loader->get_Shader("6"));
-					}
+				if (pair.second->get_Tag() != "Object_Lamp" &&  pair.second->get_Tag() != "Particle" && pair.second->get_Tag() != "Light")
+				{
+
+					pair.second->renderDepth(po_Loader->get_Shader("6"));
 				}
-				obj_No++;
+
+
 			}
 			glBindFramebuffer(GL_FRAMEBUFFER, 0);
 		}
@@ -1163,11 +1201,6 @@ void Scene_3D::render()
 		camera_3D->update_Shader(po_Loader->get_Shader("0"));
 		glUseProgram(po_Loader->get_Shader("7")->get_Program());
 		camera_3D->update_Shader(po_Loader->get_Shader("7"));
-
-		//for (auto const& pair : mspo_Objects)
-		//{
-		//	if (pair.second->get_Tag() == "Object" || pair.second->get_Tag() == "Object_NonSavable") pair.second->render(po_Loader->get_Shader("0"));
-		//}
 
 		for (auto const& pair : mspo_Objects)
 		{
@@ -1189,7 +1222,7 @@ void Scene_3D::render()
 				glUseProgram(po_Loader->get_Shader("0")->get_Program());
 				pair.second->render(po_Loader->get_Shader("0"));
 			}
-		}		
+		}
 	}
 
 	glDisable(GL_BLEND);
@@ -1210,9 +1243,6 @@ void Scene_3D::render()
 		}
 
 	}
-		
-		
-		
 
 	lock_mouse(false);
 	b_Conditions[Conditions::Move_Mouse] = false;
@@ -1225,7 +1255,7 @@ void Scene_3D::render()
 
 		for (auto const& pair : mspo_Objects)
 		{
-			if (pair.second->get_Tag() == "Object" && pair.second->get_ObjectID() == pickedID || 
+			if (pair.second->get_Tag() == "Object" && pair.second->get_ObjectID() == pickedID ||
 				pair.second->get_Tag() == "Object_NonSavable" && pair.second->get_ObjectID() == pickedID)
 			{
 				//Lots to do here
@@ -1234,7 +1264,7 @@ void Scene_3D::render()
 					for (auto const& children : pair.second->get_Children()) s_Deletion.push_back(children.first);
 					s_Deletion.push_back(pair.first);
 				}
-				else s_Deletion.push_back(pair.first);		
+				else s_Deletion.push_back(pair.first);
 			}
 		}
 
@@ -1249,6 +1279,14 @@ void Scene_3D::render()
 				mspo_Objects.erase(s_Deletion.at(i));
 			}
 		}
+	}
+
+	if (b_Conditions[Conditions::ReloadScene])
+	{
+		clean_Up();
+		b_Init = false;
+		b_Conditions[Conditions::ReloadScene] = false;
+		pickedID = -1;
 	}
 }
 

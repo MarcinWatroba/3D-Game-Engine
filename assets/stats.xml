@@ -12,7 +12,7 @@
 </patrols>
 <stats>
 		<new_Stat name = "" health = "" ammo = "" mass = "" gravity = "true" path = ""> </new_Stat>
-		<new_Stat name = "Player Stats" health = "3" ammo = "100" mass = "10" gravity = "true" path = ""> </new_Stat>
-		<new_Stat name = "Robot Stats" health = "5" ammo = "50" mass = "10" gravity = "true" path = ""> </new_Stat>
+		<new_Stat name = "Player Stats" health = "3" ammo = "100000" mass = "10" gravity = "true" path = ""> </new_Stat>
+		<new_Stat name = "Robot Stats" health = "5" ammo = "50" mass = "10" gravity = "true" path = "square"> </new_Stat>
 		<new_Stat name = "Robot Stats 2" health = "10" ammo = "200" mass = "10" gravity = "true" path = "line"> </new_Stat>
 </stats>
